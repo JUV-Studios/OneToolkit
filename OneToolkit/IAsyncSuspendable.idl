@@ -1,0 +1,11 @@
+import "IAsyncClosable.idl";
+
+namespace OneToolkit
+{
+	interface IAsyncSuspendable requires IAsyncClosable
+	{
+		Boolean IsSuspended { get; };
+		Windows.Foundation.IAsyncAction SuspendAsync();
+		Windows.Foundation.IAsyncAction ResumeAsync();
+	};
+}

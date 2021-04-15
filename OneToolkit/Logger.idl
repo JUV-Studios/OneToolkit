@@ -1,0 +1,44 @@
+import "IAsyncClosable.idl";
+import "LineEndingHelper.idl";
+
+namespace OneToolkit
+{
+    struct LoggerContext
+    {
+        Boolean IsLoggingToFile;
+        Boolean IsChangesBatched;
+        Boolean IsConsoleSupported;
+        Boolean IsDebuggerAttached;
+    };
+
+    interface ICustomLogger
+    {
+        Boolean CanClear { get; };
+        Windows.Foundation.IAsyncAction ClearAsync();
+        Windows.Foundation.IAsyncAction AppendAsync(String text);
+    };
+   
+    [bindable]
+    [default_interface]
+    runtimeclass Logger : IAsyncClosable
+    {
+        Logger();
+        Logger(String dateTimeFormat);
+        Logger(String dateTimeFormat, Windows.Storage.StorageFile file);
+        Windows.Globalization.DateTimeFormatting.DateTimeFormatter Formatter { get; };
+        Windows.Storage.StorageFile WorkingFile { get; };
+        IVector<ICustomLogger> CustomLoggers { get; };
+        Windows.Security.Cryptography.BinaryStringEncoding OutputEncoding;
+        LineEnding NewLineEnding;
+        void Clear();
+        void Write(String text);
+        void Append(String text);
+        LoggerContext GetContext();
+        String CreateLog(String content);
+        Windows.Foundation.IAsyncAction ClearAsync();
+        Windows.Foundation.IAsyncAction WriteAsync(String text);
+        Windows.Foundation.IAsyncAction AppendAsync(String text);
+        void StartBatchingChanges();
+        Windows.Foundation.IAsyncAction CommitBatchedChangesAsync();
+    }
+}

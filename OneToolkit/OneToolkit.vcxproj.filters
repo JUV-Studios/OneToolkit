@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>accd3aa8-1ba0-4223-9bbe-0c431709210b</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{7b97eea9-c690-4a9f-8ff2-37397da75820}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{11bd0252-1585-40ae-baff-3451b6014012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Converters">
+      <UniqueIdentifier>{2fa511d6-7791-442a-83b3-c96fa8433799}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OneToolkit.def">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="packages.config">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="PropertySheet.props">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt">
+      <Filter>Resources</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="IAsyncClosable.idl" />
+    <Midl Include="IAsyncSuspendable.idl" />
+    <Midl Include="Logger.idl" />
+    <Midl Include="BufferHelper.idl" />
+    <Midl Include="LineEndingHelper.idl" />
+    <Midl Include="IEquatable.idl" />
+    <Midl Include="XamlAppType.idl" />
+    <Midl Include="StringLocalizationConverter.idl">
+      <Filter>UI\Converters</Filter>
+    </Midl>
+  </ItemGroup>
+</Project>

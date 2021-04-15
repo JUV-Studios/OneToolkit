@@ -1,0 +1,7 @@
+namespace OneToolkit
+{
+	interface IEquatable
+	{
+		[noexcept] Boolean IsEqual(Object another);
+	};
+}

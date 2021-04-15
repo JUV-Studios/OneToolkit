@@ -1,0 +1,14 @@
+﻿#pragma once
+#include <unknwn.h>
+#include <atomic>
+#include <cstddef>
+#include <winstring.h>
+#include <Windows.h>
+#include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.Storage.AccessCache.h>
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Globalization.DateTimeFormatting.h>
+#include <winrt/Windows.UI.Xaml.Interop.h>
+#include <winrt/Windows.Security.Cryptography.h>
+#include <winrt/Windows.ApplicationModel.Core.h>
