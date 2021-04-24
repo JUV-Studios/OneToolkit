@@ -1,5 +1,4 @@
 import "IAsyncClosable.idl";
-import "LineEndingHelper.idl";
 
 namespace OneToolkit
 {
@@ -29,7 +28,6 @@ namespace OneToolkit
         Windows.Storage.StorageFile WorkingFile { get; };
         IVector<ICustomLogger> CustomLoggers { get; };
         Windows.Security.Cryptography.BinaryStringEncoding OutputEncoding;
-        LineEnding NewLineEnding;
         void Clear();
         void Write(String text);
         void Append(String text);

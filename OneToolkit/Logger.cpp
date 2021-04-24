@@ -12,7 +12,6 @@ using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
-using namespace Windows::UI::Xaml::Data;
 using namespace Windows::Security::Cryptography;
 using namespace Windows::Globalization;
 using namespace Windows::Globalization::DateTimeFormatting;
@@ -28,7 +27,7 @@ namespace winrt::OneToolkit::implementation
 	{
 	}
 
-	Logger::Logger(hstring const& dateTimeFormat, StorageFile const& file) :  m_DateTimeFormatter(dateTimeFormat)
+	Logger::Logger(hstring const& dateTimeFormat, StorageFile const& file) : m_WorkingFile(file), m_DateTimeFormatter(dateTimeFormat)
 	{
 	}
 
@@ -39,7 +38,7 @@ namespace winrt::OneToolkit::implementation
 
 	StorageFile Logger::WorkingFile() const noexcept
 	{
-		return m_FileHandle == nullptr ? nullptr : m_FileHandle.UnderlyingFile();
+		return m_WorkingFile;
 	}
 
 	IVector<ICustomLogger> Logger::CustomLoggers()
@@ -56,16 +55,6 @@ namespace winrt::OneToolkit::implementation
 	void Logger::OutputEncoding(BinaryStringEncoding value) noexcept
 	{
 		m_OutputEncoding = value;
-	}
-
-	LineEnding Logger::NewLineEnding() const noexcept
-	{
-		return m_NewLineEnding;
-	}
-
-	void Logger::NewLineEnding(LineEnding value) noexcept
-	{
-		m_NewLineEnding = value;
 	}
 
 	void Logger::Write(hstring const& text)
@@ -85,7 +74,7 @@ namespace winrt::OneToolkit::implementation
 
 	LoggerContext Logger::GetContext() const noexcept
 	{
-		return { .IsLoggingToFile = m_FileHandle != nullptr, .IsChangesBatched = m_IsChangesBatched, .IsConsoleSupported = GetConsoleWindow() != nullptr, .IsDebuggerAttached = IsDebuggerPresent() != 0 };
+		return { .IsLoggingToFile = m_WorkingFile != nullptr, .IsChangesBatched = m_IsChangesBatched, .IsConsoleSupported = GetConsoleWindow() != nullptr, .IsDebuggerAttached = IsDebuggerPresent() != 0 };
 	}
 
 	hstring Logger::CreateLog(hstring const& content)
@@ -93,7 +82,7 @@ namespace winrt::OneToolkit::implementation
 		std::wstring logContent;
 		logContent += m_DateTimeFormatter.Format(clock::now()) + L" " + content;
 		auto lastChr = content[content.size() - 1];
-		if (lastChr != L'\r' && lastChr != L'\n') logContent += LineEndingHelper::GetNewLineString(m_NewLineEnding);
+		if (lastChr != L'\r' && lastChr != L'\n') logContent += L'\n';
 		return { logContent.data(), static_cast<uint32_t>(logContent.size()) };
 	}
 

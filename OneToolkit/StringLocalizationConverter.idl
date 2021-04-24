@@ -1,9 +1,0 @@
-namespace OneToolkit.UI.Converters
-{
-    [bindable]
-    [default_interface]
-    runtimeclass StringLocalizationConverter : Windows.UI.Xaml.Data.IValueConverter
-    {
-        StringLocalizationConverter();
-    }
-}

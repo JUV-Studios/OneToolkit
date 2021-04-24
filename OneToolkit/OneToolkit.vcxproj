@@ -146,27 +146,20 @@
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="LineEndingHelper.h">
-      <DependentUpon>LineEndingHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
+    <ClInclude Include="Exports\ModernCX.h" />
     <ClInclude Include="Logger.h">
       <DependentUpon>Logger.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="StringLocalizationConverter.h">
-      <DependentUpon>StringLocalizationConverter.idl</DependentUpon>
+    <ClInclude Include="StreamHelper.h">
+      <DependentUpon>StreamHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BufferHelper.cpp">
       <DependentUpon>BufferHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="LineEndingHelper.cpp">
-      <DependentUpon>LineEndingHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
@@ -177,8 +170,8 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="StringLocalizationConverter.cpp">
-      <DependentUpon>StringLocalizationConverter.idl</DependentUpon>
+    <ClCompile Include="StreamHelper.cpp">
+      <DependentUpon>StreamHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
   </ItemGroup>
@@ -199,13 +192,11 @@
     <Midl Include="IAsyncClosable.idl" />
     <Midl Include="IAsyncSuspendable.idl" />
     <Midl Include="IEquatable.idl" />
-    <Midl Include="LineEndingHelper.idl">
-      <SubType>Designer</SubType>
-    </Midl>
+    <Midl Include="ITypedValue.idl" />
     <Midl Include="Logger.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="StringLocalizationConverter.idl">
+    <Midl Include="StreamHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="XamlAppType.idl" />

@@ -16,8 +16,6 @@ namespace winrt::OneToolkit
             Windows::Foundation::Collections::IVector<ICustomLogger> CustomLoggers();
             Windows::Security::Cryptography::BinaryStringEncoding OutputEncoding() const noexcept;
             void OutputEncoding(Windows::Security::Cryptography::BinaryStringEncoding value) noexcept;
-            LineEnding NewLineEnding() const noexcept;
-            void NewLineEnding(LineEnding value) noexcept;
             void Clear();
             void Write(hstring const& text);
             void Append(hstring const& text);
@@ -36,11 +34,10 @@ namespace winrt::OneToolkit
             Windows::Foundation::Collections::IVector<ICustomLogger> m_CustomLoggers;
             Windows::Foundation::IAsyncAction AppendFileAsync(hstring content);
             Windows::Security::Cryptography::BinaryStringEncoding m_OutputEncoding = Windows::Security::Cryptography::BinaryStringEncoding::Utf16LE;
-            LineEnding m_NewLineEnding = LineEnding::CR;
             bool m_IsChangesBatched = false;
             std::atomic_bool m_IsWriting = false;
             std::vector<hstring> m_BatchedChanges;
-            OneToolkit::Storage::SynchronousFile m_FileHandle = nullptr;
+            Windows::Storage::StorageFile m_WorkingFile = nullptr;
             Windows::Globalization::DateTimeFormatting::DateTimeFormatter m_DateTimeFormatter = nullptr;
         };
     }

@@ -1,0 +1,10 @@
+import "IEquatable.idl";
+
+namespace OneToolkit
+{
+	interface ITypedValue requires IEquatable
+	{
+		Object Value { get; };
+		Windows.UI.Xaml.Interop.TypeName TypeId { get; };
+	};
+}

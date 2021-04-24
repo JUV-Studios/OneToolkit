@@ -11,11 +11,8 @@
     <Filter Include="Storage">
       <UniqueIdentifier>{7b97eea9-c690-4a9f-8ff2-37397da75820}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{11bd0252-1585-40ae-baff-3451b6014012}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI\Converters">
-      <UniqueIdentifier>{2fa511d6-7791-442a-83b3-c96fa8433799}</UniqueIdentifier>
+    <Filter Include="Exports">
+      <UniqueIdentifier>{bde6d561-d748-45b0-8a37-747732810879}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +38,9 @@
     <ClInclude Include="pch.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="Exports\ModernCX.h">
+      <Filter>Exports</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt">
@@ -51,12 +51,14 @@
     <Midl Include="IAsyncClosable.idl" />
     <Midl Include="IAsyncSuspendable.idl" />
     <Midl Include="Logger.idl" />
-    <Midl Include="BufferHelper.idl" />
-    <Midl Include="LineEndingHelper.idl" />
     <Midl Include="IEquatable.idl" />
     <Midl Include="XamlAppType.idl" />
-    <Midl Include="StringLocalizationConverter.idl">
-      <Filter>UI\Converters</Filter>
+    <Midl Include="ITypedValue.idl" />
+    <Midl Include="BufferHelper.idl">
+      <Filter>Storage</Filter>
+    </Midl>
+    <Midl Include="StreamHelper.idl">
+      <Filter>Storage</Filter>
     </Midl>
   </ItemGroup>
 </Project>

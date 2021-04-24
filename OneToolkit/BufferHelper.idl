@@ -1,11 +1,12 @@
-namespace OneToolkit
+namespace OneToolkit.Storage
 {
     [default_interface]
     static runtimeclass BufferHelper
     {
         static Windows.Storage.Streams.IBuffer EmptyBuffer { get; };
-        static UInt8 GetDataAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
-        static void SetDataAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index, UInt8 val);
+        static Windows.Storage.Streams.IBuffer Concat(Windows.Storage.Streams.IBuffer[] buffers);
+        static UInt8 GetAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
+        static void SetAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index, UInt8 val);
         [noexcept] static Boolean IsDataEqual(Windows.Storage.Streams.IBuffer first, Windows.Storage.Streams.IBuffer second);
     }
 }

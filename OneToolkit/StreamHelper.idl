@@ -1,0 +1,8 @@
+namespace OneToolkit.Storage
+{
+    [default_interface]
+    static runtimeclass StreamHelper
+    {
+        static Windows.Foundation.IAsyncAction AppendAsync(Windows.Storage.Streams.IRandomAccessStream stream, Windows.Storage.Streams.IBuffer buffer);
+    }
+}
