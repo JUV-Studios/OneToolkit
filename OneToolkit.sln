@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JuvMvvmManaged", "JuvMvvmMa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JuvUserInterface", "JuvUserInterface\JuvUserInterface.vcxproj", "{243A2F4E-6AC8-4D1D-85E0-F93C5DB39DC4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JuvMvvmCpp", "JuvMvvmCpp\JuvMvvmCpp.vcxproj", "{02714426-3B08-45CC-8A67-4B7CE56BC7A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,24 @@ Global
 		{243A2F4E-6AC8-4D1D-85E0-F93C5DB39DC4}.Release|x64.Build.0 = Release|x64
 		{243A2F4E-6AC8-4D1D-85E0-F93C5DB39DC4}.Release|x86.ActiveCfg = Release|Win32
 		{243A2F4E-6AC8-4D1D-85E0-F93C5DB39DC4}.Release|x86.Build.0 = Release|Win32
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Debug|ARM.ActiveCfg = Debug|ARM
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Debug|ARM.Build.0 = Debug|ARM
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Debug|ARM64.Build.0 = Debug|ARM64
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Debug|x64.ActiveCfg = Debug|x64
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Debug|x64.Build.0 = Debug|x64
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Debug|x86.ActiveCfg = Debug|Win32
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Debug|x86.Build.0 = Debug|Win32
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Release|Any CPU.ActiveCfg = Release|Win32
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Release|ARM.ActiveCfg = Release|ARM
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Release|ARM.Build.0 = Release|ARM
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Release|ARM64.ActiveCfg = Release|ARM64
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Release|ARM64.Build.0 = Release|ARM64
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Release|x64.ActiveCfg = Release|x64
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Release|x64.Build.0 = Release|x64
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Release|x86.ActiveCfg = Release|Win32
+		{02714426-3B08-45CC-8A67-4B7CE56BC7A8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

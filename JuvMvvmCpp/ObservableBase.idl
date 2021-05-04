@@ -1,0 +1,12 @@
+namespace OneToolkit.Mvvm
+{
+    [bindable]
+    [default_interface]
+    unsealed runtimeclass ObservableBase : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        ObservableBase();
+        overridable Boolean Decide(String propertyName);
+        overridable void WhenPropertyChanged(Windows.UI.Xaml.Data.PropertyChangedEventArgs args);
+        void Raise(String propertyName);
+    }
+}
