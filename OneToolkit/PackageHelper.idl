@@ -1,0 +1,8 @@
+namespace OneToolkit.AppModel
+{
+    [default_interface]
+    static runtimeclass PackageHelper
+    {
+        [noexcept] static Boolean IsPackaged { get; };
+    }
+}

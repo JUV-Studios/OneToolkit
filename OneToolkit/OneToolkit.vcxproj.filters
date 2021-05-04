@@ -8,11 +8,14 @@
     <Filter Include="Generated Files">
       <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Storage">
-      <UniqueIdentifier>{7b97eea9-c690-4a9f-8ff2-37397da75820}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Exports">
       <UniqueIdentifier>{bde6d561-d748-45b0-8a37-747732810879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{e5424560-e0f5-4540-833d-f318f65edc80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppModel">
+      <UniqueIdentifier>{2f334ef8-6fa9-450e-be2c-acc7ab904d46}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,19 +30,14 @@
     <None Include="OneToolkit.def">
       <Filter>Resources</Filter>
     </None>
-    <None Include="packages.config">
-      <Filter>Resources</Filter>
-    </None>
     <None Include="PropertySheet.props">
       <Filter>Resources</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Exports\ModernCX.h">
-      <Filter>Exports</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -48,17 +46,12 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="IAsyncClosable.idl" />
-    <Midl Include="IAsyncSuspendable.idl" />
-    <Midl Include="Logger.idl" />
-    <Midl Include="IEquatable.idl" />
-    <Midl Include="XamlAppType.idl" />
-    <Midl Include="ITypedValue.idl" />
-    <Midl Include="BufferHelper.idl">
-      <Filter>Storage</Filter>
+    <Midl Include="Foundation.idl" />
+    <Midl Include="PackageHelper.idl">
+      <Filter>AppModel</Filter>
     </Midl>
-    <Midl Include="StreamHelper.idl">
-      <Filter>Storage</Filter>
+    <Midl Include="AppModelEnums.idl">
+      <Filter>AppModel</Filter>
     </Midl>
   </ItemGroup>
 </Project>

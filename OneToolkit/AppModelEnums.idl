@@ -1,0 +1,15 @@
+namespace OneToolkit.AppModel
+{
+	enum WindowsAppType
+	{
+		Desktop,
+		Universal
+	};
+
+	enum XamlFrameworkType
+	{
+		None,
+		PlatformXaml,
+		LiftedWinUI
+	};
+}

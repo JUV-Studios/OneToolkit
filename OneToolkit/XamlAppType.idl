@@ -1,4 +1,0 @@
-namespace OneToolkit
-{
-	enum XamlAppType { PlatformXaml, LiftedWinUI };
-}
