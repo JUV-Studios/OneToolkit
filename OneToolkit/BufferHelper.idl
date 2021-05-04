@@ -1,0 +1,9 @@
+namespace OneToolkit.Storage
+{
+    [default_interface]
+    static runtimeclass BufferHelper
+    {
+        static UInt8 GetAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
+        static void SetAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index, UInt8 value);
+    }
+}

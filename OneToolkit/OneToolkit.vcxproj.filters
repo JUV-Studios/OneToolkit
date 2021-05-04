@@ -53,5 +53,8 @@
     <Midl Include="Enums.idl">
       <Filter>AppModel</Filter>
     </Midl>
+    <Midl Include="BufferHelper.idl">
+      <Filter>Storage</Filter>
+    </Midl>
   </ItemGroup>
 </Project>
