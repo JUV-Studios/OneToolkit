@@ -9,7 +9,8 @@ namespace winrt::OneToolkit::AppModel
         {
             PackageHelper() = delete;
             static bool IsPackaged() noexcept;
-            static Windows::Foundation::IAsyncOperation<bool> CheckIsFullTrust();
+            static Windows::Foundation::IAsyncOperation<bool> CheckIsFullTrustAsync();
+            static Windows::Foundation::IAsyncOperation<Windows::Data::Xml::Dom::XmlDocument> GetPackageManifestAsync();
         };
     }
 
