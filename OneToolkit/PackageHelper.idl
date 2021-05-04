@@ -4,5 +4,6 @@ namespace OneToolkit.AppModel
     static runtimeclass PackageHelper
     {
         [noexcept] static Boolean IsPackaged { get; };
+        static Windows.Foundation.IAsyncOperation<Boolean> CheckIsFullTrust();
     }
 }

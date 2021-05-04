@@ -8,10 +8,15 @@
     <Filter Include="Controls">
       <UniqueIdentifier>{f8c9eaaa-54ea-456b-b993-2954db6457c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Converters">
+      <UniqueIdentifier>{e31ea20f-0d37-4ed7-8c20-80fa50282db2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="StringLocalizationConverter.cpp" />
+    <ClCompile Include="StringLocalizationConverter.cpp">
+      <Filter>Converters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
