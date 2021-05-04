@@ -17,6 +17,12 @@
     <Filter Include="AppModel">
       <UniqueIdentifier>{2f334ef8-6fa9-450e-be2c-acc7ab904d46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{5bcbd889-5999-4f18-b3b2-3282f2bb12bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Yaml">
+      <UniqueIdentifier>{244d1019-ad49-46cb-9eec-e10f6eb755a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">

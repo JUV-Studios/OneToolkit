@@ -8,6 +8,7 @@ namespace winrt::OneToolkit::Storage
 		struct BufferHelper : BufferHelperT<BufferHelper>
 		{
 			BufferHelper() = delete;
+			static Windows::Storage::Streams::IBuffer EmptyBuffer();
 			static uint8_t GetAt(Windows::Storage::Streams::IBuffer const& buffer, uint32_t index);
 			static void SetAt(Windows::Storage::Streams::IBuffer const& buffer, uint32_t index, uint8_t value);
 		};
