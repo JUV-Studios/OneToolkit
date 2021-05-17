@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace OneToolkit.Mvvm
 {
@@ -9,33 +11,27 @@ namespace OneToolkit.Mvvm
 		PropertyChanging, PropertyChanged
 	}
 
-	public interface IPropertyEventRaiser
-	{
-		void Raise(string propertyName, PropertyEventType eventType);
-	}
-
 	/// <summary>
-	/// Provides a base class for view models and observable objects
+	/// Provides a base class for view models and observable objects.
 	/// </summary>
-	public class ObservableBase : INotifyPropertyChanging, INotifyPropertyChanged, IPropertyEventRaiser
+	public class ObservableBase : INotifyPropertyChanging, INotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
-		public event PropertyChangingEventHandler PropertyChanging;
-
 		public ObservableBase()
 		{
 			var propertyFields = from field in GetType().GetRuntimeFields()
-								 where field.FieldType.GetInterfaces().Contains(typeof(IWeakHolder<IPropertyEventRaiser>))
-								 select field.GetValue(this) as IWeakHolder<IPropertyEventRaiser>;
-
-			foreach (var propertyField in propertyFields)
-			{
-				propertyField.Holder.Target = this;
-			}
+								 where field.FieldType.GetInterfaces().Contains(typeof(IWeakHolder<ObservableBase>))
+								 select field.GetValue(this) as IWeakHolder<ObservableBase>;
+			foreach (var propertyField in propertyFields) propertyField.Holder.Target = this;
 		}
 
+		public bool SuppressEvents { get; set; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public event PropertyChangingEventHandler PropertyChanging;
+
 		/// <summary>
-		/// Override this method to determine whether to raise property changed/property changing or not
+		/// Override this method to determine whether to raise property changed/property changing or not.
 		/// </summary>
 		protected virtual bool Decide(string propertyName, PropertyEventType eventType)
 		{
@@ -43,7 +39,7 @@ namespace OneToolkit.Mvvm
 		}
 
 		/// <summary>
-		/// Override this method to perform custom actions after raising the property changed event
+		/// Override this method to perform custom actions after raising the property changed event.
 		/// </summary>
 		protected virtual void WhenPropertyChanged(PropertyChangedEventArgs args)
 		{
@@ -51,28 +47,63 @@ namespace OneToolkit.Mvvm
 		}
 
 		/// <summary>
-		/// Override this method to perform custom actions after raising the property changing event
+		/// Override this method to perform custom actions after raising the property changing event.
 		/// </summary>
 		protected virtual void WhenPropertyChanging(PropertyChangingEventArgs args)
 		{
 			// Do nothing here
 		}
 
-		public void Raise(string propertyName, PropertyEventType type)
+		public static bool SetProperty<T>(WeakPointer<ObservableBase> pointer, ref T field, T newValue, string propertyName)
 		{
-			if (Decide(propertyName, type))
+			if (pointer.IsTargetValid)
 			{
-				if (type == PropertyEventType.PropertyChanged)
-				{
-					PropertyChangedEventArgs args = new(propertyName);
-					PropertyChanged?.Invoke(this, args);
-					WhenPropertyChanged(args);
-				}
-				else
+				pointer.Target.SetProperty(ref field, newValue, propertyName);
+				return true;
+			}
+			else return false;
+		}
+
+		public static bool Raise(WeakPointer<ObservableBase> pointer, string propertyName, PropertyEventType type)
+		{
+			if (pointer.IsTargetValid)
+			{
+				pointer.Target.Raise(propertyName, type);
+				return true;
+			}
+			else return false;
+		}
+
+		protected void SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+		{
+			if (!EqualityComparer<T>.Default.Equals(field, newValue))
+			{
+				Raise(propertyName, PropertyEventType.PropertyChanging);
+				field = newValue;
+				Raise(propertyName, PropertyEventType.PropertyChanged);
+			}
+		}
+
+		/// <summary>
+		/// Raises the specified property event for a specified property name.
+		/// </summary>
+		/// <param name="propertyName">The name of the property. Shouldn't be empty or only full of whitespaces.</param>
+		/// <param name="type">The type of the property event.</param>
+		protected void Raise(string propertyName, PropertyEventType type)
+		{
+			if (!string.IsNullOrWhiteSpace(propertyName) && Decide(propertyName, type) && !SuppressEvents)
+			{
+				if (type == PropertyEventType.PropertyChanging)
 				{
 					PropertyChangingEventArgs args = new(propertyName);
 					PropertyChanging?.Invoke(this, args);
 					WhenPropertyChanging(args);
+				}
+				else
+				{
+					PropertyChangedEventArgs args = new(propertyName);
+					PropertyChanged?.Invoke(this, args);
+					WhenPropertyChanged(args);
 				}
 			}
 		}

@@ -12,7 +12,7 @@
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
-#include <winrt/Windows.Data.Xml.Dom.h>
+#include <winrt/Windows.ApplicationModel.Resources.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>

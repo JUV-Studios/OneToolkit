@@ -1,0 +1,10 @@
+namespace OneToolkit.UI.Converters
+{
+    [bindable]
+    [default_interface]
+    runtimeclass StringLocalizationConverter : Windows.UI.Xaml.Data.INotifyPropertyChanged, Windows.UI.Xaml.Data.IValueConverter
+    {
+        StringLocalizationConverter();
+        Windows.ApplicationModel.Resources.ResourceLoader Context;
+    }
+}

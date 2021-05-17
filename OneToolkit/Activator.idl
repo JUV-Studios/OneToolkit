@@ -1,0 +1,9 @@
+namespace OneToolkit.Reflection
+{
+    [default_interface]
+    static runtimeclass Activator
+    {
+        static Object ActivateInstance(Windows.UI.Xaml.Interop.TypeName typeId);
+        static Object ActivateInstance(Windows.UI.Xaml.Interop.TypeName typeId, Object[] args);
+    }
+}

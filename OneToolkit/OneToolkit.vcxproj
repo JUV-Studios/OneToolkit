@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210503.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210503.1\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props" Condition="Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" />
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -15,7 +16,7 @@
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.14393.0</WindowsTargetPlatformMinVersion>
     <CppWinRTFastAbi>true</CppWinRTFastAbi>
     <CppWinRTLibs>true</CppWinRTLibs>
   </PropertyGroup>
@@ -143,29 +144,85 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BufferHelper.h">
-      <DependentUpon>BufferHelper.idl</DependentUpon>
+    <ClInclude Include="Activator.h">
+      <DependentUpon>Activator.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="PackageHelper.h">
-      <DependentUpon>PackageHelper.idl</DependentUpon>
+    <ClInclude Include="BoolAsObjectConverter.h">
+      <DependentUpon>BoolAsObjectConverter.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="BoolAsVisibilityConverter.h">
+      <DependentUpon>BoolAsVisibilityConverter.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="BoolReverseConverter.h">
+      <DependentUpon>BoolReverseConverter.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="FileHandle.h">
+      <DependentUpon>FileHandle.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="LineEndingHelper.h">
+      <DependentUpon>LineEndingHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Singleton.h">
+      <DependentUpon>Singleton.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="StringLocalizationConverter.h">
+      <DependentUpon>StringLocalizationConverter.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="StringOperations.h">
+      <DependentUpon>StringOperations.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BufferHelper.cpp">
-      <DependentUpon>BufferHelper.idl</DependentUpon>
+    <ClCompile Include="Activator.cpp">
+      <DependentUpon>Activator.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="PackageHelper.cpp">
-      <DependentUpon>PackageHelper.idl</DependentUpon>
+    <ClCompile Include="BoolAsObjectConverter.cpp">
+      <DependentUpon>BoolAsObjectConverter.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="BoolAsVisibilityConverter.cpp">
+      <DependentUpon>BoolAsVisibilityConverter.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="BoolReverseConverter.cpp">
+      <DependentUpon>BoolReverseConverter.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="FileHandle.cpp">
+      <DependentUpon>FileHandle.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="LineEndingHelper.cpp">
+      <DependentUpon>LineEndingHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="Singleton.cpp">
+      <DependentUpon>Singleton.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="StringLocalizationConverter.cpp">
+      <DependentUpon>StringLocalizationConverter.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="StringOperations.cpp">
+      <DependentUpon>StringOperations.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="OneToolkit.def" />
@@ -178,24 +235,46 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="BufferHelper.idl">
+    <Midl Include="Activator.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="BoolAsObjectConverter.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="BoolAsVisibilityConverter.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="BoolReverseConverter.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="Enums.idl" />
+    <Midl Include="FileHandle.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="Foundation.idl" />
-    <Midl Include="PackageHelper.idl">
+    <Midl Include="LineEndingHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="Singleton.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="StringLocalizationConverter.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="StringOperations.idl">
       <SubType>Designer</SubType>
     </Midl>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210503.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210503.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210503.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210503.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210503.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210503.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props'))" />
   </Target>
 </Project>

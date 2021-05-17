@@ -1,59 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace OneToolkit.Mvvm
 {
-	public sealed class ObservableProperty<T> : IWeakHolder<IPropertyEventRaiser>
+	/// <summary>
+	/// Represents an property which automatically raises property changed/property changing events when it's value is set.
+	/// </summary>
+	/// <typeparam name="T">The underlying type of the property.</typeparam>
+	/// <remarks>A field of this class should be only declared in a class that inherits from ObservableBase.</remarks>
+	public sealed class ObservableProperty<T> : IWeakHolder<ObservableBase>
 	{
-		private readonly string _PropertyName;
+		private readonly string PropertyName;
 
-		private T _Value;
-
-		public T Value
-		{
-			get => _Value;
-			set
-			{
-				if (!Comparer.Equals(_Value, value))
-				{
-					var target = Holder.Target;
-					target.Raise(_PropertyName, PropertyEventType.PropertyChanging);
-					_Value = value;
-					target.Raise(_PropertyName, PropertyEventType.PropertyChanged);
-				}
-			}
-		}
-
-		public WeakPointer<IPropertyEventRaiser> Holder { get; } = new();
-
-		public EqualityComparer<T> Comparer { get; set; } = EqualityComparer<T>.Default;
+		private T BackingField;
 
 		public ObservableProperty(string propertyName, T value = default)
 		{
-			_Value = value;
-			_PropertyName = propertyName;
+			BackingField = value;
+			PropertyName = propertyName;
 		}
 
-		public override bool Equals(object obj)
+		/// <summary>
+		/// Gets or sets the underlying value for this ObservableProperty instance. Automatically raises PropertyChanged when needed.
+		/// </summary>
+		public T Value
 		{
-			if (obj is ObservableProperty<T> propertyRef)
+			get => BackingField;
+			set
 			{
-				return Comparer.Equals(_Value, propertyRef._Value);
-			}
-			else if (obj is T val)
-			{
-				return Comparer.Equals(_Value, val);
-			}
-			else
-			{
-				return false;
+				if (!ObservableBase.SetProperty(Holder, ref BackingField, value, PropertyName)) throw new ObjectDisposedException("Holder");
 			}
 		}
 
-		public override int GetHashCode()
-		{
-			return (_Value?.GetHashCode()).GetValueOrDefault(base.GetHashCode());
-		}
+		public WeakPointer<ObservableBase> Holder { get; } = new();
 
-		public override string ToString() => _PropertyName;
+		public override string ToString() => PropertyName;
 	}
 }

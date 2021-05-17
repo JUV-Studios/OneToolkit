@@ -1,0 +1,21 @@
+﻿<Hub
+	x:Class="OneToolkit.UI.Controls.HubPanel"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:OneToolkit.UI.Controls"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Margin="0"
+	Padding="0"
+	d:DesignHeight="300"
+	d:DesignWidth="400"
+	Loaded="Hub_Loaded"
+	SectionsInViewChanged="Hub_SectionsInViewChanged"
+	mc:Ignorable="d">
+
+	<Hub.HeaderTemplate>
+		<DataTemplate x:DataType="x:String">
+			<TextBlock Style="{ThemeResource HeaderTextBlockStyle}" Text="{x:Bind}" />
+		</DataTemplate>
+	</Hub.HeaderTemplate>
+</Hub>

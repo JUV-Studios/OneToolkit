@@ -17,11 +17,23 @@
     <Filter Include="AppModel">
       <UniqueIdentifier>{2f334ef8-6fa9-450e-be2c-acc7ab904d46}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Data">
-      <UniqueIdentifier>{5bcbd889-5999-4f18-b3b2-3282f2bb12bd}</UniqueIdentifier>
+    <Filter Include="UI">
+      <UniqueIdentifier>{e3467b78-3a66-4083-872e-c0de25efa1f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Data\Yaml">
-      <UniqueIdentifier>{244d1019-ad49-46cb-9eec-e10f6eb755a6}</UniqueIdentifier>
+    <Filter Include="UI\Converters">
+      <UniqueIdentifier>{fea32006-da90-428c-b331-f41a3b4623ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{e6735ca6-e455-4c16-bf52-23a6f2ad2c27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Text">
+      <UniqueIdentifier>{db5eb1e4-c183-41d7-bb8e-3def702fdc5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reflection">
+      <UniqueIdentifier>{cf757ca4-6bc9-4433-ad45-2b66d365a1dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Controls">
+      <UniqueIdentifier>{17753b08-442f-43f7-b10f-0f63008382a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -53,14 +65,33 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Foundation.idl" />
-    <Midl Include="PackageHelper.idl">
-      <Filter>AppModel</Filter>
-    </Midl>
     <Midl Include="Enums.idl">
       <Filter>AppModel</Filter>
     </Midl>
-    <Midl Include="BufferHelper.idl">
+    <Midl Include="FileHandle.idl">
       <Filter>Storage</Filter>
+    </Midl>
+    <Midl Include="StringLocalizationConverter.idl">
+      <Filter>UI\Converters</Filter>
+    </Midl>
+    <Midl Include="Singleton.idl" />
+    <Midl Include="BoolReverseConverter.idl">
+      <Filter>UI\Converters</Filter>
+    </Midl>
+    <Midl Include="BoolAsObjectConverter.idl">
+      <Filter>UI\Converters</Filter>
+    </Midl>
+    <Midl Include="LineEndingHelper.idl">
+      <Filter>Data\Text</Filter>
+    </Midl>
+    <Midl Include="Activator.idl">
+      <Filter>Reflection</Filter>
+    </Midl>
+    <Midl Include="StringOperations.idl">
+      <Filter>Data\Text</Filter>
+    </Midl>
+    <Midl Include="BoolAsVisibilityConverter.idl">
+      <Filter>UI\Converters</Filter>
     </Midl>
   </ItemGroup>
 </Project>

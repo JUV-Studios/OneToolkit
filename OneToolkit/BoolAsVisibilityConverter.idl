@@ -1,0 +1,11 @@
+namespace OneToolkit.UI.Converters
+{
+    [bindable]
+    [default_interface]
+    runtimeclass BoolAsVisibilityConverter : Windows.UI.Xaml.Data.INotifyPropertyChanged, Windows.UI.Xaml.Data.IValueConverter
+    {
+        BoolAsVisibilityConverter();
+        Windows.UI.Xaml.Visibility VisibilityIfTrue;
+        [noexcept] Windows.UI.Xaml.Visibility VisibilityIfFalse { get; };
+    }
+}
