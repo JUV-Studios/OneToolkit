@@ -48,6 +48,9 @@ namespace OneToolkit.Mvvm
 			PropertyName = propertyName;
 		}
 
+		/// <summary>
+		/// The default parameter that will be used for CanExecute and Execute methods respectively.
+		/// </summary>
 		public object DefaultParameter { get; set; }
 
 		public event EventHandler CanExecuteChanged;
@@ -67,6 +70,9 @@ namespace OneToolkit.Mvvm
 			if (CanExecute(parameter)) Functor(this, parameter);
 		}
 
+		/// <summary>
+		/// Raises the CanExecuteChanged event and property changing/property changed for IsEnabled when used with ObservableBase.
+		/// </summary>
 		public void Raise()
 		{
 			CanExecuteChanged(this, new());

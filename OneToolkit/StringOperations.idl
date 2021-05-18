@@ -7,6 +7,6 @@ namespace OneToolkit.Data.Text
         static String TrimStart(String text, String trimChars);
         static String TrimEnd(String text, String trimChars);
         static String Replace(String text, String replaced, String replacedWith);
-        static IVectorView<String> Split(String text, String delimiter);
+        static IVector<String> Split(String text, String delimiter);
     }
 }

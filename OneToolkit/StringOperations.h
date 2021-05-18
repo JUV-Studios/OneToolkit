@@ -12,7 +12,7 @@ namespace winrt::OneToolkit::Data::Text
             static hstring TrimStart(hstring const& text, hstring const& trimChars);
             static hstring TrimEnd(hstring const& text, hstring const& trimChars);
             static hstring Replace(hstring const& text, hstring const& replaced, hstring const& replacedWith);
-            static Windows::Foundation::Collections::IVectorView<hstring> Split(hstring const& text, hstring const& delimiter);
+            static Windows::Foundation::Collections::IVector<hstring> Split(hstring const& text, hstring const& delimiter);
         };
     }
 

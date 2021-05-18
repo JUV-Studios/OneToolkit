@@ -3,6 +3,7 @@
 #include "Data.Text.StringOperations.g.cpp"
 
 using namespace winrt;
+using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
 namespace winrt::OneToolkit::Data::Text::implementation
@@ -36,7 +37,7 @@ namespace winrt::OneToolkit::Data::Text::implementation
 		return output;
 	}
 
-	IVectorView<hstring> StringOperations::Split(hstring const& text, hstring const& delimiter)
+	IVector<hstring> StringOperations::Split(hstring const& text, hstring const& delimiter)
 	{
 		std::vector<hstring> values;
 		std::wstring textCopy { text };
@@ -48,6 +49,6 @@ namespace winrt::OneToolkit::Data::Text::implementation
 			token = wcstok_s(nullptr, delimiter.data(), &state);
 		}
 
-		return single_threaded_vector(std::move(values)).GetView();
+		return single_threaded_vector(std::move(values));
 	}
 }

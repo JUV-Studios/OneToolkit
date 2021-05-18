@@ -1,8 +1,8 @@
 ﻿<Application
-	x:Class="Showcase.App"
+	x:Class="OneToolkit.Showcase.App"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:local="using:Showcase">
+	xmlns:local="using:OneToolkit.Showcase">
 
 	<Application.Resources>
 		<XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />

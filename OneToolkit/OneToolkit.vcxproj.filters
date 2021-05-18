@@ -14,9 +14,6 @@
     <Filter Include="Storage">
       <UniqueIdentifier>{e5424560-e0f5-4540-833d-f318f65edc80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AppModel">
-      <UniqueIdentifier>{2f334ef8-6fa9-450e-be2c-acc7ab904d46}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{e3467b78-3a66-4083-872e-c0de25efa1f8}</UniqueIdentifier>
     </Filter>
@@ -28,9 +25,6 @@
     </Filter>
     <Filter Include="Data\Text">
       <UniqueIdentifier>{db5eb1e4-c183-41d7-bb8e-3def702fdc5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Reflection">
-      <UniqueIdentifier>{cf757ca4-6bc9-4433-ad45-2b66d365a1dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="UI\Controls">
       <UniqueIdentifier>{17753b08-442f-43f7-b10f-0f63008382a7}</UniqueIdentifier>
@@ -65,12 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Foundation.idl" />
-    <Midl Include="Enums.idl">
-      <Filter>AppModel</Filter>
-    </Midl>
-    <Midl Include="FileHandle.idl">
-      <Filter>Storage</Filter>
-    </Midl>
     <Midl Include="StringLocalizationConverter.idl">
       <Filter>UI\Converters</Filter>
     </Midl>
@@ -84,14 +72,12 @@
     <Midl Include="LineEndingHelper.idl">
       <Filter>Data\Text</Filter>
     </Midl>
-    <Midl Include="Activator.idl">
-      <Filter>Reflection</Filter>
-    </Midl>
     <Midl Include="StringOperations.idl">
       <Filter>Data\Text</Filter>
     </Midl>
     <Midl Include="BoolAsVisibilityConverter.idl">
       <Filter>UI\Converters</Filter>
     </Midl>
+    <Midl Include="AppModel.idl" />
   </ItemGroup>
 </Project>

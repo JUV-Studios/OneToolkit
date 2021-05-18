@@ -144,10 +144,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Activator.h">
-      <DependentUpon>Activator.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="BoolAsObjectConverter.h">
       <DependentUpon>BoolAsObjectConverter.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -158,10 +154,6 @@
     </ClInclude>
     <ClInclude Include="BoolReverseConverter.h">
       <DependentUpon>BoolReverseConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="FileHandle.h">
-      <DependentUpon>FileHandle.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="LineEndingHelper.h">
@@ -183,10 +175,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Activator.cpp">
-      <DependentUpon>Activator.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="BoolAsObjectConverter.cpp">
       <DependentUpon>BoolAsObjectConverter.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -197,10 +185,6 @@
     </ClCompile>
     <ClCompile Include="BoolReverseConverter.cpp">
       <DependentUpon>BoolReverseConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="FileHandle.cpp">
-      <DependentUpon>FileHandle.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="LineEndingHelper.cpp">
@@ -235,9 +219,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="Activator.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="BoolAsObjectConverter.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -247,10 +228,7 @@
     <Midl Include="BoolReverseConverter.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="Enums.idl" />
-    <Midl Include="FileHandle.idl">
-      <SubType>Designer</SubType>
-    </Midl>
+    <Midl Include="AppModel.idl" />
     <Midl Include="Foundation.idl" />
     <Midl Include="LineEndingHelper.idl">
       <SubType>Designer</SubType>
