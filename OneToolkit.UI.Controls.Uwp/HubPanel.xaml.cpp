@@ -28,9 +28,30 @@ HubPanel::HubPanel()
 	InitializeComponent();
 }
 
+double HubPanel::UniformMargin::get()
+{
+	return Padding.Left;
+}
+
+void HubPanel::UniformMargin::set(double value)
+{
+	if (UniformMargin != value)
+	{
+		Padding = ThicknessHelper::FromLengths(value, value, value, 0);
+		SetPaddingForSections();
+		PropertyChanged(this, ref new PropertyChangedEventArgs("UniformMargin"));
+	}
+}
+
 void HubPanel::Hub_Loaded(Object^ sender, RoutedEventArgs^ e)
 {
 	SetAutomationProperties();
+}
+
+void HubPanel::SetPaddingForSections()
+{
+	auto value = UniformMargin;
+	for (auto const& section : Sections) section->Padding = ThicknessHelper::FromLengths(value, 0, value, value);
 }
 
 void HubPanel::SetAutomationProperties()
@@ -46,6 +67,8 @@ void HubPanel::SetAutomationProperties()
 
 		m_LastSetSize = Sections->Size;
 	}
+
+	SetPaddingForSections();
 }
 
 void HubPanel::Hub_SectionsInViewChanged(Object^ sender, SectionsInViewChangedEventArgs^ e)

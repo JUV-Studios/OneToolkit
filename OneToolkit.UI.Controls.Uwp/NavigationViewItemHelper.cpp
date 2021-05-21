@@ -15,9 +15,9 @@ namespace OneToolkit::UI::Controls
 	public ref class NavigationViewItemHelper sealed
 	{
 	public:
-		static bool ApplyCommandResources(Object^ item, XamlUICommand^ command)
+		static bool ApplyCommandResources(Object^ navViewItem, XamlUICommand^ command)
 		{
-			auto muxcItem = dynamic_cast<MUXC::NavigationViewItemBase^>(item);
+			auto muxcItem = dynamic_cast<MUXC::NavigationViewItemBase^>(navViewItem);
 			if (muxcItem != nullptr)
 			{
 				muxcItem->Content = command->Label;
@@ -31,7 +31,7 @@ namespace OneToolkit::UI::Controls
 			}
 			else
 			{
-				auto wuxcItem = dynamic_cast<WUXC::NavigationViewItemBase^>(item);
+				auto wuxcItem = dynamic_cast<WUXC::NavigationViewItemBase^>(navViewItem);
 				if (wuxcItem != nullptr)
 				{
 					wuxcItem->Content = command->Label;
@@ -39,7 +39,7 @@ namespace OneToolkit::UI::Controls
 					WUXC::ToolTipService::SetToolTip(wuxcItem, command->Description);
 					AutomationProperties::SetHelpText(wuxcItem, command->Description);
 					KeyboardAcceleratorHelper::SetKeyboardAccelerators(wuxcItem, command->KeyboardAccelerators);
-					auto classItem = dynamic_cast<WUXC::NavigationViewItem^>(item);
+					auto classItem = dynamic_cast<WUXC::NavigationViewItem^>(navViewItem);
 					if (classItem != nullptr) classItem->Icon = IconSourceHelper::CreateElement(command->IconSource);
 					return true;
 				}

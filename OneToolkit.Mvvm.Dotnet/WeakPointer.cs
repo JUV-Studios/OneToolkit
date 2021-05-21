@@ -1,5 +1,4 @@
-﻿using OneToolkit.Mvvm;
-using System;
+﻿using System;
 
 namespace OneToolkit
 {
@@ -41,8 +40,14 @@ namespace OneToolkit
 		}
 	}
 
+	/// <summary>
+	/// Represents an object that holds a weak pointer to its parent.
+	/// </summary>
 	public interface IWeakHolder<T> where T : class
 	{
+		/// <summary>
+		/// A weak pointer to an instance of the parent class.
+		/// </summary>
 		public WeakPointer<T> Holder { get; }
 	}
 }

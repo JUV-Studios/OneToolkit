@@ -1,4 +1,5 @@
 #pragma once
+#include "IPageViewItem.h"
 
 namespace OneToolkit::UI::Controls
 {
@@ -7,17 +8,25 @@ namespace OneToolkit::UI::Controls
 
 	[Windows::UI::Xaml::Data::Bindable]
 	[Windows::Foundation::Metadata::WebHostHidden]
-	public ref class PageViewLinkItem sealed : Microsoft::UI::Xaml::Controls::NavigationViewItem
+	[Windows::UI::Xaml::Markup::ContentPropertyAttribute(Name = "Label")]
+	public ref struct PageViewLinkItem sealed : Microsoft::UI::Xaml::Controls::NavigationViewItem, IPageViewItem
 	{
-	public:
 		PageViewLinkItem();
+
+		virtual property Platform::String^ Label
+		{
+			Platform::String^ get();
+			void set(Platform::String^ value);
+		}
 
 		property Windows::System::LauncherOptions^ Options;
 
 		property Windows::Foundation::Uri^ NavigateUri;
 
 		event PageViewLinkItemAfterLinkLaunchedHandler^ AfterLinkLaunched;
-	internal:
-		void Raise(bool result);
+
+		virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
+
+		Windows::Foundation::IAsyncAction^ InvokeAsync();
 	};
 }

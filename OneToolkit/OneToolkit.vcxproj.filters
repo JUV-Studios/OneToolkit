@@ -5,15 +5,6 @@
       <UniqueIdentifier>accd3aa8-1ba0-4223-9bbe-0c431709210b</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Exports">
-      <UniqueIdentifier>{bde6d561-d748-45b0-8a37-747732810879}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Storage">
-      <UniqueIdentifier>{e5424560-e0f5-4540-833d-f318f65edc80}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{e3467b78-3a66-4083-872e-c0de25efa1f8}</UniqueIdentifier>
     </Filter>
@@ -29,6 +20,12 @@
     <Filter Include="UI\Controls">
       <UniqueIdentifier>{17753b08-442f-43f7-b10f-0f63008382a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{e5424560-e0f5-4540-833d-f318f65edc80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
@@ -36,6 +33,15 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewServiceUwp.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewServiceWin32.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewService.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +57,14 @@
     <ClInclude Include="pch.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="OneToolkit.h" />
+    <ClInclude Include="ViewServiceUwp.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewServiceWin32.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Lifecycle.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt">
@@ -58,11 +72,9 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="Foundation.idl" />
     <Midl Include="StringLocalizationConverter.idl">
       <Filter>UI\Converters</Filter>
     </Midl>
-    <Midl Include="Singleton.idl" />
     <Midl Include="BoolReverseConverter.idl">
       <Filter>UI\Converters</Filter>
     </Midl>
@@ -78,6 +90,15 @@
     <Midl Include="BoolAsVisibilityConverter.idl">
       <Filter>UI\Converters</Filter>
     </Midl>
-    <Midl Include="AppModel.idl" />
+    <Midl Include="FontHelper.idl">
+      <Filter>UI</Filter>
+    </Midl>
+    <Midl Include="BufferHelper.idl">
+      <Filter>Storage</Filter>
+    </Midl>
+    <Midl Include="Lifecycle.idl" />
+    <Midl Include="ViewService.idl">
+      <Filter>UI</Filter>
+    </Midl>
   </ItemGroup>
 </Project>

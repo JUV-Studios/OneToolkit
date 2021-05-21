@@ -18,10 +18,13 @@
     <ClInclude Include="PageViewLinkItem.h" />
     <ClInclude Include="IconSourceHelper.h" />
     <ClInclude Include="KeyboardAcceleratorHelper.h" />
+    <ClInclude Include="IPageViewItem.h" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="PageView.xaml" />
     <Page Include="HubPanel.xaml" />
+    <Page Include="HubPanelSection.xaml" />
+    <Page Include="Styles.xaml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

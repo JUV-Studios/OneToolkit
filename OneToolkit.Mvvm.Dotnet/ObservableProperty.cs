@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace OneToolkit.Mvvm
 {
@@ -16,6 +15,7 @@ namespace OneToolkit.Mvvm
 
 		public ObservableProperty(string propertyName, T value = default)
 		{
+			if (string.IsNullOrWhiteSpace(propertyName)) throw new InvalidOperationException("PropertyName for an ObservableProperty instance must not be empty");
 			BackingField = value;
 			PropertyName = propertyName;
 		}
@@ -33,6 +33,12 @@ namespace OneToolkit.Mvvm
 		}
 
 		public WeakPointer<ObservableBase> Holder { get; } = new();
+
+		/// <summary>
+		/// Enables access to the underlying data storage.
+		/// </summary>
+		/// <returns>A reference to the data storage.</returns>
+		public ref T GetBackingField() => ref BackingField;
 
 		public override string ToString() => PropertyName;
 	}

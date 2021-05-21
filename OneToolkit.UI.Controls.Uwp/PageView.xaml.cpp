@@ -8,7 +8,7 @@
 
 using namespace OneToolkit::UI::Controls;
 using namespace Platform;
-using namespace concurrency;
+using namespace Concurrency;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::ApplicationModel::Core;
@@ -152,20 +152,14 @@ void PageView::NavigationView_Loaded(Object^ sender, RoutedEventArgs^ e)
 void PageView::NavigationView_ItemInvoked(Microsoft::UI::Xaml::Controls::NavigationView^, Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs^ args)
 {
 	// Handle navigation in selection changed for items that selects on invoked and others here
-	auto navViewItem = dynamic_cast<NavigationViewItem^>(args->InvokedItemContainer);
+	auto navViewItem = dynamic_cast<Microsoft::UI::Xaml::Controls::NavigationViewItem^>(args->InvokedItemContainer);
 	if (navViewItem != nullptr ? navViewItem->SelectsOnInvoked : false)
 	{
 		if (args->IsSettingsInvoked && SettingsContent != nullptr) CurrentContent = SettingsContent;
 		else
 		{
 			auto linkItem = dynamic_cast<PageViewLinkItem^>(args->InvokedItemContainer);
-			if (linkItem != nullptr)
-			{
-				create_task(Launcher::LaunchUriAsync(linkItem->NavigateUri, linkItem->Options)).then([linkItem](bool result)
-					{
-						linkItem->Raise(result);
-					});
-			}
+			if (linkItem != nullptr) create_task(linkItem->InvokeAsync());
 			else CustomItemInvoked(this, args);
 		}
 	}

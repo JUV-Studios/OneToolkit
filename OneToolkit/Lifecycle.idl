@@ -1,27 +1,24 @@
-namespace OneToolkit
+namespace OneToolkit.Lifecycle
 {
+	delegate void EventHandlerWithSender(Object sender);
+
 	interface ISuspendable
 	{
 		[noexcept] Boolean IsSuspended { get; };
-		event Windows.Foundation.EventHandler<Object> Suspended;
-		event Windows.Foundation.EventHandler<Object> Resumed;
+		event EventHandlerWithSender Suspended;
+		event EventHandlerWithSender Resumed;
 	};
 
 	interface IAsyncClosable requires Windows.Foundation.IClosable
 	{
+		event EventHandlerWithSender Closed;
 		Windows.Foundation.IAsyncAction CloseAsync();
 		Windows.Foundation.IAsyncOperation<Boolean> RequestCloseAsync();
-		event Windows.Foundation.EventHandler<Object> Closed;
 	};
-	
+
 	interface IAsyncSuspendable requires ISuspendable
 	{
 		Windows.Foundation.IAsyncAction SuspendAsync();
 		Windows.Foundation.IAsyncAction ResumeAsync();
-	};
-
-	interface IEquatable
-	{
-		[noexcept] Boolean IsEqual(Object another);
 	};
 }

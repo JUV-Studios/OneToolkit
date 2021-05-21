@@ -1,258 +1,320 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props" Condition="Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" />
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props')" />
-  <PropertyGroup Label="Globals">
-    <CppWinRTOptimized>true</CppWinRTOptimized>
-    <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
-    <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
-    <MinimalCoreWin>true</MinimalCoreWin>
-    <ProjectGuid>{0dd5edd3-19b8-4924-8df1-add70803e693}</ProjectGuid>
-    <ProjectName>OneToolkit</ProjectName>
-    <RootNamespace>OneToolkit</RootNamespace>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.14393.0</WindowsTargetPlatformMinVersion>
-    <CppWinRTFastAbi>true</CppWinRTFastAbi>
-    <CppWinRTLibs>true</CppWinRTLibs>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|ARM">
-      <Configuration>Debug</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|ARM64">
-      <Configuration>Debug</Configuration>
-      <Platform>ARM64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x64">
-      <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|ARM">
-      <Configuration>Release</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|ARM64">
-      <Configuration>Release</Configuration>
-      <Platform>ARM64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64">
-      <Configuration>Release</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-  </ItemGroup>
-  <PropertyGroup Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v140</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-    <GenerateManifest>false</GenerateManifest>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets">
-    <Import Project="PropertySheet.props" />
-  </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
-      <WarningLevel>Level4</WarningLevel>
-      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
-      <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
-      <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>
-      </DisableSpecificWarnings>
-      <PreprocessorDefinitions>_WINRT_DLL;WIN32_LEAN_AND_MEAN;WINRT_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>OneToolkit.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
-    <ClCompile>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">stdcpplatest</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">stdcpplatest</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpplatest</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpplatest</LanguageStandard>
-      <StringPooling Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</StringPooling>
-      <StringPooling Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</StringPooling>
-      <StringPooling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</StringPooling>
-      <StringPooling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</StringPooling>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
-    <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">stdcpplatest</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">stdcpplatest</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpplatest</LanguageStandard>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpplatest</LanguageStandard>
-      <StringPooling Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</StringPooling>
-      <StringPooling Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</StringPooling>
-      <StringPooling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</StringPooling>
-      <StringPooling Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</StringPooling>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
-      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
-    </ClCompile>
-    <Link>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="BoolAsObjectConverter.h">
-      <DependentUpon>BoolAsObjectConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="BoolAsVisibilityConverter.h">
-      <DependentUpon>BoolAsVisibilityConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="BoolReverseConverter.h">
-      <DependentUpon>BoolReverseConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="LineEndingHelper.h">
-      <DependentUpon>LineEndingHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Singleton.h">
-      <DependentUpon>Singleton.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="StringLocalizationConverter.h">
-      <DependentUpon>StringLocalizationConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="StringOperations.h">
-      <DependentUpon>StringOperations.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="BoolAsObjectConverter.cpp">
-      <DependentUpon>BoolAsObjectConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="BoolAsVisibilityConverter.cpp">
-      <DependentUpon>BoolAsVisibilityConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="BoolReverseConverter.cpp">
-      <DependentUpon>BoolReverseConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="LineEndingHelper.cpp">
-      <DependentUpon>LineEndingHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="Singleton.cpp">
-      <DependentUpon>Singleton.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="StringLocalizationConverter.cpp">
-      <DependentUpon>StringLocalizationConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="StringOperations.cpp">
-      <DependentUpon>StringOperations.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="OneToolkit.def" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="PropertySheet.props" />
-    <Text Include="readme.txt">
-      <DeploymentContent>false</DeploymentContent>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="BoolAsObjectConverter.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="BoolAsVisibilityConverter.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="BoolReverseConverter.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="AppModel.idl" />
-    <Midl Include="Foundation.idl" />
-    <Midl Include="LineEndingHelper.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="Singleton.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="StringLocalizationConverter.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="StringOperations.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-  </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props'))" />
-  </Target>
+	<Import Project="..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props" Condition="Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" />
+	<Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props')" />
+	<PropertyGroup Label="Globals">
+		<CppWinRTOptimized>true</CppWinRTOptimized>
+		<CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
+		<CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
+		<MinimalCoreWin>true</MinimalCoreWin>
+		<ProjectGuid>{0dd5edd3-19b8-4924-8df1-add70803e693}</ProjectGuid>
+		<ProjectName>OneToolkit</ProjectName>
+		<RootNamespace>OneToolkit</RootNamespace>
+		<DefaultLanguage>en-US</DefaultLanguage>
+		<MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+		<AppContainerApplication>true</AppContainerApplication>
+		<ApplicationType>Windows Store</ApplicationType>
+		<ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+		<WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
+		<WindowsTargetPlatformMinVersion>10.0.14393.0</WindowsTargetPlatformMinVersion>
+		<CppWinRTFastAbi>true</CppWinRTFastAbi>
+		<CppWinRTLibs>true</CppWinRTLibs>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug|ARM">
+			<Configuration>Debug</Configuration>
+			<Platform>ARM</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|ARM64">
+			<Configuration>Debug</Configuration>
+			<Platform>ARM64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|Win32">
+			<Configuration>Debug</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|x64">
+			<Configuration>Debug</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|ARM">
+			<Configuration>Release</Configuration>
+			<Platform>ARM</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|ARM64">
+			<Configuration>Release</Configuration>
+			<Platform>ARM64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|Win32">
+			<Configuration>Release</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|x64">
+			<Configuration>Release</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Label="Configuration">
+		<ConfigurationType>DynamicLibrary</ConfigurationType>
+		<PlatformToolset>v140</PlatformToolset>
+		<PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+		<PlatformToolset Condition="'$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
+		<CharacterSet>Unicode</CharacterSet>
+		<GenerateManifest>false</GenerateManifest>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+		<UseDebugLibraries>true</UseDebugLibraries>
+		<LinkIncremental>true</LinkIncremental>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+		<UseDebugLibraries>false</UseDebugLibraries>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<LinkIncremental>false</LinkIncremental>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+	<ImportGroup Label="ExtensionSettings">
+	</ImportGroup>
+	<ImportGroup Label="Shared">
+	</ImportGroup>
+	<ImportGroup Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Label="PropertySheets">
+		<Import Project="PropertySheet.props" />
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros" />
+	<PropertyGroup />
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<PrecompiledHeader>Use</PrecompiledHeader>
+			<PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+			<PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+			<WarningLevel>Level4</WarningLevel>
+			<AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+			<!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
+			<AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION %(AdditionalOptions)</AdditionalOptions>
+			<DisableSpecificWarnings>
+			</DisableSpecificWarnings>
+			<PreprocessorDefinitions>_WINRT_DLL;WIN32_LEAN_AND_MEAN;WINRT_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+		</ClCompile>
+		<Link>
+			<SubSystem>Console</SubSystem>
+			<GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+			<ModuleDefinitionFile>OneToolkit.def</ModuleDefinitionFile>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+		<ClCompile>
+			<PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">stdcpplatest</LanguageStandard>
+			<LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">stdcpplatest</LanguageStandard>
+			<LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpplatest</LanguageStandard>
+			<LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpplatest</LanguageStandard>
+			<StringPooling Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</StringPooling>
+			<StringPooling Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</StringPooling>
+			<StringPooling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</StringPooling>
+			<StringPooling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</StringPooling>
+			<CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+			<CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</CompileAsWinRT>
+			<CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+			<CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+			<ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">OneToolkit.h</ForcedIncludeFiles>
+			<ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">OneToolkit.h</ForcedIncludeFiles>
+			<ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OneToolkit.h</ForcedIncludeFiles>
+			<ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OneToolkit.h</ForcedIncludeFiles>
+		</ClCompile>
+		<Link>
+			<AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+		<Link>
+			<AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+		<Link>
+			<AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+		<Link>
+			<AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+		<ClCompile>
+			<PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">stdcpplatest</LanguageStandard>
+			<LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">stdcpplatest</LanguageStandard>
+			<LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpplatest</LanguageStandard>
+			<LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpplatest</LanguageStandard>
+			<StringPooling Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</StringPooling>
+			<StringPooling Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</StringPooling>
+			<StringPooling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</StringPooling>
+			<StringPooling Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</StringPooling>
+			<CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+			<CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</CompileAsWinRT>
+			<CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+			<CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+			<ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">OneToolkit.h</ForcedIncludeFiles>
+			<ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">OneToolkit.h</ForcedIncludeFiles>
+			<ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">OneToolkit.h</ForcedIncludeFiles>
+			<ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OneToolkit.h</ForcedIncludeFiles>
+		</ClCompile>
+		<Link>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<OptimizeReferences>true</OptimizeReferences>
+			<AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClInclude Include="BufferHelper.h">
+			<DependentUpon>BufferHelper.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClInclude>
+		<ClInclude Include="BoolAsObjectConverter.h">
+			<DependentUpon>BoolAsObjectConverter.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClInclude>
+		<ClInclude Include="BoolAsVisibilityConverter.h">
+			<DependentUpon>BoolAsVisibilityConverter.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClInclude>
+		<ClInclude Include="BoolReverseConverter.h">
+			<DependentUpon>BoolReverseConverter.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClInclude>
+		<ClInclude Include="FontHelper.h">
+			<DependentUpon>FontHelper.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClInclude>
+		<ClInclude Include="Lifecycle.h">
+			<DependentUpon>Lifecycle.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClInclude>
+		<ClInclude Include="LineEndingHelper.h">
+			<DependentUpon>LineEndingHelper.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClInclude>
+		<ClInclude Include="OneToolkit.h" />
+		<ClInclude Include="pch.h" />
+		<ClInclude Include="StringLocalizationConverter.h">
+			<DependentUpon>StringLocalizationConverter.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClInclude>
+		<ClInclude Include="StringOperations.h">
+			<DependentUpon>StringOperations.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClInclude>
+		<ClInclude Include="ViewService.h">
+			<DependentUpon>ViewService.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClInclude>
+		<ClInclude Include="ViewServiceUwp.h" />
+		<ClInclude Include="ViewServiceWin32.h" />
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="BoolAsObjectConverter.cpp">
+			<DependentUpon>BoolAsObjectConverter.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+		<ClCompile Include="BoolAsVisibilityConverter.cpp">
+			<DependentUpon>BoolAsVisibilityConverter.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+		<ClCompile Include="BoolReverseConverter.cpp">
+			<DependentUpon>BoolReverseConverter.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+		<ClCompile Include="BufferHelper.cpp">
+			<DependentUpon>BufferHelper.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+		<ClCompile Include="FontHelper.cpp">
+			<DependentUpon>FontHelper.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+		<ClCompile Include="LineEndingHelper.cpp">
+			<DependentUpon>LineEndingHelper.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+		<ClCompile Include="pch.cpp">
+			<PrecompiledHeader>Create</PrecompiledHeader>
+		</ClCompile>
+		<ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+		<ClCompile Include="StringLocalizationConverter.cpp">
+			<DependentUpon>StringLocalizationConverter.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+		<ClCompile Include="StringOperations.cpp">
+			<DependentUpon>StringOperations.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+		<ClCompile Include="ViewService.cpp">
+			<DependentUpon>ViewService.idl</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+		<ClCompile Include="ViewServiceUwp.cpp">
+			<DependentUpon>ViewServiceUwp.h</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+		<ClCompile Include="ViewServiceWin32.cpp">
+			<DependentUpon>ViewServiceWin32.h</DependentUpon>
+			<SubType>Code</SubType>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="OneToolkit.def" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="packages.config" />
+		<None Include="PropertySheet.props" />
+		<Text Include="readme.txt">
+			<DeploymentContent>false</DeploymentContent>
+		</Text>
+	</ItemGroup>
+	<ItemGroup>
+		<Midl Include="BoolAsObjectConverter.idl">
+			<SubType>Designer</SubType>
+		</Midl>
+		<Midl Include="BoolAsVisibilityConverter.idl">
+			<SubType>Designer</SubType>
+		</Midl>
+		<Midl Include="BoolReverseConverter.idl">
+			<SubType>Designer</SubType>
+		</Midl>
+		<Midl Include="BufferHelper.idl">
+			<SubType>Designer</SubType>
+		</Midl>
+		<Midl Include="FontHelper.idl">
+			<SubType>Designer</SubType>
+		</Midl>
+		<Midl Include="Lifecycle.idl" />
+		<Midl Include="LineEndingHelper.idl">
+			<SubType>Designer</SubType>
+		</Midl>
+		<Midl Include="StringLocalizationConverter.idl">
+			<SubType>Designer</SubType>
+		</Midl>
+		<Midl Include="StringOperations.idl">
+			<SubType>Designer</SubType>
+		</Midl>
+		<Midl Include="ViewService.idl">
+			<SubType>Designer</SubType>
+		</Midl>
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+	<ImportGroup Label="ExtensionTargets">
+		<Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
+		<Import Project="..\packages\Win2D.uwp.1.26.0\build\native\Win2D.uwp.targets" Condition="Exists('..\packages\Win2D.uwp.1.26.0\build\native\Win2D.uwp.targets')" />
+	</ImportGroup>
+	<Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+		<PropertyGroup>
+			<ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+		</PropertyGroup>
+		<Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
+		<Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+		<Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props'))" />
+		<Error Condition="!Exists('..\packages\Win2D.uwp.1.26.0\build\native\Win2D.uwp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Win2D.uwp.1.26.0\build\native\Win2D.uwp.targets'))" />
+	</Target>
 </Project>

@@ -1,0 +1,20 @@
+namespace OneToolkit.Mvvm
+{
+    [bindable]
+    [default_interface]
+    unsealed runtimeclass ObservableBase : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        ObservableBase();
+        [noexcept] Boolean SuppressEvents { get; };
+        [method_name("put_SuppressEvents")] protected void SuppressEvents(Boolean value);
+        overridable Boolean Decide(String propertyName);
+        overridable void WhenPropertyChanged(Windows.UI.Xaml.Data.PropertyChangedEventArgs args);
+        protected void Raise(String propertyName);
+    };
+
+    [default_interface]
+    static runtimeclass ObservableBaseHelper
+    {
+        static void Raise(ObservableBase instance, String propertyName);
+    };
+}

@@ -37,7 +37,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{95b918e4-ad86-45a6-be1a-77399535bad2}</ProjectGuid>
     <Keyword>WindowsRuntimeComponent</Keyword>
-    <RootNamespace>OneToolkit.UI.Control</RootNamespace>
+    <RootNamespace>OneToolkit.UI.Controls</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -156,7 +156,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions) /await</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -173,7 +173,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj /await %(AdditionalOptions) /await</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -190,7 +190,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions) /await</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -207,7 +207,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions) /await</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -224,7 +224,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions) /await</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -241,7 +241,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions) /await</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -258,7 +258,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions) /await</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -275,7 +275,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions) /await</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -289,7 +289,11 @@
     <ClInclude Include="HubPanel.xaml.h">
       <DependentUpon>HubPanel.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="HubPanelSection.xaml.h">
+      <DependentUpon>HubPanelSection.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="IconSourceHelper.h" />
+    <ClInclude Include="IPageViewItem.h" />
     <ClInclude Include="KeyboardAcceleratorHelper.h" />
     <ClInclude Include="PageView.xaml.h">
       <DependentUpon>PageView.xaml</DependentUpon>
@@ -300,6 +304,9 @@
   <ItemGroup>
     <ClCompile Include="HubPanel.xaml.cpp">
       <DependentUpon>HubPanel.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="HubPanelSection.xaml.cpp">
+      <DependentUpon>HubPanelSection.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="IconSourceHelper.cpp" />
     <ClCompile Include="KeyboardAcceleratorHelper.cpp" />
@@ -320,7 +327,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Styles.xaml">
+      <DeploymentContent>true</DeploymentContent>
+    </Page>
     <Page Include="HubPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HubPanelSection.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PageView.xaml">

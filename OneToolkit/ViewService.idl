@@ -1,0 +1,19 @@
+import "Lifecycle.idl";
+
+namespace OneToolkit.UI
+{
+    interface IViewServiceProvider requires Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        String Title;
+        Boolean IsFullScreen;
+        [noexcept] Object ReferenceSource { get; };
+        Windows.Foundation.IAsyncOperation<Boolean> CloseAsync();
+    };
+
+    [default_interface]
+    static runtimeclass ViewService
+    {
+        static IViewServiceProvider GetForCurrentView();
+        static IViewServiceProvider GetForWindowId(Int64 windowHandle);
+    }
+}

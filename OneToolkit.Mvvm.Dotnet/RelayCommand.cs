@@ -9,11 +9,26 @@ namespace OneToolkit.Mvvm
 
 	public interface IDefaultCommand : ICommand
 	{
+		/// <summary>
+		/// Defines the method to be called when the command is invoked using the default argument.
+		/// </summary>
 		public void Execute();
 
+		/// <summary>
+		/// Defines the method that determines whether the command can execute in its current state using the default argument.
+		/// </summary>
+		/// <returns>true if this command can be executed; otherwise, false.</returns>
 		public bool CanExecute();
 
+		/// <summary>
+		/// The default parameter that will be used for CanExecute and Execute methods respectively if an argument isn't provided.
+		/// </summary>
 		public object DefaultParameter { get; set; }
+
+		/// <summary>
+		/// Gets whether the command can be executed with the default argument.
+		/// </summary>
+		public bool IsEnabled { get; }
 	}
 
 	/// <summary>
@@ -48,9 +63,6 @@ namespace OneToolkit.Mvvm
 			PropertyName = propertyName;
 		}
 
-		/// <summary>
-		/// The default parameter that will be used for CanExecute and Execute methods respectively.
-		/// </summary>
 		public object DefaultParameter { get; set; }
 
 		public event EventHandler CanExecuteChanged;
@@ -71,14 +83,14 @@ namespace OneToolkit.Mvvm
 		}
 
 		/// <summary>
-		/// Raises the CanExecuteChanged event and property changing/property changed for IsEnabled when used with ObservableBase.
+		/// Raises the CanExecuteChanged event and property changing/property changed for IsEnabled when used as a field in a class that derives from ObservableBase.
 		/// </summary>
 		public void Raise()
 		{
 			CanExecuteChanged(this, new());
 			if (ObservableBase.Raise(Holder, PropertyName, PropertyEventType.PropertyChanging)) ObservableBase.Raise(Holder, PropertyName, PropertyEventType.PropertyChanged);
 		}
-
-		public override string ToString() => ToString();
+		
+		public override string ToString() => string.IsNullOrWhiteSpace(PropertyName) ? base.ToString() : PropertyName;
 	}
 }

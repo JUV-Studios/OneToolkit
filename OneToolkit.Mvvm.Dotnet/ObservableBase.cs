@@ -6,6 +6,9 @@ using System.Runtime.CompilerServices;
 
 namespace OneToolkit.Mvvm
 {
+	/// <summary>
+	/// Represents the type of a property related event.
+	/// </summary>
 	public enum PropertyEventType : byte
 	{
 		PropertyChanging, PropertyChanged
@@ -24,7 +27,10 @@ namespace OneToolkit.Mvvm
 			foreach (var propertyField in propertyFields) propertyField.Holder.Target = this;
 		}
 
-		public bool SuppressEvents { get; set; }
+		/// <summary>
+		/// Gets or sets whether property changing/property changed events are raised or not when you call the Raise method.
+		/// </summary>
+		public bool SuppressEvents { get; protected set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -54,6 +60,10 @@ namespace OneToolkit.Mvvm
 			// Do nothing here
 		}
 
+		/// <summary>
+		/// Enables access to the protected SetProperty method from the outside world.
+		/// </summary>
+		/// <returns>True if the pointer you passed was valid, else false.</returns>
 		public static bool SetProperty<T>(WeakPointer<ObservableBase> pointer, ref T field, T newValue, string propertyName)
 		{
 			if (pointer.IsTargetValid)
@@ -64,6 +74,10 @@ namespace OneToolkit.Mvvm
 			else return false;
 		}
 
+		/// <summary>
+		/// Enables access to the protected Raise method from the outside world.
+		/// </summary>
+		/// <returns>True if the pointer you passed was valid, else false.</returns>
 		public static bool Raise(WeakPointer<ObservableBase> pointer, string propertyName, PropertyEventType type)
 		{
 			if (pointer.IsTargetValid)
@@ -74,6 +88,9 @@ namespace OneToolkit.Mvvm
 			else return false;
 		}
 
+		/// <summary>
+		/// Automatically sets a property value and raises property changing/property changed when required.
+		/// </summary>
 		protected void SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
 		{
 			if (!EqualityComparer<T>.Default.Equals(field, newValue))
