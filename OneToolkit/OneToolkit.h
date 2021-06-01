@@ -316,7 +316,7 @@ namespace winrt::OneToolkit::Mvvm
 		/// </summary>
 		virtual void WhenPropertyChanged(ChangedArgs const&)
 		{
-			// Do nothing here
+			// Do nothing here.
 		}
 
 		/// <summary>
@@ -324,7 +324,7 @@ namespace winrt::OneToolkit::Mvvm
 		/// </summary>
 		virtual void WhenPropertyChanging(PropertyChangingEventArgs const&)
 		{
-			// Do nothing here
+			// Do nothing here.
 		}
 	private:
 		event<ChangedDelegate> m_PropertyChanged;

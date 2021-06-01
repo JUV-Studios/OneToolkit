@@ -1,89 +1,65 @@
 ﻿#include "pch.h"
 #include "FontHelper.h"
 #include "UI.FontHelper.g.cpp"
-#include <winrt/Microsoft.Graphics.Canvas.Text.h>
+#include <dwrite.h>
 
 using namespace winrt;
 using namespace Windows::Globalization;
 using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::Foundation::Collections;
-using namespace Microsoft::Graphics::Canvas::Text;
 
 namespace winrt::OneToolkit::UI::implementation
 {
-	struct FontFamilyVectorView : implements<FontFamilyVectorView, IVectorView<hstring>, IIterable<hstring>>
-	{
-	public:
-		FontFamilyVectorView()
-		{
-			for (uint32_t i = 1; i < Array.size(); i++)
-			{
-				int index = i - 1;
-				auto current = Array[i];
-				while (index >= 0 && Array[index] > current)
-				{
-					Array[index + 1] = Array[index];
-					index--;
-				}
-
-				Array[index + 1] = current;
-			}
-		}
-
-		uint32_t Size() const noexcept
-		{
-			return Array.size();
-		}
-
-		hstring GetAt(uint32_t index) const
-		{
-			return Array.at(index);
-		}
-
-		bool IndexOf(hstring const& value, uint32_t& index)
-		{
-			auto found = std::find(Array.begin(), Array.end(), value);
-			index = static_cast<uint32_t>(found - Array.begin());
-			return found != Array.end();
-		}
-
-		uint32_t GetMany(uint32_t startIndex, array_view<hstring> items)
-		{
-			if (items.size() > Array.size()) return static_cast<uint32_t>(E_BOUNDS);
-			else
-			{
-				uint32_t counter = 0;
-				for (uint32_t index = startIndex; index < Array.size(); ++index)
-				{
-					items[counter] = Array[index];
-					counter++;
-				}
-
-				return static_cast<uint32_t>(S_OK);
-			}
-		}
-
-		IIterator<hstring> First() const
-		{
-			return juv::collections::raw_array_iterator(Array);
-		}
-
-		// CanvasTextFormat::GetSystemFontFamilies requires Win2D version 1.4.0 or later.
-		com_array<hstring> Array = CanvasTextFormat::GetSystemFontFamilies(ApplicationLanguages::Languages());
-	};
-
 	IVectorView<hstring> FontHelper::InstalledFontFamilies()
 	{
 		static slim_mutex singletonLock;
-		const slim_lock_guard lockGuard{ singletonLock };
+		const slim_lock_guard lockGuard { singletonLock };
 		static IVectorView<hstring> _InstalledFontFamilies;
-		if (_InstalledFontFamilies == nullptr) _InstalledFontFamilies = make<FontFamilyVectorView>();
+		if (_InstalledFontFamilies == nullptr)
+		{
+			std::vector<hstring> fontFamilies;
+			com_ptr<IDWriteFactory> factory;
+			com_ptr<IDWriteFontCollection> fontCollection;
+			check_hresult(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(factory.put())));
+			check_hresult(factory->GetSystemFontCollection(fontCollection.put(), true));
+			auto familyCount = fontCollection->GetFontFamilyCount();
+			fontFamilies.reserve(familyCount);
+			for (uint32_t index = 0; index < familyCount; ++index)
+			{
+				uint32_t localeIndex = 0;
+				int exists = false;
+				wchar_t localeName[LOCALE_NAME_MAX_LENGTH];
+				com_ptr<IDWriteFontFamily> fontFamily;
+				com_ptr<IDWriteLocalizedStrings> familyNames;
+				check_hresult(fontCollection->GetFontFamily(index, fontFamily.put()));
+				check_hresult(fontFamily->GetFamilyNames(familyNames.put())); // Get a list of localized strings for the family name.
+				if (GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH)) // Get the default locale for this user.
+				{
+					// If the default locale is returned, find that locale name, otherwise use "en-us".
+					check_hresult(familyNames->FindLocaleName(localeName, &localeIndex, &exists));
+				}
+
+				if (!exists) check_hresult(familyNames->FindLocaleName(L"en-us", &localeIndex, &exists)); // If the above find did not find a match, retry with US English
+				if (!exists) localeIndex = 0; // If the specified locale doesn't exist, select the first on the list.
+				uint32_t length = 0;
+				check_hresult(familyNames->GetStringLength(localeIndex, &length));
+				length++;
+				impl::hstring_builder stringBuilder { length }; // Allocate a string big enough to hold the name.
+				check_hresult(familyNames->GetString(localeIndex, stringBuilder.data(), length));
+				fontFamilies.emplace_back(stringBuilder.to_hstring());
+			}
+
+			std::sort(fontFamilies.begin(), fontFamilies.end());
+			_InstalledFontFamilies = single_threaded_vector<hstring>(std::move(fontFamilies)).GetView();
+		}
+
 		return _InstalledFontFamilies;
 	}
 
 	bool FontHelper::IsFontFamilyPresent(hstring const& fontFamilyName)
 	{
-		auto const& array = get_self<FontFamilyVectorView>(InstalledFontFamilies())->Array;
-		return std::find(array.begin(), array.end(), fontFamilyName) != array.end();
+		/*auto const& array = get_self<FontFamilyVectorView>(InstalledFontFamilies())->Array;
+		return std::find(array.begin(), array.end(), fontFamilyName) != array.end(); */
+		return true;
 	}
 }

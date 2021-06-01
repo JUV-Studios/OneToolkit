@@ -1,0 +1,10 @@
+namespace OneToolkit.Storage
+{
+    [default_interface]
+    static runtimeclass MemoryBufferHelper
+    {
+        static UInt8 GetAt(Windows.Foundation.IMemoryBufferReference reference, UInt32 index);
+        static void SetAt(Windows.Foundation.IMemoryBufferReference reference, UInt32 index, UInt8 value);
+        static Boolean IsIndexValid(Windows.Foundation.IMemoryBufferReference reference, UInt32 index);
+    }
+}

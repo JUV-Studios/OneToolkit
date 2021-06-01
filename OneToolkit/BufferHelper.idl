@@ -5,6 +5,6 @@ namespace OneToolkit.Storage
     {
         static UInt8 GetAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
         static void SetAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index, UInt8 value);
-        static Boolean IsValidIndex(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
+        static Boolean IsIndexValid(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
     }
 }

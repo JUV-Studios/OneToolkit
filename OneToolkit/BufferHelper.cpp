@@ -9,17 +9,17 @@ namespace winrt::OneToolkit::Storage::implementation
 {
 	uint8_t BufferHelper::GetAt(IBuffer const& buffer, uint32_t index)
 	{
-		if (!IsValidIndex(buffer, index)) throw hresult_out_of_bounds();
+		if (!IsIndexValid(buffer, index)) throw hresult_out_of_bounds();
 		return buffer.data()[index];
 	}
 
 	void BufferHelper::SetAt(IBuffer const& buffer, uint32_t index, uint8_t value)
 	{
-		if (!IsValidIndex(buffer, index)) throw hresult_out_of_bounds();
+		if (!IsIndexValid(buffer, index)) throw hresult_out_of_bounds();
 		buffer.data()[index] = value;
 	}
 
-	bool BufferHelper::IsValidIndex(IBuffer const& buffer, uint32_t index)
+	bool BufferHelper::IsIndexValid(IBuffer const& buffer, uint32_t index)
 	{
 		return index < buffer.Length();
 	}

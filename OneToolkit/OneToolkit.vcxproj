@@ -206,6 +206,10 @@
       <DependentUpon>LineEndingHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="MemoryBufferHelper.h">
+      <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ObservableValue.h">
       <DependentUpon>ObservableValue.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -262,6 +266,10 @@
     </ClCompile>
     <ClCompile Include="LineEndingHelper.cpp">
       <DependentUpon>LineEndingHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="MemoryBufferHelper.cpp">
+      <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ObservableValue.cpp">
@@ -333,6 +341,9 @@
     <Midl Include="LineEndingHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="MemoryBufferHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="ObservableValue.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -358,7 +369,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="..\packages\Win2D.uwp.1.26.0\build\native\Win2D.uwp.targets" Condition="Exists('..\packages\Win2D.uwp.1.26.0\build\native\Win2D.uwp.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -367,7 +377,6 @@
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props'))" />
-    <Error Condition="!Exists('..\packages\Win2D.uwp.1.26.0\build\native\Win2D.uwp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Win2D.uwp.1.26.0\build\native\Win2D.uwp.targets'))" />
     <Error Condition="!Exists('..\packages\juv.1.0.0.4\build\native\juv.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\juv.1.0.0.4\build\native\juv.props'))" />
   </Target>
 </Project>

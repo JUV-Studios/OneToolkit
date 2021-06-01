@@ -5,6 +5,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:OneToolkit.Showcase"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:ui="using:OneToolkit.UI"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">
 
@@ -29,7 +30,8 @@
 				<ListView
 					x:Name="Namespaces"
 					Grid.Row="2"
-					Header="Namespaces">
+					Header="Namespaces"
+					ItemsSource="{x:Bind ui:FontHelper.InstalledFontFamilies}">
 					<ListView.HeaderTemplate>
 						<DataTemplate x:DataType="x:String">
 							<TextBlock

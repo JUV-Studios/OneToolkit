@@ -10,7 +10,7 @@ namespace winrt::OneToolkit::Storage
             BufferHelper() = delete;
             static uint8_t GetAt(Windows::Storage::Streams::IBuffer const& buffer, uint32_t index);
             static void SetAt(Windows::Storage::Streams::IBuffer const& buffer, uint32_t index, uint8_t value);
-            static bool IsValidIndex(Windows::Storage::Streams::IBuffer const& buffer, uint32_t index);
+            static bool IsIndexValid(Windows::Storage::Streams::IBuffer const& buffer, uint32_t index);
         };
     }
 

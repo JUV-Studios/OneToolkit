@@ -98,6 +98,9 @@
     <Midl Include="ObservableValue.idl">
       <Filter>Mvvm\NonGeneric</Filter>
     </Midl>
+    <Midl Include="MemoryBufferHelper.idl">
+      <Filter>Storage</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
