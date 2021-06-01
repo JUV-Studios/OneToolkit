@@ -4,6 +4,5 @@ namespace OneToolkit.UI
     static runtimeclass FontHelper
     {
         static IVectorView<String> InstalledFontFamilies { get; };
-        static Boolean IsFontFamilyPresent(String fontFamilyName);
     }
 }

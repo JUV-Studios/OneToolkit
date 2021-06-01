@@ -101,6 +101,9 @@
     <Midl Include="MemoryBufferHelper.idl">
       <Filter>Storage</Filter>
     </Midl>
+    <Midl Include="FileHandle.idl">
+      <Filter>Storage</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />

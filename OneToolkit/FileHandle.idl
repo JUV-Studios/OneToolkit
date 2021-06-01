@@ -1,0 +1,9 @@
+namespace OneToolkit.Storage
+{
+    [default_interface]
+    runtimeclass FileHandle
+    {
+        FileHandle(Windows.Storage.StorageFile file, Windows.Storage.FileAccessMode accessMode);
+        [noexcept] Windows.Storage.FileAccessMode AccessMode { get; };
+    }
+}

@@ -198,6 +198,10 @@
       <DependentUpon>DialogHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="FileHandle.h">
+      <DependentUpon>FileHandle.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="FontHelper.h">
       <DependentUpon>FontHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -258,6 +262,10 @@
     </ClCompile>
     <ClCompile Include="DialogHelper.cpp">
       <DependentUpon>DialogHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="FileHandle.cpp">
+      <DependentUpon>FileHandle.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="FontHelper.cpp">
@@ -331,6 +339,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="DialogHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="FileHandle.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="FontHelper.idl">

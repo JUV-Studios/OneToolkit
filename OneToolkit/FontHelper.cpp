@@ -55,11 +55,4 @@ namespace winrt::OneToolkit::UI::implementation
 
 		return _InstalledFontFamilies;
 	}
-
-	bool FontHelper::IsFontFamilyPresent(hstring const& fontFamilyName)
-	{
-		/*auto const& array = get_self<FontFamilyVectorView>(InstalledFontFamilies())->Array;
-		return std::find(array.begin(), array.end(), fontFamilyName) != array.end(); */
-		return true;
-	}
 }

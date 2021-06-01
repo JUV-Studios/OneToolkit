@@ -9,7 +9,6 @@ namespace winrt::OneToolkit::UI
         {
             FontHelper() = delete;
             static Windows::Foundation::Collections::IVectorView<hstring> InstalledFontFamilies();
-            static bool IsFontFamilyPresent(hstring const& fontFamilyName);
         };
     }
 
