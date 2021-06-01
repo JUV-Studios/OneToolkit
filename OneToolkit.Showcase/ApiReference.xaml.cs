@@ -1,19 +1,4 @@
-﻿using OneToolkit.Storage;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,11 +9,9 @@ namespace OneToolkit.Showcase
 	/// </summary>
 	public sealed partial class ApiReference : UserControl
 	{
-		public ApiReference() => InitializeComponent();
-
-		private void Namespaces_Loaded(object sender, RoutedEventArgs e)
+		public ApiReference()
 		{
-			Namespaces.ItemsSource = typeof(BufferHelper).Assembly.GetTypes().Select(t => t.Namespace).Distinct();
+			InitializeComponent();
 		}
 	}
 }

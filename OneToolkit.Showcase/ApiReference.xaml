@@ -26,16 +26,24 @@
 					VerticalAlignment="Top"
 					Style="{ThemeResource HeaderTextBlockStyle}"
 					Text="API reference" />
-				<TreeView
+				<ListView
 					x:Name="Namespaces"
 					Grid.Row="2"
-					Loaded="Namespaces_Loaded">
-					<TreeView.ItemTemplate>
+					Header="Namespaces">
+					<ListView.HeaderTemplate>
+						<DataTemplate x:DataType="x:String">
+							<TextBlock
+								Margin="48,0,48,0"
+								Style="{ThemeResource BaseTextBlockStyle}"
+								Text="{x:Bind}" />
+						</DataTemplate>
+					</ListView.HeaderTemplate>
+					<ListView.ItemTemplate>
 						<DataTemplate x:DataType="x:String">
 							<TextBlock Text="{x:Bind}" />
 						</DataTemplate>
-					</TreeView.ItemTemplate>
-				</TreeView>
+					</ListView.ItemTemplate>
+				</ListView>
 			</Grid>
 		</SplitView.Pane>
 	</SplitView>

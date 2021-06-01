@@ -52,6 +52,13 @@ namespace juv
 				return reinterpret_cast<Func>(result);
 			}
 
+			template <typename Func>
+			auto get_proc_address(std::wstring_view procName) const
+			{
+				auto procNameA = winrt::to_string(procName);
+				return get_proc_address(procNameA);
+			}
+
 			~dynamic_module()
 			{
 				if (Handle) WINRT_IMPL_FreeLibrary(Handle);
@@ -62,7 +69,7 @@ namespace juv
 		private:
 			inline void set_handle(void* newHandle)
 			{
-				if (!newHandle) throw_last_error();
+				if (!newHandle) winrt::throw_last_error();
 				Handle = newHandle;
 			}
 		};
@@ -204,6 +211,10 @@ namespace winrt::OneToolkit::Mvvm
 		PropertyChanging, PropertyChanged
 	};
 
+	/// <summary>
+	/// Represents a ViewModel which can raise property changed and property changing events.
+	/// <remarks>You don't usually need to derive from this class directly. If you just want features of a view model, you can derive from the ObservableBase class.</remarks>
+	/// </summary>
 	struct ComposableObservableBase
 	{
 	public:
@@ -216,6 +227,9 @@ namespace winrt::OneToolkit::Mvvm
 			return m_SuppressEvents;
 		}
 
+		/// <summary>
+		/// Automatically sets a property value and raises property changing/property changed when required.
+		/// </summary>
 		template <typename T>
 		void SetProperty(T& field, T newValue, hstring const& propertyName)
 		{
@@ -287,10 +301,12 @@ namespace winrt::OneToolkit::Mvvm
 			}
 		}
 	protected:
+		ObservableBase() = default;
+
 		/// <summary>
 		/// Override this method to determine whether to raise property changed/property changing or not.
 		/// </summary>
-		virtual bool Decide(hstring const&, PropertyEventType) noexcept
+		virtual bool Decide(hstring const&, PropertyEventType) const noexcept
 		{
 			return true;
 		}

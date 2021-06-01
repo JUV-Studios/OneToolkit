@@ -32,6 +32,12 @@
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ViewServiceDesktop.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewServiceUniversal.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -41,7 +47,12 @@
   <ItemGroup>
     <ClInclude Include="OneToolkit.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="juv.h" />
+    <ClInclude Include="ViewServiceDesktop.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewServiceUniversal.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="StringLocalizationConverter.idl">

@@ -1,6 +1,5 @@
 namespace OneToolkit.UI
 {
-    delegate Windows.Foundation.IAsyncAction DialogDisplayAsyncHandler();
     delegate Windows.Foundation.IAsyncAction DialogDisplayCompletionAsyncHandler(Windows.UI.Xaml.Controls.ContentDialogResult result);
 
     [default_interface]

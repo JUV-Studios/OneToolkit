@@ -12,6 +12,10 @@
 	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 
+	<Page.Resources>
+		<StaticResource x:Key="NavigationViewExpandedPaneBackground" ResourceKey="SystemControlAcrylicWindowBrush" />
+	</Page.Resources>
+
 	<Grid>
 		<controls:PageView
 			x:Name="NavView"
