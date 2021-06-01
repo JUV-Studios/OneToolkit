@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <unknwn.h>
 #include <atomic>
+#include <format>
 #include <cstddef>
 #include <winstring.h>
 #include <Windows.h>
@@ -17,5 +18,7 @@
 #include <winrt/Windows.UI.Xaml.Data.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
+#include <winrt/Windows.UI.Xaml.Media.Animation.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include "OneToolkit.h"

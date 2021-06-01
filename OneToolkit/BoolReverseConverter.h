@@ -5,7 +5,7 @@ namespace winrt::OneToolkit::UI::Converters
 {
     namespace implementation
     {
-        struct BoolReverseConverter : BoolReverseConverterT<BoolReverseConverter>
+        struct BoolReverseConverter : BoolReverseConverterT<BoolReverseConverter, non_agile>
         {
             BoolReverseConverter() = default;
             IInspectable Convert(IInspectable const& value, Windows::UI::Xaml::Interop::TypeName const&, IInspectable const&, hstring const&) const noexcept;

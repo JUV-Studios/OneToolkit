@@ -5,20 +5,16 @@ namespace winrt::OneToolkit::UI::Converters
 {
     namespace implementation
     {
-        struct BoolAsVisibilityConverter : BoolAsVisibilityConverterT<BoolAsVisibilityConverter>
+        struct BoolAsVisibilityConverter : BoolAsVisibilityConverterT<BoolAsVisibilityConverter, non_agile>, Mvvm::ObservableBase<BoolAsVisibilityConverter>
         {
         public:
             BoolAsVisibilityConverter() = default;
-            Windows::UI::Xaml::Visibility VisibilityIfTrue() const noexcept;
-            void VisibilityIfTrue(Windows::UI::Xaml::Visibility value);
+            Mvvm::ObservableProperty<Windows::UI::Xaml::Visibility> VisibilityIfTrue { this, L"VisibilityIfTrue" };
             Windows::UI::Xaml::Visibility VisibilityIfFalse() const noexcept;
             IInspectable Convert(IInspectable const& value, Windows::UI::Xaml::Interop::TypeName const&, IInspectable const&, hstring const&);
             IInspectable ConvertBack(IInspectable const& value, Windows::UI::Xaml::Interop::TypeName const&, IInspectable const&, hstring const&);
-            event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
-            void PropertyChanged(event_token token) noexcept;
-        private:
-            Windows::UI::Xaml::Visibility m_VisibilityIfTrue;
-            event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_PropertyChanged;
+        protected:
+            void WhenPropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventArgs const& args) override final;
         };
     }
 

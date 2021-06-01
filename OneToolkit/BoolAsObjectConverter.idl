@@ -1,8 +1,10 @@
+import "IViewModel.idl";
+
 namespace OneToolkit.UI.Converters
 {
     [bindable]
     [default_interface]
-    runtimeclass BoolAsObjectConverter : Windows.UI.Xaml.Data.INotifyPropertyChanged, Windows.UI.Xaml.Data.IValueConverter
+    runtimeclass BoolAsObjectConverter : OneToolkit.Mvvm.IViewModel
     {
         BoolAsObjectConverter();
         Object ValueForTrue;

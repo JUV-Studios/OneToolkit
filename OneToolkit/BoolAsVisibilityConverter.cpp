@@ -10,24 +10,9 @@ using namespace Windows::UI::Xaml::Interop;
 
 namespace winrt::OneToolkit::UI::Converters::implementation
 {
-	Visibility BoolAsVisibilityConverter::VisibilityIfTrue() const noexcept
-	{
-		return m_VisibilityIfTrue;
-	}
-
-	void BoolAsVisibilityConverter::VisibilityIfTrue(Visibility value)
-	{
-		if (m_VisibilityIfTrue != value)
-		{
-			m_VisibilityIfTrue = value;
-			m_PropertyChanged(*this, PropertyChangedEventArgs(L"VisibilityIfTrue"));
-			m_PropertyChanged(*this, PropertyChangedEventArgs(L"VisibilityIfFalse"));
-		}
-	}
-
 	Visibility BoolAsVisibilityConverter::VisibilityIfFalse() const noexcept
 	{
-		return m_VisibilityIfTrue == Visibility::Visible ? Visibility::Collapsed : Visibility::Visible;
+		return VisibilityIfTrue() == Visibility::Visible ? Visibility::Collapsed : Visibility::Visible;
 	}
 
 	IInspectable BoolAsVisibilityConverter::Convert(IInspectable const& value, TypeName const&, IInspectable const&, hstring const&)
@@ -40,13 +25,8 @@ namespace winrt::OneToolkit::UI::Converters::implementation
 		return box_value(unbox_value<Visibility>(value) == VisibilityIfTrue());
 	}
 
-	event_token BoolAsVisibilityConverter::PropertyChanged(PropertyChangedEventHandler const& handler)
+	void BoolAsVisibilityConverter::WhenPropertyChanged(PropertyChangedEventArgs const& args)
 	{
-		return m_PropertyChanged.add(handler);
-	}
-
-	void BoolAsVisibilityConverter::PropertyChanged(event_token token) noexcept
-	{
-		m_PropertyChanged.remove(token);
+		if (args.PropertyName() == L"VisibilityIfTrue") Raise(L"VisibilityIfFalse");
 	}
 }

@@ -10,10 +10,14 @@ namespace OneToolkit
 	{
 		private WeakReference<T> _Reference;
 
-		public WeakPointer() { }
+		public WeakPointer(T value = null)
+		{
+			_Reference = new(value);
+		}
 
-		public WeakPointer(T value) => _Reference = new(value);
-
+		/// <summary>
+		/// Gets or sets the instance for this WeakPointer instance.
+		/// </summary>
 		public T Target
 		{
 			get
@@ -30,10 +34,20 @@ namespace OneToolkit
 			}
 		}
 
+		/// <summary>
+		/// Tells whether this WeakPointer instance refers to a valid object.
+		/// </summary>
 		public bool IsTargetValid => Target != null;
 
+		/// <summary>
+		/// Clears the reference and sets it to null.
+		/// </summary>
 		public void Reset() => _Reference = null;
 
+		/// <summary>
+		/// Enables access to the underlying data storage.
+		/// </summary>
+		/// <returns>A reference to the data storage.</returns>
 		public ref WeakReference<T> AsWeakReference()
 		{
 			return ref _Reference;

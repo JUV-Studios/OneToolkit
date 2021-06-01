@@ -1,0 +1,13 @@
+namespace OneToolkit.UI
+{
+    delegate Windows.Foundation.IAsyncAction DialogDisplayAsyncHandler();
+    delegate Windows.Foundation.IAsyncAction DialogDisplayCompletionAsyncHandler(Windows.UI.Xaml.Controls.ContentDialogResult result);
+
+    [default_interface]
+    static runtimeclass DialogHelper 
+    {
+        [noexcept] static Boolean IsDialogShown;
+        [noexcept] static Windows.Foundation.IAsyncOperation<Boolean> TryShowDialogAsync(Windows.UI.Xaml.Controls.ContentDialog dialog, Windows.UI.Xaml.Controls.ContentDialogPlacement placement, 
+        DialogDisplayCompletionAsyncHandler completionHandler);
+    }
+}

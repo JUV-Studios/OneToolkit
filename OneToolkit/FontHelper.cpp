@@ -1,56 +1,35 @@
 ﻿#include "pch.h"
 #include "FontHelper.h"
 #include "UI.FontHelper.g.cpp"
-#include <winrt/OneToolkit.Lifecycle.h>
 #include <winrt/Microsoft.Graphics.Canvas.Text.h>
 
 using namespace winrt;
-using namespace OneToolkit::Storage;
-using namespace OneToolkit::Lifecycle;
 using namespace Windows::Globalization;
-using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::Xaml::Interop;
+using namespace Windows::Foundation::Collections;
 using namespace Microsoft::Graphics::Canvas::Text;
 
 namespace winrt::OneToolkit::UI::implementation
 {
-	struct FontFamilyIterator : implements<FontFamilyIterator, IIterator<hstring>>
-	{
-	public:
-		FontFamilyIterator(IVectorView<hstring> const& vectorView) : m_VectorView(vectorView)
-		{
-		}
-
-		hstring Current() const
-		{
-			return m_VectorView.GetAt(m_CurrentIndex);
-		}
-
-		bool HasCurrent() const noexcept
-		{
-			return m_CurrentIndex < m_VectorView.Size();
-		}
-
-		uint32_t GetMany(array_view<hstring> items)
-		{
-			if (items.size() > m_VectorView.Size()) throw hresult_out_of_bounds();
-			for (uint32_t index = 0; index < items.size(); ++index) items[index] = m_VectorView.GetAt(index);
-			return items.size();
-		}
-
-		bool MoveNext() noexcept
-		{
-			m_CurrentIndex++;
-			return m_CurrentIndex < m_VectorView.Size();
-		}
-	private:
-		uint32_t m_CurrentIndex = 0;
-		IVectorView<hstring> m_VectorView;
-	};
-
 	struct FontFamilyVectorView : implements<FontFamilyVectorView, IVectorView<hstring>, IIterable<hstring>>
 	{
 	public:
+		FontFamilyVectorView()
+		{
+			for (uint32_t i = 1; i < Array.size(); i++)
+			{
+				int index = i - 1;
+				auto current = Array[i];
+				while (index >= 0 && Array[index] > current)
+				{
+					Array[index + 1] = Array[index];
+					index--;
+				}
+
+				Array[index + 1] = current;
+			}
+		}
+
 		uint32_t Size() const noexcept
 		{
 			return Array.size();
@@ -86,19 +65,18 @@ namespace winrt::OneToolkit::UI::implementation
 
 		IIterator<hstring> First() const
 		{
-			return make<FontFamilyIterator>(*this);
+			return juv::collections::raw_array_iterator(Array);
 		}
 
 		// CanvasTextFormat::GetSystemFontFamilies requires Win2D version 1.4.0 or later.
 		com_array<hstring> Array = CanvasTextFormat::GetSystemFontFamilies(ApplicationLanguages::Languages());
 	};
 
-	IVectorView<hstring> _InstalledFontFamilies;
-
 	IVectorView<hstring> FontHelper::InstalledFontFamilies()
 	{
 		static slim_mutex singletonLock;
 		const slim_lock_guard lockGuard{ singletonLock };
+		static IVectorView<hstring> _InstalledFontFamilies;
 		if (_InstalledFontFamilies == nullptr) _InstalledFontFamilies = make<FontFamilyVectorView>();
 		return _InstalledFontFamilies;
 	}

@@ -1,0 +1,16 @@
+import "PropertyChangingEventArgs.idl";
+
+namespace OneToolkit.Mvvm
+{
+    delegate void PropertyChangingEventHandler(Object sender, PropertyChangingEventArgs e);
+
+    interface INotifyPropertyChanging
+    {
+        event PropertyChangingEventHandler PropertyChanging;
+    };
+
+    interface IViewModel requires Windows.UI.Xaml.Data.INotifyPropertyChanged, INotifyPropertyChanging
+    {
+        [noexcept] Boolean SuppressEvents { get; };
+    };
+}

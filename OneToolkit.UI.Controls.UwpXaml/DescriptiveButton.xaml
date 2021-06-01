@@ -1,0 +1,15 @@
+﻿<Button
+	x:Class="OneToolkit.UI.Controls.DescriptiveButton"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:OneToolkit.UI.Controls"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	HorizontalContentAlignment="Left"
+	mc:Ignorable="d">
+
+	<StackPanel Orientation="Vertical">
+		<TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind Title, Mode=OneWay}" />
+		<TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind Caption, Mode=OneWay}" />
+	</StackPanel>
+</Button>

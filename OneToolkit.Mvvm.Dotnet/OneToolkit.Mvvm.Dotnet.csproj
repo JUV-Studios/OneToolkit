@@ -8,7 +8,7 @@
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	<PackageId>OneToolkit.Mvvm.Dotnet</PackageId>
-	<Version>1.0.0.5</Version>
+	<Version>1.0.0.7</Version>
 	<Authors>Jaiganesh Kumaran</Authors>
 	<Company>JUV Studios</Company>
 	<Product>OneToolkit</Product>
@@ -16,9 +16,11 @@
 	<NeutralLanguage>ta</NeutralLanguage>
 	<PackageLicenseExpression></PackageLicenseExpression>
 	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-	<PackageReleaseNotes>Added RelayCommand</PackageReleaseNotes>
+	<PackageReleaseNotes>Fixed an issue which prevented using ObservableProperty instances for XAML data binding.</PackageReleaseNotes>
 	<Copyright>© 2021 JUV Studios. All rights reserved</Copyright>
 	<PackageTags>mvvm onetoolkit juvstudios dotnet</PackageTags>
+	<AssemblyVersion>1.0.0.7</AssemblyVersion>
+	<FileVersion>1.0.0.7</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

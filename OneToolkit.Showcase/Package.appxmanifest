@@ -8,8 +8,8 @@
 
   <Identity
     Name="JuvStudios.OneToolkitShowcase"
-    Publisher="CN=jaiga"
-    Version="1.0.0.0" />
+    Publisher="CN=JUV Studios"
+    Version="1.0.0.4" />
 
   <mp:PhoneIdentity PhoneProductId="2e750ce5-17c1-403f-ad6b-cd74c0592a1b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

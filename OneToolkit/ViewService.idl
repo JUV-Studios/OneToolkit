@@ -1,4 +1,5 @@
 import "Lifecycle.idl";
+import "IViewModel.idl";
 
 namespace OneToolkit.UI
 {
@@ -6,6 +7,8 @@ namespace OneToolkit.UI
     {
         String Title;
         Boolean IsFullScreen;
+        Boolean ExtendViewIntoTitleBar;
+        Int64 WindowHandle { get; };
         [noexcept] Object ReferenceSource { get; };
         Windows.Foundation.IAsyncOperation<Boolean> CloseAsync();
     };

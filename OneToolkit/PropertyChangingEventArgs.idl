@@ -1,0 +1,9 @@
+namespace OneToolkit.Mvvm
+{
+    [default_interface]
+    runtimeclass PropertyChangingEventArgs
+    {
+        PropertyChangingEventArgs(String propertyName);
+        [noexcept] String PropertyName { get; };
+    };
+}

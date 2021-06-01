@@ -6,8 +6,70 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:OneToolkit.Showcase"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:system="using:Windows.System"
+	xmlns:ui="using:OneToolkit.UI"
 	Background="{ThemeResource MaterialPageBackground}"
+	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 
-	<controls:PageView />
+	<Grid>
+		<controls:PageView
+			x:Name="NavView"
+			DisplayModeChanged="NavView_DisplayModeChanged"
+			IsBackButtonVisible="Collapsed">
+			<controls:PageView.ContentTransitions>
+				<TransitionCollection>
+					<PaneThemeTransition />
+				</TransitionCollection>
+			</controls:PageView.ContentTransitions>
+			<controls:PageView.PaneHeader>
+				<TextBlock
+					x:Name="TitleBlock"
+					VerticalAlignment="Center"
+					Style="{ThemeResource CaptionTextBlockStyle}"
+					Text="OneToolkit Showcase" />
+			</controls:PageView.PaneHeader>
+			<controls:PageView.SettingsContent>
+				<local:SettingsPage />
+			</controls:PageView.SettingsContent>
+			<controls:PageView.MenuItems>
+				<controls:PageViewContentItem Icon="Home" Label="Home">
+					<controls:HubPanel Header="Welcome!" />
+				</controls:PageViewContentItem>
+				<controls:PageViewContentItem Label="API reference">
+					<local:ApiReference />
+				</controls:PageViewContentItem>
+			</controls:PageView.MenuItems>
+			<controls:PageView.FooterMenuItems>
+				<controls:PageViewLinkItem Label="Feedback" NavigateUri="https://www.nuget.org/packages/OneToolkit/1.0.0.3/ContactOwners">
+					<controls:PageViewLinkItem.Icon>
+						<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xED15;" />
+					</controls:PageViewLinkItem.Icon>
+				</controls:PageViewLinkItem>
+			</controls:PageView.FooterMenuItems>
+		</controls:PageView>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowBreakpoint}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="TitleBlock.Margin" Value="8,0,0,0" />
+						<Setter Target="NavView.PaneDisplayMode" Value="LeftCompact" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowBreakpoint}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="TitleBlock.Margin" Value="12,12,12,0" />
+						<Setter Target="NavView.PaneDisplayMode" Value="Left" />
+						<Setter Target="NavView.IsPaneToggleButtonVisible" Value="False" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+	</Grid>
 </Page>

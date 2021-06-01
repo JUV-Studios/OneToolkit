@@ -88,7 +88,7 @@ namespace OneToolkit.Mvvm
 		public void Raise()
 		{
 			CanExecuteChanged(this, new());
-			if (ObservableBase.Raise(Holder, PropertyName, PropertyEventType.PropertyChanging)) ObservableBase.Raise(Holder, PropertyName, PropertyEventType.PropertyChanged);
+			if (ObservableBase.Raise(Holder, PropertyName, PropertyEventType.PropertyChanging)) _ = ObservableBase.Raise(Holder, PropertyName);
 		}
 		
 		public override string ToString() => string.IsNullOrWhiteSpace(PropertyName) ? base.ToString() : PropertyName;
