@@ -8,9 +8,9 @@ namespace winrt::OneToolkit::Storage
         struct BufferHelper : BufferHelperT<BufferHelper>
         {
             BufferHelper() = delete;
-            static uint8_t GetAt(Windows::Storage::Streams::IBuffer const& buffer, uint32_t index);
-            static void SetAt(Windows::Storage::Streams::IBuffer const& buffer, uint32_t index, uint8_t value);
-            static bool IsIndexValid(Windows::Storage::Streams::IBuffer const& buffer, uint32_t index);
+            static juv::uint8 GetAt(Windows::Storage::Streams::IBuffer const& buffer, juv::uint32 index);
+            static void SetAt(Windows::Storage::Streams::IBuffer const& buffer, juv::uint32 index, juv::uint8 value);
+            static bool IsIndexValid(Windows::Storage::Streams::IBuffer const& buffer, juv::uint32 index);
         };
     }
 

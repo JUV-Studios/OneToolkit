@@ -1,0 +1,12 @@
+import "Lifecycle.idl";
+
+namespace OneToolkit.Storage
+{
+    [default_interface]
+    runtimeclass SharedFile : Windows.Foundation.IClosable
+    {
+        SharedFile(Windows.Storage.StorageFile file);
+        [noexcept] String Token { get; };
+        Windows.Foundation.IAsyncOperation<Windows.Storage.StorageFile> GetFileAsync();
+    };
+}

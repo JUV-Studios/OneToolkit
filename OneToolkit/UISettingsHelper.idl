@@ -1,0 +1,8 @@
+namespace OneToolkit.UI
+{
+    [default_interface]
+    static runtimeclass UISettingsHelper
+    {
+        static Windows.UI.ViewManagement.UISettings Instance { get; };
+    }
+}

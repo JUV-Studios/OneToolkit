@@ -1,9 +1,22 @@
 namespace OneToolkit.Storage
 {
+    [flags]
+    enum FileSharingMode
+    {
+        ShareNone = 0,
+        ShareRead = 0x1,
+        ShareWrite = 0x2,
+        ShareDelete = 0x4
+    };
+
     [default_interface]
     runtimeclass FileHandle
     {
-        FileHandle(Windows.Storage.StorageFile file, Windows.Storage.FileAccessMode accessMode);
+        FileHandle(Windows.Storage.StorageFile file, Windows.Storage.FileAccessMode accessMode, FileSharingMode sharingMode);
+        FileHandle(Windows.Storage.StorageFolder folder, String fileName, Windows.Storage.FileAccessMode accessMode, FileSharingMode sharingMode);
+        String FileName { get; };
+        UInt64 FileSize { get; };
+        [noexcept] UInt64 UnderlyingHandle { get; };
         [noexcept] Windows.Storage.FileAccessMode AccessMode { get; };
     }
 }

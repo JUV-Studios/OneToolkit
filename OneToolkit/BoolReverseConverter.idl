@@ -1,9 +1,0 @@
-namespace OneToolkit.UI.Converters
-{
-    [bindable]
-    [default_interface]
-    runtimeclass BoolReverseConverter : Windows.UI.Xaml.Data.IValueConverter
-    {
-        BoolReverseConverter();
-    }
-}

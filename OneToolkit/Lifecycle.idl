@@ -15,7 +15,6 @@ namespace OneToolkit.Lifecycle
 
 	interface IAsyncClosable requires Windows.Foundation.IClosable
 	{
-		event Windows.Foundation.EventHandler<IAsyncClosable> Closed;
 		Windows.Foundation.IAsyncAction CloseAsync();
 		Windows.Foundation.IAsyncOperation<Boolean> RequestCloseAsync();
 	};
@@ -26,13 +25,15 @@ namespace OneToolkit.Lifecycle
 		Windows.Foundation.IAsyncAction ResumeAsync();
 	};
 
+	interface IAsyncInitialize requires Windows.UI.Xaml.Data.INotifyPropertyChanged
+	{
+		Boolean IsLoading { get; };
+		Boolean HasInitialized { get; };
+		Windows.Foundation.IAsyncAction InitializeAsync();
+	};
+
 	interface IEquatable
 	{
 		[noexcept] Boolean IsEqual(Object another);
-	};
-
-	interface ICloneable requires IEquatable
-	{
-		Object Clone();
 	};
 }

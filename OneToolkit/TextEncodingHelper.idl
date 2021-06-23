@@ -2,7 +2,7 @@ namespace OneToolkit.Data
 {
     enum Endianness
     {
-        Little, Big
+        None, Little, Big
     };
 
     namespace Text

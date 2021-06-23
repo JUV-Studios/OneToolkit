@@ -1,0 +1,11 @@
+namespace OneToolkit.UI.Input
+{
+    [default_interface]
+    static runtimeclass KeyStateHelper
+    {
+        static Boolean IsKeyUp(Windows.System.VirtualKey key);
+        static Boolean IsKeyDown(Windows.System.VirtualKey key);
+        static Boolean IsKeyLocked(Windows.System.VirtualKey key);
+        static Boolean IsKeyStateActive(Windows.System.VirtualKey key, Windows.UI.Core.CoreVirtualKeyStates keyState);
+    }
+}

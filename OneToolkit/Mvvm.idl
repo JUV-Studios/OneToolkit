@@ -1,0 +1,17 @@
+import "Metadata.idl";
+import "Lifecycle.idl";
+
+namespace OneToolkit.Mvvm
+{
+    struct PropertyChangingEventArgs
+    {
+        String PropertyName;
+    };
+
+    delegate void PropertyChangingEventHandler(Object sender, PropertyChangingEventArgs e);
+
+    interface INotifyPropertyChanging
+    {
+        event PropertyChangingEventHandler PropertyChanging;
+    };
+}

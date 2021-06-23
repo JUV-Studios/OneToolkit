@@ -1,0 +1,96 @@
+﻿<UserControl
+	x:Class="OneToolkit.Showcase.Views.MainPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:OneToolkit.UI.Xaml.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:OneToolkit.Showcase.Views"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
+	Loaded="Page_Loaded"
+	mc:Ignorable="d">
+
+	<UserControl.Resources>
+		<AcrylicBrush
+			x:Key="NavigationViewDefaultPaneBackground"
+			BackgroundSource="HostBackdrop"
+			FallbackColor="{ThemeResource SystemChromeMediumColor}"
+			TintColor="{ThemeResource SystemChromeAltHighColor}"
+			TintOpacity="0.8" />
+		<AcrylicBrush
+			x:Key="NavigationViewExpandedPaneBackground"
+			BackgroundSource="HostBackdrop"
+			FallbackColor="{ThemeResource SystemChromeMediumColor}"
+			TintColor="{ThemeResource SystemChromeAltHighColor}"
+			TintOpacity="0.8" />
+	</UserControl.Resources>
+
+	<Grid>
+		<controls:PageView
+			x:Name="NavView"
+			Background="{ThemeResource ModernPageBackground}"
+			DisplayModeChanged="NavView_DisplayModeChanged"
+			IsBackButtonVisible="Collapsed"
+			ViewServiceProvider="{x:Bind viewModels:SettingsViewModel.ViewServiceProvider}">
+			<controls:PageView.ContentTransitions>
+				<TransitionCollection>
+					<PaneThemeTransition />
+				</TransitionCollection>
+			</controls:PageView.ContentTransitions>
+			<controls:PageView.PaneHeader>
+				<TextBlock
+					x:Name="TitleBlock"
+					VerticalAlignment="Center"
+					Style="{ThemeResource CaptionTextBlockStyle}"
+					Text="OneToolkit Showcase" />
+			</controls:PageView.PaneHeader>
+			<controls:PageView.AutoSuggestBox>
+				<AutoSuggestBox PlaceholderText="What are you looking for?" QueryIcon="Find" />
+			</controls:PageView.AutoSuggestBox>
+			<controls:PageView.SettingsContent>
+				<local:SettingsPage />
+			</controls:PageView.SettingsContent>
+			<controls:PageView.MenuItems>
+				<controls:PageViewContentItem x:Uid="HomeNavItem" Icon="Home">
+					<local:HomePage />
+				</controls:PageViewContentItem>
+				<controls:PageViewContentItem Label="API reference">
+					<controls:PageViewContentItem.Icon>
+						<FontIcon Glyph="&#xE736;" />
+					</controls:PageViewContentItem.Icon>
+					<local:ApiReference />
+				</controls:PageViewContentItem>
+			</controls:PageView.MenuItems>
+			<controls:PageView.FooterMenuItems>
+				<controls:PageViewLinkItem x:Uid="FeedbackNavItem" NavigateUri="{x:Bind FeedbackUri}">
+					<controls:PageViewLinkItem.Icon>
+						<FontIcon Glyph="&#xED15;" />
+					</controls:PageViewLinkItem.Icon>
+				</controls:PageViewLinkItem>
+			</controls:PageView.FooterMenuItems>
+		</controls:PageView>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowBreakpoint}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="TitleBlock.Margin" Value="8,0,0,0" />
+						<Setter Target="NavView.PaneDisplayMode" Value="LeftCompact" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowBreakpoint}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="TitleBlock.Margin" Value="12,12,12,12" />
+						<Setter Target="NavView.PaneDisplayMode" Value="Left" />
+						<Setter Target="NavView.IsPaneToggleButtonVisible" Value="False" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+	</Grid>
+</UserControl>

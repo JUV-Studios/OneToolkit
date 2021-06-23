@@ -6,7 +6,9 @@
 #include "UI.ViewService.g.cpp"
 
 using namespace winrt;
+using namespace Windows::UI::Core;
 using namespace Windows::Foundation;
+using namespace Windows::ApplicationModel::Core;
 
 namespace winrt::OneToolkit::UI::implementation
 {

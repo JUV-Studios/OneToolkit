@@ -2,6 +2,7 @@
 #include "TextEncodingHelper.h"
 #include "Data.Text.TextEncodingHelper.g.cpp"
 
+using namespace juv;
 using namespace	winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Storage::Streams;
@@ -11,12 +12,12 @@ namespace winrt::OneToolkit::Data::Text::implementation
 {
 	namespace BOM
 	{
-		constexpr std::array<uint8_t, 3> Utf8 { 0xEF, 0xBB, 0xBF };
-		constexpr std::array<uint8_t, 2> Utf16LE { 0xFF, 0xFE };
-		constexpr std::array<uint8_t, 2> Utf16BE { 0xFE, 0xFF };
+		constexpr std::array<uint8, 3> Utf8 { 0xEF, 0xBB, 0xBF };
+		constexpr std::array<uint8, 2> Utf16LE { 0xFF, 0xFE };
+		constexpr std::array<uint8, 2> Utf16BE { 0xFE, 0xFF };
 	}
 
-	uint8_t TextEncodingHelper::GetBomLength(BinaryStringEncoding encoding) noexcept
+	uint8 TextEncodingHelper::GetBomLength(BinaryStringEncoding encoding) noexcept
 	{
 		return encoding == BinaryStringEncoding::Utf8 ? 3 : 2;
 	}
@@ -24,21 +25,21 @@ namespace winrt::OneToolkit::Data::Text::implementation
 	bool TextEncodingHelper::IsUtf8(IBuffer const& buffer)
 	{
 		/*
-		UTF8 valid sequences:
-		0xxxxxxx  ASCII
-		110xxxxx 10xxxxxx  2-byte
-		1110xxxx 10xxxxxx 10xxxxxx  3-byte
-		11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  4-byte
+			UTF8 valid sequences:
+			0xxxxxxx  ASCII
+			110xxxxx 10xxxxxx 2-byte
+			1110xxxx 10xxxxxx 10xxxxxx 3-byte
+			11110xxx 10xxxxxx 10xxxxxx 10xxxxxx 4-byte
 
-		Width in UTF8:
-		0-127 - 1 byte
-		194-223	- 2 bytes
-		224-239	- 3 bytes
-		/240-244 - 4 bytes
-		Subsequent chars are in the range 128-191
+			Width in UTF8:
+			0-127 - 1 byte
+			194-223	- 2 bytes
+			224-239	- 3 bytes
+			/240-244 - 4 bytes
+			Subsequent chars are in the range 128-191
 		*/
 
-		uint32_t pos = 0;
+		uint32 pos = 0;
 		int	moreCharacters;
 		auto bufferData = buffer.data();
 		auto bufferSize = buffer.Length();
@@ -61,35 +62,36 @@ namespace winrt::OneToolkit::Data::Text::implementation
 			}
 		}
 
-		// If we get here, only valid UTF-8 sequences have been processed
 		return true;
 	}
 
 	bool TextEncodingHelper::IsUtf16(IBuffer const& buffer, Endianness& endianness)
 	{
-		auto bufferData = buffer.data();
-		auto bufferSize = buffer.Length();
-		if (IsUtf16Regular(bufferData, bufferSize, endianness)) return true;
-		else return IsUtf16Ascii(bufferData, bufferSize, endianness);
+		std::span<uint8 const> bufferSpan { buffer.data(), buffer.Length() };
+		if (IsUtf16Regular(bufferSpan, endianness)) return true;
+		else return IsUtf16Ascii(bufferSpan, endianness);
 	}
 
-	bool TextEncodingHelper::IsUtf16Regular(uint8_t const* buffer, uint32_t size, Endianness& endianness) noexcept
+	bool TextEncodingHelper::IsUtf16Regular(std::span<juv::uint8 const> buffer, Endianness& endianness) noexcept
 	{
+		auto size = buffer.size();
 		if (size < 2) return false;
-		// Reduce size by 1 so we don't need to worry about bounds checking for pairs of bytes
-		size--;
+		size--; // Reduce size by 1 so we don't need to worry about bounds checking for pairs of bytes.
 		int leControlCharacters = 0;
 		int beControlCharacters = 0;
-		uint8_t ch1, ch2;
-		uint32_t pos = 0;
+		uint8 ch1, ch2;
+		uint32 pos = 0;
 		while (pos < size)
 		{
 			ch1 = buffer[pos++];
 			ch2 = buffer[pos++];
 			if (ch1 == 0 && (ch2 == 0x0a || ch2 == 0x0d)) beControlCharacters++;
 			else if (ch2 == 0 && (ch1 == 0x0a || ch1 == 0x0d)) leControlCharacters++;
-			// If we are getting both LE and BE control characters, then this file is not utf16
-			if (leControlCharacters && beControlCharacters) return false;
+			if (leControlCharacters && beControlCharacters)
+			{
+				// If we're finding both LE and BE control characters, it's not UTF16.
+				return false;
+			}
 		}
 
 		if (leControlCharacters)
@@ -102,16 +104,21 @@ namespace winrt::OneToolkit::Data::Text::implementation
 			endianness = Endianness::Big;
 			return true;
 		}
-		else return false;
+		else
+		{
+			endianness = Endianness::None;
+			return false;
+		}
 	}
 
-	bool TextEncodingHelper::IsUtf16Ascii(uint8_t const* buffer, uint32_t size, Endianness& endianness) noexcept
+	bool TextEncodingHelper::IsUtf16Ascii(std::span<uint8 const> buffer, Endianness& endianness) noexcept
 	{
 		int oddNulls = 0;
 		int evenNulls = 0;
+
 		// Get even nulls
-		uint32_t pos = 0;
-		while (pos < size)
+		uint32 pos = 0;
+		while (pos < buffer.size())
 		{
 			if (buffer[pos] == 0) evenNulls++;
 			pos += 2;
@@ -119,14 +126,14 @@ namespace winrt::OneToolkit::Data::Text::implementation
 
 		// Get odd nulls
 		pos = 1;
-		while (pos < size)
+		while (pos < buffer.size())
 		{
 			if (buffer[pos] == 0) oddNulls++;
 			pos += 2;
 		}
 
-		double evenNullThreshold = (evenNulls * 2.0) / size;
-		double oddNullThreshold = (oddNulls * 2.0) / size;
+		double evenNullThreshold = (evenNulls * 2.0) / buffer.size();
+		double oddNullThreshold = (oddNulls * 2.0) / buffer.size();
 		double expectedNullThreshold = 70 / 100.0;
 		double unexpectedNullThreshold = 10 / 100.0;
 		if (evenNullThreshold < unexpectedNullThreshold && oddNullThreshold > expectedNullThreshold) // Lots of odd nulls, low number of even nulls
@@ -139,7 +146,11 @@ namespace winrt::OneToolkit::Data::Text::implementation
 			endianness = Endianness::Big;
 			return true;
 		}
-		else return false; // Don't know
+		else
+		{
+			endianness = Endianness::None;
+			return false;
+		}
 	}
 
 	IReference<BinaryStringEncoding> TextEncodingHelper::TryDetectWithBom(IBuffer const& buffer) noexcept

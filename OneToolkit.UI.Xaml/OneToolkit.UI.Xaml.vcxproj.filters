@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>a940e529-311c-4630-9e7a-800a9117be03</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Controls">
+      <UniqueIdentifier>{aa8a7dac-78ae-46d7-9983-49b1028ce6a1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="PageViewLinkItem.cpp" />
+    <ClCompile Include="IconSourceHelper.cpp" />
+    <ClCompile Include="KeyboardAcceleratorHelper.cpp" />
+    <ClCompile Include="PageViewContentItem.cpp" />
+    <ClCompile Include="PageViewItemBase.cpp" />
+    <ClCompile Include="NavigationViewItemHelper.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="IconSourceHelper.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardAcceleratorHelper.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="PageViewItemBase.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="PageViewLinkItem.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="PageViewContentItem.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DescriptiveButton.xaml">
+      <Filter>Controls</Filter>
+    </Page>
+    <Page Include="HubPanel.xaml">
+      <Filter>Controls</Filter>
+    </Page>
+    <Page Include="HubPanelSection.xaml">
+      <Filter>Controls</Filter>
+    </Page>
+    <Page Include="PageView.xaml">
+      <Filter>Controls</Filter>
+    </Page>
+    <Page Include="Styles.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

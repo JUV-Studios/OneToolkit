@@ -1,19 +1,27 @@
-// (c) 2021 JUV Studios. All rights reserved. Included as part of OneToolkit for use in C++/WinRT projects.
+// (c) 2021 JUV Studios. All rights reserved. Included as part of OneToolkit for use in C++ projects targeting the Windows platform.
 
 #pragma once
 #include <juv.h>
 #include <concepts>
-#include <unknwn.h>
 #include <winerror.h>
+#include <debugapi.h>
+#include <winrt/OneToolkit.UI.h>
 #include <winrt/OneToolkit.Mvvm.h>
+#include <winrt/OneToolkit.Imaging.h>
+#include <winrt/OneToolkit.Storage.h>
 #include <winrt/Windows.UI.Xaml.Data.h>
 #include <winrt/OneToolkit.Lifecycle.h>
-#include <winrt/OneToolkit.Storage.h>
 #include <winrt/OneToolkit.Data.Text.h>
-#include <winrt/OneToolkit.UI.Converters.h>
-#include <winrt/Windows.Foundation.Collections.h>
 
-namespace juv
+#define DeclareEvent(Type, Name) private: ::winrt::event<Type> m_##Name;\
+public: ::winrt::event_token Name(Type const& handler) { return m_##Name.add(handler); }\
+void Name(::winrt::event_token token) noexcept { m_##Name.remove(token); }
+
+#define DeclareObservableProperty(Type, Name, DefaultValue) private: Type m_##Name = DefaultValue;\
+public: Type Name() const noexcept { return m_##Name; }\
+void Name(Type value) { SetProperty<Type>(m_##Name, value, L#Name); }
+
+namespace winrt::OneToolkit
 {
 	/// <summary>
 	/// Represents a type which can be passed through the Windows Runtime ABI.
@@ -21,124 +29,311 @@ namespace juv
 	template <typename T>
 	concept WindowsRuntimeType = winrt::impl::has_category_v<T>;
 
-	namespace runtime
+	namespace Debugger
 	{
-		class dynamic_module
+		inline void Break() noexcept
+		{
+			DebugBreak();
+		}
+
+		inline bool IsAttached() noexcept
+		{
+			return IsDebuggerPresent() != 0;
+		}
+
+		inline void Write(std::string_view text) noexcept
+		{
+			OutputDebugStringA(text.data());
+		}
+
+		inline void Write(std::wstring_view text) noexcept
+		{
+			OutputDebugStringW(text.data());
+		}
+
+		inline void WriteLine(std::string& line)
+		{
+			OutputDebugStringA((line + "\n").data());
+		}
+
+		inline void WriteLine(std::wstring& line)
+		{
+			OutputDebugStringW((line + L"\n").data());
+		}
+	}
+
+	namespace Runtime
+	{
+		/// <summary>
+		/// Represents a dynamic link library and enables the ability to use exported functions or variables.
+		/// </summary>
+		class DynamicModule
 		{
 		public:
-			dynamic_module(winrt::hstring const& fileName) : FileName(fileName)
+			DynamicModule(std::string_view fileName) : DynamicModule(to_hstring(fileName))
 			{
-				set_handle(WINRT_IMPL_LoadLibraryW(fileName.data()));
+			}
+	
+			DynamicModule(winrt::hstring const& fileName) : m_FileName(fileName)
+			{
+				Handle(WINRT_IMPL_LoadLibraryW(fileName.data()));
 			}
 
-			dynamic_module(dynamic_module const& another)
+			DynamicModule(DynamicModule const& another)
 			{
-				set_handle(WINRT_IMPL_LoadLibraryW(another.FileName.data()));
-				FileName = another.FileName;
+				Copy(another);
 			}
 
-			dynamic_module(dynamic_module&& another)
+			DynamicModule(DynamicModule&& another) noexcept
 			{
-				set_handle(another.Handle);
-				FileName = another.FileName;
-				another.Handle = nullptr;
+				Move(std::move(another));
 			}
 
-			template <typename Func>
-			auto get_proc_address(std::string_view procName) const
+			DynamicModule& operator=(const DynamicModule& another)
 			{
-				auto result = WINRT_IMPL_GetProcAddress(Handle, procName.data());
-				if (!result) winrt::throw_last_error();
-				return reinterpret_cast<Func>(result);
+				Copy(another);
+				return *this;
 			}
 
-			template <typename Func>
-			auto get_proc_address(std::wstring_view procName) const
+			DynamicModule& operator=(DynamicModule&& another) noexcept
 			{
-				auto procNameA = winrt::to_string(procName);
-				return get_proc_address(procNameA);
+				Move(std::move(another));
+				return *this;
 			}
 
-			~dynamic_module()
+			bool operator==(DynamicModule const& another) const noexcept
 			{
-				if (Handle) WINRT_IMPL_FreeLibrary(Handle);
+				return m_FileName == another.m_FileName && m_Handle == another.m_Handle;
 			}
 
-			void* Handle;
-			winrt::hstring FileName;
+			bool operator!=(DynamicModule const& another) const noexcept
+			{
+				return !operator==(another);
+			}
+
+			/// <summary>
+			/// Returns an handle to the loaded dynamic link library.
+			/// </summary>
+			auto Handle() const noexcept
+			{
+				return m_Handle;
+			}
+
+			/// <summary>
+			/// Returns the name of the DLL.
+			/// </summary>
+			const hstring FileName() const noexcept
+			{
+				return m_FileName;
+			}
+
+			/// <summary>
+			/// Retrieves the address of an exported function or variable.
+			/// </summary>
+			template <typename T>
+			auto GetProcAddress(std::string_view procName) const
+			{
+				auto result = WINRT_IMPL_GetProcAddress(m_Handle, procName.data());
+				if (!result) throw_last_error();
+				return reinterpret_cast<T>(result);
+			}
+
+			/// <summary>
+			/// Retrieves the address of an exported function or variable.
+			/// </summary>
+			template <typename T>
+			auto GetProcAddress(std::wstring_view procName) const
+			{
+				auto procNameA = to_string(procName);
+				return GetProcAddress<T>(procNameA);
+			}
+	
+			~DynamicModule()
+			{
+				if (m_Handle) WINRT_IMPL_FreeLibrary(m_Handle);
+			}
 		private:
-			inline void set_handle(void* newHandle)
+			HMODULE m_Handle;
+
+			hstring m_FileName;
+
+			void Handle(void* newHandle)
 			{
-				if (!newHandle) winrt::throw_last_error();
-				Handle = newHandle;
+				if (!newHandle) throw_last_error();
+				m_Handle = static_cast<HMODULE>(newHandle);
+			}
+
+			void Copy(DynamicModule const& another)
+			{
+				Handle(WINRT_IMPL_LoadLibraryW(another.m_FileName.data()));
+				m_FileName = another.m_FileName;
+			}
+
+			void Move(DynamicModule&& another) noexcept
+			{
+				Handle(another.m_Handle);
+				m_FileName = another.m_FileName;
+				another.m_Handle = nullptr;
 			}
 		};
 	}
 
-	namespace collections
+	namespace Mvvm
 	{
-		namespace details
+		enum class PropertyEventType : juv::uint8
 		{
-			template <WindowsRuntimeType T>
-			struct RawArrayIterator : winrt::implements<RawArrayIterator<T>, winrt::Windows::Foundation::Collections::IIterator<T>>
-			{
-			public:
-				RawArrayIterator(winrt::array_view<T> arrayView) : m_ArrayView(arrayView)
-				{
-				}
-
-				T Current() const
-				{
-					return m_ArrayView[m_CurrentIndex];
-				}
-
-				bool HasCurrent() const noexcept
-				{
-					return m_CurrentIndex < m_ArrayView.size();
-				}
-
-				uint32_t GetMany(winrt::array_view<T> items)
-				{
-					if (items.size() > m_ArrayView.size()) throw winrt::hresult_out_of_bounds();
-					for (uint32_t index = 0; index < items.size(); ++index) items[index] = m_ArrayView[index];
-					return items.size();
-				}
-
-				bool MoveNext() noexcept
-				{
-					m_CurrentIndex++;
-					return m_CurrentIndex < m_ArrayView.size();
-				}
-			private:
-				uint32_t m_CurrentIndex = 0;
-				winrt::array_view<T> m_ArrayView;
-			};
-		}
+			PropertyChanging, PropertyChanged
+		};
 
 		/// <summary>
-		/// Creates a Windows Runtime collection iterator over a raw array.
+		/// Provides a base class for view models and observable objects.
 		/// </summary>
-		template <WindowsRuntimeType T>
-		winrt::Windows::Foundation::Collections::IIterator<T> raw_array_iterator(winrt::array_view<T> const& arrayView) noexcept
+		/// <remarks> If you're implementing a runtime class, we recommend that you implement INotifyPropertyChanged, INotifyPropertyChanging and/or IEventDisableable.</remarks>
+		template <typename Derived, WindowsRuntimeType ChangedDelegate = Windows::UI::Xaml::Data::PropertyChangedEventHandler, WindowsRuntimeType ChangedArgs = Windows::UI::Xaml::Data::PropertyChangedEventArgs>
+		struct ObservableBase
 		{
-			return winrt::make<details::RawArrayIterator<T>>(arrayView);
-		}
-	}
-}
+		public:
+			ObservableBase(ObservableBase&&) = delete;
 
-namespace winrt::OneToolkit
-{
+			ObservableBase(ObservableBase const&) = delete;
+
+			/// <summary>
+			/// Gets whether the property changing/property changed events will be raised or not.
+			/// </summary>
+			bool SuppressEvents() const noexcept
+			{
+				return m_SuppressEvents;
+			}
+
+			DeclareEvent(ChangedDelegate, PropertyChanged);
+
+			DeclareEvent(PropertyChangingEventHandler, PropertyChanging);
+		protected:
+			ObservableBase(bool suppressEvents = false) : m_SuppressEvents(suppressEvents)
+			{
+			}
+
+			void SuppressEvents(bool value) noexcept
+			{
+				m_SuppressEvents = value;
+			}
+
+			/// <summary>
+			/// Raises the specified property event for a specified property name.
+			/// </summary>
+			/// <param name="propertyName">The name of the property. Shouldn't be empty or only full of whitespaces.</param>
+			/// <param name="type">The type of the property event.</param>
+			void Raise(hstring const& propertyName, PropertyEventType eventType = PropertyEventType::PropertyChanged)
+			{
+				if (!juv::has_only_whitespaces(propertyName) && Decide(propertyName, eventType) && !m_SuppressEvents)
+				{
+					if (eventType == PropertyEventType::PropertyChanging)
+					{
+						PropertyChangingEventArgs args{ .PropertyName = propertyName };
+						m_PropertyChanging(*static_cast<Derived*>(this), args);
+						WhenPropertyChanging(args);
+					}
+					else
+					{
+						ChangedArgs args{ propertyName };
+						m_PropertyChanged(*static_cast<Derived*>(this), args);
+						WhenPropertyChanged(args);
+					}
+				}
+			}
+
+			/// <summary>
+			/// Automatically sets a property value and raises property changing/property changed when required.
+			/// </summary>
+			/// <returns>True if the value was set, false if the value passed was equal to the fields existing value.</returns>
+			template <typename T>
+			bool SetProperty(T& field, T newValue, hstring const& propertyName)
+			{
+				if (field != newValue)
+				{
+					Raise(propertyName, PropertyEventType::PropertyChanging);
+					field = newValue;
+					Raise(propertyName, PropertyEventType::PropertyChanged);
+					return true;
+				}
+
+				return false;
+			}
+
+			/// <summary>
+			/// Override this method to determine whether to raise property changed/property changing or not.
+			/// </summary>
+			virtual bool Decide(hstring const&, PropertyEventType) noexcept
+			{
+				return true;
+			}
+
+			/// <summary>
+			/// Override this method to perform custom actions after raising the property changed event.
+			/// </summary>
+			virtual void WhenPropertyChanged(ChangedArgs const&)
+			{
+				// Do nothing here.
+			}
+
+			/// <summary>
+			/// Override this method to perform custom actions after raising the property changing event.
+			/// </summary>
+			virtual void WhenPropertyChanging(PropertyChangingEventArgs const&)
+			{
+				// Do nothing here.
+			}
+		private:
+			bool m_SuppressEvents;
+		};
+
+		template <typename T>
+		class AutoProperty
+		{
+		public:
+			AutoProperty(T defaultValue = {}) : m_BackingField(defaultValue)
+			{
+			}
+
+			T operator()() const noexcept
+			{
+				return m_BackingField;
+			}
+
+			void operator()(T value)
+			{
+				m_BackingField = value;
+			}
+
+			T& operator*() const noexcept
+			{
+				return m_BackingField;
+			}
+
+			T* operator->() const noexcept
+			{
+				return &m_BackingField;
+			}
+		private:
+			T m_BackingField;
+		};
+	}
+
 	namespace Lifecycle
 	{
 		/// <summary>
 		/// Provides a base class to conveniently implement the IClosable interface.
-		/// <remarks>Your derived class must provide a public or protected Dispose method which will be called by Close when the object hasn't been closed yet.</remarks>
 		/// </summary>
+		/// <remarks>Your derived class must provide a Dispose method which will be called by Close when the object hasn't been closed yet.</remarks>
 		template <typename Derived>
 		struct Disposable
 		{
 		public:
-			void Close() noexcept
+			Disposable(Disposable&&) = delete;
+
+			Disposable(Disposable const&) = delete;
+
+			void Close()
 			{
 				if (!m_IsDisposed)
 				{
@@ -152,14 +347,19 @@ namespace winrt::OneToolkit
 				Close();
 			}
 		protected:
-			Disposable() = default;
+			Disposable()
+			{
+			}
 
-			bool m_IsDisposed = false;
-
+			/// <summary>
+			/// Throws an exception if the object is closed.
+			/// </summary>
 			inline void ThrowIfDisposed() const
 			{
 				if (m_IsDisposed) throw hresult_error(RO_E_CLOSED);
 			}
+		private:
+			bool m_IsDisposed;
 		};
 
 		/// <summary>
@@ -169,6 +369,10 @@ namespace winrt::OneToolkit
 		struct Suspendable
 		{
 		public:
+			Suspendable(Suspendable&&) = delete;
+
+			Suspendable(Suspendable const&) = delete;
+
 			/// <summary>
 			/// Gets whether the current object is suspended.
 			/// </summary>
@@ -177,208 +381,67 @@ namespace winrt::OneToolkit
 				return m_IsSuspended;
 			}
 
-			event_token StateChanged(SuspendableStateChangedEventHandler const& handler)
-			{
-				return m_StateChanged.add(handler);
-			}
-
-			void StateChanged(event_token token) noexcept
-			{
-				m_StateChanged.remove(token);
-			}
+			DeclareEvent(SuspendableStateChangedEventHandler, StateChanged);
 		protected:
 			Suspendable() = default;
 
-			bool m_IsSuspended = false;
-
 			/// <summary>
-			/// Raises the state changed event.
+			/// Toggles the suspended state.
 			/// </summary>
-			void Raise(SuspendableEventType eventType)
+			void ToggleState()
 			{
-				m_StateChanged(*static_cast<Derived*>(this), eventType);
-			}
-		private:
-			SuspendableStateChangedEventHandler m_StateChanged;
-		};
-	}
-}
-
-namespace winrt::OneToolkit::Mvvm
-{
-	enum class PropertyEventType : uint8_t
-	{
-		PropertyChanging, PropertyChanged
-	};
-
-	/// <summary>
-	/// Represents a ViewModel which can raise property changed and property changing events.
-	/// <remarks>You don't usually need to derive from this class directly. If you just want features of a view model, you can derive from the ObservableBase class.</remarks>
-	/// </summary>
-	struct ComposableObservableBase
-	{
-	public:
-		/// <summary>
-		/// Represents whether the property changing/property changed events are raised or not when you call the Raise method.
-		/// </summary>
-		/// <returns></returns>
-		bool SuppressEvents() const noexcept
-		{
-			return m_SuppressEvents;
-		}
-
-		/// <summary>
-		/// Automatically sets a property value and raises property changing/property changed when required.
-		/// </summary>
-		template <typename T>
-		void SetProperty(T& field, T newValue, hstring const& propertyName)
-		{
-			if (field != newValue)
-			{
-				Raise(propertyName, PropertyEventType::PropertyChanging);
-				field = newValue;
-				Raise(propertyName, PropertyEventType::PropertyChanged);
-			}
-		}
-
-		/// <summary>
-		/// Raises the specified property event for a specified property name.
-		/// </summary>
-		/// <param name="propertyName">The name of the property. Shouldn't be empty or only full of whitespaces.</param>
-		/// <param name="type">The type of the property event.</param>
-		virtual void Raise(hstring const& propertyName, PropertyEventType eventType = PropertyEventType::PropertyChanged) = 0;
-	protected:
-		ComposableObservableBase() = default;
-
-		bool m_SuppressEvents = false;
-	};
-
-	/// <summary>
-	/// Provides a base class for view models and observable objects.
-	/// If you're implementing a runtime class, declare that you implement the IViewModel interface in metadata or another interface that's similar.
-	/// </summary>
-	template <typename Derived, juv::WindowsRuntimeType ChangedDelegate = Windows::UI::Xaml::Data::PropertyChangedEventHandler, 
-		juv::WindowsRuntimeType ChangedArgs = Windows::UI::Xaml::Data::PropertyChangedEventArgs>
-	struct ObservableBase : ComposableObservableBase
-	{
-	public:
-		event_token PropertyChanged(ChangedDelegate const& handler)
-		{
-			return m_PropertyChanged.add(handler);
-		}
-
-		void PropertyChanged(event_token token) noexcept
-		{
-			m_PropertyChanged.remove(token);
-		}
-
-		event_token PropertyChanging(PropertyChangingEventHandler const& handler)
-		{
-			return m_PropertyChanging.add(handler);
-		}
-
-		void PropertyChanging(event_token token) noexcept
-		{
-			m_PropertyChanging.remove(token);
-		}
-
-		void Raise(hstring const& propertyName, PropertyEventType eventType = PropertyEventType::PropertyChanged) final
-		{
-			if (!juv::has_only_whitespaces(propertyName) && Decide(propertyName, eventType) && !m_SuppressEvents)
-			{
-				if (eventType == PropertyEventType::PropertyChanging)
+				if (m_IsSuspended)
 				{
-					PropertyChangingEventArgs args{ propertyName };
-					m_PropertyChanging(*static_cast<Derived*>(this), args);
-					WhenPropertyChanging(args);
+					m_IsSuspended = false;
+					m_StateChanged(*static_cast<Derived*>(this), SuspendableEventType::Resumed);
 				}
 				else
 				{
-					ChangedArgs args{ propertyName };
-					m_PropertyChanged(*static_cast<Derived*>(this), args);
-					WhenPropertyChanged(args);
+					m_IsSuspended = true;
+					m_StateChanged(*static_cast<Derived*>(this), SuspendableEventType::Suspended);
 				}
 			}
-		}
-	protected:
-		ObservableBase() = default;
+		private:
+			bool m_IsSuspended;
+		};
+		
+		/// <summary>
+		/// Provides a base class to conveniently implement the IAsyncInitialize interface. 
+		/// </summary>
+		template <typename Derived>
+		struct AsyncInitialize : Mvvm::ObservableBase<Derived>
+		{
+		public:
+			AsyncInitialize(AsyncInitialize&&) = delete;
+
+			AsyncInitialize(AsyncInitialize const&) = delete;
+
+			DeclareObservableProperty(bool, IsLoading, false);
+
+			DeclareObservableProperty(bool, HasInitialized, false);
+		protected:
+			AsyncInitialize() = default;
+		};
 
 		/// <summary>
-		/// Override this method to determine whether to raise property changed/property changing or not.
+		/// Provides a base class to conveniently implement the IEquatable interface.
 		/// </summary>
-		virtual bool Decide(hstring const&, PropertyEventType) const noexcept
+		/// <remarks>Your derived class must provide an overload of the equals operator that takes an IInspectable.</remarks>
+		template <typename Derived>
+		struct Equatable
 		{
-			return true;
-		}
+		public:
+			Equatable(Equatable&&) = delete;
 
-		/// <summary>
-		/// Override this method to perform custom actions after raising the property changed event.
-		/// </summary>
-		virtual void WhenPropertyChanged(ChangedArgs const&)
-		{
-			// Do nothing here.
-		}
+			Equatable(Equatable const&) = delete;
 
-		/// <summary>
-		/// Override this method to perform custom actions after raising the property changing event.
-		/// </summary>
-		virtual void WhenPropertyChanging(PropertyChangingEventArgs const&)
-		{
-			// Do nothing here.
-		}
-	private:
-		event<ChangedDelegate> m_PropertyChanged;
-		event<PropertyChangingEventHandler> m_PropertyChanging;
-	};
-
-	/// <summary>
-	/// Represents an property which automatically raises property changed/property changing events when it's value is set.
-	/// </summary>
-	/// <typeparam name="T">The underlying type of the property.</typeparam>
-	template <typename T>
-	struct ObservableProperty
-	{
-	public:
-		ObservableProperty(ComposableObservableBase* const holder, hstring const& propertyName, T value = {}) : m_Holder(*holder), m_PropertyName(propertyName), m_BackingField(value)
-		{
-		}
-
-		/// <summary>
-		/// Gets the underlying value for this ObservableProperty instance.
-		/// </summary>
-		T operator()() const noexcept
-		{
-			return m_BackingField;
-		}
-
-		/// <summary>
-		/// Sets the underlying value for this ObservableProperty instance. Automatically raises PropertyChanging/PropertyChanged when you set it unless suppress is enabled.
-		/// </summary>
-		void operator()(T value)
-		{
-			m_Holder.SetProperty(m_BackingField, value, m_PropertyName);
-		}
-
-		/// <summary>
-		/// Returns a string that represents the current object.
-		/// </summary>
-		/// <returns>A string that represents the current object.</returns>
-		hstring ToString() const noexcept
-		{
-			return m_PropertyName;
-		}
-
-		/// <summary>
-		/// Enables access to the underlying data storage.
-		/// </summary>
-		/// <returns>A reference to the underlying data storage.</returns>
-		T& GetBackingField() noexcept
-		{
-			return m_BackingField;
-		}
-	private:
-		T m_BackingField;
-		hstring m_PropertyName;
-		ComposableObservableBase& m_Holder;
-	};
+			bool IsEqual(Windows::Foundation::IInspectable const& another) const noexcept
+			{
+				if (another == *static_cast<const Derived*>(this)) return true;
+				else return static_cast<const Derived*>(this)->operator==(another);
+			}
+		protected:
+			Equatable() = default;
+		};
+	}
 }

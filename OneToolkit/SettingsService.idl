@@ -1,0 +1,13 @@
+namespace OneToolkit.Storage
+{
+    [bindable]
+    [default_interface]
+    runtimeclass SettingsService
+    {
+        SettingsService(Windows.Storage.ApplicationDataContainer dataContainer);
+        [noexcept] Windows.Storage.ApplicationDataContainer DataContainer { get; };
+        Object GetValue(String key);
+        Object GetValue(String key, Object defaultValue);
+        void SetValue(String key, Object newValue);
+    }
+}

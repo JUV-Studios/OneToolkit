@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\juv.1.0.0.4\build\native\juv.props" Condition="Exists('..\packages\juv.1.0.0.4\build\native\juv.props')" />
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="..\packages\juv.1.0.0.5\build\native\juv.props" Condition="Exists('..\packages\juv.1.0.0.5\build\native\juv.props')" />
   <Import Project="..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props" Condition="Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" />
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -121,15 +121,22 @@
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">OneToolkit.h</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">OneToolkit.h</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OneToolkit.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ForcedIncludeFiles>
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">stdc17</LanguageStandard_C>
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">stdc17</LanguageStandard_C>
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdc17</LanguageStandard_C>
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">$(FrameworkSdkDir)Include\10.0.20348.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(FrameworkSdkDir)Include\10.0.20348.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(FrameworkSdkDir)Include\10.0.20348.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(FrameworkSdkDir)Include\10.0.20348.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">%(AdditionalDependencies)</AdditionalDependencies>
@@ -159,14 +166,22 @@
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">OneToolkit.h</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">OneToolkit.h</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">OneToolkit.h</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OneToolkit.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ForcedIncludeFiles>
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">stdc17</LanguageStandard_C>
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">stdc17</LanguageStandard_C>
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdc17</LanguageStandard_C>
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">$(FrameworkSdkDir)Include\10.0.20348.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(FrameworkSdkDir)Include\10.0.20348.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(FrameworkSdkDir)Include\10.0.20348.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(FrameworkSdkDir)Include\10.0.20348.0\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -182,20 +197,8 @@
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="BoolAsObjectConverter.h">
-      <DependentUpon>BoolAsObjectConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="BoolAsVisibilityConverter.h">
-      <DependentUpon>BoolAsVisibilityConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="BoolReverseConverter.h">
-      <DependentUpon>BoolReverseConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="DialogHelper.h">
-      <DependentUpon>DialogHelper.idl</DependentUpon>
+    <ClInclude Include="CropDialog.h">
+      <DependentUpon>CropDialog.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="FileHandle.h">
@@ -206,6 +209,14 @@
       <DependentUpon>FontHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="ImageResizer.h">
+      <DependentUpon>ImageResizer.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="KeyStateHelper.h">
+      <DependentUpon>KeyStateHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="LineEndingHelper.h">
       <DependentUpon>LineEndingHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -214,14 +225,13 @@
       <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="ObservableValue.h">
-      <DependentUpon>ObservableValue.idl</DependentUpon>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="SettingsService.h">
+      <DependentUpon>SettingsService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="OneToolkit.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="PropertyChangingEventArgs.h">
-      <DependentUpon>PropertyChangingEventArgs.idl</DependentUpon>
+    <ClInclude Include="SharedFile.h">
+      <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="StringLocalizationConverter.h">
@@ -236,32 +246,25 @@
       <DependentUpon>TextEncodingHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="UISettingsHelper.h">
+      <DependentUpon>UISettingsHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ViewService.h">
       <DependentUpon>ViewService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="ViewServiceBase.h" />
     <ClInclude Include="ViewServiceDesktop.h" />
     <ClInclude Include="ViewServiceUniversal.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BoolAsObjectConverter.cpp">
-      <DependentUpon>BoolAsObjectConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="BoolAsVisibilityConverter.cpp">
-      <DependentUpon>BoolAsVisibilityConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="BoolReverseConverter.cpp">
-      <DependentUpon>BoolReverseConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="BufferHelper.cpp">
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="DialogHelper.cpp">
-      <DependentUpon>DialogHelper.idl</DependentUpon>
+    <ClCompile Include="CropDialog.cpp">
+      <DependentUpon>CropDialog.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="FileHandle.cpp">
@@ -272,6 +275,14 @@
       <DependentUpon>FontHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="ImageResizer.cpp">
+      <DependentUpon>ImageResizer.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="KeyStateHelper.cpp">
+      <DependentUpon>KeyStateHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="LineEndingHelper.cpp">
       <DependentUpon>LineEndingHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -280,17 +291,20 @@
       <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ObservableValue.cpp">
-      <DependentUpon>ObservableValue.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
+    <ClInclude Include="OneToolkit.h">
+      <FileType>Document</FileType>
+    </ClInclude>
     <ClCompile Include="pch.cpp">
       <DependentUpon>pch.h</DependentUpon>
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="PropertyChangingEventArgs.cpp">
-      <DependentUpon>PropertyChangingEventArgs.idl</DependentUpon>
+    <ClCompile Include="SettingsService.cpp">
+      <DependentUpon>SettingsService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="SharedFile.cpp">
+      <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="StringLocalizationConverter.cpp">
@@ -303,6 +317,10 @@
     </ClCompile>
     <ClCompile Include="TextEncodingHelper.cpp">
       <DependentUpon>TextEncodingHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="UISettingsHelper.cpp">
+      <DependentUpon>UISettingsHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ViewService.cpp">
@@ -326,19 +344,10 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="BoolAsObjectConverter.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="BoolAsVisibilityConverter.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="BoolReverseConverter.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="BufferHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="DialogHelper.idl">
+    <Midl Include="CropDialog.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="FileHandle.idl">
@@ -347,7 +356,13 @@
     <Midl Include="FontHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="IViewModel.idl" />
+    <Midl Include="ImageResizer.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="KeyStateHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="Mvvm.idl" />
     <Midl Include="Lifecycle.idl" />
     <Midl Include="LineEndingHelper.idl">
       <SubType>Designer</SubType>
@@ -355,10 +370,11 @@
     <Midl Include="MemoryBufferHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="ObservableValue.idl">
+    <Midl Include="Metadata.idl" />
+    <Midl Include="SettingsService.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="PropertyChangingEventArgs.idl">
+    <Midl Include="SharedFile.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="StringLocalizationConverter.idl">
@@ -370,6 +386,9 @@
     <Midl Include="TextEncodingHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="UISettingsHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="ViewService.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -379,15 +398,15 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210505.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props'))" />
-    <Error Condition="!Exists('..\packages\juv.1.0.0.4\build\native\juv.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\juv.1.0.0.4\build\native\juv.props'))" />
+    <Error Condition="!Exists('..\packages\juv.1.0.0.5\build\native\juv.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\juv.1.0.0.5\build\native\juv.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
 </Project>

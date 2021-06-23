@@ -4,9 +4,6 @@
     <Filter Include="UI">
       <UniqueIdentifier>{e3467b78-3a66-4083-872e-c0de25efa1f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\Converters">
-      <UniqueIdentifier>{fea32006-da90-428c-b331-f41a3b4623ef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Data">
       <UniqueIdentifier>{e6735ca6-e455-4c16-bf52-23a6f2ad2c27}</UniqueIdentifier>
     </Filter>
@@ -19,11 +16,17 @@
     <Filter Include="Storage">
       <UniqueIdentifier>{e5424560-e0f5-4540-833d-f318f65edc80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mvvm">
-      <UniqueIdentifier>{24e268cc-a951-4a06-b46d-3409b5ae721d}</UniqueIdentifier>
+    <Filter Include="Imaging">
+      <UniqueIdentifier>{419a548f-56eb-4cfc-855d-d6da7847cf3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mvvm\NonGeneric">
-      <UniqueIdentifier>{2e22c381-518d-4ce9-81de-4c4341676415}</UniqueIdentifier>
+    <Filter Include="UI\Converters">
+      <UniqueIdentifier>{feb095f9-ba10-433b-b285-5b5e85d33fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Input">
+      <UniqueIdentifier>{bc0906ea-cd09-4eb6-9e18-09c3cc7d72af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mvvm">
+      <UniqueIdentifier>{8d050e19-c8ad-484a-a5ae-09de97d085ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +41,9 @@
     <ClCompile Include="ViewServiceUniversal.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="ObservableValue.cpp">
+      <Filter>Mvvm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -45,7 +51,6 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OneToolkit.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ViewServiceDesktop.h">
       <Filter>UI</Filter>
@@ -53,25 +58,17 @@
     <ClInclude Include="ViewServiceUniversal.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="OneToolkit.h" />
+    <ClInclude Include="ViewServiceBase.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="StringLocalizationConverter.idl">
-      <Filter>UI\Converters</Filter>
-    </Midl>
-    <Midl Include="BoolReverseConverter.idl">
-      <Filter>UI\Converters</Filter>
-    </Midl>
-    <Midl Include="BoolAsObjectConverter.idl">
-      <Filter>UI\Converters</Filter>
-    </Midl>
     <Midl Include="LineEndingHelper.idl">
       <Filter>Data\Text</Filter>
     </Midl>
     <Midl Include="StringOperations.idl">
       <Filter>Data\Text</Filter>
-    </Midl>
-    <Midl Include="BoolAsVisibilityConverter.idl">
-      <Filter>UI\Converters</Filter>
     </Midl>
     <Midl Include="FontHelper.idl">
       <Filter>UI</Filter>
@@ -79,30 +76,43 @@
     <Midl Include="BufferHelper.idl">
       <Filter>Storage</Filter>
     </Midl>
-    <Midl Include="Lifecycle.idl" />
     <Midl Include="ViewService.idl">
       <Filter>UI</Filter>
     </Midl>
     <Midl Include="TextEncodingHelper.idl">
       <Filter>Data\Text</Filter>
     </Midl>
-    <Midl Include="DialogHelper.idl">
-      <Filter>UI</Filter>
-    </Midl>
-    <Midl Include="PropertyChangingEventArgs.idl">
-      <Filter>Mvvm</Filter>
-    </Midl>
-    <Midl Include="IViewModel.idl">
-      <Filter>Mvvm</Filter>
-    </Midl>
-    <Midl Include="ObservableValue.idl">
-      <Filter>Mvvm\NonGeneric</Filter>
-    </Midl>
     <Midl Include="MemoryBufferHelper.idl">
       <Filter>Storage</Filter>
     </Midl>
     <Midl Include="FileHandle.idl">
       <Filter>Storage</Filter>
+    </Midl>
+    <Midl Include="Metadata.idl" />
+    <Midl Include="ImageResizer.idl">
+      <Filter>Imaging</Filter>
+    </Midl>
+    <Midl Include="SettingsService.idl">
+      <Filter>Storage</Filter>
+    </Midl>
+    <Midl Include="Lifecycle.idl" />
+    <Midl Include="CropDialog.idl">
+      <Filter>Imaging</Filter>
+    </Midl>
+    <Midl Include="UISettingsHelper.idl">
+      <Filter>UI</Filter>
+    </Midl>
+    <Midl Include="StringLocalizationConverter.idl">
+      <Filter>UI\Converters</Filter>
+    </Midl>
+    <Midl Include="SharedFile.idl">
+      <Filter>Storage</Filter>
+    </Midl>
+    <Midl Include="KeyStateHelper.idl">
+      <Filter>UI\Input</Filter>
+    </Midl>
+    <Midl Include="Mvvm.idl">
+      <Filter>Mvvm</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>

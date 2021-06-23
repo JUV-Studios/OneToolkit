@@ -11,12 +11,12 @@ namespace winrt::OneToolkit::Data::Text
             TextEncodingHelper() = delete;
             static bool IsUtf8(Windows::Storage::Streams::IBuffer const& buffer);
             static bool IsUtf16(Windows::Storage::Streams::IBuffer const& buffer, Endianness& endianness);
-            static uint8_t GetBomLength(Windows::Security::Cryptography::BinaryStringEncoding encoding) noexcept;
+            static juv::uint8 GetBomLength(Windows::Security::Cryptography::BinaryStringEncoding encoding) noexcept;
             static Windows::Foundation::IReference<Windows::Security::Cryptography::BinaryStringEncoding> TryDetect(Windows::Storage::Streams::IBuffer const& buffer) noexcept;
             static Windows::Foundation::IReference<Windows::Security::Cryptography::BinaryStringEncoding> TryDetectWithBom(Windows::Storage::Streams::IBuffer const& buffer) noexcept;
         private:
-            static bool IsUtf16Ascii(uint8_t const* buffer, uint32_t size, Endianness& endianness) noexcept;
-            static bool IsUtf16Regular(uint8_t const* buffer, uint32_t size, Endianness& endianness) noexcept;
+            static bool IsUtf16Ascii(std::span<juv::uint8 const> buffer, Endianness& endianness) noexcept;
+            static bool IsUtf16Regular(std::span<juv::uint8 const> buffer, Endianness& endianness) noexcept;
         };
     }
 

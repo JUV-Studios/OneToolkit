@@ -2,6 +2,7 @@
 #include "StringOperations.h"
 #include "Data.Text.StringOperations.g.cpp"
 
+using namespace juv;
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -37,11 +38,11 @@ namespace winrt::OneToolkit::Data::Text::implementation
 		return output;
 	}
 
-	IVector<hstring> StringOperations::Split(hstring const& text, hstring const& delimiter)
+	IVectorView<hstring> StringOperations::Split(hstring const& text, hstring const& delimiter)
 	{
 		std::vector<hstring> values;
 		std::wstring textCopy { text };
-		wchar_t* state = nullptr;
+		wchar* state = nullptr;
 		auto token = wcstok_s(textCopy.data(), delimiter.data(), &state);
 		while (token != nullptr)
 		{
@@ -49,6 +50,6 @@ namespace winrt::OneToolkit::Data::Text::implementation
 			token = wcstok_s(nullptr, delimiter.data(), &state);
 		}
 
-		return single_threaded_vector(std::move(values));
+		return single_threaded_vector(std::move(values)).GetView();
 	}
 }

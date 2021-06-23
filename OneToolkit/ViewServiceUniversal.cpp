@@ -4,6 +4,7 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::UI::ViewManagement;
+using namespace Windows::ApplicationModel::Core;
 
 namespace winrt::OneToolkit::UI
 {
@@ -45,12 +46,12 @@ namespace winrt::OneToolkit::UI
 		}
 	}
 
-	bool ViewServiceUniversal::ExtendViewIntoTitleBar() const
+	bool ViewServiceUniversal::ExtendsContentIntoTitleBar() const
 	{
 		return m_CoreAppView.TitleBar().ExtendViewIntoTitleBar();
 	}
 
-	void ViewServiceUniversal::ExtendViewIntoTitleBar(bool value)
+	void ViewServiceUniversal::ExtendsContentIntoTitleBar(bool value)
 	{
 		if (m_CoreAppView.TitleBar().ExtendViewIntoTitleBar() != value)
 		{
@@ -66,9 +67,24 @@ namespace winrt::OneToolkit::UI
 		return juv::as_value<int64_t>(windowHandle);
 	}
 
+	Rect ViewServiceUniversal::Bounds() const
+	{
+		return m_CoreAppView.CoreWindow().Bounds();
+	}
+
 	IInspectable ViewServiceUniversal::ReferenceSource() const noexcept
 	{
 		return m_CoreAppView.CoreWindow();
+	}
+
+	UserInteractionMode ViewServiceUniversal::InteractionMode() const
+	{
+		return m_ViewSettings.UserInteractionMode();
+	}
+
+	void ViewServiceUniversal::SetMinimumSize(Size const& minSize) const
+	{
+		m_AppView.SetPreferredMinSize(minSize);
 	}
 
 	IAsyncOperation<bool> ViewServiceUniversal::CloseAsync() const
