@@ -6,11 +6,43 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:OneToolkit.Showcase.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	xmlns:models="using:OneToolkit.Showcase.Models"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	mc:Ignorable="d">
 
 	<controls:HubPanel
 		x:Name="Panel"
 		Title="{x:Bind GroupData.DisplayName}"
-		UniformMargin="48" />
+		ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+		ScrollViewer.HorizontalScrollMode="Auto"
+		UniformMargin="48">
+		<controls:HubPanelSection x:Uid="ClassesPanel">
+			<GridView
+				ItemContainerTransitions="{x:Null}"
+				ItemsSource="{x:Bind GroupData.Classes}"
+				SelectionMode="None">
+				<GridView.ItemContainerStyle>
+					<Style TargetType="GridViewItem">
+						<Setter Property="Width" Value="280" />
+						<Setter Property="IsTabStop" Value="False" />
+						<Setter Property="Margin" Value="0,0,8,8" />
+						<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+					</Style>
+				</GridView.ItemContainerStyle>
+				<GridView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid Orientation="Vertical" />
+					</ItemsPanelTemplate>
+				</GridView.ItemsPanel>
+				<GridView.ItemTemplate>
+					<DataTemplate x:DataType="models:TypeGroup">
+						<controls:DescriptiveButton
+							Title="{x:Bind Name}"
+							HorizontalAlignment="Stretch"
+							Caption="{x:Bind DisplayName}" />
+					</DataTemplate>
+				</GridView.ItemTemplate>
+			</GridView>
+		</controls:HubPanelSection>
+	</controls:HubPanel>
 </Page>

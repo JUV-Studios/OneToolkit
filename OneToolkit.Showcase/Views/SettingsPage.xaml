@@ -14,13 +14,10 @@
 	<controls:HubPanel Loaded="HubPanel_Loaded">
 		<controls:HubPanelSection x:Uid="SettingsHubBrowsing">
 			<wctControls:WrapPanel>
-				<ComboBox x:Uid="ProgrammingLanguageBox" SelectedValue="{x:Bind viewModels:SettingsViewModel.Instance.SelectedProgrammingLanguage, Mode=TwoWay}">
-					<x:String>C#</x:String>
-					<x:String>C++/CX</x:String>
-					<x:String>C++/WinRT</x:String>
-					<x:String>Rust</x:String>
-					<x:String>Visual Basic</x:String>
-				</ComboBox>
+				<ComboBox
+					x:Uid="ProgrammingLanguageBox"
+					ItemsSource="{x:Bind viewModels:SettingsViewModel.ProgrammingLanguages}"
+					SelectedValue="{x:Bind viewModels:SettingsViewModel.Instance.SelectedProgrammingLanguage, Mode=TwoWay}" />
 			</wctControls:WrapPanel>
 		</controls:HubPanelSection>
 		<controls:HubPanelSection x:Uid="SettingsHubAbout">

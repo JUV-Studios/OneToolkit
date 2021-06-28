@@ -1,9 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 
 namespace OneToolkit.Runtime
 {
+	/// <summary>
+	/// Provides useful extension methods for reflection.
+	/// </summary>
 	public static class ReflectionExtensions
 	{
 		/// <summary>

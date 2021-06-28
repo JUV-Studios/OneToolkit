@@ -1,14 +1,14 @@
-import "Metadata.idl";
 import "Lifecycle.idl";
 
 namespace OneToolkit.UI
 {
-    interface IViewServiceProvider requires Windows.UI.Xaml.Data.INotifyPropertyChanged, OneToolkit.Lifecycle.IEquatable
+    interface IViewServiceProvider requires Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         String Title;
         Boolean IsFullScreen;
         Boolean IsDialogShown;
         Boolean ExtendsContentIntoTitleBar;
+        Boolean IsTitleBarVisibile { get; };
         Int64 WindowHandle { get; };
         Windows.Foundation.Rect Bounds { get; };
         [noexcept] Object ReferenceSource { get; };
@@ -21,6 +21,6 @@ namespace OneToolkit.UI
     static runtimeclass ViewService
     {
         static IViewServiceProvider GetForCurrentView();
-        [OneToolkit.Metadata.DesktopOnly] static IViewServiceProvider GetForWindowId(Int64 windowHandle);
+        static IViewServiceProvider GetForWindowId(Int64 windowHandle);
     }
 }

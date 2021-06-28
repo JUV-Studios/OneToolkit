@@ -30,7 +30,7 @@ namespace OneToolkit.Showcase.Views
 
 		public static readonly string[] ExcludedNamespaces = new[]
 		{
-			"OneToolkit.UI.Xaml.OneToolkit_UI_Xaml_XamlTypeInfo"
+			"OneToolkit.UI.Xaml.OneToolkit_UI_Xaml_XamlTypeInfo", "System.Runtime.CompilerServices", "Microsoft.CodeAnalysis"
 		};
 
 		public static IEnumerable<TypeGroup> FoundTypes;
@@ -56,20 +56,8 @@ namespace OneToolkit.Showcase.Views
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			App.NavView.PropertyChanged += NavView_PropertyChanged;
 			Namespaces.SelectedNode ??= Namespaces.RootNodes[0];
-			PaneTitle.Margin = App.NavView.IsDragRegionApplied ? new(24, 0, 24, 12) : new(24, 24, 24, 12);
 			if (DocsFrame.Content == null) NavigateToDocs(Namespaces.ItemFromContainer(Namespaces.ContainerFromNode(Namespaces.SelectedNode)) as TypeGroup);
-		}
-
-		private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-		{
-			App.NavView.PropertyChanged -= NavView_PropertyChanged;
-		}
-
-		private void NavView_PropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			if (e.PropertyName == "IsDragRegionApplied") PaneTitle.Margin = App.NavView.IsDragRegionApplied ? new(24, 0, 24, 12) : new(24, 24, 24, 12);
 		}
 
 		private void Namespaces_ItemInvoked(MUXC.TreeView sender, MUXC.TreeViewItemInvokedEventArgs args)
@@ -83,7 +71,15 @@ namespace OneToolkit.Showcase.Views
 
 		private void NavigateToDocs(TypeGroup typeGroup)
 		{
-			if (!typeGroup.IsType) DocsFrame.Navigate(typeof(NamespacePage), typeGroup, new DrillInNavigationTransitionInfo());
+			if (!typeGroup.IsType)
+			{
+				if (DocsFrame.Content is NamespacePage namespacePage)
+				{
+					if (namespacePage.GroupData == typeGroup) return;
+				}
+
+				DocsFrame.Navigate(typeof(NamespacePage), typeGroup, new DrillInNavigationTransitionInfo());
+			}
 		}
 	}
 }

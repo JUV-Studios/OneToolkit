@@ -18,15 +18,14 @@ namespace winrt::OneToolkit::Imaging::implementation
 	{
 		SharedFile sharedInput { input };
 		SharedFile sharedDestination { destination };
-		auto cropWidth = static_cast<int>(CropSize().Width);
-		auto cropHeight = static_cast<int>(CropSize().Height);
+		auto cropWidth = static_cast<int>(m_CropSize.Width);
+		auto cropHeight = static_cast<int>(m_CropSize.Height);
 		ValueSet parameters;
 		parameters.Insert(L"InputToken", box_value(sharedInput.Token()));
 		parameters.Insert(L"DestinationToken", box_value(sharedDestination.Token()));
 		parameters.Insert(L"CropWidthPixels", box_value(cropWidth));
 		parameters.Insert(L"CropHeightPixels", box_value(cropHeight));
-		parameters.Insert(L"EllipticalCrop", box_value(IsEllipticalCrop()));
-		parameters.Insert(L"ShowCamera", box_value(ShowCamera()));
+		parameters.Insert(L"EllipticalCrop", box_value(m_IsEllipticalCrop));
 		LauncherOptions options;
 		options.TargetApplicationPackageFamilyName(L"Microsoft.Windows.Photos_8wekyb3d8bbwe");
 		auto result = co_await Launcher::LaunchUriForResultsAsync(PickerUri, options);

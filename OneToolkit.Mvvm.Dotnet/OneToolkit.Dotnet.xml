@@ -1,0 +1,395 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OneToolkit.Dotnet</name>
+    </assembly>
+    <members>
+        <member name="T:OneToolkit.Data.Text.LineEnding">
+            <summary>
+            Represents a line ending scheme.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Data.Text.LineEndingHelper">
+            <summary>
+            Provides helper methods for dealing with line endings.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Data.Text.LineEndingHelper.IsNewLineString(System.String,OneToolkit.Data.Text.LineEnding@)">
+            <summary>
+            Gets whether a string represents a new line.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Data.Text.LineEndingHelper.GetNewLineString(OneToolkit.Data.Text.LineEnding)">
+            <summary>
+            Gets a string that represents the desired line ending.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Data.Text.LineEndingHelper.Normalize(System.String,OneToolkit.Data.Text.LineEnding)">
+            <summary>
+            Normalizes a string to use a single line ending for every new line.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Data.Text.StringExtensions">
+            <summary>
+            Provides high performance extension methods for strings.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Data.Text.StringExtensions.Clone(System.String)">
+            <summary>
+            Copies a string into a new instance.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Data.Text.StringExtensions.ReplaceCharacter(System.String,System.Char,System.Char)">
+            <summary>
+            Replaces a single character in a string without allocating a new one.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Mvvm.IBackingProvider`1">
+            <summary>
+            Represents an object the provides access to its internal data storage.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.IBackingProvider`1.GetBackingField">
+            <summary>
+            Enables access to the underlying data storage.
+            </summary>
+            <returns>A reference to the underlying data storage.</returns>
+        </member>
+        <member name="T:OneToolkit.Mvvm.INotifyValueChanged">
+            <summary>
+            Notifies clients that the value has changed.
+            </summary>
+        </member>
+        <member name="E:OneToolkit.Mvvm.INotifyValueChanged.ValueChanged">
+            <summary>
+            Occurs when the value held by this object changes. 
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Mvvm.ObservableBase">
+            <summary>
+            Provides a base class for view models and observable objects.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.#ctor(System.Boolean)">
+            <summary>
+            Creates a new instance of ObservableBase from a derived class. 
+            </summary>
+            <param name="suppressEvents">Optional initial value for the SuppressEvents property.</param>
+        </member>
+        <member name="P:OneToolkit.Mvvm.ObservableBase.SuppressEvents">
+            <summary>
+            Represents whether the property changing/property changed events will be raised or not.
+            </summary>
+        </member>
+        <member name="E:OneToolkit.Mvvm.ObservableBase.PropertyChanged">
+            <summary>
+            Occurs when a property value changes.
+            </summary>
+        </member>
+        <member name="E:OneToolkit.Mvvm.ObservableBase.PropertyChanging">
+            <summary>
+            Occurs when a property value is changing.
+            </summary>
+        </member>
+        <member name="E:OneToolkit.Mvvm.ObservableBase.ValueChanged">
+            <summary>
+            Occurs when the value held by this object changes.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.SetProperty``1(OneToolkit.Mvvm.ObservableBase,``0@,``0,System.String)">
+            <summary>
+            Enables access to the protected SetProperty method from the outside world.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.Raise(OneToolkit.Mvvm.ObservableBase,System.String,OneToolkit.Mvvm.PropertyEventType)">
+            <summary>
+            Enables access to the protected Raise method from the outside world.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.Raise(OneToolkit.Mvvm.ObservableBase,System.Object,System.Object)">
+            <summary>
+            Enables access to the protected Raise method from the outside world.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.Decide(System.String,OneToolkit.Mvvm.PropertyEventType)">
+            <summary>
+            Override this method to determine whether to raise property changed/property changing or not.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.WhenPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            Override this method to perform custom actions after raising the property changed event.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.WhenPropertyChanging(System.ComponentModel.PropertyChangingEventArgs)">
+            <summary>
+            Override this method to perform custom actions after raising the property changing event.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.SetProperty``1(``0@,``0,System.String)">
+            <summary>
+            Automatically sets a property value and raises property changing/property changed when required.
+            </summary>
+            <returns>True if the value was set, false if the value passed was equal to the existing value.</returns>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.Raise(System.String,OneToolkit.Mvvm.PropertyEventType)">
+            <summary>
+            Raises the specified property event for a specified property name.
+            </summary>
+            <param name="propertyName">The name of the property. Shouldn't be empty or only full of whitespaces.</param>
+            <param name="eventType">The type of the property event.</param>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.Raise(System.Object,System.Object)">
+            <summary>
+            Raises the value changed event on this object.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Mvvm.ObservableProperty`1">
+            <summary>
+            Represents an property which automatically raises property changed/property changing events when it's value is set.
+            </summary>
+            <typeparam name="T">The underlying type of the property.</typeparam>
+            <remarks>A field of this class must be only declared in a class that inherits from ObservableBase if you omit the holder parameter when constructing.</remarks>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableProperty`1.#ctor(System.String,`0,OneToolkit.Mvvm.ObservableBase)">
+            <summary>
+            Creates a new instance of ObservableProperty using an optional strong reference to the holder.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableProperty`1.#ctor(System.String,`0,System.WeakReference{OneToolkit.Mvvm.ObservableBase})">
+            <summary>
+            Creates a new instance of ObservableProperty using an optional weak reference to the holder.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableProperty`1.#ctor(OneToolkit.Mvvm.ObservableProperty{`0})">
+            <summary>
+            Creates a new instance of ObservableProperty based on an existing one.
+            </summary>
+            <param name="other">The other instance whose properties will be copied.</param>
+        </member>
+        <member name="F:OneToolkit.Mvvm.ObservableProperty`1.PropertyName">
+            <summary>
+            Gets the name of this ObservableProperty which will be used when raising property events. 
+            </summary>
+        </member>
+        <member name="P:OneToolkit.Mvvm.ObservableProperty`1.Value">
+            <summary>
+            Gets or sets the underlying value for this ObservableProperty instance.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableProperty`1.GetBackingField">
+            <summary>
+            Enables access to the underlying data storage.
+            </summary>
+            <returns>A reference to the underlying data storage.</returns>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableProperty`1.Equals(`0)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableProperty`1.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="obj">The object to compare with the current object.</param>
+            <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableProperty`1.GetHashCode">
+            <summary>
+            Serves as the default hash function.
+            </summary>
+            <returns>A hash code for the current object.</returns>
+        </member>
+        <member name="T:OneToolkit.Mvvm.ObservableValue`1">
+            <summary>
+            Represents a value that notifies when it's changed.
+            </summary>
+            <typeparam name="T">The underlying type of the property.</typeparam>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableValue`1.#ctor(`0,System.Boolean)">
+            <summary>
+            Creates a new instance of ObservableValue.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableValue`1.#ctor(OneToolkit.Mvvm.ObservableValue{`0})">
+            <summary>
+            Creates a new instance of ObservableValue based on an existing one.
+            </summary>
+            <param name="other">The other instance whose properties will be copied.</param>
+        </member>
+        <member name="P:OneToolkit.Mvvm.ObservableValue`1.SuppressEvents">
+            <summary>
+            Represents whether the property changing/property changed events will be raised or not.
+            </summary>
+        </member>
+        <member name="P:OneToolkit.Mvvm.ObservableValue`1.Value">
+            <summary>
+            Gets or sets the underlying value for this ObservableValue instance. Automatically raises PropertyChanging/PropertyChanged when you set it unless suppress is enabled.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableValue`1.GetBackingField">
+            <summary>
+            Enables access to the underlying data storage.
+            </summary>
+            <returns>A reference to the underlying data storage.</returns>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableValue`1.Equals(`0)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableValue`1.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="obj">The object to compare with the current object.</param>
+            <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableValue`1.GetHashCode">
+            <summary>
+            Serves as the default hash function.
+            </summary>
+            <returns>A hash code for the current object.</returns>
+        </member>
+        <member name="T:OneToolkit.Mvvm.PropertyEventType">
+            <summary>
+            Represents the type of a property related event.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Mvvm.IDefaultCommand">
+            <summary>
+            Defines a command with a default argument.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.IDefaultCommand.Execute">
+            <summary>
+            Defines the method to be called when the command is invoked using the default argument.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.IDefaultCommand.CanExecute">
+            <summary>
+            Defines the method that determines whether the command can execute in its current state using the default argument.
+            </summary>
+            <returns>true if this command can be executed; otherwise, false.</returns>
+        </member>
+        <member name="P:OneToolkit.Mvvm.IDefaultCommand.DefaultParameter">
+            <summary>
+            The default argument that will be used for CanExecute and Execute methods respectively if an argument isn't provided.
+            </summary>
+        </member>
+        <member name="P:OneToolkit.Mvvm.IDefaultCommand.IsEnabled">
+            <summary>
+            Gets whether the command can be executed with the default argument.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Mvvm.RelayCommand">
+            <summary>
+            Provides a bindable command which can choose to execute or not.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.RelayCommand.#ctor(System.Action{OneToolkit.Mvvm.RelayCommand,System.Object})">
+            <summary>
+            Creates a new instance of RelayCommand using a functor and decider.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.RelayCommand.#ctor(System.Action{OneToolkit.Mvvm.RelayCommand,System.Object},System.Func{OneToolkit.Mvvm.RelayCommand,System.Object,System.Boolean})">
+            <summary>
+            Creates a new instance of RelayCommand using a functor and decider.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.RelayCommand.#ctor(System.Action{OneToolkit.Mvvm.RelayCommand,System.Object},System.Func{OneToolkit.Mvvm.RelayCommand,System.Object,System.Boolean},System.String)">
+            <summary>
+            Creates a new instance of RelayCommand using a functor and decider along with a name.
+            </summary>
+        </member>
+        <member name="F:OneToolkit.Mvvm.RelayCommand.PropertyName">
+            <summary>
+            Gets the name of this RelayCommand which will be used when raising property events. 
+            </summary>
+        </member>
+        <member name="P:OneToolkit.Mvvm.RelayCommand.DefaultParameter">
+            <summary>
+            The default argument that will be used for CanExecute and Execute methods respectively if an argument isn't provided.
+            </summary>
+        </member>
+        <member name="E:OneToolkit.Mvvm.RelayCommand.CanExecuteChanged">
+            <summary>
+            Occurs when changes occur that affect whether or not the command should execute.
+            </summary>
+        </member>
+        <member name="P:OneToolkit.Mvvm.RelayCommand.IsEnabled">
+            <summary>
+            Gets whether the command can be executed with the default argument.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.RelayCommand.CanExecute">
+            <summary>
+            Defines the method that determines whether the command can execute in its current state using the default argument.
+            </summary>
+            <returns>true if this command can be executed, otherwise false.</returns>
+        </member>
+        <member name="M:OneToolkit.Mvvm.RelayCommand.CanExecute(System.Object)">
+            <summary>
+            Defines the method that determines whether the command can execute in its current state.
+            </summary>
+            <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to null.</param>
+            <returns>true if this command can be executed; otherwise, false.</returns>
+        </member>
+        <member name="M:OneToolkit.Mvvm.RelayCommand.Execute">
+            <summary>
+            Defines the method to be called when the command is invoked using the default argument.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.RelayCommand.Execute(System.Object)">
+            <summary>
+            Defines the method to be called when the command is invoked.
+            </summary>
+            <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to null.</param>
+        </member>
+        <member name="M:OneToolkit.Mvvm.RelayCommand.Raise">
+            <summary>
+            Raises the CanExecuteChanged event and PropertyChanged for IsEnabled when used as a field in a class that derives from ObservableBase.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Mvvm.ValueChangedEventArgs">
+            <summary>
+            Provides data for the ValueChanged event.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ValueChangedEventArgs.#ctor(System.Object,System.Object)">
+            <summary>
+            Creates a new instance of ValueChangedEventArgs.
+            </summary>
+        </member>
+        <member name="F:OneToolkit.Mvvm.ValueChangedEventArgs.OldValue">
+            <summary>
+            The value before the change.
+            </summary>
+        </member>
+        <member name="F:OneToolkit.Mvvm.ValueChangedEventArgs.NewValue">
+            <summary>
+            The value after the change.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Runtime.ReflectionExtensions">
+            <summary>
+            Provides useful extension methods for reflection.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Runtime.ReflectionExtensions.IsWinMD(System.Reflection.Assembly)">
+            <summary>
+            Gets whether an assembly represents a Windows Runtime metadata file.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Runtime.ReflectionExtensions.GetDllFileName(System.Reflection.Assembly)">
+            <summary>
+            Gets the implementation file name of an assembly.
+            </summary>
+        </member>
+    </members>
+</doc>

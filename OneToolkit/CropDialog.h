@@ -10,9 +10,8 @@ namespace winrt::OneToolkit::Imaging
             CropDialog() = default;
             static Windows::Foundation::IAsyncOperation<bool> IsSupportedAsync();
             Windows::Foundation::IAsyncOperation<bool> CropAsync(Windows::Storage::StorageFile input, Windows::Storage::StorageFile destination) const;
-            Mvvm::AutoProperty<bool> ShowCamera;
-            Mvvm::AutoProperty<bool> IsEllipticalCrop;
-            Mvvm::AutoProperty<Windows::Foundation::Size> CropSize { {500, 500} };
+            DeclareAutoProperty(bool, IsEllipticalCrop, false);
+            DeclareAutoProperty(Windows::Foundation::Size, CropSize, Windows::Foundation::Size(500, 500));
         };
     }
 

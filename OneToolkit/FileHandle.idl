@@ -17,6 +17,7 @@ namespace OneToolkit.Storage
         String FileName { get; };
         UInt64 FileSize { get; };
         [noexcept] UInt64 UnderlyingHandle { get; };
+        [noexcept] FileSharingMode SharingMode { get; };
         [noexcept] Windows.Storage.FileAccessMode AccessMode { get; };
     }
 }

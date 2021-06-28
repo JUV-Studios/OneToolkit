@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace OneToolkit.Mvvm
 {
@@ -7,7 +8,7 @@ namespace OneToolkit.Mvvm
 	/// Represents a value that notifies when it's changed.
 	/// </summary>
 	/// <typeparam name="T">The underlying type of the property.</typeparam>
-	public sealed class ObservableValue<T> : ObservableBase, INotifyValueChanged, IBackingProvider<T>
+	public sealed class ObservableValue<T> : ObservableBase, IBackingProvider<T>
 	{
 		private T BackingField;
 
@@ -46,11 +47,9 @@ namespace OneToolkit.Mvvm
 			set
 			{
 				var previousValue = BackingField;
-				if (SetProperty(ref BackingField, value)) ValueChanged(this, new(previousValue, value));
+				if (SetProperty(ref BackingField, value)) Raise(previousValue, value);
 			}
 		}
-
-		public event EventHandler<ValueChangedEventArgs> ValueChanged;
 
 		/// <summary>
 		/// Enables access to the underlying data storage.
@@ -58,8 +57,18 @@ namespace OneToolkit.Mvvm
 		/// <returns>A reference to the underlying data storage.</returns>
 		public ref T GetBackingField() => ref BackingField;
 
+		/// <summary>
+		/// Indicates whether the current object is equal to another object of the same type.
+		/// </summary>
+		/// <param name="other">An object to compare with this object.</param>
+		/// <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
 		public bool Equals(T other) => EqualityComparer<T>.Default.Equals(BackingField, other);
 
+		/// <summary>
+		/// Determines whether the specified object is equal to the current object.
+		/// </summary>
+		/// <param name="obj">The object to compare with the current object.</param>
+		/// <returns>true if the specified object is equal to the current object; otherwise, false.</returns>
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(this, obj) || ReferenceEquals(BackingField, obj)) return true;
@@ -68,6 +77,10 @@ namespace OneToolkit.Mvvm
 			else return false;
 		}
 
+		/// <summary>
+		/// Serves as the default hash function.
+		/// </summary>
+		/// <returns>A hash code for the current object.</returns>
 		public override int GetHashCode() => (BackingField?.GetHashCode()).GetValueOrDefault(base.GetHashCode());
 	}
 }

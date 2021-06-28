@@ -25,9 +25,6 @@
     <Filter Include="UI\Input">
       <UniqueIdentifier>{bc0906ea-cd09-4eb6-9e18-09c3cc7d72af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mvvm">
-      <UniqueIdentifier>{8d050e19-c8ad-484a-a5ae-09de97d085ec}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ViewService.cpp">
@@ -40,9 +37,6 @@
     </ClCompile>
     <ClCompile Include="ViewServiceUniversal.cpp">
       <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="ObservableValue.cpp">
-      <Filter>Mvvm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,9 +58,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="LineEndingHelper.idl">
-      <Filter>Data\Text</Filter>
-    </Midl>
     <Midl Include="StringOperations.idl">
       <Filter>Data\Text</Filter>
     </Midl>
@@ -88,7 +79,6 @@
     <Midl Include="FileHandle.idl">
       <Filter>Storage</Filter>
     </Midl>
-    <Midl Include="Metadata.idl" />
     <Midl Include="ImageResizer.idl">
       <Filter>Imaging</Filter>
     </Midl>
@@ -110,9 +100,6 @@
     </Midl>
     <Midl Include="KeyStateHelper.idl">
       <Filter>UI\Input</Filter>
-    </Midl>
-    <Midl Include="Mvvm.idl">
-      <Filter>Mvvm</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>

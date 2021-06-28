@@ -5,7 +5,7 @@
 namespace winrt::OneToolkit::UI
 {
 	template <typename Derived>
-	struct ViewServiceBase : implements<Derived, IViewServiceProvider, Lifecycle::IEquatable, Windows::UI::Xaml::Data::INotifyPropertyChanged, non_agile>, Mvvm::ObservableBase<Derived>, Lifecycle::Equatable<Derived>
+	struct ViewServiceBase : implements<Derived, IViewServiceProvider, Windows::UI::Xaml::Data::INotifyPropertyChanged, non_agile>, Mvvm::ObservableBase<Derived>
 	{
 	public:
 		bool IsDialogShown()
@@ -23,10 +23,9 @@ namespace winrt::OneToolkit::UI
 			}
 		}
 
-		bool operator==(Windows::Foundation::IInspectable const& another) const noexcept
+		bool IsTitleBarVisibile() const
 		{
-			if (auto viewServiceProvider = another.try_as<IViewServiceProvider>()) return viewServiceProvider.WindowHandle() == static_cast<const Derived*>(this)->WindowHandle();
-			else return false;
+			return !static_cast<Derived const*>(this)->IsFullScreen() && static_cast<Derived const*>(this)->InteractionMode() == Windows::UI::ViewManagement::UserInteractionMode::Mouse;
 		}
 	private:
 		std::wstring m_DialogShownKey;

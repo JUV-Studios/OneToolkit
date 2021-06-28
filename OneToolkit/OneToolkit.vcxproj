@@ -217,10 +217,6 @@
       <DependentUpon>KeyStateHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="LineEndingHelper.h">
-      <DependentUpon>LineEndingHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="MemoryBufferHelper.h">
       <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -281,10 +277,6 @@
     </ClCompile>
     <ClCompile Include="KeyStateHelper.cpp">
       <DependentUpon>KeyStateHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="LineEndingHelper.cpp">
-      <DependentUpon>LineEndingHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="MemoryBufferHelper.cpp">
@@ -362,15 +354,10 @@
     <Midl Include="KeyStateHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="Mvvm.idl" />
     <Midl Include="Lifecycle.idl" />
-    <Midl Include="LineEndingHelper.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="MemoryBufferHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="Metadata.idl" />
     <Midl Include="SettingsService.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -394,7 +381,9 @@
     </Midl>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="readme.txt" />
+    <Text Include="readme.txt">
+      <DeploymentContent>false</DeploymentContent>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

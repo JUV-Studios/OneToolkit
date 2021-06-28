@@ -31,9 +31,4 @@ namespace OneToolkit.Lifecycle
 		Boolean HasInitialized { get; };
 		Windows.Foundation.IAsyncAction InitializeAsync();
 	};
-
-	interface IEquatable
-	{
-		[noexcept] Boolean IsEqual(Object another);
-	};
 }

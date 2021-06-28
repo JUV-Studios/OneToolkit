@@ -5,36 +5,28 @@
 
 #pragma once
 #include "PageView.g.h"
+#include "ContentFrame.xaml.h"
 #include "PageViewLinkItem.h"
 #include "PageViewContentItem.h"
 
 namespace OneToolkit::UI::Xaml::Controls
 {
 	[Windows::Foundation::Metadata::WebHostHidden]
-	public delegate void PageViewMenuItemInvokedHandler(PageView^ sender, Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs^ args);
+	public delegate void PageViewMenuItemInvokedHandler(PageView^ sender, MUXC::NavigationViewItemInvokedEventArgs^ args);
 
 	[Windows::Foundation::Metadata::WebHostHidden]
-	public delegate void PageViewMenuSelectionChangedHandler(PageView^ sender, Microsoft::UI::Xaml::Controls::NavigationViewSelectionChangedEventArgs^ args);
-	
-	/// <summary>
-	/// Extends NavigationView to handle content navigation automatically.
-	/// </summary>
+	public delegate void PageViewMenuSelectionChangedHandler(PageView^ sender, MUXC::NavigationViewSelectionChangedEventArgs^ args);
+
 	[Windows::Foundation::Metadata::WebHostHidden]
-	public ref class PageView sealed : OneToolkit::Mvvm::INotifyPropertyChanging, Windows::UI::Xaml::Data::INotifyPropertyChanged
+	public ref class PageView sealed
 	{
 	public:
 		PageView();
 
-		property IViewServiceProvider^ ViewServiceProvider
+		property bool SyncBackWithSystem
 		{
-			IViewServiceProvider^ get();
-			void set(IViewServiceProvider^ value);
-		}
-
-		property Windows::UI::Xaml::UIElement^ CurrentContent
-		{
-			Windows::UI::Xaml::UIElement^ get();
-			void set(Windows::UI::Xaml::UIElement^ value);
+			bool get();
+			void set(bool value);
 		}
 
 		property Windows::UI::Xaml::UIElement^ SettingsContent
@@ -43,45 +35,49 @@ namespace OneToolkit::UI::Xaml::Controls
 			void set(Windows::UI::Xaml::UIElement^ value);
 		}
 
-		property bool IsDragRegionEnabled
+		property Media::Animation::IContentTransition^ ContentTransition
 		{
-			bool get();
-			void set(bool value);
+			Media::Animation::IContentTransition^ get();
+			void set(Media::Animation::IContentTransition^ value);
 		}
 
-		property bool IsDragRegionApplied
-		{
-			bool get();
-		}
-
-		static property Windows::UI::Xaml::DependencyProperty^ IsDragRegionEnabledProperty
+		static property Windows::UI::Xaml::DependencyProperty^ SettingsContentProperty
 		{
 			Windows::UI::Xaml::DependencyProperty^ get();
 		}
 
-		/*property bool SyncBackButtonWithSystem
+		static property Windows::UI::Xaml::DependencyProperty^ ContentTransitionProperty
 		{
-			bool get();
-			void set(bool value);
-		}*/
+			Windows::UI::Xaml::DependencyProperty^ get();
+		}
+
+		static property Windows::UI::Xaml::DependencyProperty^ SyncBackWithSystemProperty
+		{
+			Windows::UI::Xaml::DependencyProperty^ get();
+		}
+
+		void Navigate(Windows::UI::Xaml::UIElement^ content);
+
+		void InvokeItem(MUXC::NavigationViewItemBase^ navViewitem);
 
 		event PageViewMenuItemInvokedHandler^ MenuItemInvoked;
 
 		event PageViewMenuSelectionChangedHandler^ MenuSelectionChanged;
 
-		virtual event OneToolkit::Mvvm::PropertyChangingEventHandler^ PropertyChanging;
-
-		virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
+		MUXC::NavigationViewItemBase^ ItemFromContent(Windows::UI::Xaml::UIElement^ content);		
 	private:
-		bool m_UseDefaultTransitions = true;
-		IViewServiceProvider^ m_ViewServiceProvider;
-		Windows::UI::Xaml::UIElement^ m_SettingsContent;
-		static Windows::UI::Xaml::DependencyProperty^ m_IsDragRegionEnabledProperty;
-		static void OnPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
-		void SetDragRegionProperties();
+		MUXC::NavigationViewItemInvokedEventArgs^ m_LastInvokedArgs;
+		Windows::Foundation::EventRegistrationToken m_PropertyChangedToken;
+		static Windows::UI::Xaml::DependencyProperty^ m_SettingsContentProperty;
+		static Windows::UI::Xaml::DependencyProperty^ m_ContentTransitionProperty;
+		static Windows::UI::Xaml::DependencyProperty^ m_SyncBackWithSystemProperty;
+		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
+		MUXC::NavigationViewItemBase^ FindContentItem(Windows::Foundation::Collections::IVector<Platform::Object^>^ collection, Windows::UI::Xaml::UIElement^ content);
+		void OnPropertyChanged(Platform::Object^ sender, Windows::UI::Xaml::Data::PropertyChangedEventArgs^ e);
 		void NavigationView_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-		void NavigationView_SizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e);
-		void NavigationView_ItemInvoked(Microsoft::UI::Xaml::Controls::NavigationView^ sender, Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs^ args);
-		void NavigationView_SelectionChanged(Microsoft::UI::Xaml::Controls::NavigationView^ sender, Microsoft::UI::Xaml::Controls::NavigationViewSelectionChangedEventArgs^ args);
+		void NavigationView_Unloaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void NavigationView_ItemInvoked(MUXC::NavigationView^ sender, MUXC::NavigationViewItemInvokedEventArgs^ args);
+		void NavigationView_SelectionChanged(MUXC::NavigationView^ sender, MUXC::NavigationViewSelectionChangedEventArgs^ args);
+		void NavigationView_BackRequested(MUXC::NavigationView^ sender, MUXC::NavigationViewBackRequestedEventArgs^ args);
 	};
 }

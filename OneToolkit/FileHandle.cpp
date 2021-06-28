@@ -14,20 +14,15 @@ namespace winrt::OneToolkit::Storage::implementation
 		return accessMode == FileAccessMode::Read ? HAO_READ | HAO_READ_ATTRIBUTES : HAO_READ | HAO_READ_ATTRIBUTES | HAO_WRITE | HAO_DELETE;
 	}
 
-	FileHandle::FileHandle(StorageFile const& file, FileAccessMode accessMode, FileSharingMode sharingMode) : m_FileName(file.Name()), m_AccessMode(accessMode)
+	FileHandle::FileHandle(StorageFile const& file, FileAccessMode accessMode, FileSharingMode sharingMode) : m_FileName(file.Name()), m_AccessMode(accessMode), m_SharingMode(sharingMode)
 	{
 		check_hresult(file.as<IStorageItemHandleAccess>()->Create(AsAccessOption(accessMode), static_cast<HANDLE_SHARING_OPTIONS>(sharingMode), HO_NONE, nullptr, m_FileHandle.put()));
 	}
 
-	FileHandle::FileHandle(StorageFolder const& folder, hstring const& fileName, FileAccessMode accessMode, FileSharingMode sharingMode) : m_FileName(fileName), m_AccessMode(accessMode)
+	FileHandle::FileHandle(StorageFolder const& folder, hstring const& fileName, FileAccessMode accessMode, FileSharingMode sharingMode) : m_FileName(fileName), m_AccessMode(accessMode), m_SharingMode(sharingMode)
 	{
 		check_hresult(folder.as<IStorageFolderHandleAccess>()->Create(fileName.data(), HCO_CREATE_NEW, AsAccessOption(accessMode), static_cast<HANDLE_SHARING_OPTIONS>(sharingMode), HO_NONE, nullptr,
 			m_FileHandle.put()));
-	}
-
-	hstring FileHandle::FileName() const noexcept
-	{
-		return m_FileName;
 	}
 
 	uint64 FileHandle::FileSize() const
@@ -40,10 +35,5 @@ namespace winrt::OneToolkit::Storage::implementation
 	uint64 FileHandle::UnderlyingHandle() const noexcept
 	{
 		return juv::as_value<int64>(m_FileHandle.get());
-	}
-
-	FileAccessMode FileHandle::AccessMode() const noexcept
-	{
-		return m_AccessMode;
 	}
 }

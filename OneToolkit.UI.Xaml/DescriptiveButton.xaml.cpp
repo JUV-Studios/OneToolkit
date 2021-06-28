@@ -21,37 +21,41 @@ using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
+DeclareDependencyProperty(String, DescriptiveButton, Title, "");
+
+DeclareDependencyProperty(String, DescriptiveButton, Caption, "");
+
 DescriptiveButton::DescriptiveButton()
 {
 	InitializeComponent();
 }
 
+void DescriptiveButton::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)
+{
+	dynamic_cast<DescriptiveButton^>(sender)->SetProperties();
+}
+
+void DescriptiveButton::SetProperties()
+{
+	AutomationProperties::SetName(this, Title + L", " + Caption);
+}
+
 String^ DescriptiveButton::Title::get()
 {
-	return m_Title;
+	return GetValue(m_TitleProperty)->ToString();
 }
 
 void DescriptiveButton::Title::set(String^ value)
 {
-	if (m_Title != value)
-	{
-		m_Title = value;
-		AutomationProperties::SetName(this, m_Title + L", " + m_Caption);
-		PropertyChanged(this, ref new PropertyChangedEventArgs(L"Title"));
-	}
+	SetValue(m_TitleProperty, value);
 }
 
 String^ DescriptiveButton::Caption::get()
 {
-	return m_Caption;
+	return GetValue(m_CaptionProperty)->ToString();
 }
 
 void DescriptiveButton::Caption::set(String^ value)
 {
-	if (m_Caption != value)
-	{
-		m_Caption = value;
-		AutomationProperties::SetName(this, m_Title + L", " + m_Caption);
-		PropertyChanged(this, ref new PropertyChangedEventArgs(L"Caption"));
-	}
+	SetValue(m_CaptionProperty, value);
 }

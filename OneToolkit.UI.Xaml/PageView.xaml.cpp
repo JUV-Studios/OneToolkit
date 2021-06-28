@@ -5,6 +5,7 @@
 
 #include "pch.h"
 #include "PageView.xaml.h"
+#include "SlideContentTransition.h"
 
 using namespace Platform;
 using namespace Concurrency;
@@ -12,8 +13,10 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::System;
+using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Shapes;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Data;
@@ -22,133 +25,148 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::ViewManagement;
-using namespace OneToolkit::Mvvm;
 using namespace OneToolkit::UI;
 using namespace OneToolkit::UI::Xaml::Controls;
+using namespace OneToolkit::UI::Xaml::Media::Animation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-DependencyProperty^ PageView::m_IsDragRegionEnabledProperty = DependencyProperty::Register("IsDragRegionEnabled", bool::typeid, PageView::typeid, 
-	ref new PropertyMetadata(false, ref new PropertyChangedCallback(&PageView::OnPropertyChanged)));
+DeclareDependencyProperty(bool, PageView, SyncBackWithSystem, true);
+
+DeclareDependencyProperty(UIElement, PageView, SettingsContent, nullptr);
+
+DeclareDependencyProperty(IContentTransition, PageView, ContentTransition, ref new SlideContentTransition);
 
 PageView::PageView()
 {
 	InitializeComponent();
-	IsTitleBarAutoPaddingEnabled = false;
 }
 
-IViewServiceProvider^ PageView::ViewServiceProvider::get()
+bool PageView::SyncBackWithSystem::get()
 {
-	if (m_ViewServiceProvider == nullptr) m_ViewServiceProvider = ViewService::GetForCurrentView();
-	return m_ViewServiceProvider;
+	return static_cast<bool>(GetValue(m_SyncBackWithSystemProperty));
 }
 
-void PageView::ViewServiceProvider::set(IViewServiceProvider^ value)
+void PageView::SyncBackWithSystem::set(bool value)
 {
-	m_ViewServiceProvider = value;
-}
-
-UIElement^ PageView::CurrentContent::get()
-{
-	return dynamic_cast<UIElement^>(PageContent->Content);
-}
-
-void PageView::CurrentContent::set(UIElement^ value)
-{
-	if (CurrentContent != value)
-	{
-		PropertyChangingEventArgs changingArgs;
-		changingArgs.PropertyName = "CurrentContent";
-		PropertyChanging(this, changingArgs);
-		PageContent->Content = value;
-		PropertyChanged(this, ref new PropertyChangedEventArgs("CurrentContent"));
-	}
+	SetValue(m_SyncBackWithSystemProperty, value);
 }
 
 UIElement^ PageView::SettingsContent::get()
 {
-	return m_SettingsContent;
+	return dynamic_cast<UIElement^>(GetValue(m_SettingsContentProperty));
 }
 
 void PageView::SettingsContent::set(UIElement^ value)
 {
-	if (m_SettingsContent != value)
+	SetValue(m_SettingsContentProperty, value);
+}
+
+IContentTransition^ PageView::ContentTransition::get()
+{
+	return dynamic_cast<IContentTransition^>(GetValue(m_ContentTransitionProperty));
+}
+
+void PageView::ContentTransition::set(IContentTransition^ value)
+{
+	SetValue(m_ContentTransitionProperty, value);
+}
+
+MUXC::NavigationViewItemBase^ PageView::ItemFromContent(UIElement^ content)
+{
+	if (!content) return nullptr;
+	if (content == SettingsContent)
 	{
-		if (SelectedItem != nullptr && SelectedItem == SettingsItem) CurrentContent = value;
-		m_SettingsContent = value;
-		PropertyChanged(this, ref new PropertyChangedEventArgs("SettingsContent"));
-	}
-}
-
-bool PageView::IsDragRegionEnabled::get()
-{
-	return static_cast<bool>(GetValue(m_IsDragRegionEnabledProperty));
-}
-
-void PageView::IsDragRegionEnabled::set(bool value)
-{
-	SetValue(m_IsDragRegionEnabledProperty, value);
-}
-
-bool PageView::IsDragRegionApplied::get()
-{
-	return IsDragRegionEnabled && ViewServiceProvider->InteractionMode == UserInteractionMode::Mouse && !ViewServiceProvider->IsFullScreen;
-}
-
-DependencyProperty^ PageView::IsDragRegionEnabledProperty::get()
-{
-	return m_IsDragRegionEnabledProperty;
-}
-
-void PageView::OnPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)
-{
-	if (e->Property == m_IsDragRegionEnabledProperty) dynamic_cast<PageView^>(sender)->SetDragRegionProperties();
-}
-
-void PageView::SetDragRegionProperties()
-{
-	if (IsDragRegionApplied)
-	{
-		auto titleBarHeight = CoreApplication::GetCurrentView()->TitleBar->Height;
-		DragRegion->Height = titleBarHeight == 0 ? 32 : titleBarHeight;
-		DragRegion->Visibility = Windows::UI::Xaml::Visibility::Visible;
-		Window::Current->SetTitleBar(DragRegion);
+		return dynamic_cast<MUXC::NavigationViewItemBase^>(SettingsItem);
 	}
 	else
 	{
-		DragRegion->Height = 0;
-		DragRegion->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
-		Window::Current->SetTitleBar(nullptr);
+		auto found = FindContentItem(MenuItems, content);
+		if (found == nullptr) found = FindContentItem(FooterMenuItems, content);
+		return found;
+	}
+}
+
+void PageView::Navigate(UIElement^ content)
+{
+	Frame->Navigate(content);
+}
+
+void PageView::InvokeItem(MUXC::NavigationViewItemBase^ navViewitem)
+{
+	throw ref new Platform::NotImplementedException();
+}
+
+void PageView::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)
+{
+	auto pageView = dynamic_cast<PageView^>(sender);
+	if (e->Property == m_SettingsContentProperty)
+	{
+		if (pageView->SelectedItem != nullptr && pageView->SelectedItem == pageView->SettingsItem) pageView->Frame->Content = dynamic_cast<UIElement^>(e->NewValue);
+	}
+}
+
+MUXC::NavigationViewItemBase^ PageView::FindContentItem(IVector<Object^>^ collection, UIElement^ content)
+{
+	for (auto const& item : collection)
+	{
+		if (auto pageViewContentItem = dynamic_cast<PageViewContentItem^>(static_cast<Object^>(item)))
+		{
+			if (pageViewContentItem->SelectionContent == content) return pageViewContentItem;
+		}
 	}
 
-	PropertyChanged(this, ref new PropertyChangedEventArgs("IsDragRegionApplied"));
+	return nullptr;
+}
+
+void PageView::OnPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+{
+	if (e->PropertyName == "CanGoBack") IsBackEnabled = Frame->CanGoBack;
+	else if (e->PropertyName == "Content") SelectedItem = ItemFromContent(dynamic_cast<UIElement^>(Frame->Content));
 }
 
 void PageView::NavigationView_Loaded(Object^ sender, RoutedEventArgs^ e)
 {
-	SetDragRegionProperties();
+	m_PropertyChangedToken = Frame->PropertyChanged += ref new PropertyChangedEventHandler(this, &PageView::OnPropertyChanged);
 }
 
-void PageView::NavigationView_SizeChanged(Object^ sender, SizeChangedEventArgs^ e)
+void PageView::NavigationView_Unloaded(Object^ sender, RoutedEventArgs^ e)
 {
-	SetDragRegionProperties();
+	Frame->PropertyChanged -= m_PropertyChangedToken;
 }
 
-void PageView::NavigationView_ItemInvoked(Microsoft::UI::Xaml::Controls::NavigationView^, Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs^ args)
+void PageView::NavigationView_ItemInvoked(MUXC::NavigationView^, MUXC::NavigationViewItemInvokedEventArgs^ args)
 {
 	// Handle navigation in selection changed for items that selects on invoked and others here
-	auto navViewItem = dynamic_cast<Microsoft::UI::Xaml::Controls::NavigationViewItem^>(args->InvokedItemContainer);
+	m_LastInvokedArgs = args;
+	auto navViewItem = dynamic_cast<MUXC::NavigationViewItem^>(args->InvokedItemContainer);
 	if (navViewItem != nullptr ? !navViewItem->SelectsOnInvoked : true)
 	{
-		if (args->IsSettingsInvoked && SettingsContent != nullptr) CurrentContent = SettingsContent;
+		if (args->IsSettingsInvoked && SettingsContent != nullptr) Navigate(SettingsContent);
 		else if (auto pageViewItem = dynamic_cast<PageViewItemBase^>(args->InvokedItemContainer)) pageViewItem->Invoke(this);
 		else MenuItemInvoked(this, args);
 	}
 }
 
-void PageView::NavigationView_SelectionChanged(Microsoft::UI::Xaml::Controls::NavigationView^ sender, Microsoft::UI::Xaml::Controls::NavigationViewSelectionChangedEventArgs^ args)
+void PageView::NavigationView_SelectionChanged(MUXC::NavigationView^ sender, MUXC::NavigationViewSelectionChangedEventArgs^ args)
 {
-	if (args->IsSettingsSelected && SettingsContent != nullptr) CurrentContent = SettingsContent;
-	else if (auto pageViewItem = dynamic_cast<PageViewItemBase^>(args->SelectedItemContainer)) pageViewItem->Invoke(this);
-	else MenuSelectionChanged(this, args);
+	if (args->IsSettingsSelected && SettingsContent != nullptr)
+	{
+		Navigate(SettingsContent);
+	}
+	else if (auto pageViewItem = dynamic_cast<PageViewItemBase^>(args->SelectedItemContainer))
+	{
+		pageViewItem->Invoke(this);
+	}
+	else
+	{
+		MenuItemInvoked(this, m_LastInvokedArgs);
+		MenuSelectionChanged(this, args);
+		m_LastInvokedArgs = nullptr;
+	}
+}
+
+void PageView::NavigationView_BackRequested(MUXC::NavigationView^ sender, MUXC::NavigationViewBackRequestedEventArgs^ args)
+{
+	Frame->GoBack();
 }

@@ -3,10 +3,8 @@
 #pragma once
 #include <juv.h>
 #include <concepts>
-#include <winerror.h>
-#include <debugapi.h>
+#include <Windows.h>
 #include <winrt/OneToolkit.UI.h>
-#include <winrt/OneToolkit.Mvvm.h>
 #include <winrt/OneToolkit.Imaging.h>
 #include <winrt/OneToolkit.Storage.h>
 #include <winrt/Windows.UI.Xaml.Data.h>
@@ -16,6 +14,10 @@
 #define DeclareEvent(Type, Name) private: ::winrt::event<Type> m_##Name;\
 public: ::winrt::event_token Name(Type const& handler) { return m_##Name.add(handler); }\
 void Name(::winrt::event_token token) noexcept { m_##Name.remove(token); }
+
+#define DeclareAutoProperty(Type, Name, DefaultValue) private: Type m_##Name = DefaultValue;\
+public: Type Name() const noexcept { return m_##Name; }\
+void Name(Type value) noexcept { m_##Name = value; }
 
 #define DeclareObservableProperty(Type, Name, DefaultValue) private: Type m_##Name = DefaultValue;\
 public: Type Name() const noexcept { return m_##Name; }\
@@ -29,17 +31,46 @@ namespace winrt::OneToolkit
 	template <typename T>
 	concept WindowsRuntimeType = winrt::impl::has_category_v<T>;
 
+	/// <summary>
+	/// Provides the ability to find about and communicate with the debugger.
+	/// </summary>
 	namespace Debugger
 	{
+		/// <summary>
+		/// Signals a breakpoint to an attached debugger for the current process.
+		/// </summary>
 		inline void Break() noexcept
 		{
 			DebugBreak();
 		}
 
+		/// <summary>
+		/// Gets whether a debugger is attached to the current process.
+		/// </summary>
 		inline bool IsAttached() noexcept
 		{
 			return IsDebuggerPresent() != 0;
 		}
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+		/// <summary>
+		/// Signals a breakpoint to an attached debugger for the specified process using its handle.
+		/// </summary>
+		inline void Break(HANDLE processHandle)
+		{
+			check_bool(DebugBreakProcess(processHandle));
+		}
+
+		/// <summary>
+		/// Gets whether a debugger is attached to a specified process using its handle.
+		/// </summary>
+		inline bool IsAttached(HANDLE processHandle)
+		{
+			int result;
+			check_bool(CheckRemoteDebuggerPresent(processHandle, &result));
+			return result != false;
+		}
+#endif
 
 		inline void Write(std::string_view text) noexcept
 		{
@@ -51,14 +82,16 @@ namespace winrt::OneToolkit
 			OutputDebugStringW(text.data());
 		}
 
-		inline void WriteLine(std::string& line)
+		inline void WriteLine(std::string& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
 		{
-			OutputDebugStringA((line + "\n").data());
+			auto newLine = Data::Text::LineEndingHelper::GetNewLineString<char>(lineEnding).data();
+			OutputDebugStringA((line + newLine).data());
 		}
 
-		inline void WriteLine(std::wstring& line)
+		inline void WriteLine(std::wstring& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
 		{
-			OutputDebugStringW((line + L"\n").data());
+			auto newLine = Data::Text::LineEndingHelper::GetNewLineString<juv::wchar>(lineEnding).data();
+			OutputDebugStringW((line + newLine).data());
 		}
 	}
 
@@ -120,7 +153,7 @@ namespace winrt::OneToolkit
 			}
 
 			/// <summary>
-			/// Returns the name of the DLL.
+			/// Returns the file name of the DLL.
 			/// </summary>
 			const hstring FileName() const noexcept
 			{
@@ -180,15 +213,9 @@ namespace winrt::OneToolkit
 
 	namespace Mvvm
 	{
-		enum class PropertyEventType : juv::uint8
-		{
-			PropertyChanging, PropertyChanged
-		};
-
 		/// <summary>
 		/// Provides a base class for view models and observable objects.
 		/// </summary>
-		/// <remarks> If you're implementing a runtime class, we recommend that you implement INotifyPropertyChanged, INotifyPropertyChanging and/or IEventDisableable.</remarks>
 		template <typename Derived, WindowsRuntimeType ChangedDelegate = Windows::UI::Xaml::Data::PropertyChangedEventHandler, WindowsRuntimeType ChangedArgs = Windows::UI::Xaml::Data::PropertyChangedEventArgs>
 		struct ObservableBase
 		{
@@ -198,7 +225,7 @@ namespace winrt::OneToolkit
 			ObservableBase(ObservableBase const&) = delete;
 
 			/// <summary>
-			/// Gets whether the property changing/property changed events will be raised or not.
+			/// Gets whether the property changed event will be raised or not.
 			/// </summary>
 			bool SuppressEvents() const noexcept
 			{
@@ -206,54 +233,48 @@ namespace winrt::OneToolkit
 			}
 
 			DeclareEvent(ChangedDelegate, PropertyChanged);
-
-			DeclareEvent(PropertyChangingEventHandler, PropertyChanging);
 		protected:
+			/// <summary>
+			/// Creates a new instance of ObservableBase from a derived class. 
+			/// </summary>
+			/// <param name="suppressEvents">Optional initial value for the SuppressEvents property.</param>
 			ObservableBase(bool suppressEvents = false) : m_SuppressEvents(suppressEvents)
 			{
 			}
 
+			/// <summary>
+			/// Sets whether the property changed event will be raised or not.
+			/// </summary>
 			void SuppressEvents(bool value) noexcept
 			{
 				m_SuppressEvents = value;
 			}
 
 			/// <summary>
-			/// Raises the specified property event for a specified property name.
+			/// Raises the property changed event for a specified property name.
 			/// </summary>
 			/// <param name="propertyName">The name of the property. Shouldn't be empty or only full of whitespaces.</param>
-			/// <param name="type">The type of the property event.</param>
-			void Raise(hstring const& propertyName, PropertyEventType eventType = PropertyEventType::PropertyChanged)
+			void Raise(hstring const& propertyName)
 			{
-				if (!juv::has_only_whitespaces(propertyName) && Decide(propertyName, eventType) && !m_SuppressEvents)
+				if (!juv::has_only_whitespaces(propertyName) && Decide(propertyName) && !m_SuppressEvents)
 				{
-					if (eventType == PropertyEventType::PropertyChanging)
-					{
-						PropertyChangingEventArgs args{ .PropertyName = propertyName };
-						m_PropertyChanging(*static_cast<Derived*>(this), args);
-						WhenPropertyChanging(args);
-					}
-					else
-					{
-						ChangedArgs args{ propertyName };
-						m_PropertyChanged(*static_cast<Derived*>(this), args);
-						WhenPropertyChanged(args);
-					}
+					ChangedArgs args { propertyName };
+					m_PropertyChanged(*static_cast<Derived*>(this), args);
+					WhenPropertyChanged(args);
 				}
 			}
 
 			/// <summary>
-			/// Automatically sets a property value and raises property changing/property changed when required.
+			/// Automatically sets a property value and raises property changed when required.
 			/// </summary>
-			/// <returns>True if the value was set, false if the value passed was equal to the fields existing value.</returns>
+			/// <returns>True if the value was set, false if the value passed was equal to the existing value.</returns>
 			template <typename T>
 			bool SetProperty(T& field, T newValue, hstring const& propertyName)
 			{
 				if (field != newValue)
 				{
-					Raise(propertyName, PropertyEventType::PropertyChanging);
 					field = newValue;
-					Raise(propertyName, PropertyEventType::PropertyChanged);
+					Raise(propertyName);
 					return true;
 				}
 
@@ -261,9 +282,9 @@ namespace winrt::OneToolkit
 			}
 
 			/// <summary>
-			/// Override this method to determine whether to raise property changed/property changing or not.
+			/// Override this method to determine whether to raise property changed or not.
 			/// </summary>
-			virtual bool Decide(hstring const&, PropertyEventType) noexcept
+			virtual bool Decide(hstring const&) noexcept
 			{
 				return true;
 			}
@@ -275,47 +296,8 @@ namespace winrt::OneToolkit
 			{
 				// Do nothing here.
 			}
-
-			/// <summary>
-			/// Override this method to perform custom actions after raising the property changing event.
-			/// </summary>
-			virtual void WhenPropertyChanging(PropertyChangingEventArgs const&)
-			{
-				// Do nothing here.
-			}
 		private:
 			bool m_SuppressEvents;
-		};
-
-		template <typename T>
-		class AutoProperty
-		{
-		public:
-			AutoProperty(T defaultValue = {}) : m_BackingField(defaultValue)
-			{
-			}
-
-			T operator()() const noexcept
-			{
-				return m_BackingField;
-			}
-
-			void operator()(T value)
-			{
-				m_BackingField = value;
-			}
-
-			T& operator*() const noexcept
-			{
-				return m_BackingField;
-			}
-
-			T* operator->() const noexcept
-			{
-				return &m_BackingField;
-			}
-		private:
-			T m_BackingField;
 		};
 	}
 
@@ -347,9 +329,7 @@ namespace winrt::OneToolkit
 				Close();
 			}
 		protected:
-			Disposable()
-			{
-			}
+			Disposable() = default;
 
 			/// <summary>
 			/// Throws an exception if the object is closed.
@@ -386,7 +366,7 @@ namespace winrt::OneToolkit
 			Suspendable() = default;
 
 			/// <summary>
-			/// Toggles the suspended state.
+			/// Toggles the suspended state and raises the StateChanged event.	
 			/// </summary>
 			void ToggleState()
 			{
@@ -421,27 +401,6 @@ namespace winrt::OneToolkit
 			DeclareObservableProperty(bool, HasInitialized, false);
 		protected:
 			AsyncInitialize() = default;
-		};
-
-		/// <summary>
-		/// Provides a base class to conveniently implement the IEquatable interface.
-		/// </summary>
-		/// <remarks>Your derived class must provide an overload of the equals operator that takes an IInspectable.</remarks>
-		template <typename Derived>
-		struct Equatable
-		{
-		public:
-			Equatable(Equatable&&) = delete;
-
-			Equatable(Equatable const&) = delete;
-
-			bool IsEqual(Windows::Foundation::IInspectable const& another) const noexcept
-			{
-				if (another == *static_cast<const Derived*>(this)) return true;
-				else return static_cast<const Derived*>(this)->operator==(another);
-			}
-		protected:
-			Equatable() = default;
 		};
 	}
 }

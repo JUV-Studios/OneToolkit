@@ -16,7 +16,7 @@
 	</HubSection.HeaderTemplate>
 	<HubSection.ContentTemplate>
 		<DataTemplate x:DataType="local:HubPanelSection">
-			<ContentPresenter Content="{x:Bind Content, Mode=OneWay}" />
+			<ContentPresenter Content="{x:Bind Content, Mode=TwoWay}" DataContext="{x:Bind}" />
 		</DataTemplate>
 	</HubSection.ContentTemplate>
 </HubSection>

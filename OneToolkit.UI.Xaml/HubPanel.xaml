@@ -9,6 +9,7 @@
 	Padding="48,48,48,0"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
+	Background="Transparent"
 	Loaded="Hub_Loaded"
 	SectionHeaderClick="Hub_SectionHeaderClick"
 	SectionsInViewChanged="Hub_SectionsInViewChanged"
@@ -29,9 +30,10 @@
 	<Hub.HeaderTemplate>
 		<DataTemplate x:DataType="x:String">
 			<TextBlock
-				FontWeight="SemiBold"
-				Style="{StaticResource ModernHeaderTextStyle}"
-				Text="{x:Bind}" />
+				Style="{StaticResource DisplayTextBlockStyle}"
+				Text="{x:Bind}"
+				TextWrapping="NoWrap"
+				ToolTipService.ToolTip="{x:Bind}" />
 		</DataTemplate>
 	</Hub.HeaderTemplate>
 </Hub>

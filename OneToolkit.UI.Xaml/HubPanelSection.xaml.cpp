@@ -21,6 +21,8 @@ using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
+DeclareDependencyProperty(UIElement, HubPanelSection, Content, nullptr);
+
 HubPanelSection::HubPanelSection()
 {
 	InitializeComponent();
@@ -28,15 +30,9 @@ HubPanelSection::HubPanelSection()
 
 String^ HubPanelSection::Title::get()
 {
-	try
-	{
-		return static_cast<String^>(Header);
-	}
-	catch (InvalidCastException^)
-	{
-		if (auto stringable = dynamic_cast<IStringable^>(Header)) return Header->ToString();
-		else return "";
-	}
+	if (auto string = dynamic_cast<IBox<String^>^>(Header)) return string->Value;
+	else if (auto stringable = dynamic_cast<IStringable^>(Header)) return stringable->ToString();
+	else return "";
 }
 
 void HubPanelSection::Title::set(String^ value)
@@ -51,17 +47,12 @@ void HubPanelSection::Title::set(String^ value)
 
 UIElement^ HubPanelSection::Content::get()
 {
-	return m_Content;
+	return static_cast<UIElement^>(GetValue(m_ContentProperty));
 }
 
 void HubPanelSection::Content::set(UIElement^ value)
 {
-	if (m_Content != value)
-	{
-		m_Content = value;
-		SetProperties();
-		PropertyChanged(this, ref new PropertyChangedEventArgs("Content"));
-	}
+	SetValue(m_ContentProperty, value);
 }
 
 HubPanel^ HubPanelSection::Container::get()
@@ -84,6 +75,11 @@ void HubPanelSection::RaiseHeaderClick(HubPanel^ sender)
 	HeaderClick(sender);
 }
 
+void HubPanelSection::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)
+{
+	dynamic_cast<HubPanelSection^>(sender)->SetProperties();
+}
+
 void HubPanelSection::SetProperties()
 {
 	if (Content != nullptr)
@@ -98,6 +94,6 @@ void HubPanelSection::SetProperties()
 			}
 		}
 
-		AutomationProperties::SetName(m_Content, automationText);
+		AutomationProperties::SetName(Content, automationText);
 	}
 }

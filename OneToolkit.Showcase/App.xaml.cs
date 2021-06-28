@@ -1,5 +1,4 @@
 ﻿using OneToolkit.Showcase.Views;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;

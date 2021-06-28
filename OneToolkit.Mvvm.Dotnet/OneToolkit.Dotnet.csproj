@@ -8,12 +8,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageId>OneToolkit.Dotnet</PackageId>
-    <Version>1.0.0.7</Version>
+    <Version>1.0.0.8</Version>
     <Authors>Jaiganesh Kumaran</Authors>
     <Company>JUV Studios</Company>
     <Product>OneToolkit</Product>
     <Description>OneToolkit provides a set of controls, converters and helpers that help you build modern Windows apps. This package provides a set of functionality (including the MVVM framework) that can be used on any platform with .NET Standard 2.0 or later.</Description>
-    <NeutralLanguage>ta</NeutralLanguage>
+    <NeutralLanguage>en-US</NeutralLanguage>
     <PackageLicenseExpression></PackageLicenseExpression>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageReleaseNotes>Fixed an issue which prevented using ObservableProperty instances for XAML data binding.</PackageReleaseNotes>
@@ -21,6 +21,13 @@
     <PackageTags>mvvm onetoolkit juvstudios dotnet</PackageTags>
     <AssemblyVersion>1.0.0.7</AssemblyVersion>
     <FileVersion>1.0.0.7</FileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>C:\Users\jaiga\Desktop\source\OneToolkit\OneToolkit.Mvvm.Dotnet\OneToolkit.Dotnet.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\LICENSE.txt">

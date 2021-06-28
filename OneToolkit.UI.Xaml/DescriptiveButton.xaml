@@ -6,11 +6,11 @@
 	xmlns:local="using:OneToolkit.UI.Xaml.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	HorizontalContentAlignment="Left"
-	CornerRadius="{StaticResource ControlCornerRadius}"
+	Style="{ThemeResource DefaultButtonStyle}"
 	mc:Ignorable="d">
 
 	<StackPanel Orientation="Vertical">
-		<TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind Title, Mode=OneWay}" />
-		<TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind Caption, Mode=OneWay}" />
+		<TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind Title, Mode=TwoWay}" />
+		<TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind Caption, Mode=TwoWay}" />
 	</StackPanel>
 </Button>

@@ -1,9 +1,9 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel;
+using Microsoft.Toolkit.Uwp;
 using Microsoft.Toolkit.Uwp.Helpers;
 using OneToolkit.UI.Xaml.Controls;
-using Microsoft.Toolkit.Uwp;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 

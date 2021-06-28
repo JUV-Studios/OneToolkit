@@ -167,6 +167,11 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Reference\juv\Functions\as_optional.txt" />
+    <Content Include="Assets\Reference\juv\Functions\as_pointer.txt" />
+    <Content Include="Assets\Reference\juv\Functions\as_value.txt" />
+    <Content Include="Assets\Reference\juv\Functions\has_only_whitespaces.txt" />
+    <Content Include="Assets\Reference\juv\Functions\is_space.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -204,10 +209,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>4.2.0</Version>
+      <Version>4.3.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>4.2.0</Version>
+      <Version>4.3.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.12</Version>
@@ -219,7 +224,7 @@
       <Version>7.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.5.0</Version>
+      <Version>2.6.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +250,7 @@
   <ItemGroup>
     <XliffResource Include="MultilingualResources\OneToolkit.Showcase.ta.xlf" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

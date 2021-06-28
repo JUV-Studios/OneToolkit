@@ -8,27 +8,38 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
+	BackRequested="NavigationView_BackRequested"
+	Background="{ThemeResource NavigationViewContentBackground}"
+	IsTitleBarAutoPaddingEnabled="False"
 	ItemInvoked="NavigationView_ItemInvoked"
 	Loaded="NavigationView_Loaded"
 	SelectionChanged="NavigationView_SelectionChanged"
-	SizeChanged="NavigationView_SizeChanged"
+	Unloaded="NavigationView_Unloaded"
 	mc:Ignorable="d">
 
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
-		<Rectangle
-			x:Name="DragRegion"
-			Grid.Row="0"
-			Height="32"
-			HorizontalAlignment="Stretch"
-			VerticalAlignment="Top"
-			Fill="Transparent" />
-		<ContentPresenter
-			x:Name="PageContent"
-			Grid.Row="1"
-			ContentTransitions="{x:Bind ContentTransitions, Mode=TwoWay}" />
-	</Grid>
+	<muxc:NavigationView.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.ThemeDictionaries>
+				<ResourceDictionary x:Key="Light">
+					<StaticResource x:Key="NavigationViewContentBackground" ResourceKey="ApplicationPageBackgroundThemeBrush" />
+					<StaticResource x:Key="NavigationViewExpandedPaneBackground" ResourceKey="SystemControlAcrylicWindowBrush" />
+				</ResourceDictionary>
+				<ResourceDictionary x:Key="Dark">
+					<StaticResource x:Key="NavigationViewContentBackground" ResourceKey="ApplicationPageBackgroundThemeBrush" />
+					<StaticResource x:Key="NavigationViewExpandedPaneBackground" ResourceKey="SystemControlAcrylicWindowBrush" />
+				</ResourceDictionary>
+				<ResourceDictionary x:Key="HighContrast">
+					<SolidColorBrush x:Key="NavigationViewContentBackground" Color="{ThemeResource SystemColorWindowColor}" />
+					<SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{ThemeResource SystemColorWindowColor}" />
+				</ResourceDictionary>
+			</ResourceDictionary.ThemeDictionaries>
+		</ResourceDictionary>
+	</muxc:NavigationView.Resources>
+
+	<local:ContentFrame
+		x:Name="Frame"
+		Grid.Row="1"
+		ContentTransition="{x:Bind ContentTransition, Mode=TwoWay}"
+		ContentTransitions="{x:Bind ContentTransitions, Mode=TwoWay}"
+		SyncBackWithSystem="{x:Bind SyncBackWithSystem, Mode=TwoWay}" />
 </muxc:NavigationView>

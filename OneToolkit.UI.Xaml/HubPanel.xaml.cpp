@@ -26,6 +26,8 @@ using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
+DeclareDependencyProperty(double, HubPanel, Spacing, PropertyValue::CreateDouble(36));
+
 HubPanel::HubPanel()
 {
 	InitializeComponent();
@@ -48,15 +50,9 @@ void HubPanel::UniformMargin::set(double value)
 
 String^ HubPanel::Title::get()
 {
-	try
-	{
-		return static_cast<String^>(Header);
-	}
-	catch (InvalidCastException^)
-	{
-		if (auto stringable = dynamic_cast<IStringable^>(Header)) return Header->ToString();
-		else return "";
-	}
+	if (auto string = dynamic_cast<IBox<String^>^>(Header)) return string->Value;
+	else if (auto stringable = dynamic_cast<IStringable^>(Header)) return stringable->ToString();
+	else return "";
 }
 
 void HubPanel::Title::set(String^ value)
@@ -69,20 +65,68 @@ void HubPanel::Title::set(String^ value)
 	}
 }
 
+double HubPanel::Spacing::get()
+{
+	return static_cast<double>(GetValue(m_SpacingProperty));
+}
+
+void HubPanel::Spacing::set(double value)
+{
+	SetValue(m_SpacingProperty, value);
+}
+
+double HubPanel::HeaderSpacing::get()
+{
+	if (Application::Current->Resources->HasKey("HubPanelHeaderSpacing"))
+	{
+		if (auto resource = dynamic_cast<IBox<double>^>(Application::Current->Resources->Lookup("HubPanelHeaderSpacing"))) return resource->Value;
+		else return 4;
+	}
+	else
+	{
+		return 4;
+	}
+}
+
 void HubPanel::Hub_Loaded(Object^ sender, RoutedEventArgs^ e)
 {
 	SetProperties();
 }
 
+void HubPanel::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)
+{
+	dynamic_cast<HubPanel^>(sender)->SetProperties();
+}
+
 void HubPanel::SetProperties()
 {
 	auto uniformMargin = Padding.Left;
+	auto headerSpacing = HeaderSpacing;
 	for (uint32 index = 0; index < Sections->Size; ++index)
 	{
 		auto section = Sections->GetAt(index);
 		AutomationProperties::SetPositionInSet(section, index + 1);
 		AutomationProperties::SetSizeOfSet(section, Sections->Size);
-		section->Padding = ThicknessHelper::FromLengths(uniformMargin, 6, uniformMargin, uniformMargin);
+		if (Sections->Size <= 1)
+		{
+			section->Padding = ThicknessHelper::FromLengths(uniformMargin, headerSpacing, uniformMargin, uniformMargin);
+		}
+		else
+		{
+			if (FlowDirection == ::FlowDirection::LeftToRight)
+			{
+				if (index == 0) section->Padding = ThicknessHelper::FromLengths(uniformMargin, headerSpacing, Spacing, uniformMargin);
+				else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(0, headerSpacing, uniformMargin, uniformMargin);
+				else section->Padding == ThicknessHelper::FromLengths(0, headerSpacing, Spacing, uniformMargin);
+			}
+			else
+			{
+				if (index == 0) section->Padding = ThicknessHelper::FromLengths(Spacing, headerSpacing, uniformMargin, uniformMargin);
+				else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(uniformMargin, headerSpacing, 0, uniformMargin);
+				else section->Padding == ThicknessHelper::FromLengths(Spacing, headerSpacing, 0, uniformMargin);
+			}
+		}
+
 		if (auto hubPanelSection = dynamic_cast<HubPanelSection^>(section)) hubPanelSection->Container = this;
 	}
 }

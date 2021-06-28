@@ -6,44 +6,19 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:OneToolkit.Showcase.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 
-	<UserControl.Resources>
-		<AcrylicBrush
-			x:Key="NavigationViewDefaultPaneBackground"
-			BackgroundSource="HostBackdrop"
-			FallbackColor="{ThemeResource SystemChromeMediumColor}"
-			TintColor="{ThemeResource SystemChromeAltHighColor}"
-			TintOpacity="0.8" />
-		<AcrylicBrush
-			x:Key="NavigationViewExpandedPaneBackground"
-			BackgroundSource="HostBackdrop"
-			FallbackColor="{ThemeResource SystemChromeMediumColor}"
-			TintColor="{ThemeResource SystemChromeAltHighColor}"
-			TintOpacity="0.8" />
-	</UserControl.Resources>
-
 	<Grid>
-		<controls:PageView
-			x:Name="NavView"
-			Background="{ThemeResource ModernPageBackground}"
-			DisplayModeChanged="NavView_DisplayModeChanged"
-			IsBackButtonVisible="Collapsed"
-			ViewServiceProvider="{x:Bind viewModels:SettingsViewModel.ViewServiceProvider}">
+		<controls:PageView x:Name="NavView" PaneTitle="OneToolkit Showcase">
 			<controls:PageView.ContentTransitions>
 				<TransitionCollection>
 					<PaneThemeTransition />
 				</TransitionCollection>
 			</controls:PageView.ContentTransitions>
-			<controls:PageView.PaneHeader>
-				<TextBlock
-					x:Name="TitleBlock"
-					VerticalAlignment="Center"
-					Style="{ThemeResource CaptionTextBlockStyle}"
-					Text="OneToolkit Showcase" />
-			</controls:PageView.PaneHeader>
 			<controls:PageView.AutoSuggestBox>
 				<AutoSuggestBox PlaceholderText="What are you looking for?" QueryIcon="Find" />
 			</controls:PageView.AutoSuggestBox>
@@ -76,8 +51,8 @@
 						<AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowBreakpoint}" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
-						<Setter Target="TitleBlock.Margin" Value="8,0,0,0" />
 						<Setter Target="NavView.PaneDisplayMode" Value="LeftCompact" />
+						<Setter Target="NavView.IsPaneToggleButtonVisible" Value="True" />
 					</VisualState.Setters>
 				</VisualState>
 				<VisualState>
@@ -85,9 +60,26 @@
 						<AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowBreakpoint}" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
-						<Setter Target="TitleBlock.Margin" Value="12,12,12,12" />
 						<Setter Target="NavView.PaneDisplayMode" Value="Left" />
-						<Setter Target="NavView.IsPaneToggleButtonVisible" Value="False" />
+						<Setter Target="NavView.IsPaneToggleButtonVisible" Value="True" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+			<VisualStateGroup>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<triggers:UserInteractionModeStateTrigger InteractionMode="Mouse" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="NavView.IsBackButtonVisible" Value="Visible" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<triggers:UserInteractionModeStateTrigger InteractionMode="Touch" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="NavView.IsBackButtonVisible" Value="Collapsed" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

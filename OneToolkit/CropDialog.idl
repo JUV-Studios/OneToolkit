@@ -6,7 +6,6 @@ namespace OneToolkit.Imaging
         CropDialog();
         static Windows.Foundation.IAsyncOperation<Boolean> IsSupportedAsync();
         Windows.Foundation.IAsyncOperation<Boolean> CropAsync(Windows.Storage.StorageFile input, Windows.Storage.StorageFile destination);
-        [noexcept] Boolean ShowCamera;
         [noexcept] Boolean IsEllipticalCrop;
         [noexcept] Windows.Foundation.Size CropSize;
     }

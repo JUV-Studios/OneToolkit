@@ -7,9 +7,9 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:models="using:OneToolkit.Showcase.Models"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	HorizontalAlignment="Stretch"
+	VerticalAlignment="Stretch"
 	Loaded="UserControl_Loaded"
-	Unloaded="UserControl_Unloaded"
 	mc:Ignorable="d">
 
 	<Grid>
@@ -23,7 +23,7 @@
 			TallModeConfiguration="TopBottom"
 			WideModeConfiguration="LeftRight">
 			<muxc:TwoPaneView.Pane1>
-				<Grid>
+				<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="*" />
@@ -31,11 +31,12 @@
 					<StackPanel
 						x:Name="PaneTitle"
 						Grid.Row="0"
+						Margin="24,24,24,12"
 						HorizontalAlignment="Stretch"
 						VerticalAlignment="Top"
 						Spacing="12">
 						<TextBlock Style="{ThemeResource TitleTextBlockStyle}">API reference</TextBlock>
-						<TextBlock Style="{ThemeResource BaseTextBlockStyle}">Namespaces</TextBlock>
+						<TextBlock x:Uid="NamespacesBlock" Style="{ThemeResource BaseTextBlockStyle}" />
 					</StackPanel>
 					<muxc:TreeView
 						x:Name="Namespaces"
@@ -47,10 +48,7 @@
 						ItemsSource="{x:Bind local:ApiReference.FoundTypes}">
 						<muxc:TreeView.ItemTemplate>
 							<DataTemplate x:DataType="models:TypeGroup">
-								<muxc:TreeViewItem
-									Content="{x:Bind Name}"
-									ItemsSource="{x:Bind Children}"
-									ToolTipService.ToolTip="{x:Bind Name}" />
+								<muxc:TreeViewItem Content="{x:Bind Name}" ItemsSource="{x:Bind Children}" />
 							</DataTemplate>
 						</muxc:TreeView.ItemTemplate>
 					</muxc:TreeView>
@@ -59,7 +57,7 @@
 			<muxc:TwoPaneView.Pane2>
 				<Frame
 					x:Name="DocsFrame"
-					Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+					Background="{ThemeResource SystemChromeLowColor}"
 					IsNavigationStackEnabled="False" />
 			</muxc:TwoPaneView.Pane2>
 		</muxc:TwoPaneView>

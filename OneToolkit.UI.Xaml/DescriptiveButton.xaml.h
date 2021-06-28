@@ -8,9 +8,9 @@
 
 namespace OneToolkit::UI::Xaml::Controls
 {
-	[Windows::UI::Xaml::Markup::ContentProperty(Name = "Title")]
 	[Windows::Foundation::Metadata::WebHostHidden]
-	public ref class DescriptiveButton sealed : Windows::UI::Xaml::Data::INotifyPropertyChanged
+	[Windows::UI::Xaml::Markup::ContentProperty(Name = "Title")]
+	public ref class DescriptiveButton sealed
 	{
 	public:
 		DescriptiveButton();
@@ -27,9 +27,20 @@ namespace OneToolkit::UI::Xaml::Controls
 			void set(Platform::String^ value);
 		}
 
-		virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
+		static property Windows::UI::Xaml::DependencyProperty^ TitleProperty
+		{
+			Windows::UI::Xaml::DependencyProperty^ get();
+		}
+
+		static property Windows::UI::Xaml::DependencyProperty^ CaptionProperty
+		{
+			Windows::UI::Xaml::DependencyProperty^ get();
+		}
 	private:
-		Platform::String^ m_Title;
 		Platform::String^ m_Caption;
+		static Windows::UI::Xaml::DependencyProperty^ m_TitleProperty;
+		static Windows::UI::Xaml::DependencyProperty^ m_CaptionProperty;
+		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
+		void SetProperties();
 	};
 }

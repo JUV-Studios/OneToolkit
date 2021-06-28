@@ -26,12 +26,30 @@ namespace OneToolkit::UI::Xaml::Controls
 			void set(Platform::String^ value);
 		}
 
+		property double Spacing
+		{
+			double get();
+			void set(double value);
+		}
+
+		property double HeaderSpacing
+		{
+			double get();
+		}
+
+		static property Windows::UI::Xaml::DependencyProperty^ SpacingProperty
+		{
+			Windows::UI::Xaml::DependencyProperty^ get();
+		}
+
 		virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
 	private:
 		uint32 m_LastSetSize = 0;
+		static Windows::UI::Xaml::DependencyProperty^ m_SpacingProperty;
+		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
 		void SetProperties();
 		void Hub_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-		void Hub_SectionHeaderClick(Platform::Object^, Windows::UI::Xaml::Controls::HubSectionHeaderClickEventArgs^ e);
-		void Hub_SectionsInViewChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SectionsInViewChangedEventArgs^ e);
+		void Hub_SectionHeaderClick(Platform::Object^, WUXC::HubSectionHeaderClickEventArgs^ e);
+		void Hub_SectionsInViewChanged(Platform::Object^ sender, WUXC::SectionsInViewChangedEventArgs^ e);
 	};
 }

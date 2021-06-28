@@ -12,14 +12,13 @@ namespace winrt::OneToolkit::Storage
         public:
             FileHandle(Windows::Storage::StorageFile const& file, Windows::Storage::FileAccessMode accessMode, FileSharingMode sharingMode);
             FileHandle(Windows::Storage::StorageFolder const& folder, hstring const& fileName, Windows::Storage::FileAccessMode accessMode, FileSharingMode sharingMode);
-            hstring FileName() const noexcept;
+            DeclareAutoProperty(hstring, FileName, {});
+            DeclareAutoProperty(FileSharingMode, SharingMode, {});
+            DeclareAutoProperty(Windows::Storage::FileAccessMode, AccessMode, {});
             juv::uint64 FileSize() const;
             juv::uint64 UnderlyingHandle() const noexcept;
-            Windows::Storage::FileAccessMode AccessMode() const noexcept;
         private:
-            hstring m_FileName;
             file_handle m_FileHandle;
-            Windows::Storage::FileAccessMode m_AccessMode;
         };
     }
 

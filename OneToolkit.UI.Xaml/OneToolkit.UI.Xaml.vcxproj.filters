@@ -8,6 +8,12 @@
     <Filter Include="Controls">
       <UniqueIdentifier>{aa8a7dac-78ae-46d7-9983-49b1028ce6a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Media">
+      <UniqueIdentifier>{bc487bf6-1aff-412c-af1e-2655f2ebc59b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Animation">
+      <UniqueIdentifier>{5a2f1282-7db3-43dc-8a6f-2cfb8238ea35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -18,6 +24,15 @@
     <ClCompile Include="PageViewItemBase.cpp" />
     <ClCompile Include="NavigationViewItemHelper.cpp">
       <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentDialogHelper.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="SuppressContentTransition.cpp">
+      <Filter>Media\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="SlideContentTransition.cpp">
+      <Filter>Media\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +52,17 @@
     <ClInclude Include="PageViewContentItem.h">
       <Filter>Controls</Filter>
     </ClInclude>
+    <ClInclude Include="OneToolkit.UI.Xaml.h" />
+    <ClInclude Include="IContentTransition.h">
+      <Filter>Media\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="SuppressContentTransition.h">
+      <Filter>Media\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationType.h" />
+    <ClInclude Include="SlideContentTransition.h">
+      <Filter>Media\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Page Include="DescriptiveButton.xaml">
@@ -52,6 +78,9 @@
       <Filter>Controls</Filter>
     </Page>
     <Page Include="Styles.xaml" />
+    <Page Include="ContentFrame.xaml">
+      <Filter>Controls</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

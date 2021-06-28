@@ -11,9 +11,9 @@ namespace OneToolkit.Showcase.Views
 	/// </summary>
 	public sealed partial class NamespacePage : Page
 	{
-		private TypeGroup GroupData;
-
 		public NamespacePage() => InitializeComponent();
+
+		public TypeGroup GroupData;
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{

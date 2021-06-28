@@ -8,5 +8,5 @@ using namespace OneToolkit::UI::Xaml::Controls;
 
 void PageViewContentItem::Invoke(PageView^ sender)
 {
-	sender->CurrentContent = SelectionContent;
+	sender->Navigate(SelectionContent);
 }

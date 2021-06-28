@@ -5,7 +5,7 @@ namespace OneToolkit::UI::Xaml::Controls
 	ref class PageView;
 
 	[Windows::Foundation::Metadata::WebHostHidden]
-	public ref class PageViewItemBase : Microsoft::UI::Xaml::Controls::NavigationViewItem
+	public ref class PageViewItemBase : MUXC::NavigationViewItem
 	{
 	public:
 		property Platform::String^ Label

@@ -15,9 +15,9 @@
 			<converters:BoolNegationConverter x:Name="BoolReverseConverter" />
 			<Style TargetType="wctControls:WrapPanel">
 				<Setter Property="Orientation" Value="Vertical" />
-				<Setter Property="VerticalSpacing" Value="12" />
+				<Setter Property="VerticalSpacing" Value="8" />
 				<Setter Property="HorizontalSpacing" Value="12" />
 			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
-</Application>
+</Application>	

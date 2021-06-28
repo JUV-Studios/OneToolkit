@@ -2,6 +2,9 @@
 
 namespace OneToolkit.Mvvm
 {
+	/// <summary>
+	/// Represents an object the provides access to its internal data storage.
+	/// </summary>
 	public interface IBackingProvider<T> : IEquatable<T>
 	{
 

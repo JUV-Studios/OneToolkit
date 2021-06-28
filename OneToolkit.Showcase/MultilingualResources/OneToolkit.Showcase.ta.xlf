@@ -54,6 +54,22 @@
           <source>Terms of use</source>
           <target state="new">Terms of use</target>
         </trans-unit>
+        <trans-unit id="NamespacesBlock.Text" translate="yes" xml:space="preserve">
+          <source>Namespaces</source>
+          <target state="new">Namespaces</target>
+        </trans-unit>
+        <trans-unit id="NamespaceText" translate="yes" xml:space="preserve">
+          <source>namespace</source>
+          <target state="new">namespace</target>
+        </trans-unit>
+        <trans-unit id="ClassesPanel.Title" translate="yes" xml:space="preserve">
+          <source>Classes</source>
+          <target state="new">Classes</target>
+        </trans-unit>
+        <trans-unit id="ClassText" translate="yes" xml:space="preserve">
+          <source>class</source>
+          <target state="new">class</target>
+        </trans-unit>
       </group>
     </body>
   </file>

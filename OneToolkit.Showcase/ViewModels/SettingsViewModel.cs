@@ -11,7 +11,10 @@ namespace OneToolkit.Showcase.ViewModels
 	{
 		private readonly SettingsService SettingsService = new(ApplicationData.Current.RoamingSettings);
 
-		private SettingsViewModel() { }
+		private SettingsViewModel()
+		{
+			SettingsService.DataContainer.Values.Clear();
+		}
 
 		public static SettingsViewModel Instance { get; } = new();
 

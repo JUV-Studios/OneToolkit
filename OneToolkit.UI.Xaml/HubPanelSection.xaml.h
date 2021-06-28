@@ -31,6 +31,11 @@ namespace OneToolkit::UI::Xaml::Controls
 			void set(Windows::UI::Xaml::UIElement^ value);
 		}
 
+		static property Windows::UI::Xaml::DependencyProperty^ ContentProperty
+		{
+			Windows::UI::Xaml::DependencyProperty^ get();
+		}
+
 		event HubPanelSectionHeaderClickEventHandler^ HeaderClick;
 
 		virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
@@ -44,7 +49,8 @@ namespace OneToolkit::UI::Xaml::Controls
 		void RaiseHeaderClick(HubPanel^ sender);
 	private:
 		Platform::WeakReference m_Container;
-		Windows::UI::Xaml::UIElement^ m_Content;
+		static Windows::UI::Xaml::DependencyProperty^ m_ContentProperty;
+		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
 		void SetProperties();
 	};
 }
