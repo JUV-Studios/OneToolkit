@@ -1,9 +1,9 @@
-﻿using System;
-using Windows.Storage;
+﻿using Windows.Storage;
 using OneToolkit.UI;
 using OneToolkit.Mvvm;
 using OneToolkit.Storage;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
 
 namespace OneToolkit.Showcase.ViewModels
 {
@@ -13,7 +13,7 @@ namespace OneToolkit.Showcase.ViewModels
 
 		private SettingsViewModel()
 		{
-			SettingsService.DataContainer.Values.Clear();
+			ElementSoundPlayer.State = DisableSoundEffects ? ElementSoundPlayerState.Off : ElementSoundPlayerState.On;
 		}
 
 		public static SettingsViewModel Instance { get; } = new();
@@ -24,6 +24,20 @@ namespace OneToolkit.Showcase.ViewModels
 		{
 			"C#", "C++/CX", "C++/WinRT", "Rust", "Visual Basic"
 		};
+
+		public bool DisableSoundEffects
+		{
+			get => (bool)SettingsService.GetValue(nameof(DisableSoundEffects), false);
+			set
+			{
+				if (DisableSoundEffects != value)
+				{
+					ElementSoundPlayer.State = value ? ElementSoundPlayerState.Off : ElementSoundPlayerState.On;
+					SettingsService.SetValue(nameof(DisableSoundEffects), value);
+					Raise(nameof(DisableSoundEffects));
+				}
+			}
+		}
 
 		public string SelectedProgrammingLanguage
 		{

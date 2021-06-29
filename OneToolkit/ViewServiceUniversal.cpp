@@ -3,7 +3,6 @@
 
 using namespace winrt;
 using namespace Windows::Foundation;
-using namespace Windows::UI::ViewManagement;
 using namespace Windows::ApplicationModel::Core;
 
 namespace winrt::OneToolkit::UI
@@ -75,11 +74,6 @@ namespace winrt::OneToolkit::UI
 	IInspectable ViewServiceUniversal::ReferenceSource() const noexcept
 	{
 		return m_CoreAppView.CoreWindow();
-	}
-
-	UserInteractionMode ViewServiceUniversal::InteractionMode() const
-	{
-		return m_ViewSettings.UserInteractionMode();
 	}
 
 	void ViewServiceUniversal::SetMinimumSize(Size const& minSize) const

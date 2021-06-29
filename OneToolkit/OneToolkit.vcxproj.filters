@@ -25,6 +25,9 @@
     <Filter Include="UI\Input">
       <UniqueIdentifier>{bc0906ea-cd09-4eb6-9e18-09c3cc7d72af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ApplicationModel">
+      <UniqueIdentifier>{a4e30534-44bb-4022-a65a-209282212388}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ViewService.cpp">
@@ -100,6 +103,9 @@
     </Midl>
     <Midl Include="KeyStateHelper.idl">
       <Filter>UI\Input</Filter>
+    </Midl>
+    <Midl Include="AppInformation.idl">
+      <Filter>ApplicationModel</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>

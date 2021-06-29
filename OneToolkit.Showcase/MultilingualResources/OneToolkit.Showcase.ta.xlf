@@ -70,6 +70,18 @@
           <source>class</source>
           <target state="new">class</target>
         </trans-unit>
+        <trans-unit id="SettingsHubContributions.Title" translate="yes" xml:space="preserve">
+          <source>Contributions</source>
+          <target state="new">Contributions</target>
+        </trans-unit>
+        <trans-unit id="DisableSoundEffectsSwitch.Header" translate="yes" xml:space="preserve">
+          <source>Disable sound effects</source>
+          <target state="new">Disable sound effects</target>
+        </trans-unit>
+        <trans-unit id="SettingsHubGeneral.Title" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="new">General</target>
+        </trans-unit>
       </group>
     </body>
   </file>

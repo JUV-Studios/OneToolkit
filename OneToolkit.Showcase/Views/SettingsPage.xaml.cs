@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel;
 using Microsoft.Toolkit.Uwp;
@@ -13,7 +15,7 @@ namespace OneToolkit.Showcase.Views
 	{
 		public SettingsPage() => InitializeComponent();
 
-		public string AboutAutomationText => "About, " + AboutDisplayText.Replace("\n", ", ");
+		public string AboutAutomationText => $"{"SettingsHubAbout.Title".GetLocalized()}, {AboutDisplayText.Replace("\n", ", ")}";
 
 		public readonly string AboutDisplayText = $"OneToolkit Showcase\n{string.Format("VersionText".GetLocalized(), Package.Current.Id.Version.ToFormattedString())}\n{"CopyrightText".GetLocalized()}";
 
@@ -22,5 +24,7 @@ namespace OneToolkit.Showcase.Views
 			var target = sender as HubPanel;
 			if (string.IsNullOrEmpty(target.Title)) target.Title = (App.NavView.SettingsItem as ContentControl).Content.ToString();
 		}
+
+		private async void Contribute_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new("https://dev.azure.com/JUV-Studios/OneToolkit"));
 	}
 }

@@ -16,12 +16,10 @@ namespace winrt::OneToolkit::UI
 		int64_t WindowHandle() const;
 		Windows::Foundation::Rect Bounds() const;
 		IInspectable ReferenceSource() const noexcept;
-		Windows::UI::ViewManagement::UserInteractionMode InteractionMode() const;
 		void SetMinimumSize(Windows::Foundation::Size const& minSize) const;
 		Windows::Foundation::IAsyncOperation<bool> CloseAsync() const;
 	private:
 		HWND m_WindowHandle;
 		Runtime::DynamicModule user32 { L"User32.dll" };
-		Runtime::DynamicModule advapi32 { L"Advapi32.dll" };
 	};
 }

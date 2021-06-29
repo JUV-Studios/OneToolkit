@@ -12,6 +12,11 @@
 	mc:Ignorable="d">
 
 	<controls:HubPanel Loaded="HubPanel_Loaded">
+		<controls:HubPanelSection x:Uid="SettingsHubGeneral">
+			<wctControls:WrapPanel>
+				<ToggleSwitch x:Uid="DisableSoundEffectsSwitch" IsOn="{x:Bind viewModels:SettingsViewModel.Instance.DisableSoundEffects, Mode=TwoWay}" />
+			</wctControls:WrapPanel>
+		</controls:HubPanelSection>
 		<controls:HubPanelSection x:Uid="SettingsHubBrowsing">
 			<wctControls:WrapPanel>
 				<ComboBox
@@ -19,6 +24,17 @@
 					ItemsSource="{x:Bind viewModels:SettingsViewModel.ProgrammingLanguages}"
 					SelectedValue="{x:Bind viewModels:SettingsViewModel.Instance.SelectedProgrammingLanguage, Mode=TwoWay}" />
 			</wctControls:WrapPanel>
+		</controls:HubPanelSection>
+		<controls:HubPanelSection x:Uid="SettingsHubContributions" MaxWidth="{StaticResource SplitViewOpenPaneThemeLength}">
+			<StackPanel Spacing="8">
+				<TextBlock Text="OneToolkit is open source! We welcome everyone to contribute and help improve our library." TextWrapping="WrapWholeWords" />
+				<Button
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Stretch"
+					Click="Contribute_Click">
+					Contribute to OneToolkit
+				</Button>
+			</StackPanel>
 		</controls:HubPanelSection>
 		<controls:HubPanelSection x:Uid="SettingsHubAbout">
 			<Grid>

@@ -56,7 +56,13 @@ namespace OneToolkit::UI::Xaml::Controls
 			Windows::UI::Xaml::DependencyProperty^ get();
 		}
 
+		void GoBack();
+
+		void GoForward();
+
 		void Navigate(Windows::UI::Xaml::UIElement^ content);
+
+		void NavigateToType(Windows::UI::Xaml::Interop::TypeName typeName);
 
 		void InvokeItem(MUXC::NavigationViewItemBase^ navViewitem);
 

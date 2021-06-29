@@ -87,14 +87,29 @@ MUXC::NavigationViewItemBase^ PageView::ItemFromContent(UIElement^ content)
 	}
 }
 
+void PageView::GoBack()
+{
+	Frame->GoBack();
+}
+
+void PageView::GoForward()
+{
+	Frame->GoForward();
+}
+
 void PageView::Navigate(UIElement^ content)
 {
 	Frame->Navigate(content);
 }
 
+void PageView::NavigateToType(TypeName typeName)
+{
+	Frame->NavigateToType(typeName);
+}
+
 void PageView::InvokeItem(MUXC::NavigationViewItemBase^ navViewitem)
 {
-	throw ref new Platform::NotImplementedException();
+	if (auto pageViewItemBase = dynamic_cast<PageViewItemBase^>(navViewitem)) pageViewItemBase->Invoke(this);
 }
 
 void PageView::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)

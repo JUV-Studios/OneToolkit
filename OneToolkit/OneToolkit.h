@@ -10,6 +10,7 @@
 #include <winrt/Windows.UI.Xaml.Data.h>
 #include <winrt/OneToolkit.Lifecycle.h>
 #include <winrt/OneToolkit.Data.Text.h>
+#include <winrt/OneToolkit.ApplicationModel.h>
 
 #define DeclareEvent(Type, Name) private: ::winrt::event<Type> m_##Name;\
 public: ::winrt::event_token Name(Type const& handler) { return m_##Name.add(handler); }\

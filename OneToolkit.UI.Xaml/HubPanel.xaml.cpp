@@ -100,6 +100,7 @@ void HubPanel::DependencyPropertyChanged(DependencyObject^ sender, DependencyPro
 
 void HubPanel::SetProperties()
 {
+	auto spacing = Spacing;
 	auto uniformMargin = Padding.Left;
 	auto headerSpacing = HeaderSpacing;
 	for (uint32 index = 0; index < Sections->Size; ++index)
@@ -107,24 +108,15 @@ void HubPanel::SetProperties()
 		auto section = Sections->GetAt(index);
 		AutomationProperties::SetPositionInSet(section, index + 1);
 		AutomationProperties::SetSizeOfSet(section, Sections->Size);
-		if (Sections->Size <= 1)
+		if (Sections->Size == 1)
 		{
 			section->Padding = ThicknessHelper::FromLengths(uniformMargin, headerSpacing, uniformMargin, uniformMargin);
 		}
 		else
 		{
-			if (FlowDirection == ::FlowDirection::LeftToRight)
-			{
-				if (index == 0) section->Padding = ThicknessHelper::FromLengths(uniformMargin, headerSpacing, Spacing, uniformMargin);
-				else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(0, headerSpacing, uniformMargin, uniformMargin);
-				else section->Padding == ThicknessHelper::FromLengths(0, headerSpacing, Spacing, uniformMargin);
-			}
-			else
-			{
-				if (index == 0) section->Padding = ThicknessHelper::FromLengths(Spacing, headerSpacing, uniformMargin, uniformMargin);
-				else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(uniformMargin, headerSpacing, 0, uniformMargin);
-				else section->Padding == ThicknessHelper::FromLengths(Spacing, headerSpacing, 0, uniformMargin);
-			}
+			if (index == 0) section->Padding = ThicknessHelper::FromLengths(uniformMargin, headerSpacing, 0, uniformMargin);
+			else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(spacing, headerSpacing, uniformMargin, uniformMargin);
+			else section->Padding = ThicknessHelper::FromLengths(spacing, headerSpacing, 0, uniformMargin);
 		}
 
 		if (auto hubPanelSection = dynamic_cast<HubPanelSection^>(section)) hubPanelSection->Container = this;

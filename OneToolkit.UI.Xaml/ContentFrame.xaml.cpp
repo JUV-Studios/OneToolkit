@@ -132,6 +132,8 @@ void ContentFrame::DependencyPropertyChanged(DependencyObject^ sender, Dependenc
 			Clear(contentFrame->m_ForwardStack);
 		}
 	}
+
+	contentFrame->Raise();
 }
 
 void ContentFrame::Raise()

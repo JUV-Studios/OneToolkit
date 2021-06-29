@@ -193,6 +193,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AppInformation.h">
+      <DependentUpon>AppInformation.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="BufferHelper.h">
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -255,6 +259,10 @@
     <ClInclude Include="ViewServiceUniversal.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AppInformation.cpp">
+      <DependentUpon>AppInformation.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="BufferHelper.cpp">
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -336,6 +344,9 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="AppInformation.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="BufferHelper.idl">
       <SubType>Designer</SubType>
     </Midl>

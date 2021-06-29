@@ -126,6 +126,9 @@
   <data name="CopyrightText" xml:space="preserve">
     <value>© 2021 JUV Studios. All rights reserved.</value>
   </data>
+  <data name="DisableSoundEffectsSwitch.Header" xml:space="preserve">
+    <value>Disable sound effects</value>
+  </data>
   <data name="DiscordServerInviteLink.Content" xml:space="preserve">
     <value>Join our Discord server</value>
   </data>
@@ -152,6 +155,12 @@
   </data>
   <data name="SettingsHubBrowsing.Title" xml:space="preserve">
     <value>Browsing</value>
+  </data>
+  <data name="SettingsHubContributions.Title" xml:space="preserve">
+    <value>Contributions</value>
+  </data>
+  <data name="SettingsHubGeneral.Title" xml:space="preserve">
+    <value>General</value>
   </data>
   <data name="TermsOfUseLink.Content" xml:space="preserve">
     <value>Terms of use</value>

@@ -5,8 +5,8 @@ using Windows.UI.Xaml;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;
-using OneToolkit.UI.Xaml.Controls;
 using Microsoft.Toolkit.Uwp.UI;
+using OneToolkit.UI.Xaml.Controls;
 
 namespace OneToolkit.Showcase
 {

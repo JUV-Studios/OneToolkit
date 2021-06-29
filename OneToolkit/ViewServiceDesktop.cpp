@@ -18,8 +18,6 @@ namespace winrt::OneToolkit::UI
 
 	typedef int(__stdcall* GetWindowRect)(HWND, LPRECT);
 
-	typedef int(__stdcall* RegGetValueW)(HKEY, LPCWSTR, LPCWSTR, DWORD, LPDWORD, PVOID, LPDWORD);
-
 	ViewServiceDesktop::ViewServiceDesktop(int64_t windowHandle)
 	{
 		m_WindowHandle = juv::as_pointer<HWND>(windowHandle);
@@ -79,14 +77,6 @@ namespace winrt::OneToolkit::UI
 	IInspectable ViewServiceDesktop::ReferenceSource() const noexcept
 	{
 		return box_value(WindowHandle());
-	}
-
-	UserInteractionMode ViewServiceDesktop::InteractionMode() const
-	{
-		unsigned long result;
-		unsigned long size = sizeof(result);
-		check_win32(advapi32.GetProcAddress<RegGetValueW>("RegGetValueW")(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell", L"TabletMode", RRF_RT_REG_DWORD, nullptr, &result, &size));
-		return static_cast<UserInteractionMode>(result);
 	}
 
 	void ViewServiceDesktop::SetMinimumSize(Size const&) const

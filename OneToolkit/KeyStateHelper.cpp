@@ -7,6 +7,7 @@ using namespace Windows::System;
 using namespace Windows::UI::Core;
 using namespace Windows::ApplicationModel::Core;
 using namespace OneToolkit::Runtime;
+using namespace OneToolkit::ApplicationModel;
 
 namespace winrt::OneToolkit::UI::Input::implementation
 {
@@ -29,15 +30,12 @@ namespace winrt::OneToolkit::UI::Input::implementation
 
 	bool KeyStateHelper::IsKeyStateActive(VirtualKey key, CoreVirtualKeyStates keyState)
 	{
-		if (CoreApplication::Views().Size() == 0)
-		{
-			DynamicModule user32 { L"User32.dll" };
-			auto result = user32.GetProcAddress<GetKeyState>("GetKeyState")(static_cast<int>(key));
-			return (static_cast<CoreVirtualKeyStates>(result) & keyState) == keyState;
-		}
+		if (AppInformation::IsCoreApplication()) return (CoreApplication::GetCurrentView().CoreWindow().GetKeyState(key) & keyState) == keyState;
 		else
 		{
-			return (CoreApplication::GetCurrentView().CoreWindow().GetKeyState(key) & keyState) == keyState;
+			DynamicModule user32{ L"User32.dll" };
+			auto result = user32.GetProcAddress<GetKeyState>("GetKeyState")(static_cast<int>(key));
+			return (static_cast<CoreVirtualKeyStates>(result) & keyState) == keyState;
 		}
 	}
 }

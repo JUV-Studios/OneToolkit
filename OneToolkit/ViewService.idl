@@ -8,11 +8,9 @@ namespace OneToolkit.UI
         Boolean IsFullScreen;
         Boolean IsDialogShown;
         Boolean ExtendsContentIntoTitleBar;
-        Boolean IsTitleBarVisibile { get; };
         Int64 WindowHandle { get; };
         Windows.Foundation.Rect Bounds { get; };
         [noexcept] Object ReferenceSource { get; };
-        Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         void SetMinimumSize(Windows.Foundation.Size minSize);
         Windows.Foundation.IAsyncOperation<Boolean> CloseAsync();
     };
@@ -20,6 +18,7 @@ namespace OneToolkit.UI
     [default_interface]
     static runtimeclass ViewService
     {
+        static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         static IViewServiceProvider GetForCurrentView();
         static IViewServiceProvider GetForWindowId(Int64 windowHandle);
     }

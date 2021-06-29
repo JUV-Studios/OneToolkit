@@ -22,11 +22,6 @@ namespace winrt::OneToolkit::UI
 				Windows::ApplicationModel::Core::CoreApplication::Properties().Insert(DialogShownKey(), box_value(value));
 			}
 		}
-
-		bool IsTitleBarVisibile() const
-		{
-			return !static_cast<Derived const*>(this)->IsFullScreen() && static_cast<Derived const*>(this)->InteractionMode() == Windows::UI::ViewManagement::UserInteractionMode::Mouse;
-		}
 	private:
 		std::wstring m_DialogShownKey;
 

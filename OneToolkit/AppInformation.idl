@@ -1,0 +1,8 @@
+namespace OneToolkit.ApplicationModel
+{
+    [default_interface]
+    static runtimeclass AppInformation
+    {
+        static Boolean IsCoreApplication { get; };
+    }
+}
