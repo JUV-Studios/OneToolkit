@@ -296,18 +296,12 @@
     <ClInclude Include="HubPanelSection.xaml.h">
       <DependentUpon>HubPanelSection.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="IconSourceHelper.h" />
-    <ClInclude Include="IContentEquatable.h" />
     <ClInclude Include="IContentTransition.h" />
-    <ClInclude Include="KeyboardAcceleratorHelper.h" />
     <ClInclude Include="NavigationType.h" />
     <ClInclude Include="OneToolkit.UI.Xaml.h" />
     <ClInclude Include="PageView.xaml.h">
       <DependentUpon>PageView.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="PageViewContentItem.h" />
-    <ClInclude Include="PageViewItemBase.h" />
-    <ClInclude Include="PageViewLinkItem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SlideContentTransition.h" />
     <ClInclude Include="DefaultContentTransition.h" />
@@ -323,29 +317,8 @@
     <ClCompile Include="HubPanelSection.xaml.cpp">
       <DependentUpon>HubPanelSection.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="IconSourceHelper.cpp">
-      <DependentUpon>IconSourceHelper.h</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="KeyboardAcceleratorHelper.cpp">
-      <DependentUpon>KeyboardAcceleratorHelper.h</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="NavigationViewItemHelper.cpp" />
     <ClCompile Include="PageView.xaml.cpp">
       <DependentUpon>PageView.xaml</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="PageViewContentItem.cpp">
-      <DependentUpon>PageViewContentItem.h</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="PageViewItemBase.cpp">
-      <DependentUpon>PageViewItemBase.h</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="PageViewLinkItem.cpp">
-      <DependentUpon>PageViewLinkItem.h</DependentUpon>
-      <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <DependentUpon>pch.h</DependentUpon>

@@ -11,7 +11,6 @@
 	d:DesignWidth="400"
 	Background="Transparent"
 	Loaded="Hub_Loaded"
-	SectionHeaderClick="Hub_SectionHeaderClick"
 	SectionsInViewChanged="Hub_SectionsInViewChanged"
 	mc:Ignorable="d">
 

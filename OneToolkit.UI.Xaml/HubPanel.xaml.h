@@ -49,7 +49,6 @@ namespace OneToolkit::UI::Xaml::Controls
 		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
 		void SetProperties();
 		void Hub_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-		void Hub_SectionHeaderClick(Platform::Object^, WUXC::HubSectionHeaderClickEventArgs^ e);
 		void Hub_SectionsInViewChanged(Platform::Object^ sender, WUXC::SectionsInViewChangedEventArgs^ e);
 	};
 }

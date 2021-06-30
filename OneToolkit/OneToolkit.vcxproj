@@ -225,6 +225,10 @@
       <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="PackageHelper.h">
+      <DependentUpon>PackageHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="SettingsService.h">
       <DependentUpon>SettingsService.idl</DependentUpon>
@@ -294,6 +298,10 @@
     <ClInclude Include="OneToolkit.h">
       <FileType>Document</FileType>
     </ClInclude>
+    <ClCompile Include="PackageHelper.cpp">
+      <DependentUpon>PackageHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <DependentUpon>pch.h</DependentUpon>
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -367,6 +375,9 @@
     </Midl>
     <Midl Include="Lifecycle.idl" />
     <Midl Include="MemoryBufferHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="PackageHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="SettingsService.idl">

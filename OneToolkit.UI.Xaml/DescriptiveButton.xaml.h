@@ -41,6 +41,5 @@ namespace OneToolkit::UI::Xaml::Controls
 		static Windows::UI::Xaml::DependencyProperty^ m_TitleProperty;
 		static Windows::UI::Xaml::DependencyProperty^ m_CaptionProperty;
 		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
-		void SetProperties();
 	};
 }

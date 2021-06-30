@@ -22,9 +22,6 @@
     <ClCompile Include="KeyboardAcceleratorHelper.cpp" />
     <ClCompile Include="PageViewContentItem.cpp" />
     <ClCompile Include="PageViewItemBase.cpp" />
-    <ClCompile Include="NavigationViewItemHelper.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ContentDialogHelper.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -34,21 +31,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="IconSourceHelper.h">
-      <Filter>Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardAcceleratorHelper.h">
-      <Filter>Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="PageViewItemBase.h">
-      <Filter>Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="PageViewLinkItem.h">
-      <Filter>Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="PageViewContentItem.h">
-      <Filter>Controls</Filter>
-    </ClInclude>
     <ClInclude Include="OneToolkit.UI.Xaml.h" />
     <ClInclude Include="IContentTransition.h">
       <Filter>Media\Animation</Filter>
@@ -59,9 +41,6 @@
     <ClInclude Include="NavigationType.h" />
     <ClInclude Include="SlideContentTransition.h">
       <Filter>Media\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="IContentEquatable.h">
-      <Filter>Controls</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

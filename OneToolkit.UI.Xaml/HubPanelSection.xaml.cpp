@@ -41,7 +41,6 @@ void HubPanelSection::Title::set(String^ value)
 	{
 		Header = value;
 		SetProperties();
-		PropertyChanged(this, ref new PropertyChangedEventArgs("Title"));
 	}
 }
 
@@ -66,13 +65,7 @@ void HubPanelSection::Container::set(HubPanel^ value)
 	{
 		m_Container = value;
 		SetProperties();
-		PropertyChanged(this, ref new PropertyChangedEventArgs("Container"));
 	}
-}
-
-void HubPanelSection::RaiseHeaderClick(HubPanel^ sender)
-{
-	HeaderClick(sender);
 }
 
 void HubPanelSection::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)

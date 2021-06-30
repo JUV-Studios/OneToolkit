@@ -107,6 +107,9 @@
     <Midl Include="AppInformation.idl">
       <Filter>ApplicationModel</Filter>
     </Midl>
+    <Midl Include="PackageHelper.idl">
+      <Filter>ApplicationModel</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />

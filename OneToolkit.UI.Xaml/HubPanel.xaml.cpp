@@ -123,11 +123,6 @@ void HubPanel::SetProperties()
 	}
 }
 
-void HubPanel::Hub_SectionHeaderClick(Object^, HubSectionHeaderClickEventArgs^ e)
-{
-	if (auto section = dynamic_cast<HubPanelSection^>(e->Section)) section->RaiseHeaderClick(this);
-}
-
 void HubPanel::Hub_SectionsInViewChanged(Object^ sender, SectionsInViewChangedEventArgs^ e)
 {
 	SetProperties();

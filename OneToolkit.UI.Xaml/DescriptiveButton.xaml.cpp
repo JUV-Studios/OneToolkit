@@ -32,12 +32,8 @@ DescriptiveButton::DescriptiveButton()
 
 void DescriptiveButton::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)
 {
-	dynamic_cast<DescriptiveButton^>(sender)->SetProperties();
-}
-
-void DescriptiveButton::SetProperties()
-{
-	AutomationProperties::SetName(this, Title + L", " + Caption);
+	auto target = dynamic_cast<DescriptiveButton^>(sender);
+	AutomationProperties::SetName(target, target->Title + L", " + target->Caption);
 }
 
 String^ DescriptiveButton::Title::get()
