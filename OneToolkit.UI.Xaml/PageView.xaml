@@ -3,13 +3,12 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:local="using:OneToolkit.UI.Xaml.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
 	BackRequested="NavigationView_BackRequested"
-	Background="{ThemeResource NavigationViewContentBackground}"
+	Background="{ThemeResource NavigationViewExpandedPaneBackground}"
 	IsTitleBarAutoPaddingEnabled="False"
 	ItemInvoked="NavigationView_ItemInvoked"
 	Loaded="NavigationView_Loaded"
@@ -36,10 +35,5 @@
 		</ResourceDictionary>
 	</muxc:NavigationView.Resources>
 
-	<local:ContentFrame
-		x:Name="Frame"
-		Grid.Row="1"
-		ContentTransition="{x:Bind ContentTransition, Mode=TwoWay}"
-		ContentTransitions="{x:Bind ContentTransitions, Mode=TwoWay}"
-		SyncBackWithSystem="{x:Bind SyncBackWithSystem, Mode=TwoWay}" />
+	<ContentPresenter x:Name="Frame" ContentTransitions="{x:Bind ContentTransitions, Mode=TwoWay}" />
 </muxc:NavigationView>

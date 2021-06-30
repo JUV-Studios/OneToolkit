@@ -2,23 +2,24 @@
 	x:Class="OneToolkit.Showcase.Views.MainPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:animation="using:OneToolkit.UI.Xaml.Media.Animation"
 	xmlns:controls="using:OneToolkit.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:OneToolkit.Showcase.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
-	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 
 	<Grid>
-		<controls:PageView x:Name="NavView" PaneTitle="OneToolkit Showcase">
-			<controls:PageView.ContentTransitions>
-				<TransitionCollection>
-					<PaneThemeTransition />
-				</TransitionCollection>
-			</controls:PageView.ContentTransitions>
+		<controls:PageView
+			x:Name="NavView"
+			IsBackButtonVisible="Collapsed"
+			PaneTitle="OneToolkit Showcase">
+			<controls:PageView.ContentTransition>
+				<animation:SlideContentTransition />
+			</controls:PageView.ContentTransition>
 			<controls:PageView.AutoSuggestBox>
 				<AutoSuggestBox PlaceholderText="What are you looking for?" QueryIcon="Find" />
 			</controls:PageView.AutoSuggestBox>
@@ -29,7 +30,7 @@
 				<controls:PageViewContentItem x:Uid="HomeNavItem" Icon="Home">
 					<local:HomePage />
 				</controls:PageViewContentItem>
-				<controls:PageViewContentItem Label="API reference">
+				<controls:PageViewContentItem Label="API reference" MenuItemsSource="{x:Bind viewModels:ReferenceViewModel.BindableNamespaces}">
 					<controls:PageViewContentItem.Icon>
 						<FontIcon Glyph="&#xE736;" />
 					</controls:PageViewContentItem.Icon>
@@ -61,7 +62,7 @@
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="NavView.PaneDisplayMode" Value="Left" />
-						<Setter Target="NavView.IsPaneToggleButtonVisible" Value="True" />
+						<Setter Target="NavView.IsPaneToggleButtonVisible" Value="False" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

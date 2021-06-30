@@ -29,6 +29,11 @@ namespace winrt::OneToolkit::UI::implementation
 		}
 	}
 
+	IViewServiceProvider ViewService::GetDefault()
+	{
+		return make<ViewServiceDesktop>(0);
+	}
+
 	IViewServiceProvider ViewService::GetForCurrentView()
 	{
 		return make<ViewServiceUniversal>();
@@ -36,7 +41,7 @@ namespace winrt::OneToolkit::UI::implementation
 
 	IViewServiceProvider ViewService::GetForWindowId(int64_t windowHandle)
 	{
-		if (AppInformation::IsCoreApplication()) throw hresult_illegal_method_call(L"GetForWindowId must be called from desktop apps only. CoreWindow based apps should call GetForCurrentView instead.");
+		if (AppInformation::IsCoreApplication()) throw hresult_illegal_method_call(L"GetForWindowId must be called from desktop apps only. UWP apps should call GetForCurrentView instead.");
 		return make<ViewServiceDesktop>(windowHandle);
 	}
 }

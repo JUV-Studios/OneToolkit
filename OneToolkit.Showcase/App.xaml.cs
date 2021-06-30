@@ -7,6 +7,7 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.Toolkit.Uwp.UI;
 using OneToolkit.UI.Xaml.Controls;
+using OneToolkit.Showcase.ViewModels;
 
 namespace OneToolkit.Showcase
 {
@@ -34,7 +35,7 @@ namespace OneToolkit.Showcase
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            ApiReference.Initialize();
+            ReferenceViewModel.Initialize();
             if (e.PrelaunchActivated == false)
             {
                 CoreApplication.EnablePrelaunch(true);

@@ -5,7 +5,6 @@
 
 #include "pch.h"
 #include "PageView.xaml.h"
-#include "SlideContentTransition.h"
 
 using namespace Platform;
 using namespace Concurrency;
@@ -35,7 +34,9 @@ DeclareDependencyProperty(bool, PageView, SyncBackWithSystem, true);
 
 DeclareDependencyProperty(UIElement, PageView, SettingsContent, nullptr);
 
-DeclareDependencyProperty(IContentTransition, PageView, ContentTransition, ref new SlideContentTransition);
+DeclareDependencyProperty(bool, PageView, IsNavigationStackEnabled, true);
+
+DeclareDependencyProperty(IContentTransition, PageView, ContentTransition, nullptr);
 
 PageView::PageView()
 {
@@ -50,6 +51,16 @@ bool PageView::SyncBackWithSystem::get()
 void PageView::SyncBackWithSystem::set(bool value)
 {
 	SetValue(m_SyncBackWithSystemProperty, value);
+}
+
+bool PageView::IsNavigationStackEnabled::get()
+{
+	return static_cast<bool>(GetValue(m_IsNavigationStackEnabledProperty));
+}
+
+void PageView::IsNavigationStackEnabled::set(bool value)
+{
+	SetValue(m_IsNavigationStackEnabledProperty, value);
 }
 
 UIElement^ PageView::SettingsContent::get()
@@ -92,19 +103,19 @@ void PageView::GoBack()
 	Frame->GoBack();
 }
 
-void PageView::GoForward()
+bool PageView::Navigate(UIElement^ content)
 {
-	Frame->GoForward();
+	return Frame->Navigate(content);
 }
 
-void PageView::Navigate(UIElement^ content)
+bool PageView::Navigate(TypeName sourcePageType)
 {
-	Frame->Navigate(content);
+	return Frame->Navigate(sourcePageType);
 }
 
-void PageView::NavigateToType(TypeName typeName)
+bool PageView::NavigateToType(TypeName typeName)
 {
-	Frame->NavigateToType(typeName);
+	return Frame->NavigateToType(typeName);
 }
 
 void PageView::InvokeItem(MUXC::NavigationViewItemBase^ navViewitem)
@@ -117,7 +128,10 @@ void PageView::DependencyPropertyChanged(DependencyObject^ sender, DependencyPro
 	auto pageView = dynamic_cast<PageView^>(sender);
 	if (e->Property == m_SettingsContentProperty)
 	{
-		if (pageView->SelectedItem != nullptr && pageView->SelectedItem == pageView->SettingsItem) pageView->Frame->Content = dynamic_cast<UIElement^>(e->NewValue);
+		if (pageView->SelectedItem != nullptr && pageView->SelectedItem == pageView->SettingsItem)
+		{
+			pageView->ContentTransition->SetContent(pageView->Frame, dynamic_cast<UIElement^>(e->NewValue), NavigationType::None);
+		}
 	}
 }
 
@@ -125,9 +139,9 @@ MUXC::NavigationViewItemBase^ PageView::FindContentItem(IVector<Object^>^ collec
 {
 	for (auto const& item : collection)
 	{
-		if (auto pageViewContentItem = dynamic_cast<PageViewContentItem^>(static_cast<Object^>(item)))
+		if (auto contentEquatable = dynamic_cast<IContentEquatable^>(static_cast<Object^>(item)))
 		{
-			if (pageViewContentItem->SelectionContent == content) return pageViewContentItem;
+			if (contentEquatable->Equals(content)) return dynamic_cast<MUXC::NavigationViewItem^>(contentEquatable);
 		}
 	}
 
@@ -137,7 +151,11 @@ MUXC::NavigationViewItemBase^ PageView::FindContentItem(IVector<Object^>^ collec
 void PageView::OnPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 {
 	if (e->PropertyName == "CanGoBack") IsBackEnabled = Frame->CanGoBack;
-	else if (e->PropertyName == "Content") SelectedItem = ItemFromContent(dynamic_cast<UIElement^>(Frame->Content));
+	else if (e->PropertyName == "Content")
+	{
+		auto currentItem = ItemFromContent(dynamic_cast<UIElement^>(Frame->Content));
+		if (dynamic_cast<IContentEquatable^>(currentItem)) SelectedItem = currentItem;
+	}
 }
 
 void PageView::NavigationView_Loaded(Object^ sender, RoutedEventArgs^ e)

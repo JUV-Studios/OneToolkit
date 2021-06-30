@@ -12,7 +12,7 @@
 
 	<controls:HubPanel
 		x:Name="Panel"
-		Title="{x:Bind GroupData.DisplayName}"
+		Title="{x:Bind GroupData.Caption}"
 		ScrollViewer.HorizontalScrollBarVisibility="Hidden"
 		ScrollViewer.HorizontalScrollMode="Auto"
 		UniformMargin="48">
@@ -35,11 +35,11 @@
 					</ItemsPanelTemplate>
 				</GridView.ItemsPanel>
 				<GridView.ItemTemplate>
-					<DataTemplate x:DataType="models:TypeGroup">
+					<DataTemplate x:DataType="models:TypeInfo">
 						<controls:DescriptiveButton
 							Title="{x:Bind Name}"
 							HorizontalAlignment="Stretch"
-							Caption="{x:Bind DisplayName}" />
+							Caption="{x:Bind Caption}" />
 					</DataTemplate>
 				</GridView.ItemTemplate>
 			</GridView>

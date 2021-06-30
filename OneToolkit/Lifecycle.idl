@@ -24,11 +24,4 @@ namespace OneToolkit.Lifecycle
 		Windows.Foundation.IAsyncAction SuspendAsync();
 		Windows.Foundation.IAsyncAction ResumeAsync();
 	};
-
-	interface IAsyncInitialize requires Windows.UI.Xaml.Data.INotifyPropertyChanged
-	{
-		Boolean IsLoading { get; };
-		Boolean HasInitialized { get; };
-		Windows.Foundation.IAsyncAction InitializeAsync();
-	};
 }

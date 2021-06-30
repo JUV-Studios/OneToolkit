@@ -140,6 +140,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Models\TypeGroup.cs" />
+    <Compile Include="Models\TypeInfo.cs" />
+    <Compile Include="ViewModels\ReferenceViewModel.cs" />
     <Compile Include="Views\ApiReference.xaml.cs">
       <DependentUpon>ApiReference.xaml</DependentUpon>
     </Compile>

@@ -28,9 +28,6 @@
     <ClCompile Include="ContentDialogHelper.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="SuppressContentTransition.cpp">
-      <Filter>Media\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="SlideContentTransition.cpp">
       <Filter>Media\Animation</Filter>
     </ClCompile>
@@ -56,12 +53,15 @@
     <ClInclude Include="IContentTransition.h">
       <Filter>Media\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="SuppressContentTransition.h">
+    <ClInclude Include="DefaultContentTransition.h">
       <Filter>Media\Animation</Filter>
     </ClInclude>
     <ClInclude Include="NavigationType.h" />
     <ClInclude Include="SlideContentTransition.h">
       <Filter>Media\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="IContentEquatable.h">
+      <Filter>Controls</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -78,9 +78,6 @@
       <Filter>Controls</Filter>
     </Page>
     <Page Include="Styles.xaml" />
-    <Page Include="ContentFrame.xaml">
-      <Filter>Controls</Filter>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -6,6 +6,9 @@ using Windows.ApplicationModel;
 using Microsoft.Toolkit.Uwp;
 using Microsoft.Toolkit.Uwp.Helpers;
 using OneToolkit.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
+using Microsoft.Toolkit.Uwp.UI;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -26,5 +29,10 @@ namespace OneToolkit.Showcase.Views
 		}
 
 		private async void Contribute_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new("https://dev.azure.com/JUV-Studios/OneToolkit"));
+
+		private void ContributeExpander_Expanding(Microsoft.UI.Xaml.Controls.Expander sender, Microsoft.UI.Xaml.Controls.ExpanderExpandingEventArgs args)
+		{
+			sender.MaxWidth = sender.ActualWidth;
+		}
 	}
 }

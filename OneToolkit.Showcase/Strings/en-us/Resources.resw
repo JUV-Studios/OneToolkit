@@ -123,6 +123,12 @@
   <data name="ClassText" xml:space="preserve">
     <value>class</value>
   </data>
+  <data name="ContributeBlock.Text" xml:space="preserve">
+    <value>OneToolkit is open source! We welcome everyone to contribute and help improve our library.</value>
+  </data>
+  <data name="ContributeBtn.Content" xml:space="preserve">
+    <value>Contribute to OneToolkit</value>
+  </data>
   <data name="CopyrightText" xml:space="preserve">
     <value>© 2021 JUV Studios. All rights reserved.</value>
   </data>
@@ -141,23 +147,26 @@
   <data name="HomeNavItem.Label" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="NamespacesBlock.Text" xml:space="preserve">
-    <value>Namespaces</value>
-  </data>
   <data name="NamespaceText" xml:space="preserve">
     <value>namespace</value>
   </data>
   <data name="ProgrammingLanguageBox.Header" xml:space="preserve">
     <value>Preferred programming language</value>
   </data>
+  <data name="ReferenceHub.Title" xml:space="preserve">
+    <value>API reference</value>
+  </data>
+  <data name="ReferenceHubNamespaces.Title" xml:space="preserve">
+    <value>Namespaces</value>
+  </data>
+  <data name="SettingsExpanderContribute.Header" xml:space="preserve">
+    <value>Contribute</value>
+  </data>
   <data name="SettingsHubAbout.Title" xml:space="preserve">
     <value>About this app</value>
   </data>
   <data name="SettingsHubBrowsing.Title" xml:space="preserve">
     <value>Browsing</value>
-  </data>
-  <data name="SettingsHubContributions.Title" xml:space="preserve">
-    <value>Contributions</value>
   </data>
   <data name="SettingsHubGeneral.Title" xml:space="preserve">
     <value>General</value>

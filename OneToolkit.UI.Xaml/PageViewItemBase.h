@@ -4,6 +4,7 @@ namespace OneToolkit::UI::Xaml::Controls
 {
 	ref class PageView;
 
+	[Windows::UI::Xaml::Data::Bindable]
 	[Windows::Foundation::Metadata::WebHostHidden]
 	public ref class PageViewItemBase : MUXC::NavigationViewItem
 	{

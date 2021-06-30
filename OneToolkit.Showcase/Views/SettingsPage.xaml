@@ -25,35 +25,28 @@
 					SelectedValue="{x:Bind viewModels:SettingsViewModel.Instance.SelectedProgrammingLanguage, Mode=TwoWay}" />
 			</wctControls:WrapPanel>
 		</controls:HubPanelSection>
-		<controls:HubPanelSection x:Uid="SettingsHubContributions" MaxWidth="{StaticResource SplitViewOpenPaneThemeLength}">
-			<StackPanel Spacing="8">
-				<TextBlock Text="OneToolkit is open source! We welcome everyone to contribute and help improve our library." TextWrapping="WrapWholeWords" />
-				<Button
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"
-					Click="Contribute_Click">
-					Contribute to OneToolkit
-				</Button>
-			</StackPanel>
-		</controls:HubPanelSection>
 		<controls:HubPanelSection x:Uid="SettingsHubAbout">
-			<Grid>
+			<Grid x:Name="AboutPanel">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
+					<RowDefinition Height="8" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 				<TextBlock Grid.Row="0" Text="{x:Bind AboutDisplayText}" />
-				<wctControls:WrapPanel
-					Grid.Row="1"
-					AutomationProperties.Name="{x:Bind AboutAutomationText}"
-					HorizontalSpacing="12"
-					Orientation="Vertical"
-					VerticalSpacing="0">
-					<HyperlinkButton x:Uid="TermsOfUseLink" NavigateUri="https://sway.office.com/s/5JnZ4XUEqVN7bAsB/embed" />
-					<HyperlinkButton x:Uid="TwitterFollowLink" NavigateUri="https://twitter.com/Jaigane88727011" />
-					<HyperlinkButton x:Uid="DiscordServerInviteLink" NavigateUri="https://discord.com/invite/xKVWBWu" />
-					<HyperlinkButton x:Uid="YouTubeSubscribeLink" NavigateUri="https://www.youtube.com/channel/UCCgDUPx_XgBfgBx-If1uk1g?sub_confirmation=1" />
-				</wctControls:WrapPanel>
+				<muxc:Expander
+					x:Uid="SettingsExpanderContribute"
+					Grid.Row="2"
+					HorizontalAlignment="Stretch"
+					ExpandDirection="Down"
+					Expanding="ContributeExpander_Expanding">
+					<StackPanel Spacing="8">
+						<TextBlock x:Uid="ContributeBlock" TextWrapping="Wrap" />
+						<Button
+							x:Uid="ContributeBtn"
+							HorizontalAlignment="Stretch"
+							Click="Contribute_Click" />
+					</StackPanel>
+				</muxc:Expander>
 			</Grid>
 		</controls:HubPanelSection>
 	</controls:HubPanel>

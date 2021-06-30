@@ -376,20 +376,5 @@
             The value after the change.
             </summary>
         </member>
-        <member name="T:OneToolkit.Runtime.ReflectionExtensions">
-            <summary>
-            Provides useful extension methods for reflection.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Runtime.ReflectionExtensions.IsWinMD(System.Reflection.Assembly)">
-            <summary>
-            Gets whether an assembly represents a Windows Runtime metadata file.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Runtime.ReflectionExtensions.GetDllFileName(System.Reflection.Assembly)">
-            <summary>
-            Gets the implementation file name of an assembly.
-            </summary>
-        </member>
     </members>
 </doc>

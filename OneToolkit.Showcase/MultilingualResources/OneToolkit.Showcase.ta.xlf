@@ -54,10 +54,6 @@
           <source>Terms of use</source>
           <target state="new">Terms of use</target>
         </trans-unit>
-        <trans-unit id="NamespacesBlock.Text" translate="yes" xml:space="preserve">
-          <source>Namespaces</source>
-          <target state="new">Namespaces</target>
-        </trans-unit>
         <trans-unit id="NamespaceText" translate="yes" xml:space="preserve">
           <source>namespace</source>
           <target state="new">namespace</target>
@@ -70,10 +66,6 @@
           <source>class</source>
           <target state="new">class</target>
         </trans-unit>
-        <trans-unit id="SettingsHubContributions.Title" translate="yes" xml:space="preserve">
-          <source>Contributions</source>
-          <target state="new">Contributions</target>
-        </trans-unit>
         <trans-unit id="DisableSoundEffectsSwitch.Header" translate="yes" xml:space="preserve">
           <source>Disable sound effects</source>
           <target state="new">Disable sound effects</target>
@@ -81,6 +73,26 @@
         <trans-unit id="SettingsHubGeneral.Title" translate="yes" xml:space="preserve">
           <source>General</source>
           <target state="new">General</target>
+        </trans-unit>
+        <trans-unit id="ContributeBlock.Text" translate="yes" xml:space="preserve">
+          <source>OneToolkit is open source! We welcome everyone to contribute and help improve our library.</source>
+          <target state="new">OneToolkit is open source! We welcome everyone to contribute and help improve our library.</target>
+        </trans-unit>
+        <trans-unit id="SettingsExpanderContribute.Header" translate="yes" xml:space="preserve">
+          <source>Contribute</source>
+          <target state="new">Contribute</target>
+        </trans-unit>
+        <trans-unit id="ContributeBtn.Content" translate="yes" xml:space="preserve">
+          <source>Contribute to OneToolkit</source>
+          <target state="new">Contribute to OneToolkit</target>
+        </trans-unit>
+        <trans-unit id="ReferenceHub.Title" translate="yes" xml:space="preserve">
+          <source>API reference</source>
+          <target state="new">API reference</target>
+        </trans-unit>
+        <trans-unit id="ReferenceHubNamespaces.Title" translate="yes" xml:space="preserve">
+          <source>Namespaces</source>
+          <target state="new">Namespaces</target>
         </trans-unit>
       </group>
     </body>

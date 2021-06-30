@@ -3,16 +3,6 @@
 namespace WUXC = Windows::UI::Xaml::Controls;
 namespace MUXC = Microsoft::UI::Xaml::Controls;
 
-namespace OneToolkit::UI::Xaml::Media::TransitionCollectionHelper
-{
-	inline void ApplySingleTransition(Windows::UI::Xaml::Media::Animation::TransitionCollection^& transitionCollection, Windows::UI::Xaml::Media::Animation::Transition^ transition)
-	{
-		if (!transitionCollection) transitionCollection = ref new Windows::UI::Xaml::Media::Animation::TransitionCollection;
-		else if (transitionCollection->Size > 0) transitionCollection->Clear();
-		transitionCollection->Append(transition);
-	}
-}
-
 #define DeclareDependencyProperty(Type, OwnerType, Name, DefaultValue) Windows::UI::Xaml::DependencyProperty^ OwnerType::m_##Name##Property = Windows::UI::Xaml::DependencyProperty::Register(#Name, Type::typeid, OwnerType::typeid,\
 ref new Windows::UI::Xaml::PropertyMetadata(DefaultValue, ref new Windows::UI::Xaml::PropertyChangedCallback(&OwnerType::DependencyPropertyChanged)));\
 Windows::UI::Xaml::DependencyProperty^ OwnerType::Name##Property::get() { return m_##Name##Property; }
@@ -47,16 +37,6 @@ namespace winrt
 {
 	namespace WUXC = Windows::UI::Xaml::Controls;
 	namespace MUXC = Microsoft::UI::Xaml::Controls;
-
-	namespace OneToolkit::UI::Xaml::Media::TransitionCollectionHelper
-	{
-		inline void ApplySingleTransition(Windows::UI::Xaml::Media::Animation::TransitionCollection& transitionCollection, Windows::UI::Xaml::Media::Animation::Transition const& transition)
-		{
-			if (!transitionCollection) transitionCollection = {};
-			else if (transitionCollection.Size() > 0) transitionCollection.Clear();
-			transitionCollection.Append(transition);
-		}
-	}
 }
 
 #endif

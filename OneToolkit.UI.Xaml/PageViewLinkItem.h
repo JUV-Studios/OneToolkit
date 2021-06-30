@@ -9,11 +9,9 @@ namespace OneToolkit::UI::Xaml::Controls
 	{
 	public:
 		PageViewLinkItem();
-
+	
 		property Windows::Foundation::Uri^ NavigateUri;
 	internal:
 		void Invoke(PageView^ sender) override;
-	private:
-		concurrency::task<void> InvokeAsync();
 	};
 }
