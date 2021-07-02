@@ -73,22 +73,34 @@ namespace winrt::OneToolkit
 		}
 #endif
 
+		/// <summary>
+		/// Writes text to the output window.
+		/// </summary>
 		inline void Write(std::string_view text) noexcept
 		{
 			OutputDebugStringA(text.data());
 		}
 
+		/// <summary>
+		/// Writes text to the output window.
+		/// </summary>
 		inline void Write(std::wstring_view text) noexcept
 		{
 			OutputDebugStringW(text.data());
 		}
 
+		/// <summary>
+		/// Writes a line to the output window.
+		/// </summary>
 		inline void WriteLine(std::string& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
 		{
 			auto newLine = Data::Text::LineEndingHelper::GetNewLineString<char>(lineEnding).data();
 			OutputDebugStringA((line + newLine).data());
 		}
 
+		/// <summary>
+		/// Writes a line to the output window.
+		/// </summary>
 		inline void WriteLine(std::wstring& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
 		{
 			auto newLine = Data::Text::LineEndingHelper::GetNewLineString<juv::wchar>(lineEnding).data();

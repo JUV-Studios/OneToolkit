@@ -5,13 +5,10 @@ namespace winrt::OneToolkit::Storage::implementation
 {
     struct SettingsService : SettingsServiceT<SettingsService>
     {
-    public:
         SettingsService(Windows::Storage::ApplicationDataContainer const& dataContainer);
-        Windows::Storage::ApplicationDataContainer DataContainer() const noexcept;
-        IInspectable GetValue(hstring const& key, IInspectable const& defaultValue = nullptr);
-        void SetValue(hstring const& key, IInspectable const& newValue);
-    private:
-        Windows::Storage::ApplicationDataContainer m_DataContainer;
+        DeclareAutoProperty(Windows::Storage::ApplicationDataContainer, DataContainer, nullptr);
+        IInspectable GetValue(hstring const& key, IInspectable const& defaultValue = nullptr) const;
+        void SetValue(hstring const& key, IInspectable const& newValue) const;
     };
 }
 

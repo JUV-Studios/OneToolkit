@@ -6,8 +6,8 @@ using OneToolkit.Lifecycle;
 using OneToolkit.Mvvm;
 using OneToolkit.Showcase.Models;
 using OneToolkit.UI.Xaml.Controls;
-using MUXC = Microsoft.UI.Xaml.Controls;
 using OneToolkit.Showcase.Views;
+using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace OneToolkit.Showcase.ViewModels
 {
@@ -25,10 +25,10 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public static IEnumerable<TypeGroup> FoundTypes;
 
-		public static IEnumerable<PageViewFrameItem> BindableNamespaces
+		public static IEnumerable<MUXC.NavigationViewItem> BindableNamespaces
 		{
 			get => from nameSpace in FoundTypes 
-				   select new PageViewFrameItem { Label = nameSpace.Caption, SourcePageType = typeof(NamespacePage), Parameter = nameSpace };
+				   select new MUXC.NavigationViewItem { Content = nameSpace.Caption, Tag = nameSpace };
 		}
 
 		public static void Initialize()

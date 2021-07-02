@@ -238,10 +238,6 @@
       <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="StringLocalizationConverter.h">
-      <DependentUpon>StringLocalizationConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="StringOperations.h">
       <DependentUpon>StringOperations.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -315,10 +311,6 @@
       <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="StringLocalizationConverter.cpp">
-      <DependentUpon>StringLocalizationConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="StringOperations.cpp">
       <DependentUpon>StringOperations.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -384,9 +376,6 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="SharedFile.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="StringLocalizationConverter.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="StringOperations.idl">

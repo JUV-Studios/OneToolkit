@@ -165,6 +165,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>
+      </GenerateWindowsMetadata>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -182,6 +184,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>
+      </GenerateWindowsMetadata>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -199,6 +203,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>
+      </GenerateWindowsMetadata>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -299,9 +305,6 @@
     <ClInclude Include="IContentTransition.h" />
     <ClInclude Include="NavigationType.h" />
     <ClInclude Include="OneToolkit.UI.Xaml.h" />
-    <ClInclude Include="PageView.xaml.h">
-      <DependentUpon>PageView.xaml</DependentUpon>
-    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="SlideContentTransition.h" />
     <ClInclude Include="DefaultContentTransition.h" />
@@ -316,9 +319,6 @@
     </ClCompile>
     <ClCompile Include="HubPanelSection.xaml.cpp">
       <DependentUpon>HubPanelSection.xaml</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="PageView.xaml.cpp">
-      <DependentUpon>PageView.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <DependentUpon>pch.h</DependentUpon>
@@ -343,15 +343,13 @@
     <Page Include="HubPanelSection.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PageView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Styles.xaml">
       <DeploymentContent>true</DeploymentContent>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="StringLocalizationConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OneToolkit\OneToolkit.vcxproj">

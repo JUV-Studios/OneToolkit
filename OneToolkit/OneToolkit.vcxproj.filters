@@ -19,9 +19,6 @@
     <Filter Include="Imaging">
       <UniqueIdentifier>{419a548f-56eb-4cfc-855d-d6da7847cf3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\Converters">
-      <UniqueIdentifier>{feb095f9-ba10-433b-b285-5b5e85d33fc1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI\Input">
       <UniqueIdentifier>{bc0906ea-cd09-4eb6-9e18-09c3cc7d72af}</UniqueIdentifier>
     </Filter>
@@ -94,9 +91,6 @@
     </Midl>
     <Midl Include="UISettingsHelper.idl">
       <Filter>UI</Filter>
-    </Midl>
-    <Midl Include="StringLocalizationConverter.idl">
-      <Filter>UI\Converters</Filter>
     </Midl>
     <Midl Include="SharedFile.idl">
       <Filter>Storage</Filter>

@@ -2,24 +2,25 @@
 #include "SettingsService.h"
 #include "Storage.SettingsService.g.cpp"
 
+using namespace juv;
 using namespace winrt;
 using namespace Windows::Storage;
 using namespace Windows::Foundation;
+using namespace Windows::Data::Json;
 
 namespace winrt::OneToolkit::Storage::implementation
 {
 	SettingsService::SettingsService(ApplicationDataContainer const& dataContainer) : m_DataContainer(dataContainer)
 	{
+		if (dataContainer == nullptr) throw hresult_invalid_argument(L"DataContainer for a SettingsService instance must not be null.");
 	}
 
-	ApplicationDataContainer SettingsService::DataContainer() const noexcept
+	IInspectable SettingsService::GetValue(hstring const& key, IInspectable const& defaultValue) const
 	{
-		return m_DataContainer;
-	}
-
-	IInspectable SettingsService::GetValue(hstring const& key, IInspectable const& defaultValue)
-	{
-		if (m_DataContainer.Values().HasKey(key)) return m_DataContainer.Values().Lookup(key);
+		if (m_DataContainer.Values().HasKey(key))
+		{
+			return m_DataContainer.Values().Lookup(key);
+		}
 		else
 		{
 			SetValue(key, defaultValue);
@@ -27,10 +28,10 @@ namespace winrt::OneToolkit::Storage::implementation
 		}
 	}
 
-	void SettingsService::SetValue(hstring const& key, IInspectable const& newValue)
+	void SettingsService::SetValue(hstring const& key, IInspectable const& newValue) const
 	{
 		static slim_mutex settingsValueLock;
 		const slim_lock_guard lockGuard { settingsValueLock };
-		if (!m_DataContainer.Values().Insert(key, newValue)) throw hresult_error(E_FAIL);
+		m_DataContainer.Values().Insert(key, newValue);
 	}
 }

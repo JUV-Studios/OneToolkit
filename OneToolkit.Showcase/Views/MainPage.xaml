@@ -7,6 +7,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:OneToolkit.Showcase.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
 	Loaded="Page_Loaded"
@@ -16,6 +17,7 @@
 		<controls:PageView
 			x:Name="NavView"
 			IsBackButtonVisible="Collapsed"
+			MenuItemInvoked="NavView_MenuItemInvoked"
 			PaneTitle="OneToolkit Showcase">
 			<controls:PageView.ContentTransition>
 				<animation:SlideContentTransition />
@@ -27,22 +29,22 @@
 				<local:SettingsPage />
 			</controls:PageView.SettingsContent>
 			<controls:PageView.MenuItems>
-				<controls:PageViewContentItem x:Uid="HomeNavItem" Icon="Home">
+				<controls:PageViewItem x:Uid="HomeNavItem" Icon="Home">
 					<local:HomePage />
-				</controls:PageViewContentItem>
-				<controls:PageViewContentItem Label="API reference" MenuItemsSource="{x:Bind viewModels:ReferenceViewModel.BindableNamespaces}">
-					<controls:PageViewContentItem.Icon>
+				</controls:PageViewItem>
+				<controls:PageViewItem Label="API reference" MenuItemsSource="{x:Bind viewModels:ReferenceViewModel.BindableNamespaces}">
+					<controls:PageViewItem.Icon>
 						<FontIcon Glyph="&#xE736;" />
-					</controls:PageViewContentItem.Icon>
+					</controls:PageViewItem.Icon>
 					<local:ApiReference />
-				</controls:PageViewContentItem>
+				</controls:PageViewItem>
 			</controls:PageView.MenuItems>
 			<controls:PageView.FooterMenuItems>
-				<controls:PageViewLinkItem x:Uid="FeedbackNavItem" NavigateUri="{x:Bind FeedbackUri}">
-					<controls:PageViewLinkItem.Icon>
+				<muxc:NavigationViewItem x:Name="FeedbackNavItem" x:Uid="FeedbackNavItem">
+					<muxc:NavigationViewItem.Icon>
 						<FontIcon Glyph="&#xED15;" />
-					</controls:PageViewLinkItem.Icon>
-				</controls:PageViewLinkItem>
+					</muxc:NavigationViewItem.Icon>
+				</muxc:NavigationViewItem>
 			</controls:PageView.FooterMenuItems>
 		</controls:PageView>
 		<VisualStateManager.VisualStateGroups>

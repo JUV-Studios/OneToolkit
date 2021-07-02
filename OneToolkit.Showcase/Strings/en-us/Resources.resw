@@ -138,7 +138,7 @@
   <data name="DiscordServerInviteLink.Content" xml:space="preserve">
     <value>Join our Discord server</value>
   </data>
-  <data name="FeedbackNavItem.Label" xml:space="preserve">
+  <data name="FeedbackNavItem.Content" xml:space="preserve">
     <value>Feedback</value>
   </data>
   <data name="HomeHub.Title" xml:space="preserve">

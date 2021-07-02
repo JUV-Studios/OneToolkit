@@ -10,10 +10,6 @@
           <source>Welcome</source>
           <target state="translated">வணக்கம்</target>
         </trans-unit>
-        <trans-unit id="FeedbackNavItem.Label" translate="yes" xml:space="preserve">
-          <source>Feedback</source>
-          <target state="translated" state-qualifier="tm-suggestion">பின்னூட்டம்</target>
-        </trans-unit>
         <trans-unit id="HomeNavItem.Label" translate="yes" xml:space="preserve">
           <source>Home</source>
           <target state="translated" state-qualifier="tm-suggestion">முகப்பு</target>
@@ -93,6 +89,10 @@
         <trans-unit id="ReferenceHubNamespaces.Title" translate="yes" xml:space="preserve">
           <source>Namespaces</source>
           <target state="new">Namespaces</target>
+        </trans-unit>
+        <trans-unit id="FeedbackNavItem.Content" translate="yes" xml:space="preserve">
+          <source>Feedback</source>
+          <target state="new">Feedback</target>
         </trans-unit>
       </group>
     </body>

@@ -15,9 +15,6 @@
   <data name="HomeHub.Title" xml:space="preserve">
     <value>வணக்கம்</value>
   </data>
-  <data name="FeedbackNavItem.Label" xml:space="preserve">
-    <value>பின்னூட்டம்</value>
-  </data>
   <data name="HomeNavItem.Label" xml:space="preserve">
     <value>முகப்பு</value>
   </data>

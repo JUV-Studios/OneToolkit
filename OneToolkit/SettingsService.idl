@@ -1,6 +1,5 @@
 namespace OneToolkit.Storage
 {
-    [bindable]
     [default_interface]
     runtimeclass SettingsService
     {
