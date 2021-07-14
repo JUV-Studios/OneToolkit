@@ -1,0 +1,10 @@
+namespace OneToolkit.UI.WinUI.Controls
+{
+    delegate Windows.Foundation.IAsyncAction ContentDialogDisplayCompletionAsyncHandler(Microsoft.UI.Xaml.Controls.ContentDialog dialog, Microsoft.UI.Xaml.Controls.ContentDialogResult result);
+
+    static runtimeclass ContentDialogHelper
+    {
+        static Windows.Foundation.IAsyncOperation<Boolean> TryShowAsync(Microsoft.UI.Xaml.Controls.ContentDialog dialog, Microsoft.UI.Xaml.Controls.ContentDialogPlacement placement,
+            ContentDialogDisplayCompletionAsyncHandler completionHandler, OneToolkit.UI.IViewServiceProvider viewServiceProvider);
+    }
+}

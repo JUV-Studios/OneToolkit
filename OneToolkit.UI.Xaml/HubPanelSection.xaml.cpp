@@ -21,27 +21,12 @@ using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-DeclareDependencyProperty(UIElement, HubPanelSection, Content, nullptr);
+DefineDependencyProperty(UIElement, HubPanelSection, Content, nullptr);
 
 HubPanelSection::HubPanelSection()
 {
 	InitializeComponent();
-}
-
-String^ HubPanelSection::Title::get()
-{
-	if (auto string = dynamic_cast<IBox<String^>^>(Header)) return string->Value;
-	else if (auto stringable = dynamic_cast<IStringable^>(Header)) return stringable->ToString();
-	else return "";
-}
-
-void HubPanelSection::Title::set(String^ value)
-{
-	if (Title != value)
-	{
-		Header = value;
-		SetProperties();
-	}
+	RegisterPropertyChangedCallback(HeaderProperty, ref new DependencyPropertyChangedCallback(this, &HubPanelSection::DependencyPropertyBaseChanged));
 }
 
 UIElement^ HubPanelSection::Content::get()
@@ -77,16 +62,21 @@ void HubPanelSection::SetProperties()
 {
 	if (Content != nullptr)
 	{
-		auto automationText = Title;
+		auto automationText = Header->ToString();
 		if (auto container = m_Container.Resolve<HubPanel>())
 		{
 			uint32 foundIndex;
 			if (container->Sections->IndexOf(this, &foundIndex))
 			{
-				if (foundIndex == 0) automationText = container->Title + L", " + automationText;
+				if (foundIndex == 0) automationText = container->Header->ToString() + L", " + automationText;
 			}
 		}
 
 		AutomationProperties::SetName(Content, automationText);
 	}
+}
+
+void HubPanelSection::DependencyPropertyBaseChanged(DependencyObject^ sender, DependencyProperty^ dp)
+{
+	SetProperties();
 }

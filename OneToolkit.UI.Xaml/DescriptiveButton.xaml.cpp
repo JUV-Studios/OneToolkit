@@ -21,9 +21,9 @@ using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-DeclareDependencyProperty(String, DescriptiveButton, Title, "");
+DefineDependencyProperty(String, DescriptiveButton, Title, "");
 
-DeclareDependencyProperty(String, DescriptiveButton, Caption, "");
+DefineDependencyProperty(String, DescriptiveButton, Caption, "");
 
 DescriptiveButton::DescriptiveButton()
 {

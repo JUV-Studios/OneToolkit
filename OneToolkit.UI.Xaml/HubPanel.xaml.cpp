@@ -26,43 +26,14 @@ using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-DeclareDependencyProperty(double, HubPanel, Spacing, PropertyValue::CreateDouble(36));
+DefineDependencyProperty(double, HubPanel, Spacing, PropertyValue::CreateDouble(36));
+
+DefineDependencyProperty(Thickness, HubPanel, Packing, ThicknessHelper::FromUniformLength(48));
 
 HubPanel::HubPanel()
 {
 	InitializeComponent();
-}
-
-double HubPanel::UniformMargin::get()
-{
-	return Padding.Left;
-}
-
-void HubPanel::UniformMargin::set(double value)
-{
-	if (Padding.Left != value)
-	{
-		Padding = ThicknessHelper::FromLengths(value, value, value, 0);
-		SetProperties();
-		PropertyChanged(this, ref new PropertyChangedEventArgs("UniformMargin"));
-	}
-}
-
-String^ HubPanel::Title::get()
-{
-	if (auto string = dynamic_cast<IBox<String^>^>(Header)) return string->Value;
-	else if (auto stringable = dynamic_cast<IStringable^>(Header)) return stringable->ToString();
-	else return "";
-}
-
-void HubPanel::Title::set(String^ value)
-{
-	if (Title != value)
-	{
-		Header = value;
-		SetProperties();
-		PropertyChanged(this, ref new PropertyChangedEventArgs("Title"));
-	}
+	RegisterPropertyChangedCallback(HeaderProperty, ref new DependencyPropertyChangedCallback(this, &HubPanel::DependencyPropertyBaseChanged));
 }
 
 double HubPanel::Spacing::get()
@@ -75,17 +46,14 @@ void HubPanel::Spacing::set(double value)
 	SetValue(m_SpacingProperty, value);
 }
 
-double HubPanel::HeaderSpacing::get()
+Thickness HubPanel::Packing::get()
 {
-	if (Application::Current->Resources->HasKey("HubPanelHeaderSpacing"))
-	{
-		if (auto resource = dynamic_cast<IBox<double>^>(Application::Current->Resources->Lookup("HubPanelHeaderSpacing"))) return resource->Value;
-		else return 4;
-	}
-	else
-	{
-		return 4;
-	}
+	return static_cast<Thickness>(GetValue(m_PackingProperty));
+}
+
+void HubPanel::Packing::set(Thickness value)
+{
+	SetValue(m_PackingProperty, value);
 }
 
 void HubPanel::Hub_Loaded(Object^ sender, RoutedEventArgs^ e)
@@ -100,9 +68,12 @@ void HubPanel::DependencyPropertyChanged(DependencyObject^ sender, DependencyPro
 
 void HubPanel::SetProperties()
 {
-	auto spacing = Spacing;
-	auto uniformMargin = Padding.Left;
-	auto headerSpacing = HeaderSpacing;
+	Thickness paddingValue;
+	paddingValue.Left = Packing.Left;
+	paddingValue.Top = Packing.Top;
+	paddingValue.Right = Packing.Right;
+	paddingValue.Bottom = 0;
+	Padding = paddingValue;
 	for (uint32 index = 0; index < Sections->Size; ++index)
 	{
 		auto section = Sections->GetAt(index);
@@ -110,13 +81,13 @@ void HubPanel::SetProperties()
 		AutomationProperties::SetSizeOfSet(section, Sections->Size);
 		if (Sections->Size == 1)
 		{
-			section->Padding = ThicknessHelper::FromLengths(uniformMargin, headerSpacing, uniformMargin, uniformMargin);
+			section->Padding = ThicknessHelper::FromLengths(Packing.Left, 0, Packing.Right, Packing.Bottom);
 		}
 		else
 		{
-			if (index == 0) section->Padding = ThicknessHelper::FromLengths(uniformMargin, headerSpacing, 0, uniformMargin);
-			else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(spacing, headerSpacing, uniformMargin, uniformMargin);
-			else section->Padding = ThicknessHelper::FromLengths(spacing, headerSpacing, 0, uniformMargin);
+			if (index == 0) section->Padding = ThicknessHelper::FromLengths(Packing.Left, 0, 0, Packing.Bottom);
+			else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(Spacing, 0, Packing.Right, Packing.Bottom);
+			else section->Padding = ThicknessHelper::FromLengths(Spacing, 0, 0, Packing.Bottom);
 		}
 
 		if (auto hubPanelSection = dynamic_cast<HubPanelSection^>(section)) hubPanelSection->Container = this;
@@ -124,6 +95,11 @@ void HubPanel::SetProperties()
 }
 
 void HubPanel::Hub_SectionsInViewChanged(Object^ sender, SectionsInViewChangedEventArgs^ e)
+{
+	SetProperties();
+}
+
+void HubPanel::DependencyPropertyBaseChanged(DependencyObject^ sender, DependencyProperty^ dp)
 {
 	SetProperties();
 }

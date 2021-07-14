@@ -6,10 +6,8 @@
 	xmlns:local="using:OneToolkit.UI.Xaml.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Margin="0"
-	Padding="48,48,48,0"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	Background="Transparent"
 	Loaded="Hub_Loaded"
 	SectionsInViewChanged="Hub_SectionsInViewChanged"
 	mc:Ignorable="d">

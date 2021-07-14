@@ -3,7 +3,10 @@
 namespace WUXC = Windows::UI::Xaml::Controls;
 namespace MUXC = Microsoft::UI::Xaml::Controls;
 
-#define DeclareDependencyProperty(Type, OwnerType, Name, DefaultValue) Windows::UI::Xaml::DependencyProperty^ OwnerType::m_##Name##Property = Windows::UI::Xaml::DependencyProperty::Register(#Name, Type::typeid, OwnerType::typeid,\
+#define DeclareDependencyProperty(Type, Name) private: static Windows::UI::Xaml::DependencyProperty^ m_##Name##Property;\
+public: property Type Name { Type get(); void set(Type value); } static property Windows::UI::Xaml::DependencyProperty^ Name##Property { Windows::UI::Xaml::DependencyProperty^ get(); }
+
+#define DefineDependencyProperty(Type, OwnerType, Name, DefaultValue) Windows::UI::Xaml::DependencyProperty^ OwnerType::m_##Name##Property = Windows::UI::Xaml::DependencyProperty::Register(#Name, Type::typeid, OwnerType::typeid,\
 ref new Windows::UI::Xaml::PropertyMetadata(DefaultValue, ref new Windows::UI::Xaml::PropertyChangedCallback(&OwnerType::DependencyPropertyChanged)));\
 Windows::UI::Xaml::DependencyProperty^ OwnerType::Name##Property::get() { return m_##Name##Property; }
 #else

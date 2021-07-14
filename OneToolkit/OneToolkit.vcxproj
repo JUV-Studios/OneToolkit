@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.props')" />
-  <Import Project="..\packages\juv.1.0.0.5\build\native\juv.props" Condition="Exists('..\packages\juv.1.0.0.5\build\native\juv.props')" />
-  <Import Project="..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props" Condition="Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" />
+  <Import Project="..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props" Condition="Exists('..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" />
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210709.3\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210709.3\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="..\packages\juv.1.0.0.6\build\native\juv.props" Condition="Exists('..\packages\juv.1.0.0.6\build\native\juv.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -72,6 +72,38 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <DesktopCompatible>
+    </DesktopCompatible>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <DesktopCompatible>
+    </DesktopCompatible>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <DesktopCompatible>
+    </DesktopCompatible>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DesktopCompatible>
+    </DesktopCompatible>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <DesktopCompatible>
+    </DesktopCompatible>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <DesktopCompatible>
+    </DesktopCompatible>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DesktopCompatible>
+    </DesktopCompatible>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DesktopCompatible>
+    </DesktopCompatible>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -229,6 +261,10 @@
       <DependentUpon>PackageHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="PackageVersionHelper.h">
+      <DependentUpon>PackageVersionHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="SettingsService.h">
       <DependentUpon>SettingsService.idl</DependentUpon>
@@ -236,14 +272,6 @@
     </ClInclude>
     <ClInclude Include="SharedFile.h">
       <DependentUpon>SharedFile.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="StringOperations.h">
-      <DependentUpon>StringOperations.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="TextEncodingHelper.h">
-      <DependentUpon>TextEncodingHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="UISettingsHelper.h">
@@ -254,9 +282,6 @@
       <DependentUpon>ViewService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="ViewServiceBase.h" />
-    <ClInclude Include="ViewServiceDesktop.h" />
-    <ClInclude Include="ViewServiceUniversal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppInformation.cpp">
@@ -298,6 +323,10 @@
       <DependentUpon>PackageHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="PackageVersionHelper.cpp">
+      <DependentUpon>PackageVersionHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <DependentUpon>pch.h</DependentUpon>
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -311,28 +340,12 @@
       <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="StringOperations.cpp">
-      <DependentUpon>StringOperations.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="TextEncodingHelper.cpp">
-      <DependentUpon>TextEncodingHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="UISettingsHelper.cpp">
       <DependentUpon>UISettingsHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ViewService.cpp">
       <DependentUpon>ViewService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ViewServiceDesktop.cpp">
-      <DependentUpon>ViewServiceDesktop.h</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ViewServiceUniversal.cpp">
-      <DependentUpon>ViewServiceUniversal.h</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
   </ItemGroup>
@@ -369,19 +382,17 @@
     <Midl Include="MemoryBufferHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="NavigationType.idl" />
     <Midl Include="PackageHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="PackageVersionHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="SettingsService.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="SharedFile.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="StringOperations.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="TextEncodingHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="UISettingsHelper.idl">
@@ -398,15 +409,15 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210709.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210709.3\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210505.3\build\native\Microsoft.Windows.WinMD.props'))" />
-    <Error Condition="!Exists('..\packages\juv.1.0.0.5\build\native\juv.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\juv.1.0.0.5\build\native\juv.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210621.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('..\packages\juv.1.0.0.6\build\native\juv.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\juv.1.0.0.6\build\native\juv.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210709.3\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210709.3\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210709.3\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210709.3\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props'))" />
   </Target>
 </Project>

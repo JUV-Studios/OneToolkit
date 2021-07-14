@@ -36,7 +36,6 @@
     <ClInclude Include="DefaultContentTransition.h">
       <Filter>Media\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="NavigationType.h" />
     <ClInclude Include="SlideContentTransition.h">
       <Filter>Media\Animation</Filter>
     </ClInclude>

@@ -36,6 +36,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Lifecycle\" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
 </Project>

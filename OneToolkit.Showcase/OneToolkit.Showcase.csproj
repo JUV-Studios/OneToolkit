@@ -230,7 +230,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OneToolkit.Mvvm.Dotnet\OneToolkit.Dotnet.csproj">
+    <ProjectReference Include="..\OneToolkit.Dotnet\OneToolkit.Dotnet.csproj">
       <Project>{ef690ebe-5bfe-428e-9e39-d0ef06b1fd1c}</Project>
       <Name>OneToolkit.Dotnet</Name>
     </ProjectReference>

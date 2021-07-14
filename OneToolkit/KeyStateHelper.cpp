@@ -11,7 +11,7 @@ using namespace OneToolkit::ApplicationModel;
 
 namespace winrt::OneToolkit::UI::Input::implementation
 {
-	typedef SHORT(__stdcall* GetKeyState)(int);
+	using GetKeyState = short(__stdcall*)(int);
 
 	bool KeyStateHelper::IsKeyUp(VirtualKey key)
 	{

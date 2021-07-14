@@ -1,5 +1,4 @@
 #pragma once
-#include "NavigationType.h"
 
 namespace OneToolkit::UI::Xaml::Media::Animation
 {

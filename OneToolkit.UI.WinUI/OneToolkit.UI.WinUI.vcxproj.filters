@@ -8,6 +8,12 @@
     <Filter Include="Generated Files">
       <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Controls">
+      <UniqueIdentifier>{2db97031-ede0-4010-98fd-fbfae1a15d8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Converters">
+      <UniqueIdentifier>{fdcd6b29-7090-454e-8625-7b41c7ab034e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -15,9 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="Class.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OneToolkit_UI_WinUI.def" />
@@ -28,5 +31,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="ContentDialogHelper.idl">
+      <Filter>Controls</Filter>
+    </Midl>
   </ItemGroup>
 </Project>

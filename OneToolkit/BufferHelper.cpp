@@ -22,6 +22,6 @@ namespace winrt::OneToolkit::Storage::implementation
 
 	bool BufferHelper::IsIndexValid(IBuffer const& buffer, uint32 index)
 	{
-		return index < buffer.Length();
+		return index < buffer.Capacity();
 	}
 }

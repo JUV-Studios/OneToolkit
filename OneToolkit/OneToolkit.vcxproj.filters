@@ -4,12 +4,6 @@
     <Filter Include="UI">
       <UniqueIdentifier>{e3467b78-3a66-4083-872e-c0de25efa1f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Data">
-      <UniqueIdentifier>{e6735ca6-e455-4c16-bf52-23a6f2ad2c27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data\Text">
-      <UniqueIdentifier>{db5eb1e4-c183-41d7-bb8e-3def702fdc5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Generated Files">
       <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
     </Filter>
@@ -40,27 +34,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="OneToolkit.def" />
     <None Include="PropertySheet.props" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="ViewServiceDesktop.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewServiceUniversal.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="OneToolkit.h" />
-    <ClInclude Include="ViewServiceBase.h">
-      <Filter>UI</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="StringOperations.idl">
-      <Filter>Data\Text</Filter>
-    </Midl>
     <Midl Include="FontHelper.idl">
       <Filter>UI</Filter>
     </Midl>
@@ -69,9 +51,6 @@
     </Midl>
     <Midl Include="ViewService.idl">
       <Filter>UI</Filter>
-    </Midl>
-    <Midl Include="TextEncodingHelper.idl">
-      <Filter>Data\Text</Filter>
     </Midl>
     <Midl Include="MemoryBufferHelper.idl">
       <Filter>Storage</Filter>
@@ -102,6 +81,12 @@
       <Filter>ApplicationModel</Filter>
     </Midl>
     <Midl Include="PackageHelper.idl">
+      <Filter>ApplicationModel</Filter>
+    </Midl>
+    <Midl Include="NavigationType.idl">
+      <Filter>UI</Filter>
+    </Midl>
+    <Midl Include="PackageVersionHelper.idl">
       <Filter>ApplicationModel</Filter>
     </Midl>
   </ItemGroup>

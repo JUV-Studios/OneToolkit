@@ -14,11 +14,6 @@ namespace OneToolkit::UI::Xaml::Controls
 	public ref class ContentDialogHelper sealed
 	{
 	public:
-		IAsyncOperation<bool>^ TryShowAsync(ContentDialog^ dialog, ContentDialogPlacement placement, ContentDialogDisplayCompletionAsyncHandler^ completionHandler)
-		{
-			return TryShowAsync(dialog, placement, completionHandler, ViewService::GetForCurrentView());
-		}
-
 		IAsyncOperation<bool>^ TryShowAsync(ContentDialog^ dialog, ContentDialogPlacement placement, ContentDialogDisplayCompletionAsyncHandler^ completionHandler, IViewServiceProvider^ viewServiceProvider)
 		{
 			return create_async([=]() -> task<bool>

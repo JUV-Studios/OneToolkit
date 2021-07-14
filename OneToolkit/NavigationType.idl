@@ -1,0 +1,7 @@
+namespace OneToolkit.UI
+{
+	enum NavigationType
+	{
+		None, Back, Forward
+	};
+}

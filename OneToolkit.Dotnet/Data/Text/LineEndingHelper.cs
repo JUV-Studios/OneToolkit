@@ -6,7 +6,7 @@
 #pragma warning disable CS1591
 	public enum LineEnding : byte
 	{
-		CR, LF, CRLF, Mixed
+		CR, LF, CRLF, LFCR, Mixed
 	}
 #pragma warning restore CS1591
 
@@ -20,19 +20,24 @@
 		/// </summary>
 		public static bool IsNewLineString(string text, out LineEnding lineEnding)
 		{
-			if (text == "\r")
+			if (text == GetNewLineString(LineEnding.CR))
 			{
 				lineEnding = LineEnding.CR;
 				return true;
 			}
-			else if (text == "\n")
+			else if (text == GetNewLineString(LineEnding.LF))
 			{
 				lineEnding = LineEnding.LF;
 				return true;
 			}
-			else if (text == "\r\n" || text == "\n\r")
+			else if (text == GetNewLineString(LineEnding.CRLF))
 			{
 				lineEnding = LineEnding.CRLF;
+				return true;
+			}
+			else if (text == GetNewLineString(LineEnding.LFCR))
+			{
+				lineEnding = LineEnding.LFCR;
 				return true;
 			}
 			else
@@ -50,6 +55,7 @@
 			LineEnding.CR => "\r",
 			LineEnding.LF => "\n",
 			LineEnding.CRLF => "\r\n",
+			LineEnding.LFCR => "\n\r",
 			_ => string.Empty
 		};
 
@@ -71,6 +77,10 @@
 			else if (lineEnding == LineEnding.CRLF)
 			{
 				text = Normalize(text, LineEnding.CR).Replace("\r", "\r\n");
+			}
+			else if (lineEnding == LineEnding.LFCR)
+			{
+				text = Normalize(text, LineEnding.LF).Replace("\n", "\n\r");
 			}
 
 			return text;

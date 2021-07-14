@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit", "OneToolkit\OneToolkit.vcxproj", "{0DD5EDD3-19B8-4924-8DF1-ADD70803E693}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneToolkit.Dotnet", "OneToolkit.Mvvm.Dotnet\OneToolkit.Dotnet.csproj", "{EF690EBE-5BFE-428E-9E39-D0EF06B1FD1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneToolkit.Dotnet", "OneToolkit.Dotnet\OneToolkit.Dotnet.csproj", "{EF690EBE-5BFE-428E-9E39-D0EF06B1FD1C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneToolkit.Showcase", "OneToolkit.Showcase\OneToolkit.Showcase.csproj", "{07E880F8-3550-49C3-86DB-B8F0F3513398}"
 EndProject
@@ -13,9 +13,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit.UI.Xaml", "OneTo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit.UI.WinUI", "OneToolkit.UI.WinUI\OneToolkit.UI.WinUI.vcxproj", "{38842A69-A00E-4D6B-B40B-6C0E7A21B1C1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BBEAF8F5-2E90-4CF2-94DB-5F97AD9BF535}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "juv", "juv", "{A31BD13B-9396-4772-B6A9-4C61343A72AC}"
 	ProjectSection(SolutionItems) = preProject
-		juv.h = juv.h
+		juv\juv.1.0.0.6.nupkg = juv\juv.1.0.0.6.nupkg
+		juv\juv.h = juv\juv.h
+		juv\juv.props = juv\juv.props
 	EndProjectSection
 EndProject
 Global

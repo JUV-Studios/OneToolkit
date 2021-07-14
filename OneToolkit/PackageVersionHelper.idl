@@ -1,0 +1,8 @@
+namespace OneToolkit.ApplicationModel
+{
+    [default_interface]
+    static runtimeclass PackageVersionHelper
+    {
+        static String GetFormattedString(Windows.ApplicationModel.PackageVersion packageVersion);
+    }
+}

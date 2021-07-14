@@ -3,13 +3,14 @@
 #pragma once
 #include <juv.h>
 #include <concepts>
+#include <unknwn.h>
+#include <functional>
 #include <Windows.h>
 #include <winrt/OneToolkit.UI.h>
 #include <winrt/OneToolkit.Imaging.h>
 #include <winrt/OneToolkit.Storage.h>
 #include <winrt/Windows.UI.Xaml.Data.h>
 #include <winrt/OneToolkit.Lifecycle.h>
-#include <winrt/OneToolkit.Data.Text.h>
 #include <winrt/OneToolkit.ApplicationModel.h>
 
 #define DeclareEvent(Type, Name) private: ::winrt::event<Type> m_##Name;\
@@ -40,7 +41,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Signals a breakpoint to an attached debugger for the current process.
 		/// </summary>
-		inline void Break() noexcept
+		void Break() noexcept
 		{
 			DebugBreak();
 		}
@@ -48,7 +49,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Gets whether a debugger is attached to the current process.
 		/// </summary>
-		inline bool IsAttached() noexcept
+		bool IsAttached() noexcept
 		{
 			return IsDebuggerPresent() != 0;
 		}
@@ -57,7 +58,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Signals a breakpoint to an attached debugger for the specified process using its handle.
 		/// </summary>
-		inline void Break(HANDLE processHandle)
+		void Break(HANDLE processHandle)
 		{
 			check_bool(DebugBreakProcess(processHandle));
 		}
@@ -65,7 +66,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Gets whether a debugger is attached to a specified process using its handle.
 		/// </summary>
-		inline bool IsAttached(HANDLE processHandle)
+		bool IsAttached(HANDLE processHandle)
 		{
 			int result;
 			check_bool(CheckRemoteDebuggerPresent(processHandle, &result));
@@ -76,7 +77,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		inline void Write(std::string_view text) noexcept
+		void Write(std::string_view text)
 		{
 			OutputDebugStringA(text.data());
 		}
@@ -84,27 +85,43 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		inline void Write(std::wstring_view text) noexcept
+		void Write(std::wstring_view text)
 		{
 			OutputDebugStringW(text.data());
 		}
 
 		/// <summary>
-		/// Writes a line to the output window.
+		/// Writes text to the output window.
 		/// </summary>
-		inline void WriteLine(std::string& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
+		void Write(std::u8string_view text)
 		{
-			auto newLine = Data::Text::LineEndingHelper::GetNewLineString<char>(lineEnding).data();
-			OutputDebugStringA((line + newLine).data());
+			OutputDebugStringA(reinterpret_cast<const char*>(text.data()));
+		}
+
+		/// <summary>
+		/// Writes text to the output window.
+		/// </summary>
+		void Write(std::u16string_view text)
+		{
+			OutputDebugStringW(reinterpret_cast<const wchar_t*>(text.data()));
+		}
+
+		/// <summary>
+		/// Writes text to the output window.
+		/// </summary>
+		void Write(std::u32string_view text)
+		{
+			throw hresult_not_implemented();
 		}
 
 		/// <summary>
 		/// Writes a line to the output window.
 		/// </summary>
-		inline void WriteLine(std::wstring& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
+		template <typename String>
+		void WriteLine(String& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
 		{
-			auto newLine = Data::Text::LineEndingHelper::GetNewLineString<juv::wchar>(lineEnding).data();
-			OutputDebugStringW((line + newLine).data());
+			auto newLine = Data::Text::LineEndingHelper::GetNewLineString<typename String::value_type>(lineEnding).data();
+			Write(line + newLine);
 		}
 	}
 
@@ -176,22 +193,22 @@ namespace winrt::OneToolkit
 			/// <summary>
 			/// Retrieves the address of an exported function or variable.
 			/// </summary>
-			template <typename T>
-			auto GetProcAddress(std::string_view procName) const
+			template <typename Pointer>
+			auto GetProcAddress(std::string_view procName) const requires std::is_pointer_v<Pointer>
 			{
 				auto result = WINRT_IMPL_GetProcAddress(m_Handle, procName.data());
 				if (!result) throw_last_error();
-				return reinterpret_cast<T>(result);
+				return reinterpret_cast<Pointer>(result);
 			}
 
 			/// <summary>
 			/// Retrieves the address of an exported function or variable.
 			/// </summary>
-			template <typename T>
-			auto GetProcAddress(std::wstring_view procName) const
+			template <typename Pointer>
+			auto GetProcAddress(std::wstring_view procName) const requires std::is_pointer_v<Pointer>
 			{
 				auto procNameA = to_string(procName);
-				return GetProcAddress<T>(procNameA);
+				return GetProcAddress<Pointer>(procNameA);
 			}
 	
 			~DynamicModule()
@@ -226,10 +243,16 @@ namespace winrt::OneToolkit
 
 	namespace Mvvm
 	{
+		template <typename Args>
+		concept PropertyChangedArgs = std::is_constructible_v<Args, hstring>;
+
+		template <typename Delegate, typename Args>
+		concept PropertyChangedDelegate = std::is_invocable_r_v<void, Delegate, Windows::Foundation::IInspectable, Args>;
+
 		/// <summary>
 		/// Provides a base class for view models and observable objects.
 		/// </summary>
-		template <typename Derived, WindowsRuntimeType ChangedDelegate = Windows::UI::Xaml::Data::PropertyChangedEventHandler, WindowsRuntimeType ChangedArgs = Windows::UI::Xaml::Data::PropertyChangedEventArgs>
+		template <typename Derived, PropertyChangedArgs ChangedArgs = Windows::UI::Xaml::Data::PropertyChangedEventArgs, PropertyChangedDelegate<ChangedArgs> ChangedDelegate = Windows::UI::Xaml::Data::PropertyChangedEventHandler>
 		struct ObservableBase
 		{
 		public:
@@ -246,6 +269,23 @@ namespace winrt::OneToolkit
 			}
 
 			DeclareEvent(ChangedDelegate, PropertyChanged);
+
+			/// <summary>
+			/// Automatically sets a property value and raises the property changed event through an user provided raiser.
+			/// </summary>
+			/// <returns>True if the value was set, false if the value passed was equal to the existing value.</returns>
+			template <WindowsRuntimeType T>
+			static bool SetProperty(T& field, T newValue, hstring const& propertyName, std::function<void(hstring)> raiser)
+			{
+				if (field != newValue)
+				{
+					field = newValue;
+					raiser(propertyName);
+					return true;
+				}
+
+				return false;
+			}
 		protected:
 			/// <summary>
 			/// Creates a new instance of ObservableBase from a derived class. 
@@ -281,17 +321,10 @@ namespace winrt::OneToolkit
 			/// Automatically sets a property value and raises property changed when required.
 			/// </summary>
 			/// <returns>True if the value was set, false if the value passed was equal to the existing value.</returns>
-			template <typename T>
+			template <WindowsRuntimeType T>
 			bool SetProperty(T& field, T newValue, hstring const& propertyName)
 			{
-				if (field != newValue)
-				{
-					field = newValue;
-					Raise(propertyName);
-					return true;
-				}
-
-				return false;
+				return SetProperty(field, newValue, propertyName, std::bind(&ObservableBase<Derived, ChangedDelegate, ChangedArgs>::Raise, this));
 			}
 
 			/// <summary>

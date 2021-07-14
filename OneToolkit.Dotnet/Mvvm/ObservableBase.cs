@@ -55,6 +55,23 @@ namespace OneToolkit.Mvvm
 		public event EventHandler<ValueChangedEventArgs> ValueChanged;
 
 		/// <summary>
+		/// Automatically sets a property value and raises the property changing/property changed events through an user provided raiser.
+		/// </summary>
+		/// <returns>True if the value was set, false if the value passed was equal to the existing value.</returns>
+		public static bool SetProperty<T>(ref T field, T newValue, string propertyName, Action<string, PropertyEventType> raiser)
+		{
+			if (!EqualityComparer<T>.Default.Equals(field, newValue))
+			{
+				raiser?.Invoke(propertyName, PropertyEventType.PropertyChanging);
+				field = newValue;
+				raiser?.Invoke(propertyName, PropertyEventType.PropertyChanged);
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
 		/// Enables access to the protected SetProperty method from the outside world.
 		/// </summary>
 		internal static bool SetProperty<T>(ObservableBase @base, ref T field, T newValue, string propertyName) => @base.SetProperty(ref field, newValue, propertyName);
@@ -88,7 +105,7 @@ namespace OneToolkit.Mvvm
 		/// <summary>
 		/// Override this method to perform custom actions after raising the property changing event.
 		/// </summary>
-		protected virtual void WhenPropertyChanging(System.ComponentModel.PropertyChangingEventArgs args)
+		protected virtual void WhenPropertyChanging(PropertyChangingEventArgs args)
 		{
 			// Do nothing here
 		}
@@ -99,15 +116,7 @@ namespace OneToolkit.Mvvm
 		/// <returns>True if the value was set, false if the value passed was equal to the existing value.</returns>
 		protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
 		{
-			if (!EqualityComparer<T>.Default.Equals(field, newValue))
-			{
-				Raise(propertyName, PropertyEventType.PropertyChanging);
-				field = newValue;
-				Raise(propertyName, PropertyEventType.PropertyChanged);
-				return true;
-			}
-
-			return false;
+			return SetProperty(ref field, newValue, propertyName, (propertyName, eventType) => Raise(propertyName, eventType));
 		}
 
 		/// <summary>

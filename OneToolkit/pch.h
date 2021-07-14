@@ -4,11 +4,8 @@
 #include <format>
 #include <cstddef>
 #include <filesystem>
-#include <unknwn.h>
 #include <dwrite.h>
-#include <Windows.h>
 #include <appmodel.h>
-#include <winstring.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.System.h>
@@ -20,7 +17,6 @@
 #include <winrt/Windows.Graphics.Imaging.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Xaml.h>
-#include <winrt/Windows.UI.Xaml.Data.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.UI.Xaml.Media.Animation.h>
