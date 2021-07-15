@@ -18,14 +18,6 @@
           <source>© 2021 JUV Studios. All rights reserved.</source>
           <target state="new">© 2021 JUV Studios. All rights reserved.</target>
         </trans-unit>
-        <trans-unit id="SettingsHubAbout.Title" translate="yes" xml:space="preserve">
-          <source>About this app</source>
-          <target state="new">About this app</target>
-        </trans-unit>
-        <trans-unit id="SettingsHubBrowsing.Title" translate="yes" xml:space="preserve">
-          <source>Browsing</source>
-          <target state="new">Browsing</target>
-        </trans-unit>
         <trans-unit id="VersionText" translate="yes" xml:space="preserve">
           <source>Version {0}</source>
           <target state="new">Version {0}</target>
@@ -66,10 +58,6 @@
           <source>Disable sound effects</source>
           <target state="new">Disable sound effects</target>
         </trans-unit>
-        <trans-unit id="SettingsHubGeneral.Title" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target state="new">General</target>
-        </trans-unit>
         <trans-unit id="ContributeBlock.Text" translate="yes" xml:space="preserve">
           <source>OneToolkit is open source! We welcome everyone to contribute and help improve our library.</source>
           <target state="new">OneToolkit is open source! We welcome everyone to contribute and help improve our library.</target>
@@ -93,6 +81,18 @@
         <trans-unit id="FeedbackNavItem.Content" translate="yes" xml:space="preserve">
           <source>Feedback</source>
           <target state="new">Feedback</target>
+        </trans-unit>
+        <trans-unit id="SettingsHubAbout.Header" translate="yes" xml:space="preserve">
+          <source>About this app</source>
+          <target state="new">About this app</target>
+        </trans-unit>
+        <trans-unit id="SettingsHubBrowsing.Header" translate="yes" xml:space="preserve">
+          <source>Browsing</source>
+          <target state="new">Browsing</target>
+        </trans-unit>
+        <trans-unit id="SettingsHubGeneral.Header" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="new">General</target>
         </trans-unit>
       </group>
     </body>

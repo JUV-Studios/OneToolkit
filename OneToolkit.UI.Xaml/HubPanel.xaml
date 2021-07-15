@@ -8,6 +8,7 @@
 	Margin="0"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
+	Background="Transparent"
 	Loaded="Hub_Loaded"
 	SectionsInViewChanged="Hub_SectionsInViewChanged"
 	mc:Ignorable="d">
@@ -27,6 +28,7 @@
 	<Hub.HeaderTemplate>
 		<DataTemplate x:DataType="x:String">
 			<TextBlock
+				Margin="0,0,0,8"
 				Style="{StaticResource DisplayTextBlockStyle}"
 				Text="{x:Bind}"
 				TextWrapping="NoWrap"

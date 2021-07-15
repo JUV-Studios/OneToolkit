@@ -162,13 +162,13 @@
   <data name="SettingsExpanderContribute.Header" xml:space="preserve">
     <value>Contribute</value>
   </data>
-  <data name="SettingsHubAbout.Title" xml:space="preserve">
+  <data name="SettingsHubAbout.Header" xml:space="preserve">
     <value>About this app</value>
   </data>
-  <data name="SettingsHubBrowsing.Title" xml:space="preserve">
+  <data name="SettingsHubBrowsing.Header" xml:space="preserve">
     <value>Browsing</value>
   </data>
-  <data name="SettingsHubGeneral.Title" xml:space="preserve">
+  <data name="SettingsHubGeneral.Header" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="TermsOfUseLink.Content" xml:space="preserve">

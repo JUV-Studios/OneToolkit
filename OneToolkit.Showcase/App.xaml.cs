@@ -5,9 +5,6 @@ using Windows.UI.Xaml;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;
-using Microsoft.Toolkit.Uwp.UI;
-using OneToolkit.UI.Xaml.Controls;
-using OneToolkit.Showcase.ViewModels;
 
 namespace OneToolkit.Showcase
 {
@@ -26,8 +23,6 @@ namespace OneToolkit.Showcase
             AppCenter.Start("c1fa7718-3c52-47a4-b969-abbe4d7816c5", typeof(Analytics), typeof(Crashes));
         }
 
-        public static PageView NavView => (Window.Current.Content as MainPage).FindChild<PageView>();
-
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -35,7 +30,6 @@ namespace OneToolkit.Showcase
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            ReferenceViewModel.Initialize();
             if (e.PrelaunchActivated == false)
             {
                 CoreApplication.EnablePrelaunch(true);

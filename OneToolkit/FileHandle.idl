@@ -1,3 +1,5 @@
+import "IStorageItemHandle.idl";
+
 namespace OneToolkit.Storage
 {
     [flags]
@@ -10,13 +12,11 @@ namespace OneToolkit.Storage
     };
 
     [default_interface]
-    runtimeclass FileHandle
+    runtimeclass FileHandle : IStorageItemHandle
     {
         FileHandle(Windows.Storage.StorageFile file, Windows.Storage.FileAccessMode accessMode, FileSharingMode sharingMode);
         FileHandle(Windows.Storage.StorageFolder folder, String fileName, Windows.Storage.FileAccessMode accessMode, FileSharingMode sharingMode);
-        String FileName { get; };
         UInt64 FileSize { get; };
-        [noexcept] UInt64 UnderlyingHandle { get; };
         [noexcept] FileSharingMode SharingMode { get; };
         [noexcept] Windows.Storage.FileAccessMode AccessMode { get; };
     }

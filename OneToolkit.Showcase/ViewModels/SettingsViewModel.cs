@@ -18,7 +18,7 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public static SettingsViewModel Instance { get; } = new();
 
-		public static readonly IViewServiceProvider ViewServiceProvider = ViewService.GetForCurrentView();
+		public static readonly IViewServiceUniversal ViewServiceProvider = ViewService.GetForCurrentView();
 
 		public static readonly IEnumerable<string> ProgrammingLanguages = new string[]
 		{

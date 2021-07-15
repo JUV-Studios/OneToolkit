@@ -11,7 +11,10 @@
 	xmlns:wctControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	mc:Ignorable="d">
 
-	<controls:HubPanel Loaded="HubPanel_Loaded">
+	<controls:HubPanel
+		Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+		Header="Settings"
+		Loaded="HubPanel_Loaded">
 		<controls:HubPanelSection x:Uid="SettingsHubGeneral">
 			<wctControls:WrapPanel>
 				<ToggleSwitch x:Uid="DisableSoundEffectsSwitch" IsOn="{x:Bind viewModels:SettingsViewModel.Instance.DisableSoundEffects, Mode=TwoWay}" />
@@ -39,13 +42,13 @@
 					HorizontalAlignment="Stretch"
 					ExpandDirection="Down"
 					Expanding="ContributeExpander_Expanding">
-					<StackPanel Spacing="8">
+					<wctControls:WrapPanel>
 						<TextBlock x:Uid="ContributeBlock" TextWrapping="Wrap" />
 						<Button
 							x:Uid="ContributeBtn"
 							HorizontalAlignment="Stretch"
 							Click="Contribute_Click" />
-					</StackPanel>
+					</wctControls:WrapPanel>
 				</muxc:Expander>
 			</Grid>
 		</controls:HubPanelSection>

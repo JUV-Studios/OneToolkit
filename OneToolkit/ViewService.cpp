@@ -33,8 +33,8 @@ namespace winrt::OneToolkit::UI::implementation
 		HRESULT __stdcall put_MessageHandled(bool value) noexcept;
 	};
 
-	template <typename Derived>
-	struct ViewServiceBase : implements<Derived, IViewServiceProvider, non_agile>
+	template <typename Derived, typename... Interfaces>
+	struct ViewServiceBase : implements<Derived, IViewServiceProvider, non_agile, Interfaces...>
 	{
 	public:
 		bool IsDialogShown()
@@ -61,9 +61,26 @@ namespace winrt::OneToolkit::UI::implementation
 		}
 	};
 
-	struct ViewServiceUniversal : ViewServiceBase<ViewServiceUniversal>
+	struct ViewServiceUniversal : ViewServiceBase<ViewServiceUniversal, IViewServiceUniversal>
 	{
-	public:
+		DeclareAutoProperty(ApplicationView, AppView, ApplicationView::GetForCurrentView());
+
+		DeclareAutoProperty(CoreApplicationView, CoreAppView, CoreApplication::GetCurrentView());
+
+		bool IsFullScreen() const
+		{
+			return m_AppView.IsFullScreenMode();
+		}
+
+		void IsFullScreen(bool value)
+		{
+			if (m_AppView.IsFullScreenMode() != value)
+			{
+				if (value) m_AppView.TryEnterFullScreenMode();
+				else m_AppView.ExitFullScreenMode();
+			}
+		}
+
 		hstring Title() const
 		{
 			return m_AppView.Title();
@@ -95,9 +112,6 @@ namespace winrt::OneToolkit::UI::implementation
 		{
 			return m_AppView.TryConsolidateAsync();
 		}
-	private:
-		ApplicationView m_AppView = ApplicationView::GetForCurrentView();
-		CoreApplicationView m_CoreAppView = CoreApplication::GetCurrentView();
 	};
 
 	struct ViewServiceDesktop : ViewServiceBase<ViewServiceDesktop>
@@ -164,9 +178,9 @@ namespace winrt::OneToolkit::UI::implementation
 		}
 	}
 
-	IViewServiceProvider ViewService::GetForCurrentView()
+	IViewServiceUniversal ViewService::GetForCurrentView()
 	{
-		return make<ViewServiceUniversal>();
+		return make<ViewServiceUniversal>().try_as<IViewServiceUniversal>();
 	}
 
 	IViewServiceProvider ViewService::GetForWindowId(int64_t windowHandle)

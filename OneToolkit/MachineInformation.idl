@@ -1,0 +1,10 @@
+namespace OneToolkit.System
+{
+    [default_interface]
+    static runtimeclass MachineInformation
+    {
+        static String DeviceFamily { get; };
+        static String OSName { get; };
+        static Windows.ApplicationModel.PackageVersion OSVersion { get; };
+    }
+}

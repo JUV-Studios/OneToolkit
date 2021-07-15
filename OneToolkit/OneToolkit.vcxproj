@@ -16,7 +16,7 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.14393.0</WindowsTargetPlatformMinVersion>
     <CppWinRTFastAbi>true</CppWinRTFastAbi>
     <CppWinRTLibs>true</CppWinRTLibs>
@@ -237,6 +237,10 @@
       <DependentUpon>CropDialog.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="MachineInformation.h">
+      <DependentUpon>MachineInformation.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="FileHandle.h">
       <DependentUpon>FileHandle.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -294,6 +298,10 @@
     </ClCompile>
     <ClCompile Include="CropDialog.cpp">
       <DependentUpon>CropDialog.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="MachineInformation.cpp">
+      <DependentUpon>MachineInformation.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="FileHandle.cpp">
@@ -366,6 +374,9 @@
     <Midl Include="CropDialog.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="MachineInformation.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="FileHandle.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -375,6 +386,7 @@
     <Midl Include="ImageResizer.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="IStorageItemHandle.idl" />
     <Midl Include="KeyStateHelper.idl">
       <SubType>Designer</SubType>
     </Midl>

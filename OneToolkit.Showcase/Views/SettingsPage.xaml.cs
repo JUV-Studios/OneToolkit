@@ -4,11 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel;
 using Microsoft.Toolkit.Uwp;
-using Microsoft.Toolkit.Uwp.Helpers;
-using OneToolkit.UI.Xaml.Controls;
-using Windows.UI.Xaml.Markup;
-using Microsoft.Toolkit.Uwp.UI;
-using Microsoft.Toolkit.Uwp.UI.Controls;
+using OneToolkit.ApplicationModel;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -20,12 +16,13 @@ namespace OneToolkit.Showcase.Views
 
 		public string AboutAutomationText => $"{"SettingsHubAbout.Title".GetLocalized()}, {AboutDisplayText.Replace("\n", ", ")}";
 
-		public readonly string AboutDisplayText = $"OneToolkit Showcase\n{string.Format("VersionText".GetLocalized(), Package.Current.Id.Version.ToFormattedString())}\n{"CopyrightText".GetLocalized()}";
+		public readonly string AboutDisplayText = $"OneToolkit Showcase\n{string.Format("VersionText".GetLocalized(), PackageVersionHelper.GetFormattedString(Package.Current.Id.Version))}\n"
+			+ "CopyrightText".GetLocalized();
 
 		private void HubPanel_Loaded(object sender, RoutedEventArgs e)
 		{
-			var target = sender as HubPanel;
-			if (string.IsNullOrEmpty(target.Title)) target.Title = (App.NavView.SettingsItem as ContentControl).Content.ToString();
+			/* var target = sender as HubPanel;
+			if (string.IsNullOrEmpty(target.Title)) target.Title = (App.NavView.SettingsItem as ContentControl).Content.ToString(); */
 		}
 
 		private async void Contribute_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new("https://dev.azure.com/JUV-Studios/OneToolkit"));

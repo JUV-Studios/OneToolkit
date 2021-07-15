@@ -12,10 +12,9 @@
 
 	<controls:HubPanel
 		x:Name="Panel"
-		Title="{x:Bind GroupData.Caption}"
+		Header="{x:Bind GroupData.Caption}"
 		ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-		ScrollViewer.HorizontalScrollMode="Auto"
-		UniformMargin="48">
+		ScrollViewer.HorizontalScrollMode="Auto">
 		<controls:HubPanelSection x:Uid="ClassesPanel">
 			<GridView
 				ItemContainerTransitions="{x:Null}"

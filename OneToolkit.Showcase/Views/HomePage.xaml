@@ -12,7 +12,7 @@
 	mc:Ignorable="d">
 
 	<controls:HubPanel x:Uid="HomeHub">
-		<controls:HubPanelSection Title="Getting started">
+		<controls:HubPanelSection Header="Getting started">
 			<wctControls:WrapPanel>
 				<controls:DescriptiveButton Caption="Install the NuGet packages provided by OneToolkit" Click="Install_Click">Install NuGet packages</controls:DescriptiveButton>
 			</wctControls:WrapPanel>

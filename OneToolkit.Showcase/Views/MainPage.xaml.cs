@@ -20,25 +20,12 @@ namespace OneToolkit.Showcase.Views
 		public MainPage()
 		{
 			InitializeComponent();
-			SettingsViewModel.ViewServiceProvider.SetMinimumSize(new(500, 500));
-			SettingsViewModel.ViewServiceProvider.ExtendsContentIntoTitleBar = true;
-			var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+			SettingsViewModel.ViewServiceProvider.AppView.SetPreferredMinSize(new(500, 500));
+			SettingsViewModel.ViewServiceProvider.CoreAppView.TitleBar.ExtendViewIntoTitleBar = true;
+			var titleBar = SettingsViewModel.ViewServiceProvider.AppView.TitleBar;
 			titleBar.BackgroundColor = Colors.Transparent;
 			titleBar.ButtonBackgroundColor = Colors.Transparent;
 			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-		}
-
-		private void Page_Loaded(object sender, RoutedEventArgs e)
-		{
-			NavView.SelectedItem ??= NavView.MenuItems[0];
-		}
-
-		private async void NavView_MenuItemInvoked(UI.Xaml.Controls.PageView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
-		{
-			if (args.InvokedItemContainer == FeedbackNavItem)
-			{
-				await Launcher.LaunchUriAsync(new($"https://www.nuget.org/packages/OneToolkit/{Package.Current.Id.Version.ToFormattedString()}/ContactOwners"));
-			}
 		}
 	}
 }

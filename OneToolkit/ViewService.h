@@ -9,7 +9,7 @@ namespace winrt::OneToolkit::UI
         {
             ViewService() = delete;
             static Windows::UI::ViewManagement::UserInteractionMode InteractionMode();
-            static IViewServiceProvider GetForCurrentView();
+            static IViewServiceUniversal GetForCurrentView();
             static IViewServiceProvider GetForWindowId(int64_t windowHandle);
         };
     }

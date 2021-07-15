@@ -136,9 +136,9 @@
             Occurs when the value held by this object changes.
             </summary>
         </member>
-        <member name="M:OneToolkit.Mvvm.ObservableBase.SetProperty``1(``0@,``0,System.String,System.Action{System.String},System.Action{System.String})">
+        <member name="M:OneToolkit.Mvvm.ObservableBase.SetProperty``1(``0@,``0,System.String,System.Action{System.String,OneToolkit.Mvvm.PropertyEventType})">
             <summary>
-            Automatically sets a property value and raises events through user provided raisers.
+            Automatically sets a property value and raises the property changing/property changed events through an user provided raiser.
             </summary>
             <returns>True if the value was set, false if the value passed was equal to the existing value.</returns>
         </member>

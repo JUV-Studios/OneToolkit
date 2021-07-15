@@ -9,17 +9,17 @@ using namespace Windows::Storage;
 
 namespace winrt::OneToolkit::Storage::implementation
 {
-	inline auto AsAccessOption(FileAccessMode accessMode)
+	constexpr auto AsAccessOption(FileAccessMode accessMode) noexcept
 	{
 		return accessMode == FileAccessMode::Read ? HAO_READ | HAO_READ_ATTRIBUTES : HAO_READ | HAO_READ_ATTRIBUTES | HAO_WRITE | HAO_DELETE;
 	}
 
-	FileHandle::FileHandle(StorageFile const& file, FileAccessMode accessMode, FileSharingMode sharingMode) : m_FileName(file.Name()), m_AccessMode(accessMode), m_SharingMode(sharingMode)
+	FileHandle::FileHandle(StorageFile const& file, FileAccessMode accessMode, FileSharingMode sharingMode) : m_ItemName(file.Name()), m_AccessMode(accessMode), m_SharingMode(sharingMode)
 	{
 		check_hresult(file.as<IStorageItemHandleAccess>()->Create(AsAccessOption(accessMode), static_cast<HANDLE_SHARING_OPTIONS>(sharingMode), HO_NONE, nullptr, m_FileHandle.put()));
 	}
 
-	FileHandle::FileHandle(StorageFolder const& folder, hstring const& fileName, FileAccessMode accessMode, FileSharingMode sharingMode) : m_FileName(fileName), m_AccessMode(accessMode), m_SharingMode(sharingMode)
+	FileHandle::FileHandle(StorageFolder const& folder, hstring const& fileName, FileAccessMode accessMode, FileSharingMode sharingMode) : m_ItemName(fileName), m_AccessMode(accessMode), m_SharingMode(sharingMode)
 	{
 		check_hresult(folder.as<IStorageFolderHandleAccess>()->Create(fileName.data(), HCO_CREATE_NEW, AsAccessOption(accessMode), static_cast<HANDLE_SHARING_OPTIONS>(sharingMode), HO_NONE, nullptr,
 			m_FileHandle.put()));
@@ -32,8 +32,14 @@ namespace winrt::OneToolkit::Storage::implementation
 		return result.QuadPart;
 	}
 
-	uint64 FileHandle::UnderlyingHandle() const noexcept
+	int64 FileHandle::UnderlyingValue() const noexcept
 	{
 		return juv::as_value<int64>(m_FileHandle.get());
+	}
+
+	void FileHandle::Delete()
+	{
+		FILE_DISPOSITION_INFO info { true };
+		check_bool(SetFileInformationByHandle(m_FileHandle.get(), FileDispositionInfo, &info, sizeof(FILE_DISPOSITION_INFO)));
 	}
 }

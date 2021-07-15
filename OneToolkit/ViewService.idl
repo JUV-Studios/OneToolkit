@@ -12,11 +12,18 @@ namespace OneToolkit.UI
         Windows.Foundation.IAsyncOperation<Boolean> CloseAsync();
     };
 
+    interface IViewServiceUniversal requires IViewServiceProvider
+    {
+        Boolean IsFullScreen;
+        [noexcept] Windows.UI.ViewManagement.ApplicationView AppView { get; };
+        [noexcept] Windows.ApplicationModel.Core.CoreApplicationView CoreAppView { get; };
+    };
+
     [default_interface]
     static runtimeclass ViewService
     {
         static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
-        static IViewServiceProvider GetForCurrentView();
+        static IViewServiceUniversal GetForCurrentView();
         static IViewServiceProvider GetForWindowId(Int64 windowHandle);
     }
 }

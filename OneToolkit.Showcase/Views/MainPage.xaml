@@ -10,11 +10,11 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
-	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 
 	<Grid>
-		<controls:PageView
+		<local:SettingsPage />
+		<!--<controls:PageView
 			x:Name="NavView"
 			IsBackButtonVisible="Collapsed"
 			MenuItemInvoked="NavView_MenuItemInvoked"
@@ -86,6 +86,6 @@
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>
+		</VisualStateManager.VisualStateGroups>-->
 	</Grid>
 </UserControl>

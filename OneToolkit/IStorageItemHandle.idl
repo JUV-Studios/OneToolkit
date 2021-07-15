@@ -1,0 +1,9 @@
+namespace OneToolkit.Storage
+{
+	interface IStorageItemHandle
+	{
+		String ItemName { get; };
+		[noexcept] Int64 UnderlyingValue { get; };
+		void Delete();
+	};
+}

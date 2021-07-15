@@ -3,6 +3,19 @@
 
 using SHGDNF = DWORD;
 
+typedef struct _CMINVOKECOMMANDINFO
+{
+    DWORD  cbSize;
+    DWORD  fMask;
+    HWND   hwnd;
+    LPCSTR lpVerb;
+    LPCSTR lpParameters;
+    LPCSTR lpDirectory;
+    int    nShow;
+    DWORD  dwHotKey;
+    HANDLE hIcon;
+} CMINVOKECOMMANDINFO;
+
 namespace winrt::OneToolkit::Storage
 {
     namespace implementation
@@ -12,11 +25,12 @@ namespace winrt::OneToolkit::Storage
         public:
             FileHandle(Windows::Storage::StorageFile const& file, Windows::Storage::FileAccessMode accessMode, FileSharingMode sharingMode);
             FileHandle(Windows::Storage::StorageFolder const& folder, hstring const& fileName, Windows::Storage::FileAccessMode accessMode, FileSharingMode sharingMode);
-            DeclareAutoProperty(hstring, FileName, {});
+            DeclareAutoProperty(hstring, ItemName, {});
             DeclareAutoProperty(FileSharingMode, SharingMode, {});
             DeclareAutoProperty(Windows::Storage::FileAccessMode, AccessMode, {});
             juv::uint64 FileSize() const;
-            juv::uint64 UnderlyingHandle() const noexcept;
+            juv::int64 UnderlyingValue() const noexcept;
+            void Delete();
         private:
             file_handle m_FileHandle;
         };

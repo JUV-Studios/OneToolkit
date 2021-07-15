@@ -9,6 +9,7 @@ public: property Type Name { Type get(); void set(Type value); } static property
 #define DefineDependencyProperty(Type, OwnerType, Name, DefaultValue) Windows::UI::Xaml::DependencyProperty^ OwnerType::m_##Name##Property = Windows::UI::Xaml::DependencyProperty::Register(#Name, Type::typeid, OwnerType::typeid,\
 ref new Windows::UI::Xaml::PropertyMetadata(DefaultValue, ref new Windows::UI::Xaml::PropertyChangedCallback(&OwnerType::DependencyPropertyChanged)));\
 Windows::UI::Xaml::DependencyProperty^ OwnerType::Name##Property::get() { return m_##Name##Property; }
+
 #else
 #include <OneToolkit.h>
 #include <winrt/Windows.UI.Xaml.Automation.Text.h>
