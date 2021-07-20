@@ -1,0 +1,8 @@
+namespace OneToolkit.UI.WinUI
+{
+    [default_interface]
+    static runtimeclass WindowHelper
+    {
+        static Int64 GetWindowHandle(Microsoft.UI.Xaml.Window window);
+    }
+}

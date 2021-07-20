@@ -41,7 +41,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Signals a breakpoint to an attached debugger for the current process.
 		/// </summary>
-		void Break() noexcept
+		inline void Break() noexcept
 		{
 			DebugBreak();
 		}
@@ -49,7 +49,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Gets whether a debugger is attached to the current process.
 		/// </summary>
-		bool IsAttached() noexcept
+		inline bool IsAttached() noexcept
 		{
 			return IsDebuggerPresent() != 0;
 		}
@@ -58,7 +58,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Signals a breakpoint to an attached debugger for the specified process using its handle.
 		/// </summary>
-		void Break(HANDLE processHandle)
+		inline void Break(HANDLE processHandle)
 		{
 			check_bool(DebugBreakProcess(processHandle));
 		}
@@ -66,7 +66,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Gets whether a debugger is attached to a specified process using its handle.
 		/// </summary>
-		bool IsAttached(HANDLE processHandle)
+		inline bool IsAttached(HANDLE processHandle)
 		{
 			int result;
 			check_bool(CheckRemoteDebuggerPresent(processHandle, &result));
@@ -77,7 +77,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		void Write(std::string_view text)
+		inline void Write(std::string_view text)
 		{
 			OutputDebugStringA(text.data());
 		}
@@ -85,7 +85,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		void Write(std::wstring_view text)
+		inline void Write(std::wstring_view text)
 		{
 			OutputDebugStringW(text.data());
 		}
@@ -93,7 +93,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		void Write(std::u8string_view text)
+		inline void Write(std::u8string_view text)
 		{
 			OutputDebugStringA(reinterpret_cast<const char*>(text.data()));
 		}
@@ -101,7 +101,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		void Write(std::u16string_view text)
+		inline void Write(std::u16string_view text)
 		{
 			OutputDebugStringW(reinterpret_cast<const wchar_t*>(text.data()));
 		}
@@ -109,7 +109,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		void Write(std::u32string_view text)
+		inline void Write(std::u32string_view text)
 		{
 			throw hresult_not_implemented();
 		}

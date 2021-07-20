@@ -25,5 +25,6 @@ namespace OneToolkit.UI
         static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         static IViewServiceUniversal GetForCurrentView();
         static IViewServiceProvider GetForWindowId(Int64 windowHandle);
+        static Int64 GetWindowHandle(Windows.UI.Core.CoreWindow coreWindow);
     }
 }

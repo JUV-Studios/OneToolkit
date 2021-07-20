@@ -29,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ApplianceInformation.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="OneToolkit.def" />
@@ -38,6 +41,9 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="OneToolkit.h" />
+    <ClInclude Include="ApplianceInformation.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="FontHelper.idl">
@@ -89,7 +95,7 @@
     <Midl Include="IStorageItemHandle.idl">
       <Filter>Storage</Filter>
     </Midl>
-    <Midl Include="MachineInformation.idl">
+    <Midl Include="ApplianceInformation.idl">
       <Filter>System</Filter>
     </Midl>
   </ItemGroup>

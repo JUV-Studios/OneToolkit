@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "juv", "juv", "{A31BD13B-939
 	ProjectSection(SolutionItems) = preProject
 		juv\juv.1.0.0.6.nupkg = juv\juv.1.0.0.6.nupkg
 		juv\juv.h = juv\juv.h
+		juv\juv.nuspec = juv\juv.nuspec
 		juv\juv.props = juv\juv.props
 	EndProjectSection
 EndProject

@@ -16,6 +16,26 @@ typedef struct _CMINVOKECOMMANDINFO
     HANDLE hIcon;
 } CMINVOKECOMMANDINFO;
 
+typedef struct OOPCMINVOKECOMMANDINFO
+{
+    DWORD cbSize;
+    DWORD fMask;
+    HWND hwnd;
+    LPCSTR lpVerbString;
+    LPCSTR lpParameters;
+    LPCSTR lpDirectory;
+    int nShow;
+    DWORD dwHotKey;
+    LPCSTR lpTitle;
+    LPCWSTR lpVerbWString;
+    LPCWSTR lpParametersW;
+    LPCWSTR lpDirectoryW;
+    LPCWSTR lpTitleW;
+    POINT ptInvoke;
+    UINT lpVerbInt;
+    UINT lpVerbWInt;
+} 	OOPCMINVOKECOMMANDINFO;
+
 namespace winrt::OneToolkit::Storage
 {
     namespace implementation

@@ -1,0 +1,14 @@
+namespace OneToolkit.System
+{
+    [default_interface]
+    static runtimeclass ApplianceInformation
+    {
+        static String DeviceName { get; };
+        static String DeviceModel { get; };
+        static String DeviceFamily { get; };
+        static String DeviceManufacturer { get; };
+        static String OperatingSystem { get; };
+        static Windows.ApplicationModel.PackageVersion SoftwareVersion { get; };
+        static Windows.System.ProcessorArchitecture HardwareArchitecture { get; };
+    }
+}

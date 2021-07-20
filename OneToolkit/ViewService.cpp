@@ -91,11 +91,9 @@ namespace winrt::OneToolkit::UI::implementation
 			m_AppView.Title(value);
 		}
 
-		int64_t WindowHandle() const
+		int64 WindowHandle() const
 		{
-			HWND windowHandle;
-			check_hresult(m_CoreAppView.CoreWindow().as<ICoreWindowInterop>()->get_WindowHandle(&windowHandle));
-			return as_value<int64_t>(windowHandle);
+			return ViewService::GetWindowHandle(m_CoreAppView.CoreWindow());
 		}
 
 		Rect Bounds() const
@@ -117,7 +115,7 @@ namespace winrt::OneToolkit::UI::implementation
 	struct ViewServiceDesktop : ViewServiceBase<ViewServiceDesktop>
 	{
 	public:
-		ViewServiceDesktop(int64_t windowHandle)
+		ViewServiceDesktop(int64 windowHandle)
 		{
 			m_WindowHandle = as_pointer<HWND>(windowHandle);
 		}
@@ -135,9 +133,9 @@ namespace winrt::OneToolkit::UI::implementation
 			if (Title() != value) check_bool(user32.GetProcAddress<SetWindowTextW>("SetWindowTextW")(m_WindowHandle, value.data()));
 		}
 
-		int64_t WindowHandle() const
+		int64 WindowHandle() const
 		{
-			return as_value<int64_t>(m_WindowHandle);
+			return as_value<int64>(m_WindowHandle);
 		}
 
 		Rect Bounds() const
@@ -160,7 +158,7 @@ namespace winrt::OneToolkit::UI::implementation
 		}
 	private:
 		HWND m_WindowHandle;
-		DynamicModule user32{ L"User32.dll" };
+		DynamicModule user32 { L"User32.dll" };
 	};
 
 
@@ -183,9 +181,16 @@ namespace winrt::OneToolkit::UI::implementation
 		return make<ViewServiceUniversal>().try_as<IViewServiceUniversal>();
 	}
 
-	IViewServiceProvider ViewService::GetForWindowId(int64_t windowHandle)
+	IViewServiceProvider ViewService::GetForWindowId(int64 windowHandle)
 	{
 		if (AppInformation::IsCoreApplication()) throw hresult_illegal_method_call(L"GetForWindowId must be invoked from desktop apps only. UWP apps should invoke GetForCurrentView instead.");
 		return make<ViewServiceDesktop>(windowHandle);
+	}
+
+	int64 ViewService::GetWindowHandle(CoreWindow const& coreWindow)
+	{
+		HWND windowHandle;
+		check_hresult(coreWindow.as<ICoreWindowInterop>()->get_WindowHandle(&windowHandle));
+		return as_value<int64>(windowHandle);
 	}
 }

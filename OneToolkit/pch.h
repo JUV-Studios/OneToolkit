@@ -11,6 +11,7 @@
 #include <winrt/Windows.System.Profile.h>
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.Security.Cryptography.h>
+#include <winrt/Windows.Security.ExchangeActiveSyncProvisioning.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.ApplicationModel.Resources.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
@@ -20,6 +21,6 @@
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.UI.Xaml.Media.Animation.h>
-#include <winrt/Windows.UI.ViewManagement.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Windows.UI.ViewManagement.h>
 #include "OneToolkit.h"
