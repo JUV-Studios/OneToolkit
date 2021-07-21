@@ -35,6 +35,7 @@ Windows::UI::Xaml::DependencyProperty^ OwnerType::Name##Property::get() { return
 #include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>
 #include <winrt/OneToolkit.UI.Xaml.Controls.h>
+#include <winrt/OneToolkit.UI.Xaml.Converters.h>
 #include <winrt/OneToolkit.UI.Xaml.Media.Animation.h>
 
 namespace winrt

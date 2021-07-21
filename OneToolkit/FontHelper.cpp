@@ -10,7 +10,7 @@ using namespace Windows::Foundation::Collections;
 
 namespace winrt::OneToolkit::UI::implementation
 {
-	typedef int(_stdcall* RtlGetVersion)(PRTL_OSVERSIONINFOW);
+	using RtlGetVersion = int(_stdcall*)(PRTL_OSVERSIONINFOW);
 
 	hstring FontHelper::DefaultIconFontFamily()
 	{

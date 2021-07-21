@@ -9,7 +9,7 @@ using namespace OneToolkit::UI::Xaml::Media::Animation;
 
 void SlideContentTransition::SetContent(ContentPresenter^ presenter, UIElement^ content, NavigationType navigationType)
 {
-	if (presenter->ContentTransitions == nullptr)
+	if (!presenter->ContentTransitions)
 	{
 		auto transitionCollection = ref new TransitionCollection;
 		transitionCollection->Append(ref new PaneThemeTransition);

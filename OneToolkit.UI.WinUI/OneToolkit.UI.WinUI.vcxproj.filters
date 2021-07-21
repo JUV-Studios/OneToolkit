@@ -14,13 +14,21 @@
     <Filter Include="Converters">
       <UniqueIdentifier>{fdcd6b29-7090-454e-8625-7b41c7ab034e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Media">
+      <UniqueIdentifier>{ff1f5a06-2ba8-4333-bc57-b8b33b5b47c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Animation">
+      <UniqueIdentifier>{4b0f314f-5cb4-483e-ab64-0f9998e24012}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="WindowHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="WindowHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OneToolkit_UI_WinUI.def" />
@@ -35,6 +43,16 @@
   <ItemGroup>
     <Midl Include="ContentDialogHelper.idl">
       <Filter>Controls</Filter>
+    </Midl>
+    <Midl Include="WindowHelper.idl" />
+    <Midl Include="IContentTransition.idl">
+      <Filter>Media\Animation</Filter>
+    </Midl>
+    <Midl Include="DefaultContentTransition.idl">
+      <Filter>Media\Animation</Filter>
+    </Midl>
+    <Midl Include="SlideContentTransition.idl">
+      <Filter>Media\Animation</Filter>
     </Midl>
   </ItemGroup>
 </Project>

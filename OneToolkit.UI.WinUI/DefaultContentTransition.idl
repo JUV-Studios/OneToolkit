@@ -1,0 +1,12 @@
+import "IContentTransition.idl";
+
+namespace OneToolkit.UI.WinUI.Media.Animation
+{
+    [bindable]
+    [default_interface]
+    [Windows.Foundation.Metadata.WebHostHidden]
+    runtimeclass DefaultContentTransition : IContentTransition
+    {
+        DefaultContentTransition();
+    }
+}

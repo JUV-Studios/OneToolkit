@@ -30,7 +30,7 @@ namespace winrt::OneToolkit::UI::Input::implementation
 
 	bool KeyStateHelper::IsKeyStateActive(VirtualKey key, CoreVirtualKeyStates keyState)
 	{
-		if (AppInformation::IsCoreApplication()) return (CoreApplication::GetCurrentView().CoreWindow().GetKeyState(key) & keyState) == keyState;
+		if (CoreApplication::Views().Size()) return (CoreApplication::GetCurrentView().CoreWindow().GetKeyState(key) & keyState) == keyState;
 		else
 		{
 			DynamicModule user32{ L"User32.dll" };

@@ -217,11 +217,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AppInformation.h">
-      <DependentUpon>AppInformation.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="ApplianceInformation.h" />
+	  <ClInclude Include="ApplianceInformation.h">
+		  <DependentUpon>ApplianceInformation.idl</DependentUpon>
+		  <SubType>Code</SubType>
+	  </ClInclude>
     <ClInclude Include="BufferHelper.h">
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -250,10 +249,6 @@
       <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="PackageHelper.h">
-      <DependentUpon>PackageHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="PackageVersionHelper.h">
       <DependentUpon>PackageVersionHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -277,11 +272,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AppInformation.cpp">
-      <DependentUpon>AppInformation.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ApplianceInformation.cpp" />
+	  <ClCompile Include="ApplianceInformation.cpp">
+		  <DependentUpon>ApplianceInformation.idl</DependentUpon>
+		  <SubType>Code</SubType>
+	  </ClCompile>
     <ClCompile Include="BufferHelper.cpp">
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -313,10 +307,6 @@
     <ClInclude Include="OneToolkit.h">
       <FileType>Document</FileType>
     </ClInclude>
-    <ClCompile Include="PackageHelper.cpp">
-      <DependentUpon>PackageHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="PackageVersionHelper.cpp">
       <DependentUpon>PackageVersionHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -351,9 +341,6 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="AppInformation.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="ApplianceInformation.idl" />
     <Midl Include="BufferHelper.idl">
       <SubType>Designer</SubType>
@@ -379,9 +366,6 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="NavigationType.idl" />
-    <Midl Include="PackageHelper.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="PackageVersionHelper.idl">
       <SubType>Designer</SubType>
     </Midl>

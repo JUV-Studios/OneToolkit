@@ -15,7 +15,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit.UI.WinUI", "OneT
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "juv", "juv", "{A31BD13B-9396-4772-B6A9-4C61343A72AC}"
 	ProjectSection(SolutionItems) = preProject
-		juv\juv.1.0.0.6.nupkg = juv\juv.1.0.0.6.nupkg
 		juv\juv.h = juv\juv.h
 		juv\juv.nuspec = juv\juv.nuspec
 		juv\juv.props = juv\juv.props

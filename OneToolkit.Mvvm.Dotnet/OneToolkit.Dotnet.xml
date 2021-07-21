@@ -79,6 +79,16 @@
             Attempts to detect the encoding using various methods.
             </summary>
         </member>
+        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.GetBuffer(System.String,OneToolkit.Data.Text.TextEncoding)">
+            <summary>
+            Gets the bytes representation of a string for the specified encoding.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.GetString(System.ReadOnlySpan{System.Byte},OneToolkit.Data.Text.TextEncoding)">
+            <summary>
+            Gets the string representation of a buffer for the specified encoding.
+            </summary>
+        </member>
         <member name="M:OneToolkit.Data.Text.TextEncodingHelper.AsEncoding(OneToolkit.Data.Text.TextEncoding)">
             <summary>
             Gets the encoding information for the specified text encoding.

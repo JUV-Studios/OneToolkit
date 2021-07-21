@@ -1,0 +1,8 @@
+namespace OneToolkit.UI.WinUI.Media.Animation
+{
+	[Windows.Foundation.Metadata.WebHostHidden]
+	interface IContentTransition
+	{
+		void SetContent(Microsoft.UI.Xaml.Controls.ContentPresenter presenter, Microsoft.UI.Xaml.UIElement content, OneToolkit.UI.NavigationType navigationType);
+	};
+}

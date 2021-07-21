@@ -164,7 +164,7 @@ namespace winrt::OneToolkit::UI::implementation
 
 	UserInteractionMode ViewService::InteractionMode()
 	{
-		if (AppInformation::IsCoreApplication()) return UIViewSettings::GetForCurrentView().UserInteractionMode();
+		if (CoreApplication::Views().Size()) return UIViewSettings::GetForCurrentView().UserInteractionMode();
 		else
 		{
 			unsigned long result = 0;
@@ -183,7 +183,7 @@ namespace winrt::OneToolkit::UI::implementation
 
 	IViewServiceProvider ViewService::GetForWindowId(int64 windowHandle)
 	{
-		if (AppInformation::IsCoreApplication()) throw hresult_illegal_method_call(L"GetForWindowId must be invoked from desktop apps only. UWP apps should invoke GetForCurrentView instead.");
+		if (!CoreApplication::Views().Size()) throw hresult_illegal_method_call(L"GetForWindowId must be invoked from desktop apps only. UWP apps should invoke GetForCurrentView instead.");
 		return make<ViewServiceDesktop>(windowHandle);
 	}
 

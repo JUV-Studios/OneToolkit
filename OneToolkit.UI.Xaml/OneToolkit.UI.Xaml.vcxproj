@@ -339,6 +339,7 @@
       <DependentUpon>DefaultContentTransition.h</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="WindowHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="DescriptiveButton.xaml">

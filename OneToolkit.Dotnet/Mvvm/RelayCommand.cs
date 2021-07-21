@@ -42,6 +42,18 @@ namespace OneToolkit.Mvvm
 		internal static bool CanExecuteDefault(RelayCommand command, object parameter) => true;
 
 		/// <summary>
+		/// Creates a new instance of ObservableProperty based on an existing one.
+		/// </summary>
+		/// <param name="other">The other instance whose properties will be copied.</param>
+		public RelayCommand(RelayCommand other)
+		{
+			Functor = other.Functor;
+			Decider = other.Decider;
+			PropertyName = other.PropertyName;
+			DefaultParameter = other.DefaultParameter;
+		}
+
+		/// <summary>
 		/// Creates a new instance of RelayCommand using a functor and decider.
 		/// </summary>
 		public RelayCommand(Action<RelayCommand, object> functor)

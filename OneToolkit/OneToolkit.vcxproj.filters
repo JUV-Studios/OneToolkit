@@ -80,12 +80,6 @@
     <Midl Include="KeyStateHelper.idl">
       <Filter>UI\Input</Filter>
     </Midl>
-    <Midl Include="AppInformation.idl">
-      <Filter>ApplicationModel</Filter>
-    </Midl>
-    <Midl Include="PackageHelper.idl">
-      <Filter>ApplicationModel</Filter>
-    </Midl>
     <Midl Include="NavigationType.idl">
       <Filter>UI</Filter>
     </Midl>

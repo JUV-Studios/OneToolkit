@@ -1,7 +1,9 @@
 namespace OneToolkit.UI.WinUI.Controls
 {
+    [Windows.Foundation.Metadata.WebHostHidden]
     delegate Windows.Foundation.IAsyncAction ContentDialogDisplayCompletionAsyncHandler(Microsoft.UI.Xaml.Controls.ContentDialog dialog, Microsoft.UI.Xaml.Controls.ContentDialogResult result);
 
+    [Windows.Foundation.Metadata.WebHostHidden]
     static runtimeclass ContentDialogHelper
     {
         static Windows.Foundation.IAsyncOperation<Boolean> TryShowAsync(Microsoft.UI.Xaml.Controls.ContentDialog dialog, Microsoft.UI.Xaml.Controls.ContentDialogPlacement placement,
