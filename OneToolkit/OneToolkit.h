@@ -2,6 +2,7 @@
 
 #pragma once
 #include <juv.h>
+#include <locale>
 #include <concepts>
 #include <unknwn.h>
 #include <functional>
@@ -36,12 +37,15 @@ namespace winrt::OneToolkit
 	/// <summary>
 	/// Provides the ability to find about and communicate with the debugger.
 	/// </summary>
-	namespace Debugger
+	class Debugger
 	{
+	public:
+		Debugger() = delete;
+
 		/// <summary>
 		/// Signals a breakpoint to an attached debugger for the current process.
 		/// </summary>
-		inline void Break() noexcept
+		static void Break() noexcept
 		{
 			DebugBreak();
 		}
@@ -49,7 +53,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Gets whether a debugger is attached to the current process.
 		/// </summary>
-		inline bool IsAttached() noexcept
+		static bool IsAttached() noexcept
 		{
 			return IsDebuggerPresent() != 0;
 		}
@@ -58,7 +62,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Signals a breakpoint to an attached debugger for the specified process using its handle.
 		/// </summary>
-		inline void Break(HANDLE processHandle)
+		static void Break(HANDLE processHandle)
 		{
 			check_bool(DebugBreakProcess(processHandle));
 		}
@@ -66,7 +70,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Gets whether a debugger is attached to a specified process using its handle.
 		/// </summary>
-		inline bool IsAttached(HANDLE processHandle)
+		static bool IsAttached(HANDLE processHandle)
 		{
 			int result;
 			check_bool(CheckRemoteDebuggerPresent(processHandle, &result));
@@ -77,7 +81,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		inline void Write(std::string_view text)
+		static void Write(std::string_view text)
 		{
 			OutputDebugStringA(text.data());
 		}
@@ -85,7 +89,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		inline void Write(std::wstring_view text)
+		static void Write(std::wstring_view text)
 		{
 			OutputDebugStringW(text.data());
 		}
@@ -93,7 +97,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		inline void Write(std::u8string_view text)
+		static void Write(std::u8string_view text)
 		{
 			OutputDebugStringA(reinterpret_cast<const char*>(text.data()));
 		}
@@ -101,7 +105,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		inline void Write(std::u16string_view text)
+		static void Write(std::u16string_view text)
 		{
 			OutputDebugStringW(reinterpret_cast<const wchar_t*>(text.data()));
 		}
@@ -109,7 +113,7 @@ namespace winrt::OneToolkit
 		/// <summary>
 		/// Writes text to the output window.
 		/// </summary>
-		inline void Write(std::u32string_view text)
+		static void Write(std::u32string_view text)
 		{
 			throw hresult_not_implemented();
 		}
@@ -118,12 +122,12 @@ namespace winrt::OneToolkit
 		/// Writes a line to the output window.
 		/// </summary>
 		template <typename String>
-		void WriteLine(String& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
+		static void WriteLine(String& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
 		{
 			auto newLine = Data::Text::LineEndingHelper::GetNewLineString<typename String::value_type>(lineEnding).data();
 			Write(line + newLine);
 		}
-	}
+	};
 
 	namespace Runtime
 	{
@@ -133,10 +137,6 @@ namespace winrt::OneToolkit
 		class DynamicModule
 		{
 		public:
-			DynamicModule(std::string_view fileName) : DynamicModule(to_hstring(fileName))
-			{
-			}
-	
 			DynamicModule(winrt::hstring const& fileName) : m_FileName(fileName)
 			{
 				Handle(WINRT_IMPL_LoadLibraryW(fileName.data()));
@@ -185,7 +185,7 @@ namespace winrt::OneToolkit
 			/// <summary>
 			/// Returns the file name of the DLL.
 			/// </summary>
-			const hstring FileName() const noexcept
+			const auto FileName() const noexcept
 			{
 				return m_FileName;
 			}
@@ -199,16 +199,6 @@ namespace winrt::OneToolkit
 				auto result = WINRT_IMPL_GetProcAddress(m_Handle, procName.data());
 				if (!result) throw_last_error();
 				return reinterpret_cast<Pointer>(result);
-			}
-
-			/// <summary>
-			/// Retrieves the address of an exported function or variable.
-			/// </summary>
-			template <typename Pointer>
-			auto GetProcAddress(std::wstring_view procName) const requires std::is_pointer_v<Pointer>
-			{
-				auto procNameA = to_string(procName);
-				return GetProcAddress<Pointer>(procNameA);
 			}
 	
 			~DynamicModule()

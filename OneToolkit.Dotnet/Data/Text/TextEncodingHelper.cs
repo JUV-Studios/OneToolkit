@@ -186,19 +186,6 @@ namespace OneToolkit.Data.Text
 		}
 
 		/// <summary>
-		/// Gets the bytes representation of a string for the specified encoding.
-		/// </summary>
-		public static byte[] GetBuffer(string text, TextEncoding textEncoding = TextEncoding.Unknown) => textEncoding.AsEncoding().GetBytes(text);
-
-		/// <summary>
-		/// Gets the string representation of a buffer for the specified encoding.
-		/// </summary>
-		public static unsafe string GetString(ReadOnlySpan<byte> buffer, TextEncoding textEncoding = TextEncoding.Unknown)
-		{
-			fixed (byte* data = buffer) return textEncoding.AsEncoding().GetString(data, buffer.Length);
-		}
-
-		/// <summary>
 		/// Gets the encoding information for the specified text encoding.
 		/// </summary>
 		public static Encoding AsEncoding(this TextEncoding textEncoding) => textEncoding switch
