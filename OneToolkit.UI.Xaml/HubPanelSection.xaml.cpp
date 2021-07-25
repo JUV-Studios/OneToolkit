@@ -21,22 +21,26 @@ using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-DefineDependencyProperty(UIElement, HubPanelSection, Content, nullptr);
-
 HubPanelSection::HubPanelSection()
 {
 	InitializeComponent();
-	RegisterPropertyChangedCallback(HeaderProperty, ref new DependencyPropertyChangedCallback(this, &HubPanelSection::DependencyPropertyBaseChanged));
+	auto propertyChangedCallback = ref new DependencyPropertyChangedCallback(this, &HubPanelSection::DependencyPropertyBaseChanged);
+	RegisterPropertyChangedCallback(HeaderProperty, propertyChangedCallback);
 }
 
 UIElement^ HubPanelSection::Content::get()
 {
-	return static_cast<UIElement^>(GetValue(m_ContentProperty));
+	return m_Content.Resolve<UIElement>();
 }
 
 void HubPanelSection::Content::set(UIElement^ value)
 {
-	SetValue(m_ContentProperty, value);
+	if (Content != value)
+	{
+		m_Content = value;
+		if (auto presenter = m_Presenter.Resolve<ContentPresenter>()) presenter->Content = value;
+		SetProperties();
+	}
 }
 
 HubPanel^ HubPanelSection::Container::get()
@@ -46,24 +50,16 @@ HubPanel^ HubPanelSection::Container::get()
 
 void HubPanelSection::Container::set(HubPanel^ value)
 {
-	if (Container != value)
-	{
-		m_Container = value;
-		SetProperties();
-	}
-}
-
-void HubPanelSection::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)
-{
-	dynamic_cast<HubPanelSection^>(sender)->SetProperties();
+	if (Container != value) m_Container = value;
+	SetProperties();
 }
 
 void HubPanelSection::SetProperties()
 {
-	if (Content != nullptr)
+	if (auto content = Content)
 	{
 		auto automationText = Header->ToString();
-		if (auto container = m_Container.Resolve<HubPanel>())
+		if (auto container = Container)
 		{
 			uint32 foundIndex;
 			if (container->Sections->IndexOf(this, &foundIndex))
@@ -72,8 +68,15 @@ void HubPanelSection::SetProperties()
 			}
 		}
 
-		AutomationProperties::SetName(Content, automationText);
+		AutomationProperties::SetName(content, automationText);
 	}
+}
+
+void HubPanelSection::ContentPresenter_Loaded(Object^ sender, RoutedEventArgs^ e)
+{
+	auto target = dynamic_cast<ContentPresenter^>(sender);
+	if (!target->Content) target->Content = Content;
+	m_Presenter = target;
 }
 
 void HubPanelSection::DependencyPropertyBaseChanged(DependencyObject^ sender, DependencyProperty^ dp)

@@ -4,6 +4,7 @@
 using namespace Platform;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Media::Animation;
 using namespace OneToolkit::UI::Xaml::Media::Animation;
 
@@ -24,6 +25,9 @@ void SlideContentTransition::SetContent(ContentPresenter^ presenter, UIElement^ 
 		if (presenter->ContentTransitions->Size > 1) presenter->ContentTransitions->Clear();
 		presenter->ContentTransitions->Append(ref new PaneThemeTransition);
 	}
+
+	// Set the right edge to animate from.
+	dynamic_cast<PaneThemeTransition^>(presenter->ContentTransitions->GetAt(0))->Edge = navigationType == NavigationType::Back ? EdgeTransitionLocation::Left : EdgeTransitionLocation::Right;
 
 	double originalOpacity = 1;
 	auto element = dynamic_cast<UIElement^>(presenter->Content);

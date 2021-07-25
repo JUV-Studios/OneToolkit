@@ -2,12 +2,12 @@
 
 #pragma once
 #include <juv.h>
-#include <locale>
 #include <concepts>
-#include <unknwn.h>
 #include <functional>
+#include <unknwn.h>
 #include <Windows.h>
 #include <winrt/OneToolkit.UI.h>
+#include <winrt/OneToolkit.System.h>
 #include <winrt/OneToolkit.Imaging.h>
 #include <winrt/OneToolkit.Storage.h>
 #include <winrt/Windows.UI.Xaml.Data.h>

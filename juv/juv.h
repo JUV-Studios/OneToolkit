@@ -29,7 +29,7 @@ namespace juv
 	/// Safely casts a pointer's value into an integer.
 	/// </summary>
 	template <typename Integer, typename Pointer>
-	auto as_value(Pointer pointer) noexcept requires std::is_integral_v<Integer>&& std::is_pointer_v<Pointer>
+	auto as_value(Pointer pointer) noexcept requires std::is_integral_v<Integer> && std::is_pointer_v<Pointer>
 	{
 		return static_cast<Integer>(reinterpret_cast<size_t>(pointer));
 	}
@@ -38,7 +38,7 @@ namespace juv
 	/// Safely casts an integer value into a pointer type.
 	/// </summary>
 	template <typename Pointer, typename Integer>
-	auto as_pointer(Integer value) noexcept requires std::is_integral_v<Integer>&& std::is_pointer_v<Pointer>
+	auto as_pointer(Integer value) noexcept requires std::is_integral_v<Integer> && std::is_pointer_v<Pointer>
 	{
 		return reinterpret_cast<Pointer>(static_cast<size_t>(value));
 	}

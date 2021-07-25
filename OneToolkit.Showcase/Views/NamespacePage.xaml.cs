@@ -1,4 +1,5 @@
 ﻿using OneToolkit.Showcase.Models;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -19,6 +20,13 @@ namespace OneToolkit.Showcase.Views
 		{
 			base.OnNavigatedTo(e);
 			GroupData = e.Parameter as TypeGroup;
+		}
+
+		protected override void OnNavigatedFrom(NavigationEventArgs e)
+		{
+			base.OnNavigatedFrom(e);
+			/* Bindings.StopTracking();
+			Bindings = null; */
 		}
 	}
 }

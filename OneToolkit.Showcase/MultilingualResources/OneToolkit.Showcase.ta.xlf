@@ -6,14 +6,6 @@
     </header>
     <body>
       <group id="ONETOOLKIT.SHOWCASE/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
-        <trans-unit id="HomeHub.Title" translate="yes" xml:space="preserve">
-          <source>Welcome</source>
-          <target state="translated">வணக்கம்</target>
-        </trans-unit>
-        <trans-unit id="HomeNavItem.Label" translate="yes" xml:space="preserve">
-          <source>Home</source>
-          <target state="translated" state-qualifier="tm-suggestion">முகப்பு</target>
-        </trans-unit>
         <trans-unit id="CopyrightText" translate="yes" xml:space="preserve">
           <source>© 2021 JUV Studios. All rights reserved.</source>
           <target state="new">© 2021 JUV Studios. All rights reserved.</target>
@@ -46,10 +38,6 @@
           <source>namespace</source>
           <target state="new">namespace</target>
         </trans-unit>
-        <trans-unit id="ClassesPanel.Title" translate="yes" xml:space="preserve">
-          <source>Classes</source>
-          <target state="new">Classes</target>
-        </trans-unit>
         <trans-unit id="ClassText" translate="yes" xml:space="preserve">
           <source>class</source>
           <target state="new">class</target>
@@ -70,14 +58,6 @@
           <source>Contribute to OneToolkit</source>
           <target state="new">Contribute to OneToolkit</target>
         </trans-unit>
-        <trans-unit id="ReferenceHub.Title" translate="yes" xml:space="preserve">
-          <source>API reference</source>
-          <target state="new">API reference</target>
-        </trans-unit>
-        <trans-unit id="ReferenceHubNamespaces.Title" translate="yes" xml:space="preserve">
-          <source>Namespaces</source>
-          <target state="new">Namespaces</target>
-        </trans-unit>
         <trans-unit id="FeedbackNavItem.Content" translate="yes" xml:space="preserve">
           <source>Feedback</source>
           <target state="new">Feedback</target>
@@ -93,6 +73,34 @@
         <trans-unit id="SettingsHubGeneral.Header" translate="yes" xml:space="preserve">
           <source>General</source>
           <target state="new">General</target>
+        </trans-unit>
+        <trans-unit id="ClassesPanel.Header" translate="yes" xml:space="preserve">
+          <source>Classes</source>
+          <target state="new">Classes</target>
+        </trans-unit>
+        <trans-unit id="HomeHub.Header" translate="yes" xml:space="preserve">
+          <source>Welcome</source>
+          <target state="new">Welcome</target>
+        </trans-unit>
+        <trans-unit id="ReferenceHubNamespaces.Header" translate="yes" xml:space="preserve">
+          <source>Namespaces</source>
+          <target state="new">Namespaces</target>
+        </trans-unit>
+        <trans-unit id="NavigationBox.AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Navigation menu</source>
+          <target state="new">Navigation menu</target>
+        </trans-unit>
+        <trans-unit id="HomeNavItem.Content" translate="yes" xml:space="preserve">
+          <source>Home</source>
+          <target state="new">Home</target>
+        </trans-unit>
+        <trans-unit id="SettingsNavItem.Content" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="translated">அமைப்புகள்</target>
+        </trans-unit>
+        <trans-unit id="ReferenceNavItem.Content" translate="yes" xml:space="preserve">
+          <source>API reference</source>
+          <target state="new">API reference</target>
         </trans-unit>
       </group>
     </body>

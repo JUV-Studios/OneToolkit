@@ -28,8 +28,8 @@
 	<Hub.HeaderTemplate>
 		<DataTemplate x:DataType="x:String">
 			<TextBlock
-				Margin="0,0,0,8"
-				Style="{StaticResource DisplayTextBlockStyle}"
+				Margin="{StaticResource HubPanelHeaderMargin}"
+				Style="{StaticResource HubPanelHeaderTextStyle}"
 				Text="{x:Bind}"
 				TextWrapping="NoWrap"
 				ToolTipService.ToolTip="{x:Bind}" />

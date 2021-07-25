@@ -13,7 +13,7 @@ namespace OneToolkit.Showcase.Models
 			{
 				
 				return from type in Types
-					   where Types.First().IsClass
+					   where type.IsClass
 					   select new TypeInfo(type);
 			}
 		}

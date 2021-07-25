@@ -11,9 +11,40 @@
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
 	HorizontalAlignment="Stretch"
 	VerticalAlignment="Stretch"
+	Loaded="UserControl_Loaded"
+	Unloaded="UserControl_Unloaded"
 	mc:Ignorable="d">
 
-	<controls:HubPanel x:Uid="ReferenceHub">
-		<controls:HubPanelSection x:Uid="ReferenceHubNamespaces" />
+	<controls:HubPanel Loaded="HubPanel_Loaded">
+		<controls:HubPanelSection x:Uid="ReferenceHubNamespaces">
+			<GridView
+				ItemsSource="{x:Bind local:ApiReference.FoundTypes}"
+				ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+				ScrollViewer.HorizontalScrollMode="Auto"
+				ScrollViewer.VerticalScrollBarVisibility="Hidden"
+				ScrollViewer.VerticalScrollMode="Auto"
+				SelectedIndex="0"
+				SelectionChanged="GridView_SelectionChanged">
+				<GridView.ItemContainerStyle>
+					<Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+						<Setter Property="HorizontalContentAlignment" Value="Left" />
+						<Setter Property="Width" Value="{StaticResource SplitViewOpenPaneThemeLength}" />
+					</Style>
+				</GridView.ItemContainerStyle>
+				<GridView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid Orientation="Vertical" />
+					</ItemsPanelTemplate>
+				</GridView.ItemsPanel>
+				<GridView.ItemTemplate>
+					<DataTemplate x:DataType="models:TypeGroup">
+						<TextBlock Padding="12" Text="{x:Bind Name}" />
+					</DataTemplate>
+				</GridView.ItemTemplate>
+			</GridView>
+		</controls:HubPanelSection>
+		<controls:HubPanelSection x:Name="DocsHub">
+			<Frame x:Name="DocsFrame" IsNavigationStackEnabled="False" />
+		</controls:HubPanelSection>
 	</controls:HubPanel>
 </UserControl>

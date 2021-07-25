@@ -5,4 +5,6 @@
 	<x:Double x:Key="MinWindowBreakpoint">0</x:Double>
 	<x:Double x:Key="MediumWindowBreakpoint">641</x:Double>
 	<x:Double x:Key="LargeWindowBreakpoint">1008</x:Double>
+	<Thickness x:Key="HubPanelHeaderMargin">0,0,0,8</Thickness>
+	<StaticResource x:Key="HubPanelHeaderTextStyle" ResourceKey="DisplayTextBlockStyle" />
 </ResourceDictionary>

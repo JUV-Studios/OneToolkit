@@ -13,17 +13,17 @@ namespace OneToolkit::UI::Xaml::Controls
 	{
 	public:
 		HubPanel();
+
 		DeclareDependencyProperty(double, Spacing);
 
 		DeclareDependencyProperty(Windows::UI::Xaml::Thickness, Packing);
 
 		virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
 	private:
-		uint32 m_LastSetSize = 0;
 		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
 		void SetProperties();
 		void Hub_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void Hub_SectionsInViewChanged(Platform::Object^ sender, WUXC::SectionsInViewChangedEventArgs^ e);
-		void DependencyPropertyBaseChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyProperty^ dp);
+		void DependencyPropertyBaseChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyProperty^ dependencyProperty);
 	};
 }

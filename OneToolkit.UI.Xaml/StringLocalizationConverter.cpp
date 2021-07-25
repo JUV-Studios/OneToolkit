@@ -2,14 +2,13 @@
 
 using namespace Platform;
 using namespace Windows::Foundation;
-using namespace Windows::Foundation::Metadata;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::ApplicationModel::Resources;
 
 namespace OneToolkit::UI::Xaml::Converters
 {
-	[WebHostHidden]
+	[Windows::Foundation::Metadata::WebHostHidden]
 	public ref class StringLocalizationConverter sealed : IValueConverter, INotifyPropertyChanged
 	{
 	public:

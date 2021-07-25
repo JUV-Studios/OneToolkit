@@ -10,11 +10,74 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
+	Loaded="UserControl_Loaded"
 	mc:Ignorable="d">
 
-	<Grid>
-		<local:SettingsPage />
-		<!--<controls:PageView
+	<UserControl.KeyboardAccelerators>
+		<KeyboardAccelerator
+			Key="Left"
+			Invoked="BackAccelerator_Invoked"
+			Modifiers="Menu" />
+		<KeyboardAccelerator
+			Key="Left"
+			Invoked="BackClearAccelerator_Invoked"
+			Modifiers="Menu, Shift" />
+	</UserControl.KeyboardAccelerators>
+
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="{x:Bind viewModels:SettingsViewModel.Instance.TitleBarHeight, Mode=OneWay}" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<Grid
+				x:Name="TitleBar"
+				Margin="{x:Bind viewModels:SettingsViewModel.Instance.TitleBarLeftInset, Mode=OneWay}"
+				Background="Transparent">
+				<StackPanel
+					Margin="12,0,0,0"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Orientation="Horizontal"
+					Spacing="8">
+					<Image
+						Width="16"
+						Height="16"
+						VerticalAlignment="Center"
+						Source="ms-appx:///Assets/Square150x150Logo.scale-200.png" />
+					<TextBlock
+						VerticalAlignment="Center"
+						Style="{ThemeResource CaptionTextBlockStyle}"
+						Text="OneToolkit Showcase" />
+				</StackPanel>
+			</Grid>
+			<ComboBox
+				x:Name="NavigationBox"
+				x:Uid="NavigationBox"
+				Margin="{x:Bind viewModels:SettingsViewModel.Instance.TitleBarRightInset, Mode=OneWay}"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Center"
+				SelectionChanged="NavigationBox_SelectionChanged">
+				<ComboBox.Resources>
+					<ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml" />
+				</ComboBox.Resources>
+				<ComboBoxItem x:Uid="HomeNavItem" Tag="OneToolkit.Showcase.Views.HomePage" />
+				<ComboBoxItem x:Uid="ReferenceNavItem" Tag="OneToolkit.Showcase.Views.ApiReference" />
+				<ComboBoxItem x:Uid="SettingsNavItem" Tag="OneToolkit.Showcase.Views.SettingsPage" />
+			</ComboBox>
+		</Grid>
+		<controls:ContentFrame
+			x:Name="Presenter"
+			Grid.Row="1"
+			Background="{ThemeResource LayerFillColorDefaultBrush}"
+			ContentChanged="Presenter_ContentChanged">
+			<controls:ContentFrame.ContentTransition>
+				<animation:SlideContentTransition />
+			</controls:ContentFrame.ContentTransition>
+		</controls:ContentFrame>
+	</Grid>
+
+	<!--<controls:PageView
 			x:Name="NavView"
 			IsBackButtonVisible="Collapsed"
 			MenuItemInvoked="NavView_MenuItemInvoked"
@@ -87,5 +150,4 @@
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>-->
-	</Grid>
 </UserControl>

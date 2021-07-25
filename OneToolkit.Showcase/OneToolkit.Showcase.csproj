@@ -141,7 +141,6 @@
   <ItemGroup>
     <Compile Include="Models\TypeGroup.cs" />
     <Compile Include="Models\TypeInfo.cs" />
-    <Compile Include="ViewModels\ReferenceViewModel.cs" />
     <Compile Include="Views\ApiReference.xaml.cs">
       <DependentUpon>ApiReference.xaml</DependentUpon>
     </Compile>
@@ -169,11 +168,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Reference\juv\Functions\as_optional.txt" />
-    <Content Include="Assets\Reference\juv\Functions\as_pointer.txt" />
-    <Content Include="Assets\Reference\juv\Functions\as_value.txt" />
-    <Content Include="Assets\Reference\juv\Functions\has_only_whitespaces.txt" />
-    <Content Include="Assets\Reference\juv\Functions\is_space.txt" />
+    <Content Include="Assets\Reference\Macros.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

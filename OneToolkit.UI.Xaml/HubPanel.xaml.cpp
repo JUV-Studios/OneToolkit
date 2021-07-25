@@ -26,7 +26,7 @@ using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-DefineDependencyProperty(double, HubPanel, Spacing, PropertyValue::CreateDouble(36));
+DefineDependencyProperty(double, HubPanel, Spacing, 36.0);
 
 DefineDependencyProperty(Thickness, HubPanel, Packing, ThicknessHelper::FromUniformLength(48));
 
@@ -34,26 +34,6 @@ HubPanel::HubPanel()
 {
 	InitializeComponent();
 	RegisterPropertyChangedCallback(HeaderProperty, ref new DependencyPropertyChangedCallback(this, &HubPanel::DependencyPropertyBaseChanged));
-}
-
-double HubPanel::Spacing::get()
-{
-	return static_cast<double>(GetValue(m_SpacingProperty));
-}
-
-void HubPanel::Spacing::set(double value)
-{
-	SetValue(m_SpacingProperty, value);
-}
-
-Thickness HubPanel::Packing::get()
-{
-	return static_cast<Thickness>(GetValue(m_PackingProperty));
-}
-
-void HubPanel::Packing::set(Thickness value)
-{
-	SetValue(m_PackingProperty, value);
 }
 
 void HubPanel::Hub_Loaded(Object^ sender, RoutedEventArgs^ e)
@@ -99,7 +79,7 @@ void HubPanel::Hub_SectionsInViewChanged(Object^ sender, SectionsInViewChangedEv
 	SetProperties();
 }
 
-void HubPanel::DependencyPropertyBaseChanged(DependencyObject^ sender, DependencyProperty^ dp)
+void HubPanel::DependencyPropertyBaseChanged(DependencyObject^ sender, DependencyProperty^ dependencyProperty)
 {
 	SetProperties();
 }

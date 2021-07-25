@@ -9,12 +9,10 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
 	xmlns:wctControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	Unloaded="UserControl_Unloaded"
 	mc:Ignorable="d">
 
-	<controls:HubPanel
-		Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-		Header="Settings"
-		Loaded="HubPanel_Loaded">
+	<controls:HubPanel Loaded="HubPanel_Loaded">
 		<controls:HubPanelSection x:Uid="SettingsHubGeneral">
 			<wctControls:WrapPanel>
 				<ToggleSwitch x:Uid="DisableSoundEffectsSwitch" IsOn="{x:Bind viewModels:SettingsViewModel.Instance.DisableSoundEffects, Mode=TwoWay}" />
@@ -35,11 +33,13 @@
 					<RowDefinition Height="8" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="0" Text="{x:Bind AboutDisplayText}" />
+				<TextBlock Grid.Row="0" Text="{x:Bind local:SettingsPage.AboutDisplayText}" />
 				<muxc:Expander
+					x:Name="ContributeExpander"
 					x:Uid="SettingsExpanderContribute"
 					Grid.Row="2"
 					HorizontalAlignment="Stretch"
+					AutomationProperties.Name="{x:Bind local:SettingsPage.AboutAutomationText}"
 					ExpandDirection="Down"
 					Expanding="ContributeExpander_Expanding">
 					<wctControls:WrapPanel>

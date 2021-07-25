@@ -17,13 +17,14 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Navigation;
+using namespace OneToolkit::UI::Xaml;
 using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-DefineDependencyProperty(String, DescriptiveButton, Title, "");
+DefineDependencyProperty(String^, DescriptiveButton, Title, "");
 
-DefineDependencyProperty(String, DescriptiveButton, Caption, "");
+DefineDependencyProperty(String^, DescriptiveButton, Caption, "");
 
 DescriptiveButton::DescriptiveButton()
 {
@@ -34,24 +35,6 @@ void DescriptiveButton::DependencyPropertyChanged(DependencyObject^ sender, Depe
 {
 	auto target = dynamic_cast<DescriptiveButton^>(sender);
 	AutomationProperties::SetName(target, target->Title + L", " + target->Caption);
-}
-
-String^ DescriptiveButton::Title::get()
-{
-	return GetValue(m_TitleProperty)->ToString();
-}
-
-void DescriptiveButton::Title::set(String^ value)
-{
-	SetValue(m_TitleProperty, value);
-}
-
-String^ DescriptiveButton::Caption::get()
-{
-	return GetValue(m_CaptionProperty)->ToString();
-}
-
-void DescriptiveButton::Caption::set(String^ value)
-{
-	SetValue(m_CaptionProperty, value);
+	target->TitleBlock->Visibility = target->Title ? ::Visibility::Visible : ::Visibility::Collapsed;
+	target->CaptionBlock->Visibility = target->Caption ? ::Visibility::Visible : ::Visibility::Collapsed;
 }

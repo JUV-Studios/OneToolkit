@@ -32,6 +32,7 @@
     <ClCompile Include="ApplianceInformation.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="StrongTypeCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OneToolkit.def" />
@@ -44,6 +45,8 @@
     <ClInclude Include="ApplianceInformation.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="WeakTypeCache.h" />
+    <ClInclude Include="StrongTypeCache.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="FontHelper.idl">
@@ -91,6 +94,9 @@
     </Midl>
     <Midl Include="ApplianceInformation.idl">
       <Filter>System</Filter>
+    </Midl>
+    <Midl Include="TabSwitcher.idl">
+      <Filter>UI\Input</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>

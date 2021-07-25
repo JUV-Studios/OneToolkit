@@ -10,11 +10,23 @@
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	mc:Ignorable="d">
 
+	<!--
+	<muxc:NavigationView
+		IsBackButtonVisible="Collapsed"
+		IsSettingsVisible="False"
+		PaneDisplayMode="Top">
+		<muxc:NavigationView.MenuItems>
+			<muxc:NavigationViewItem>Classes</muxc:NavigationViewItem>
+		</muxc:NavigationView.MenuItems>
+	</muxc:NavigationView>-->
+
 	<controls:HubPanel
-		x:Name="Panel"
-		Header="{x:Bind GroupData.Caption}"
+		Packing="0"
 		ScrollViewer.HorizontalScrollBarVisibility="Hidden"
 		ScrollViewer.HorizontalScrollMode="Auto">
+		<controls:HubPanel.HeaderTemplate>
+			<DataTemplate />
+		</controls:HubPanel.HeaderTemplate>
 		<controls:HubPanelSection x:Uid="ClassesPanel">
 			<GridView
 				ItemContainerTransitions="{x:Null}"

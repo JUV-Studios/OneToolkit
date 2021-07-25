@@ -2,29 +2,19 @@ import "Lifecycle.idl";
 
 namespace OneToolkit.UI
 {
-    interface IViewServiceProvider
+    [default_interface]
+    runtimeclass ViewService
     {
+        static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         String Title;
         Boolean IsDialogShown;
         Int64 WindowHandle { get; };
         Windows.Foundation.Rect Bounds { get; };
-        [noexcept] Object ReferenceSource { get; };
-        Windows.Foundation.IAsyncOperation<Boolean> CloseAsync();
-    };
-
-    interface IViewServiceUniversal requires IViewServiceProvider
-    {
-        Boolean IsFullScreen;
         [noexcept] Windows.UI.ViewManagement.ApplicationView AppView { get; };
         [noexcept] Windows.ApplicationModel.Core.CoreApplicationView CoreAppView { get; };
-    };
-
-    [default_interface]
-    static runtimeclass ViewService
-    {
-        static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
-        static IViewServiceUniversal GetForCurrentView();
-        static IViewServiceProvider GetForWindowId(Int64 windowHandle);
+        Windows.Foundation.IAsyncOperation<Boolean> CloseAsync();
+        static ViewService GetForCurrentView();
+        static ViewService GetForWindowId(Int64 windowHandle);
         static Int64 GetWindowHandle(Windows.UI.Core.CoreWindow coreWindow);
     }
 }

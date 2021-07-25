@@ -14,7 +14,9 @@ namespace OneToolkit::UI::Xaml::Controls
 	{
 	public:
 		DescriptiveButton();
+
 		DeclareDependencyProperty(Platform::String^, Title);
+
 		DeclareDependencyProperty(Platform::String^, Caption);
 	private:
 		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);

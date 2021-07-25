@@ -7,7 +7,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	DataContext="{x:Bind}"
+	DataContext="{x:Null}"
+	IsHeaderInteractive="True"
 	mc:Ignorable="d">
 	<HubSection.HeaderTemplate>
 		<DataTemplate x:DataType="x:String">
@@ -15,8 +16,8 @@
 		</DataTemplate>
 	</HubSection.HeaderTemplate>
 	<HubSection.ContentTemplate>
-		<DataTemplate x:DataType="local:HubPanelSection">
-			<ContentPresenter Content="{x:Bind Content, Mode=TwoWay}" DataContext="{x:Bind}" />
+		<DataTemplate>
+			<ContentPresenter Loaded="ContentPresenter_Loaded" />
 		</DataTemplate>
 	</HubSection.ContentTemplate>
 </HubSection>

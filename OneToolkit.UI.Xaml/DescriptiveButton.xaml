@@ -10,7 +10,13 @@
 	mc:Ignorable="d">
 
 	<StackPanel Orientation="Vertical">
-		<TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind Title, Mode=TwoWay}" />
-		<TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="{x:Bind Caption, Mode=TwoWay}" />
+		<TextBlock
+			x:Name="TitleBlock"
+			Style="{ThemeResource BaseTextBlockStyle}"
+			Text="{x:Bind Title, Mode=TwoWay}" />
+		<TextBlock
+			x:Name="CaptionBlock"
+			Style="{ThemeResource CaptionTextBlockStyle}"
+			Text="{x:Bind Caption, Mode=TwoWay}" />
 	</StackPanel>
 </Button>

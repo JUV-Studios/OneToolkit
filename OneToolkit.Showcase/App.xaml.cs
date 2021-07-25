@@ -1,10 +1,11 @@
-﻿using OneToolkit.Showcase.Views;
-using Windows.ApplicationModel.Activation;
+﻿using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;
+using OneToolkit.Lifecycle;
+using OneToolkit.Showcase.Views;
 
 namespace OneToolkit.Showcase
 {
@@ -22,6 +23,8 @@ namespace OneToolkit.Showcase
             InitializeComponent();
             AppCenter.Start("c1fa7718-3c52-47a4-b969-abbe4d7816c5", typeof(Analytics), typeof(Crashes));
         }
+
+        public static readonly WeakTypeCache PageTypeCache = new();
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points

@@ -27,6 +27,9 @@
       <Filter>Media\Animation</Filter>
     </ClCompile>
     <ClCompile Include="WindowHelper.cpp" />
+    <ClCompile Include="StringToTypeConverter.cpp">
+      <Filter>Converters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -52,6 +55,9 @@
       <Filter>Controls</Filter>
     </Page>
     <Page Include="Styles.xaml" />
+    <Page Include="ContentFrame.xaml">
+      <Filter>Controls</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

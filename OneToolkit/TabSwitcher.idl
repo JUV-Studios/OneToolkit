@@ -1,0 +1,8 @@
+namespace OneToolkit.UI.Input
+{
+    [default_interface]
+    static runtimeclass TabSwitcher
+    {
+        static Int32 GetNewSelectionIndex(UInt32 currentIndex, UInt32 collectionSize, Boolean reverse);
+    }
+}

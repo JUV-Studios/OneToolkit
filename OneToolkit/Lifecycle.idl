@@ -1,5 +1,7 @@
 namespace OneToolkit.Lifecycle
 {
+	delegate Object SingletonInstanceProvider(Windows.UI.Xaml.Interop.TypeName typeId);
+
 	delegate void SuspendableStateChangedEventHandler(ISuspendable sender, SuspendableEventType eventType);
 
 	enum SuspendableEventType
@@ -24,4 +26,25 @@ namespace OneToolkit.Lifecycle
 		Windows.Foundation.IAsyncAction SuspendAsync();
 		Windows.Foundation.IAsyncAction ResumeAsync();
 	};
+
+	interface ITypeCache
+	{
+		Boolean IsTypePresent(Windows.UI.Xaml.Interop.TypeName typeId);
+		Object GetInstance(Windows.UI.Xaml.Interop.TypeName typeId);
+		Object GetInstance(Windows.UI.Xaml.Interop.TypeName typeId, SingletonInstanceProvider provider);
+		void Emplace(Windows.UI.Xaml.Interop.TypeName typeId, Object instance);
+		void Remove(Windows.UI.Xaml.Interop.TypeName typeId);
+	};
+
+	[default_interface]
+	runtimeclass WeakTypeCache : ITypeCache
+	{
+		WeakTypeCache();
+	}
+	
+	[default_interface]
+	runtimeclass StrongTypeCache : ITypeCache
+	{
+		StrongTypeCache()
+	}
 }

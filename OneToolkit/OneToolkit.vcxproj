@@ -217,10 +217,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-	  <ClInclude Include="ApplianceInformation.h">
-		  <DependentUpon>ApplianceInformation.idl</DependentUpon>
-		  <SubType>Code</SubType>
-	  </ClInclude>
+    <ClInclude Include="ApplianceInformation.h">
+      <DependentUpon>ApplianceInformation.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="BufferHelper.h">
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -262,6 +262,11 @@
       <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="StrongTypeCache.h" />
+    <ClInclude Include="TabSwitcher.h">
+      <DependentUpon>TabSwitcher.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="UISettingsHelper.h">
       <DependentUpon>UISettingsHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -270,12 +275,13 @@
       <DependentUpon>ViewService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="WeakTypeCache.h" />
   </ItemGroup>
   <ItemGroup>
-	  <ClCompile Include="ApplianceInformation.cpp">
-		  <DependentUpon>ApplianceInformation.idl</DependentUpon>
-		  <SubType>Code</SubType>
-	  </ClCompile>
+    <ClCompile Include="ApplianceInformation.cpp">
+      <DependentUpon>ApplianceInformation.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="BufferHelper.cpp">
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -302,6 +308,15 @@
     </ClCompile>
     <ClCompile Include="MemoryBufferHelper.cpp">
       <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="StrongTypeCache.cpp" />
+    <ClCompile Include="TabSwitcher.cpp">
+      <DependentUpon>TabSwitcher.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="WeakTypeCache.cpp">
+      <DependentUpon>WeakTypeCache.h</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClInclude Include="OneToolkit.h">
@@ -373,6 +388,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="SharedFile.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="TabSwitcher.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="UISettingsHelper.idl">

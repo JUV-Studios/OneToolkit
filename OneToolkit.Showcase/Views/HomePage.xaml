@@ -14,7 +14,8 @@
 	<controls:HubPanel x:Uid="HomeHub">
 		<controls:HubPanelSection Header="Getting started">
 			<wctControls:WrapPanel>
-				<controls:DescriptiveButton Caption="Install the NuGet packages provided by OneToolkit" Click="Install_Click">Install NuGet packages</controls:DescriptiveButton>
+				<controls:DescriptiveButton Caption="Install the NuGet packages that OneToolkit provides" Click="Install_Click">Install NuGet packages</controls:DescriptiveButton>
+				<controls:DescriptiveButton>Read the docs</controls:DescriptiveButton>
 			</wctControls:WrapPanel>
 		</controls:HubPanelSection>
 	</controls:HubPanel>

@@ -16,7 +16,11 @@ namespace OneToolkit::UI::Xaml::Controls
 	public:
 		HubPanelSection();
 
-		DeclareDependencyProperty(Windows::UI::Xaml::UIElement^, Content);
+		property Windows::UI::Xaml::UIElement^ Content
+		{
+			Windows::UI::Xaml::UIElement^ get();
+			void set(Windows::UI::Xaml::UIElement^ value);
+		}
 	internal:
 		property HubPanel^ Container
 		{
@@ -24,9 +28,11 @@ namespace OneToolkit::UI::Xaml::Controls
 			void set(HubPanel^ value);
 		}
 	private:
+		Platform::WeakReference m_Content;
 		Platform::WeakReference m_Container;
-		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
+		Platform::WeakReference m_Presenter;
 		void SetProperties();
+		void ContentPresenter_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void DependencyPropertyBaseChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyProperty^ dp);
 	};
 }

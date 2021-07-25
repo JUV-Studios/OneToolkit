@@ -79,16 +79,6 @@
             Attempts to detect the encoding using various methods.
             </summary>
         </member>
-        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.GetBuffer(System.String,OneToolkit.Data.Text.TextEncoding)">
-            <summary>
-            Gets the bytes representation of a string for the specified encoding.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.GetString(System.ReadOnlySpan{System.Byte},OneToolkit.Data.Text.TextEncoding)">
-            <summary>
-            Gets the string representation of a buffer for the specified encoding.
-            </summary>
-        </member>
         <member name="M:OneToolkit.Data.Text.TextEncodingHelper.AsEncoding(OneToolkit.Data.Text.TextEncoding)">
             <summary>
             Gets the encoding information for the specified text encoding.
@@ -347,6 +337,12 @@
             <summary>
             Provides a bindable command which can choose to execute or not.
             </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.RelayCommand.#ctor(OneToolkit.Mvvm.RelayCommand)">
+            <summary>
+            Creates a new instance of ObservableProperty based on an existing one.
+            </summary>
+            <param name="other">The other instance whose properties will be copied.</param>
         </member>
         <member name="M:OneToolkit.Mvvm.RelayCommand.#ctor(System.Action{OneToolkit.Mvvm.RelayCommand,System.Object})">
             <summary>

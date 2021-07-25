@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ClassesPanel.Title" xml:space="preserve">
+  <data name="ClassesPanel.Header" xml:space="preserve">
     <value>Classes</value>
   </data>
   <data name="ClassText" xml:space="preserve">
@@ -141,23 +141,26 @@
   <data name="FeedbackNavItem.Content" xml:space="preserve">
     <value>Feedback</value>
   </data>
-  <data name="HomeHub.Title" xml:space="preserve">
+  <data name="HomeHub.Header" xml:space="preserve">
     <value>Welcome</value>
   </data>
-  <data name="HomeNavItem.Label" xml:space="preserve">
+  <data name="HomeNavItem.Content" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="NamespaceText" xml:space="preserve">
     <value>namespace</value>
   </data>
+  <data name="NavigationBox.AutomationProperties.Name" xml:space="preserve">
+    <value>Navigation menu</value>
+  </data>
   <data name="ProgrammingLanguageBox.Header" xml:space="preserve">
     <value>Preferred programming language</value>
   </data>
-  <data name="ReferenceHub.Title" xml:space="preserve">
-    <value>API reference</value>
-  </data>
-  <data name="ReferenceHubNamespaces.Title" xml:space="preserve">
+  <data name="ReferenceHubNamespaces.Header" xml:space="preserve">
     <value>Namespaces</value>
+  </data>
+  <data name="ReferenceNavItem.Content" xml:space="preserve">
+    <value>API reference</value>
   </data>
   <data name="SettingsExpanderContribute.Header" xml:space="preserve">
     <value>Contribute</value>
@@ -170,6 +173,9 @@
   </data>
   <data name="SettingsHubGeneral.Header" xml:space="preserve">
     <value>General</value>
+  </data>
+  <data name="SettingsNavItem.Content" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="TermsOfUseLink.Content" xml:space="preserve">
     <value>Terms of use</value>
