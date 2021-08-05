@@ -4,56 +4,70 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:OneToolkit.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:local="using:OneToolkit.Showcase.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:models="using:OneToolkit.Showcase.Models"
-	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	mc:Ignorable="d">
 
-	<!--
-	<muxc:NavigationView
-		IsBackButtonVisible="Collapsed"
-		IsSettingsVisible="False"
-		PaneDisplayMode="Top">
-		<muxc:NavigationView.MenuItems>
-			<muxc:NavigationViewItem>Classes</muxc:NavigationViewItem>
-		</muxc:NavigationView.MenuItems>
-	</muxc:NavigationView>-->
-
-	<controls:HubPanel
-		Packing="0"
-		ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-		ScrollViewer.HorizontalScrollMode="Auto">
-		<controls:HubPanel.HeaderTemplate>
-			<DataTemplate />
-		</controls:HubPanel.HeaderTemplate>
-		<controls:HubPanelSection x:Uid="ClassesPanel">
-			<GridView
-				ItemContainerTransitions="{x:Null}"
-				ItemsSource="{x:Bind GroupData.Classes}"
-				SelectionMode="None">
-				<GridView.ItemContainerStyle>
-					<Style TargetType="GridViewItem">
-						<Setter Property="Width" Value="280" />
-						<Setter Property="IsTabStop" Value="False" />
+	<Page.Resources>
+		<Style TargetType="GridView">
+			<Setter Property="Margin" Value="0,0,-8,-8" />
+			<Setter Property="ItemContainerStyle">
+				<Setter.Value>
+					<Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
 						<Setter Property="Margin" Value="0,0,8,8" />
+						<Setter Property="MinWidth" Value="{StaticResource SplitViewOpenPaneThemeLength}" />
+						<Setter Property="IsTabStop" Value="False" />
 						<Setter Property="HorizontalContentAlignment" Value="Stretch" />
 					</Style>
-				</GridView.ItemContainerStyle>
-				<GridView.ItemsPanel>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="ItemContainerTransitions" Value="{x:Null}" />
+			<Setter Property="SelectionMode" Value="None" />
+			<Setter Property="ItemsPanel">
+				<Setter.Value>
 					<ItemsPanelTemplate>
 						<ItemsWrapGrid Orientation="Vertical" />
 					</ItemsPanelTemplate>
-				</GridView.ItemsPanel>
-				<GridView.ItemTemplate>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="ItemTemplate">
+				<Setter.Value>
 					<DataTemplate x:DataType="models:TypeInfo">
 						<controls:DescriptiveButton
 							Title="{x:Bind Name}"
 							HorizontalAlignment="Stretch"
-							Caption="{x:Bind Caption}" />
+							Caption="{x:Bind DisplayName}"
+							Click="DescriptiveButton_Click" />
 					</DataTemplate>
-				</GridView.ItemTemplate>
-			</GridView>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Page.Resources>
+
+	<controls:HubPanel x:Name="Panel" Header="{x:Bind GroupData.Caption}">
+		<controls:HubPanelSection
+			x:Name="Classes"
+			x:Uid="ReferenceHubClasses"
+			Loaded="Classes_Loaded">
+			<GridView ItemsSource="{x:Bind GroupData.Classes}" />
+		</controls:HubPanelSection>
+		<controls:HubPanelSection
+			x:Name="Enumerations"
+			x:Uid="ReferenceHubEnumerations"
+			Loaded="Enumerations_Loaded">
+			<GridView ItemsSource="{x:Bind GroupData.Enumerations}" />
+		</controls:HubPanelSection>
+		<controls:HubPanelSection
+			x:Name="Interfaces"
+			x:Uid="ReferenceHubInterfaces"
+			Loaded="Interfaces_Loaded">
+			<GridView ItemsSource="{x:Bind GroupData.Interfaces}" />
+		</controls:HubPanelSection>
+		<controls:HubPanelSection
+			x:Name="Structures"
+			x:Uid="ReferenceHubStructures"
+			Loaded="Structures_Loaded">
+			<GridView ItemsSource="{x:Bind GroupData.Structures}" />
 		</controls:HubPanelSection>
 	</controls:HubPanel>
 </Page>

@@ -1,0 +1,73 @@
+﻿<UserControl
+	x:Class="OneToolkit.Showcase.Views.Playground"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="using:OneToolkit.UI.Xaml.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:monaco="using:Monaco"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	mc:Ignorable="d">
+
+	<UserControl.Resources>
+		<StaticResource x:Key="HubSectionHeaderButtonForeground" ResourceKey="AccentTextFillColorPrimaryBrush" />
+	</UserControl.Resources>
+
+	<Grid>
+		<muxc:TwoPaneView
+			x:Name="ContentView"
+			MinTallModeHeight="{StaticResource MinWindowBreakpoint}"
+			MinWideModeWidth="{StaticResource LargeWindowBreakpoint}"
+			ModeChanged="ContentView_ModeChanged"
+			PanePriority="Pane2"
+			TallModeConfiguration="BottomTop"
+			WideModeConfiguration="LeftRight">
+			<muxc:TwoPaneView.Pane1>
+				<monaco:CodeEditor
+					x:Name="Editor"
+					Grid.Column="0"
+					GotFocus="Editor_GotFocus"
+					Loaded="Editor_Loaded"
+					LostFocus="Editor_LostFocus" />
+			</muxc:TwoPaneView.Pane1>
+			<muxc:TwoPaneView.Pane2>
+				<controls:HubPanel
+					Grid.Column="1"
+					Loaded="HubPanel_Loaded"
+					SectionHeaderClick="HubPanel_SectionHeaderClick"
+					Visibility="{x:Bind Editor.IsLoaded, Mode=OneWay}">
+					<controls:HubPanelSection
+						x:Name="PreviewHub"
+						x:Uid="PlaygroundHubPreview"
+						IsHeaderInteractive="True" />
+				</controls:HubPanel>
+			</muxc:TwoPaneView.Pane2>
+		</muxc:TwoPaneView>
+		<muxc:ProgressRing
+			Width="100"
+			Height="100"
+			IsActive="{x:Bind Editor.IsLoaded, Mode=OneWay, Converter={StaticResource BoolReverseConverter}}" />
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<StateTrigger IsActive="{x:Bind IsInTallMode, Mode=OneWay}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="ContentView.Pane1Length" Value="*" />
+						<Setter Target="ContentView.Pane2Length" Value="*" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<StateTrigger IsActive="{x:Bind IsInTallMode, Mode=OneWay, Converter={StaticResource BoolReverseConverter}}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="ContentView.Pane1Length" Value="2*" />
+						<Setter Target="ContentView.Pane2Length" Value="3*" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+	</Grid>
+</UserControl>

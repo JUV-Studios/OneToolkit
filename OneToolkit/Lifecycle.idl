@@ -27,6 +27,11 @@ namespace OneToolkit.Lifecycle
 		Windows.Foundation.IAsyncAction ResumeAsync();
 	};
 
+	enum TypeCacheKind
+	{
+		Weak, Strong
+	};
+
 	interface ITypeCache
 	{
 		Boolean IsTypePresent(Windows.UI.Xaml.Interop.TypeName typeId);
@@ -41,10 +46,10 @@ namespace OneToolkit.Lifecycle
 	{
 		WeakTypeCache();
 	}
-	
+
 	[default_interface]
 	runtimeclass StrongTypeCache : ITypeCache
 	{
-		StrongTypeCache()
+		StrongTypeCache();
 	}
 }

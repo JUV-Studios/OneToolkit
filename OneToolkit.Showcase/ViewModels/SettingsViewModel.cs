@@ -32,27 +32,11 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public GridLength TitleBarHeight => new(ViewServiceProvider.CoreAppView.TitleBar.IsVisible ? ViewServiceProvider.CoreAppView.TitleBar.Height : 0);
 
-		public Thickness TitleBarLeftInset
-		{
-			get
-			{
-				if (ViewServiceProvider.CoreAppView.TitleBar.IsVisible) return new(ViewServiceProvider.CoreAppView.TitleBar.SystemOverlayLeftInset, 0, 0, 0);
-				else return new(0);
-			}
-		}
-
-		public Thickness TitleBarRightInset
-		{
-			get
-			{
-				if (ViewServiceProvider.CoreAppView.TitleBar.IsVisible) return new(0, 0, ViewServiceProvider.CoreAppView.TitleBar.SystemOverlayRightInset, 0);
-				else return new(0);
-			}
-		}
+		public Thickness TitleBarInset => new(ViewServiceProvider.CoreAppView.TitleBar.SystemOverlayLeftInset, 0, ViewServiceProvider.CoreAppView.TitleBar.SystemOverlayRightInset, 0);
 
 		public bool DisableSoundEffects
 		{
-			get => (bool)SettingsService.GetValue(nameof(DisableSoundEffects), false);
+			get => Convert.ToBoolean(SettingsService.GetValue(nameof(DisableSoundEffects), false));
 			set
 			{
 				if (DisableSoundEffects != value)
@@ -60,6 +44,19 @@ namespace OneToolkit.Showcase.ViewModels
 					ElementSoundPlayer.State = value ? ElementSoundPlayerState.Off : ElementSoundPlayerState.On;
 					SettingsService.SetValue(nameof(DisableSoundEffects), value);
 					Raise(nameof(DisableSoundEffects));
+				}
+			}
+		}
+
+		public bool PreviewAutoRefresh
+		{
+			get => Convert.ToBoolean(SettingsService.GetValue(nameof(PreviewAutoRefresh), true));
+			set
+			{
+				if (PreviewAutoRefresh != value)
+				{
+					SettingsService.SetValue(nameof(PreviewAutoRefresh), value);
+					Raise(nameof(PreviewAutoRefresh));
 				}
 			}
 		}
@@ -85,9 +82,8 @@ namespace OneToolkit.Showcase.ViewModels
 
 		private void TitleBar_Changed(CoreApplicationViewTitleBar sender, object args)
 		{
+			Raise(nameof(TitleBarInset));
 			Raise(nameof(TitleBarHeight));
-			Raise(nameof(TitleBarLeftInset));
-			Raise(nameof(TitleBarRightInset));
 		}
 	}
 }

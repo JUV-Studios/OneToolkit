@@ -8,10 +8,10 @@ using namespace Microsoft::UI::Xaml;
 
 namespace winrt::OneToolkit::UI::WinUI::implementation
 {
-	int64 WindowHelper::GetWindowHandle(Window const& window)
+	WindowId WindowHelper::GetWindowId(Window const& window)
 	{
 		HWND result;
 		check_hresult(window.as<IWindowNative>()->get_WindowHandle(&result));
-		return as_value<int64>(result);
+		return { as_value<uint64>(result) };
 	}
 }

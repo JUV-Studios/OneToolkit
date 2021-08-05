@@ -1,13 +1,13 @@
 ﻿#pragma once
-#include "System.ApplianceInformation.g.h"
+#include "System.MachineInformation.g.h"
 
 namespace winrt::OneToolkit::System
 {
     namespace implementation
     {
-        struct ApplianceInformation : ApplianceInformationT<ApplianceInformation>
+        struct MachineInformation : MachineInformationT<MachineInformation>
         {
-            ApplianceInformation() = delete;
+            MachineInformation() = delete;
             static hstring DeviceName();
             static hstring DeviceModel();
             static hstring DeviceFamily();
@@ -20,7 +20,7 @@ namespace winrt::OneToolkit::System
     
     namespace factory_implementation
     {
-        struct ApplianceInformation : ApplianceInformationT<ApplianceInformation, implementation::ApplianceInformation>
+        struct MachineInformation : MachineInformationT<MachineInformation, implementation::MachineInformation>
         {
         };
     }

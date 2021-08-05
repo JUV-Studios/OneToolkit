@@ -9,8 +9,8 @@ namespace winrt::OneToolkit::UI
         {
             static Windows::UI::ViewManagement::UserInteractionMode InteractionMode();
             static OneToolkit::UI::ViewService GetForCurrentView();
-            static OneToolkit::UI::ViewService GetForWindowId(juv::int64 windowHandle);
-            static juv::int64 GetWindowHandle(Windows::UI::Core::CoreWindow const& coreWindow);
+            static OneToolkit::UI::ViewService GetForWindowId(WindowId windowId);
+            static WindowId GetCoreWindowId(Windows::UI::Core::CoreWindow const& coreWindow);
         };
     }
 }

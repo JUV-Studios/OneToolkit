@@ -32,9 +32,9 @@ namespace winrt::OneToolkit::Storage::implementation
 		return result.QuadPart;
 	}
 
-	int64 FileHandle::UnderlyingValue() const noexcept
+	StorageItemId FileHandle::Id() const noexcept
 	{
-		return juv::as_value<int64>(m_FileHandle.get());
+		return { as_value<uint64>(m_FileHandle.get()) };
 	}
 
 	void FileHandle::Delete()

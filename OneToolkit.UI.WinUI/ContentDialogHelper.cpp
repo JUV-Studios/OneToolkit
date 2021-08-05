@@ -8,14 +8,14 @@ using namespace Microsoft::UI::Xaml::Controls;
 
 namespace winrt::OneToolkit::UI::WinUI::Controls::implementation
 {
-    IAsyncOperation<bool> ContentDialogHelper::TryShowAsync(ContentDialog dialog, ContentDialogPlacement placement, ContentDialogDisplayCompletionAsyncHandler completionHandler, IViewServiceProvider viewServiceProvider)
+    IAsyncOperation<bool> ContentDialogHelper::TryShowAsync(ContentDialog dialog, ContentDialogPlacement placement, ContentDialogDisplayCompletionAsyncHandler completionHandler, ViewService viewService)
     {
-        if (!viewServiceProvider.IsDialogShown())
+        if (!viewService.IsDialogShown())
         {
-            viewServiceProvider.IsDialogShown(true);
+            viewService.IsDialogShown(true);
             auto result = co_await dialog.ShowAsync();
             co_await completionHandler(dialog, result);
-            viewServiceProvider.IsDialogShown(false);
+            viewService.IsDialogShown(false);
             co_return true;
         }
 

@@ -1,0 +1,11 @@
+namespace OneToolkit.Runtime
+{
+    [default_interface]
+    static runtimeclass TypeNameHelper
+    {
+        static Boolean IsTypePrimitive(Windows.UI.Xaml.Interop.TypeName typeId);
+        static String ExtractNamespace(Windows.UI.Xaml.Interop.TypeName typeId);
+        static String ToString(Windows.UI.Xaml.Interop.TypeName typeId);
+        static Windows.UI.Xaml.Interop.TypeName FromString(String typeName);
+    }
+}

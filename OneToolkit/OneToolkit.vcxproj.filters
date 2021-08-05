@@ -22,6 +22,12 @@
     <Filter Include="System">
       <UniqueIdentifier>{d14577f3-68a8-4c5b-8eda-5998d52117b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Runtime">
+      <UniqueIdentifier>{751f88c8-284a-4ded-a6d0-b8d6934c4a21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lifecycle">
+      <UniqueIdentifier>{2c787057-96e1-45a1-95cf-a4e6b073db0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ViewService.cpp">
@@ -29,10 +35,9 @@
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="ApplianceInformation.cpp">
+    <ClCompile Include="MachineInformation.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="StrongTypeCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OneToolkit.def" />
@@ -42,11 +47,12 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="OneToolkit.h" />
-    <ClInclude Include="ApplianceInformation.h">
+    <ClInclude Include="MachineInformation.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="WeakTypeCache.h" />
-    <ClInclude Include="StrongTypeCache.h" />
+    <ClInclude Include="TypeCache.h">
+      <Filter>Lifecycle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="FontHelper.idl">
@@ -70,7 +76,6 @@
     <Midl Include="SettingsService.idl">
       <Filter>Storage</Filter>
     </Midl>
-    <Midl Include="Lifecycle.idl" />
     <Midl Include="CropDialog.idl">
       <Filter>Imaging</Filter>
     </Midl>
@@ -89,14 +94,32 @@
     <Midl Include="PackageVersionHelper.idl">
       <Filter>ApplicationModel</Filter>
     </Midl>
-    <Midl Include="IStorageItemHandle.idl">
-      <Filter>Storage</Filter>
-    </Midl>
-    <Midl Include="ApplianceInformation.idl">
+    <Midl Include="MachineInformation.idl">
       <Filter>System</Filter>
     </Midl>
     <Midl Include="TabSwitcher.idl">
       <Filter>UI\Input</Filter>
+    </Midl>
+    <Midl Include="TypeNameHelper.idl">
+      <Filter>Runtime</Filter>
+    </Midl>
+    <Midl Include="Converters.idl">
+      <Filter>UI</Filter>
+    </Midl>
+    <Midl Include="FileSizeHelper.idl">
+      <Filter>Storage</Filter>
+    </Midl>
+    <Midl Include="Reflection.idl">
+      <Filter>Runtime</Filter>
+    </Midl>
+    <Midl Include="ThemeHelper.idl">
+      <Filter>UI</Filter>
+    </Midl>
+    <Midl Include="Lifecycle.idl">
+      <Filter>Lifecycle</Filter>
+    </Midl>
+    <Midl Include="IStorageItemHandle.idl">
+      <Filter>Storage</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>

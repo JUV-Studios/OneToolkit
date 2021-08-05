@@ -31,8 +31,8 @@
           <target state="new">Join our Discord server</target>
         </trans-unit>
         <trans-unit id="TermsOfUseLink.Content" translate="yes" xml:space="preserve">
-          <source>Terms of use</source>
-          <target state="new">Terms of use</target>
+          <source>JUV Studios Terms of use</source>
+          <target state="new">JUV Studios Terms of use</target>
         </trans-unit>
         <trans-unit id="NamespaceText" translate="yes" xml:space="preserve">
           <source>namespace</source>
@@ -45,18 +45,6 @@
         <trans-unit id="DisableSoundEffectsSwitch.Header" translate="yes" xml:space="preserve">
           <source>Disable sound effects</source>
           <target state="new">Disable sound effects</target>
-        </trans-unit>
-        <trans-unit id="ContributeBlock.Text" translate="yes" xml:space="preserve">
-          <source>OneToolkit is open source! We welcome everyone to contribute and help improve our library.</source>
-          <target state="new">OneToolkit is open source! We welcome everyone to contribute and help improve our library.</target>
-        </trans-unit>
-        <trans-unit id="SettingsExpanderContribute.Header" translate="yes" xml:space="preserve">
-          <source>Contribute</source>
-          <target state="new">Contribute</target>
-        </trans-unit>
-        <trans-unit id="ContributeBtn.Content" translate="yes" xml:space="preserve">
-          <source>Contribute to OneToolkit</source>
-          <target state="new">Contribute to OneToolkit</target>
         </trans-unit>
         <trans-unit id="FeedbackNavItem.Content" translate="yes" xml:space="preserve">
           <source>Feedback</source>
@@ -74,10 +62,6 @@
           <source>General</source>
           <target state="new">General</target>
         </trans-unit>
-        <trans-unit id="ClassesPanel.Header" translate="yes" xml:space="preserve">
-          <source>Classes</source>
-          <target state="new">Classes</target>
-        </trans-unit>
         <trans-unit id="HomeHub.Header" translate="yes" xml:space="preserve">
           <source>Welcome</source>
           <target state="new">Welcome</target>
@@ -85,10 +69,6 @@
         <trans-unit id="ReferenceHubNamespaces.Header" translate="yes" xml:space="preserve">
           <source>Namespaces</source>
           <target state="new">Namespaces</target>
-        </trans-unit>
-        <trans-unit id="NavigationBox.AutomationProperties.Name" translate="yes" xml:space="preserve">
-          <source>Navigation menu</source>
-          <target state="new">Navigation menu</target>
         </trans-unit>
         <trans-unit id="HomeNavItem.Content" translate="yes" xml:space="preserve">
           <source>Home</source>
@@ -101,6 +81,70 @@
         <trans-unit id="ReferenceNavItem.Content" translate="yes" xml:space="preserve">
           <source>API reference</source>
           <target state="new">API reference</target>
+        </trans-unit>
+        <trans-unit id="PlaygroundNavItem.Content" translate="yes" xml:space="preserve">
+          <source>Playground</source>
+          <target state="new">Playground</target>
+        </trans-unit>
+        <trans-unit id="PlaygroundHubPreview.Header" translate="yes" xml:space="preserve">
+          <source>Preview</source>
+          <target state="new">Preview</target>
+        </trans-unit>
+        <trans-unit id="SettingsExpanderLinks.Header" translate="yes" xml:space="preserve">
+          <source>Useful links</source>
+          <target state="new">Useful links</target>
+        </trans-unit>
+        <trans-unit id="MacrosText" translate="yes" xml:space="preserve">
+          <source>Macros</source>
+          <target state="new">Macros</target>
+        </trans-unit>
+        <trans-unit id="NavigationMenu.AutomationProperties.HelpText" translate="yes" xml:space="preserve">
+          <source>Use Ctrl+Tab to switch between the pages quickly, wherever you are.</source>
+          <target state="new">Use Ctrl+Tab to switch between the pages quickly, wherever you are.</target>
+        </trans-unit>
+        <trans-unit id="NavigationMenu.AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Navigation menu</source>
+          <target state="new">Navigation menu</target>
+        </trans-unit>
+        <trans-unit id="PreviewAutoRefreshSwitch.Header" translate="yes" xml:space="preserve">
+          <source>Automatically refresh playground's preview as I type</source>
+          <target state="new">Automatically refresh playground's preview as I type</target>
+        </trans-unit>
+        <trans-unit id="ReferenceHubClasses.Header" translate="yes" xml:space="preserve">
+          <source>Classes</source>
+          <target state="new">Classes</target>
+        </trans-unit>
+        <trans-unit id="SettingsExpanderDependencies.Header" translate="yes" xml:space="preserve">
+          <source>Dependencies &amp; references</source>
+          <target state="new">Dependencies &amp; references</target>
+        </trans-unit>
+        <trans-unit id="ReferenceHubEnumerations.Header" translate="yes" xml:space="preserve">
+          <source>Enumerations</source>
+          <target state="new">Enumerations</target>
+        </trans-unit>
+        <trans-unit id="ReferenceHubInterfaces.Header" translate="yes" xml:space="preserve">
+          <source>Interfaces</source>
+          <target state="new">Interfaces</target>
+        </trans-unit>
+        <trans-unit id="ReferenceHubStructures.Header" translate="yes" xml:space="preserve">
+          <source>Structures</source>
+          <target state="new">Structures</target>
+        </trans-unit>
+        <trans-unit id="ReferenceSearchBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>What are you looking for?</source>
+          <target state="new">What are you looking for?</target>
+        </trans-unit>
+        <trans-unit id="EnumerationText" translate="yes" xml:space="preserve">
+          <source>enumeration</source>
+          <target state="new">enumeration</target>
+        </trans-unit>
+        <trans-unit id="InterfaceText" translate="yes" xml:space="preserve">
+          <source>interface</source>
+          <target state="new">interface</target>
+        </trans-unit>
+        <trans-unit id="StructureText" translate="yes" xml:space="preserve">
+          <source>structure</source>
+          <target state="new">structure</target>
         </trans-unit>
       </group>
     </body>

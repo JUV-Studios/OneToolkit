@@ -11,9 +11,6 @@
     <Filter Include="Controls">
       <UniqueIdentifier>{2db97031-ede0-4010-98fd-fbfae1a15d8a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Converters">
-      <UniqueIdentifier>{fdcd6b29-7090-454e-8625-7b41c7ab034e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Media">
       <UniqueIdentifier>{ff1f5a06-2ba8-4333-bc57-b8b33b5b47c4}</UniqueIdentifier>
     </Filter>

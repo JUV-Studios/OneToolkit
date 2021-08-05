@@ -1,5 +1,0 @@
-﻿DeclareEvent
-DeclareAutoProperty
-DeclareObservableProperty
-DeclareDependencyProperty
-DefineDependencyProperty

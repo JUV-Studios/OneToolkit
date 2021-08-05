@@ -1,6 +1,6 @@
-﻿using Windows.ApplicationModel.Activation;
+﻿using Windows.UI.Xaml;
 using Windows.ApplicationModel.Core;
-using Windows.UI.Xaml;
+using Windows.ApplicationModel.Activation;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;

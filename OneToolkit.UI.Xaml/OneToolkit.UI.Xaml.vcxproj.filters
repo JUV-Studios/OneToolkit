@@ -14,9 +14,6 @@
     <Filter Include="Media\Animation">
       <UniqueIdentifier>{5a2f1282-7db3-43dc-8a6f-2cfb8238ea35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Converters">
-      <UniqueIdentifier>{4b931766-07a2-45e0-bee1-7f3fd2448bbd}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -27,8 +24,8 @@
       <Filter>Media\Animation</Filter>
     </ClCompile>
     <ClCompile Include="WindowHelper.cpp" />
-    <ClCompile Include="StringToTypeConverter.cpp">
-      <Filter>Converters</Filter>
+    <ClCompile Include="TreeViewHelper.cpp">
+      <Filter>Controls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,8 +58,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="StringLocalizationConverter.cpp">
-      <Filter>Converters</Filter>
-    </None>
   </ItemGroup>
 </Project>

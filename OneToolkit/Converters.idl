@@ -1,0 +1,28 @@
+namespace OneToolkit.UI.Converters
+{
+	[default_interface]
+	runtimeclass StringTypeConverter : Windows.UI.Xaml.Data.IValueConverter
+	{
+		StringTypeConverter();
+	}
+
+	[default_interface]
+	runtimeclass StringVersionConverter : Windows.UI.Xaml.Data.IValueConverter
+	{
+		StringVersionConverter();
+	}
+
+	[default_interface]
+	runtimeclass StringFileSizeConverter : Windows.UI.Xaml.Data.IValueConverter, Windows.UI.Xaml.Data.INotifyPropertyChanged
+	{
+		StringFileSizeConverter();
+		Boolean UseBinaryPrefix;
+	}
+
+	[default_interface]
+	runtimeclass StringLocalizationConverter : Windows.UI.Xaml.Data.IValueConverter, Windows.UI.Xaml.Data.INotifyPropertyChanged
+	{
+		StringLocalizationConverter();
+		Windows.ApplicationModel.Resources.ResourceLoader Context;
+	}
+}

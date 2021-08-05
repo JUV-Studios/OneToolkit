@@ -6,10 +6,12 @@
 #include <functional>
 #include <unknwn.h>
 #include <Windows.h>
-#include <winrt/OneToolkit.UI.h>
 #include <winrt/OneToolkit.System.h>
 #include <winrt/OneToolkit.Imaging.h>
 #include <winrt/OneToolkit.Storage.h>
+#include <winrt/OneToolkit.Runtime.h>
+#include <winrt/OneToolkit.UI.Input.h>
+#include <winrt/OneToolkit.UI.Converters.h>
 #include <winrt/Windows.UI.Xaml.Data.h>
 #include <winrt/OneToolkit.Lifecycle.h>
 #include <winrt/OneToolkit.ApplicationModel.h>
@@ -314,7 +316,10 @@ namespace winrt::OneToolkit
 			template <WindowsRuntimeType T>
 			bool SetProperty(T& field, T newValue, hstring const& propertyName)
 			{
-				return SetProperty(field, newValue, propertyName, std::bind(&ObservableBase<Derived, ChangedDelegate, ChangedArgs>::Raise, this));
+				return SetProperty(field, newValue, propertyName, [this](hstring const& propertyName) 
+					{
+						Raise(propertyName); 
+					});
 			}
 
 			/// <summary>

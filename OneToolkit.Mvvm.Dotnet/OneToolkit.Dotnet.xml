@@ -84,6 +84,23 @@
             Gets the encoding information for the specified text encoding.
             </summary>
         </member>
+        <member name="T:OneToolkit.Lifecycle.MemoryManager">
+            <summary>
+            Provides helpers to manage object lifetime.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Lifecycle.MemoryManager.Delete``1(``0@)">
+            <summary>
+            Deletes an object reference. Disposes the object if it implements IDisposable and nulls the reference out.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="reference"></param>
+        </member>
+        <member name="M:OneToolkit.Lifecycle.MemoryManager.Delete``1(``0@,System.Action{``0})">
+            <summary>
+            Deletes an object reference using a custom deleter and nulls out the reference.
+            </summary>
+        </member>
         <member name="T:OneToolkit.Mvvm.IBackingProvider`1">
             <summary>
             Represents an object the provides access to its internal data storage.

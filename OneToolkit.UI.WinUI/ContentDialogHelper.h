@@ -9,7 +9,7 @@ namespace winrt::OneToolkit::UI::WinUI::Controls
         {
             ContentDialogHelper() = delete;
             static Windows::Foundation::IAsyncOperation<bool> TryShowAsync(Microsoft::UI::Xaml::Controls::ContentDialog dialog, Microsoft::UI::Xaml::Controls::ContentDialogPlacement placement, 
-                ContentDialogDisplayCompletionAsyncHandler completionHandler, IViewServiceProvider viewServiceProvider);
+                ContentDialogDisplayCompletionAsyncHandler completionHandler, ViewService viewService);
         };
     }
     

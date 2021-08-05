@@ -4,6 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
 	xmlns:local="using:OneToolkit.Showcase"
+	xmlns:otConverters="using:OneToolkit.UI.Converters"
 	xmlns:wctControls="using:Microsoft.Toolkit.Uwp.UI.Controls">
 
 	<Application.Resources>
@@ -13,6 +14,7 @@
 				<ResourceDictionary Source="ms-appx:///OneToolkit.UI.Xaml/Styles.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 			<converters:BoolNegationConverter x:Name="BoolReverseConverter" />
+			<otConverters:StringLocalizationConverter x:Key="ResourceLocalizationConverter" />
 			<Style TargetType="wctControls:WrapPanel">
 				<Setter Property="Orientation" Value="Vertical" />
 				<Setter Property="VerticalSpacing" Value="8" />

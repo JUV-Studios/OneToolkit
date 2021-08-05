@@ -8,7 +8,7 @@ namespace winrt::OneToolkit::UI::WinUI
         struct WindowHelper : WindowHelperT<WindowHelper>
         {
             WindowHelper() = delete;
-            static juv::int64 GetWindowHandle(Microsoft::UI::Xaml::Window const& window);
+            static WindowId GetWindowId(Microsoft::UI::Xaml::Window const& window);
         };
     }
 

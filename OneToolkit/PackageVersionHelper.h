@@ -8,7 +8,8 @@ namespace winrt::OneToolkit::ApplicationModel
         struct PackageVersionHelper : PackageVersionHelperT<PackageVersionHelper>
         {
             PackageVersionHelper() = delete;
-            static hstring GetFormattedString(Windows::ApplicationModel::PackageVersion packageVersion);
+            static hstring ToFormattedString(Windows::ApplicationModel::PackageVersion packageVersion);
+            static Windows::ApplicationModel::PackageVersion FromFormattedString(hstring const& formattedString);
         };
     }
 

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210714.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210714.1\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210722.2\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210722.2\build\native\Microsoft.Windows.CppWinRT.props')" />
   <Import Project="..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props" Condition="Exists('..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" />
   <Import Project="..\packages\juv.1.0.0.6\build\native\juv.props" Condition="Exists('..\packages\juv.1.0.0.6\build\native\juv.props')" />
   <PropertyGroup Label="Globals">
@@ -16,7 +16,7 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.14393.0</WindowsTargetPlatformMinVersion>
     <CppWinRTFastAbi>true</CppWinRTFastAbi>
     <CppWinRTLibs>true</CppWinRTLibs>
@@ -217,12 +217,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ApplianceInformation.h">
-      <DependentUpon>ApplianceInformation.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="BufferHelper.h">
       <DependentUpon>BufferHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="Converters.h">
+      <DependentUpon>Converters.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="CropDialog.h">
@@ -231,6 +231,10 @@
     </ClInclude>
     <ClInclude Include="FileHandle.h">
       <DependentUpon>FileHandle.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="FileSizeHelper.h">
+      <DependentUpon>FileSizeHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="FontHelper.h">
@@ -245,6 +249,10 @@
       <DependentUpon>KeyStateHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="MachineInformation.h">
+      <DependentUpon>MachineInformation.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="MemoryBufferHelper.h">
       <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -254,6 +262,10 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Reflection.h">
+      <DependentUpon>Reflection.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="SettingsService.h">
       <DependentUpon>SettingsService.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -262,9 +274,17 @@
       <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="StrongTypeCache.h" />
     <ClInclude Include="TabSwitcher.h">
       <DependentUpon>TabSwitcher.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="ThemeHelper.h">
+      <DependentUpon>ThemeHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="TypeCache.h" />
+    <ClInclude Include="TypeNameHelper.h">
+      <DependentUpon>TypeNameHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="UISettingsHelper.h">
@@ -275,15 +295,14 @@
       <DependentUpon>ViewService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="WeakTypeCache.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ApplianceInformation.cpp">
-      <DependentUpon>ApplianceInformation.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="BufferHelper.cpp">
       <DependentUpon>BufferHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="Converters.cpp">
+      <DependentUpon>Converters.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="CropDialog.cpp">
@@ -292,6 +311,10 @@
     </ClCompile>
     <ClCompile Include="FileHandle.cpp">
       <DependentUpon>FileHandle.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="FileSizeHelper.cpp">
+      <DependentUpon>FileSizeHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="FontHelper.cpp">
@@ -306,17 +329,32 @@
       <DependentUpon>KeyStateHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="MachineInformation.cpp">
+      <DependentUpon>MachineInformation.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="MemoryBufferHelper.cpp">
       <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="StrongTypeCache.cpp" />
+    <ClCompile Include="Reflection.cpp">
+      <DependentUpon>Reflection.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="TabSwitcher.cpp">
       <DependentUpon>TabSwitcher.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="WeakTypeCache.cpp">
-      <DependentUpon>WeakTypeCache.h</DependentUpon>
+    <ClCompile Include="ThemeHelper.cpp">
+      <DependentUpon>ThemeHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="TypeCache.cpp">
+      <DependentUpon>TypeCache.h</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="TypeNameHelper.cpp">
+      <DependentUpon>TypeNameHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClInclude Include="OneToolkit.h">
@@ -356,8 +394,11 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="ApplianceInformation.idl" />
+    <Midl Include="MachineInformation.idl" />
     <Midl Include="BufferHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="Converters.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="CropDialog.idl">
@@ -366,13 +407,15 @@
     <Midl Include="FileHandle.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="FileSizeHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="FontHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ImageResizer.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="IStorageItemHandle.idl" />
     <Midl Include="KeyStateHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -384,13 +427,25 @@
     <Midl Include="PackageVersionHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="Reflection.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="SettingsService.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="SharedFile.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="IStorageItemHandle.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="TabSwitcher.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="ThemeHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="TypeNameHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="UISettingsHelper.idl">
@@ -407,7 +462,7 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210714.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210714.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210722.2\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210722.2\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -415,7 +470,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\juv.1.0.0.6\build\native\juv.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\juv.1.0.0.6\build\native\juv.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210714.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210714.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210714.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210714.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210722.2\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210722.2\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210722.2\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210722.2\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
 </Project>

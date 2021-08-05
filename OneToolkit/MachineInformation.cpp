@@ -1,12 +1,13 @@
 ﻿#include "pch.h"
-#include "ApplianceInformation.h"
-#include "System.ApplianceInformation.g.cpp"
+#include "MachineInformation.h"
+#include "System.MachineInformation.g.cpp"
 
 using namespace juv;
 using namespace winrt;
 using namespace Windows::System;
 using namespace Windows::System::Profile;
 using namespace Windows::ApplicationModel;
+using namespace Windows::Foundation;
 using namespace Windows::Foundation::Metadata;
 using namespace Windows::Security::ExchangeActiveSyncProvisioning;
 using namespace OneToolkit::ApplicationModel;
@@ -15,32 +16,53 @@ namespace winrt::OneToolkit::System::implementation
 {
 	EasClientDeviceInformation ClientDeviceInformation;
 
-	hstring ApplianceInformation::DeviceName()
+	__interface __declspec(uuid("AF86E2E0-B12D-4c6a-9C5A-D7AA65101E90")) abi_IInspectable : ::IUnknown
+	{
+		int __stdcall GetIids(uint32_t* count, guid** ids) noexcept;
+		int __stdcall GetRuntimeClassName(void** name) noexcept;
+		int __stdcall GetTrustLevel(TrustLevel* level) noexcept;
+	};
+
+	__interface __declspec(uuid("76E915B1-FF36-407C-9F57-160D3E540747")) IAnalyticsVersionInfo2 : abi_IInspectable
+	{
+		int __stdcall ProductName(void** value) noexcept;
+	};
+
+	hstring MachineInformation::DeviceName()
 	{
 		return ClientDeviceInformation.FriendlyName();
 	}
 
-	hstring ApplianceInformation::DeviceModel()
+	hstring MachineInformation::DeviceModel()
 	{
 		return ClientDeviceInformation.SystemProductName();
 	}
 
-	hstring ApplianceInformation::DeviceFamily()
+	hstring MachineInformation::DeviceFamily()
 	{
 		return AnalyticsInfo::VersionInfo().DeviceFamily();
 	}
 
-	hstring ApplianceInformation::DeviceManufacturer()
+	hstring MachineInformation::DeviceManufacturer()
 	{
 		return ClientDeviceInformation.SystemManufacturer();
 	}
 
-	hstring ApplianceInformation::OperatingSystem()
+	hstring MachineInformation::OperatingSystem()
 	{
-		return ApiInformation::IsPropertyPresent(name_of<AnalyticsVersionInfo>(), L"ProductName") ? AnalyticsInfo::VersionInfo().ProductName() : ClientDeviceInformation.OperatingSystem();
+		if (auto versionInfo2 = AnalyticsInfo::VersionInfo().try_as<IAnalyticsVersionInfo2>())
+		{
+			hstring result;
+			check_hresult(versionInfo2->ProductName(put_abi(result)));
+			return result;
+		}
+		else
+		{
+			return ClientDeviceInformation.OperatingSystem();
+		}
 	}
 
-	PackageVersion ApplianceInformation::SoftwareVersion()
+	PackageVersion MachineInformation::SoftwareVersion()
 	{
 		auto versionInfo = std::stoull(AnalyticsInfo::VersionInfo().DeviceFamilyVersion().data());
 		return PackageVersion
@@ -52,7 +74,7 @@ namespace winrt::OneToolkit::System::implementation
 		};
 	}
 
-	ProcessorArchitecture ApplianceInformation::HardwareArchitecture()
+	ProcessorArchitecture MachineInformation::HardwareArchitecture()
 	{
 		return Package::Current().Id().Architecture();
 	}

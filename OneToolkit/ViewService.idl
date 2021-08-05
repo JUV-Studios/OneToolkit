@@ -2,19 +2,25 @@ import "Lifecycle.idl";
 
 namespace OneToolkit.UI
 {
+    struct WindowId
+    {
+        UInt64 Value;
+    };
+
     [default_interface]
     runtimeclass ViewService
     {
         static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         String Title;
+        Boolean IsFullScreen;
         Boolean IsDialogShown;
-        Int64 WindowHandle { get; };
+        WindowId Id { get; };
         Windows.Foundation.Rect Bounds { get; };
         [noexcept] Windows.UI.ViewManagement.ApplicationView AppView { get; };
         [noexcept] Windows.ApplicationModel.Core.CoreApplicationView CoreAppView { get; };
         Windows.Foundation.IAsyncOperation<Boolean> CloseAsync();
         static ViewService GetForCurrentView();
-        static ViewService GetForWindowId(Int64 windowHandle);
-        static Int64 GetWindowHandle(Windows.UI.Core.CoreWindow coreWindow);
+        static ViewService GetForWindowId(WindowId windowId);
+        static WindowId GetCoreWindowId(Windows.UI.Core.CoreWindow coreWindow);
     }
 }

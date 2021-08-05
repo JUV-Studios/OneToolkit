@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Linq;
-using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel;
 using Microsoft.Toolkit.Uwp;
-using OneToolkit.ApplicationModel;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using OneToolkit.UI.Xaml.Controls;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using OneToolkit.ApplicationModel;
+using OneToolkit.Lifecycle;
 
 namespace OneToolkit.Showcase.Views
 {
@@ -19,31 +16,29 @@ namespace OneToolkit.Showcase.Views
 
 		public static string AboutAutomationText => $"{"SettingsHubAbout.Header".GetLocalized()}, {AboutDisplayText.Replace("\n", ", ")}";
 
-		public static readonly string AboutDisplayText = $"OneToolkit Showcase\n{string.Format("VersionText".GetLocalized(), PackageVersionHelper.GetFormattedString(Package.Current.Id.Version))}\n"
+		public static readonly string AboutDisplayText = $"OneToolkit Showcase\n{string.Format("VersionText".GetLocalized(), PackageVersionHelper.ToFormattedString(Package.Current.Id.Version))}\n"
 			+ "CopyrightText".GetLocalized();
 
 		private void HubPanel_Loaded(object sender, RoutedEventArgs e)
 		{
 			var target = sender as HubPanel;
-			if (target.Header == null) target.Header = (MainPage.NavigationMenu.SelectedItem as ComboBoxItem).Content;
+			target.Header = (MainPage.NavigationMenu.SelectedItem as ComboBoxItem).Content;
+			target.Loaded -= HubPanel_Loaded;
 		}
 
-		private async void Contribute_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new("https://dev.azure.com/JUV-Studios/OneToolkit"));
-
-		private void ContributeExpander_Expanding(Microsoft.UI.Xaml.Controls.Expander sender, Microsoft.UI.Xaml.Controls.ExpanderExpandingEventArgs args)
+		private void AboutPanel_Loaded(object sender, RoutedEventArgs e)
 		{
-			sender.MaxWidth = sender.ActualWidth;
+			var target = sender as WrapPanel;
+			var actualWidth = target.ActualWidth;
+			LinksExpander.Width = actualWidth;
+			LinksExpander.MaxWidth = actualWidth;
+			target.Loaded -= AboutPanel_Loaded;
 		}
-
 		private void UserControl_Unloaded(object sender, RoutedEventArgs e)
 		{
-			if (!MainPage.Frame.CanGoBack)
+			if (!MainPage.ContentFrame.CanGoBack)
 			{
-				ContributeExpander.Content = null;
-				VisualTreeHelper.DisconnectChildrenRecursive(this);
-				Bindings.StopTracking();
-				Bindings = null;
-				App.PageTypeCache.Remove(typeof(SettingsPage));
+				MemoryManager.Delete(ref Bindings, _ => Bindings.StopTracking());
 #if DEBUG
 				GC.Collect();
 				GC.WaitForPendingFinalizers();

@@ -19,9 +19,10 @@ namespace OneToolkit::UI::Xaml::Controls
 		DeclareDependencyProperty(Windows::UI::Xaml::Thickness, Packing);
 
 		virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
+	internal:
+		void SetProperties();
 	private:
 		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
-		void SetProperties();
 		void Hub_Loaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void Hub_SectionsInViewChanged(Platform::Object^ sender, WUXC::SectionsInViewChangedEventArgs^ e);
 		void DependencyPropertyBaseChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyProperty^ dependencyProperty);

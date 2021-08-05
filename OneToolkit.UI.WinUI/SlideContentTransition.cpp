@@ -9,7 +9,7 @@ using namespace Microsoft::UI::Xaml::Media::Animation;
 
 namespace winrt::OneToolkit::UI::WinUI::Media::Animation::implementation
 {
-	void SlideContentTransition::SetContent(ContentPresenter const& presenter, UIElement const& content, NavigationType)
+	void SlideContentTransition::SetContent(ContentPresenter const& presenter, UIElement const& content, NavigationType navigationType)
 	{
 		if (!presenter.ContentTransitions())
 		{
@@ -26,6 +26,9 @@ namespace winrt::OneToolkit::UI::WinUI::Media::Animation::implementation
 			if (presenter.ContentTransitions().Size() > 1) presenter.ContentTransitions().Clear();
 			presenter.ContentTransitions().Append(PaneThemeTransition());
 		}
+
+		// Set the right edge to animate from.
+		presenter.ContentTransitions().GetAt(0).as<PaneThemeTransition>().Edge(navigationType == NavigationType::Back ? m_BackEdge : m_ForwardEdge);
 
 		double originalOpacity = 1;
 		auto element = presenter.Content().try_as<UIElement>();

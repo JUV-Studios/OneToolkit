@@ -8,7 +8,7 @@ namespace winrt::OneToolkit::UI::Input
 		struct TabSwitcher : TabSwitcherT<TabSwitcher>
 		{
 			TabSwitcher() = delete;
-			static int GetNewSelectionIndex(juv::uint32 currentIndex, juv::uint32 collectionSize, bool reverse);
+			static juv::uint32 GetNewSelectionIndex(juv::uint32 currentIndex, juv::uint32 collectionSize, bool reverse) noexcept;
 		};
 	}
 

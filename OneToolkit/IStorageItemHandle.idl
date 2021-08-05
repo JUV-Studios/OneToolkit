@@ -1,9 +1,23 @@
 namespace OneToolkit.Storage
 {
+	[flags]
+	enum FileSharingMode
+	{
+		ShareNone = 0,
+		ShareRead = 0x1,
+		ShareWrite = 0x2,
+		ShareDelete = 0x4
+	};
+
+	struct StorageItemId
+	{
+		UInt64 Value;
+	};
+
 	interface IStorageItemHandle
 	{
-		String ItemName { get; };
-		[noexcept] Int64 UnderlyingValue { get; };
+		[noexcept] String ItemName { get; };
+		[noexcept] StorageItemId Id { get; };
 		void Delete();
 	};
 }

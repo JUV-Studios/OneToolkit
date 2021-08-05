@@ -1,30 +1,21 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
-using Windows.Storage;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
-using Windows.ApplicationModel;
-using OneToolkit.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using OneToolkit.Mvvm;
 using OneToolkit.Lifecycle;
 using OneToolkit.Showcase.Models;
-using OneToolkit.Showcase.ViewModels;
-using Windows.UI.Xaml.Media.Animation;
-
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+using OneToolkit.UI.Xaml.Controls;
 
 namespace OneToolkit.Showcase.Views
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
 	public sealed partial class ApiReference : UserControl
 	{
+		private IContentInfo CurrentInfoItem;
+
 		public ApiReference() => InitializeComponent();
 
 		public static readonly Assembly[] ToolkitAssemblies = new[]
@@ -34,53 +25,33 @@ namespace OneToolkit.Showcase.Views
 
 		public static readonly string[] ExcludedNamespaces = new[]
 		{
-			"OneToolkit.UI.Xaml.OneToolkit_UI_Xaml_XamlTypeInfo", "System.Runtime.CompilerServices", "Microsoft.CodeAnalysis"
+			"OneToolkit.UI.Xaml.OneToolkit_UI_Xaml_XamlTypeInfo"
 		};
 
-		public static IEnumerable<TypeGroup> FoundTypes
+		public static readonly IEnumerable<IContentInfo> FoundNamespaces = from assembly in ToolkitAssemblies
+																		   from type in assembly.GetTypes()
+																		   where !ExcludedNamespaces.Contains(type.Namespace) && type.IsPublic
+																		   group type by type.Namespace into types
+																		   orderby types.Key
+																		   select new TypeGroup(types.Key, types);
+
+
+		private void TitleBlock_Loaded(object sender, RoutedEventArgs e)
 		{
-			get
-			{
-				return from assembly in ToolkitAssemblies
-					   from type in assembly.GetTypes()
-					   where !ExcludedNamespaces.Contains(type.Namespace) && !type.Name.StartsWith("__") && !type.Name.EndsWith("Statics") && !type.Name.EndsWith("Factory") && type.IsPublic
-					   group type by type.Namespace into types
-					   select new TypeGroup(types.Key, types);
-			}
+			var target = sender as TextBlock;
+			target.Text = (MainPage.NavigationMenu.SelectedItem as ComboBoxItem).Content.ToString();
+			target.Loaded -= TitleBlock_Loaded;
 		}
 
-		private void HubPanel_Loaded(object sender, RoutedEventArgs e)
+		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			var target = sender as HubPanel;
-			if (target.Header == null) target.Header = (MainPage.NavigationMenu.SelectedItem as ComboBoxItem).Content;
-		}
-
-		private /* async */ void UserControl_Loaded(object sender, RoutedEventArgs e)
-		{
-			/* if (SettingsViewModel.Instance.SelectedProgrammingLanguage.StartsWith("C++"))
-			{
-				if (MacrosList.ItemsSource == null)
-				{
-					MacrosList.ItemsSource = await PathIO.ReadLinesAsync(Path.Combine(Package.Current.InstalledLocation.Path, "Assets", "Reference", "Macros.txt"));
-					MacrosList.SelectedIndex = 0;
-				}
-
-				ReferenceMacros.Visibility = Visibility.Visible;
-			}
-			else
-			{
-				ReferenceMacros.Visibility = Visibility.Collapsed;
-			} */
 		}
 
 		private void UserControl_Unloaded(object sender, RoutedEventArgs e)
 		{
-			if (!MainPage.Frame.CanGoBack)
+			if (!MainPage.ContentFrame.CanGoBack)
 			{
-				VisualTreeHelper.DisconnectChildrenRecursive(this);
-				Bindings.StopTracking();
-				Bindings = null;
-				App.PageTypeCache.Remove(typeof(ApiReference));
+				MemoryManager.Delete(ref Bindings, _ => Bindings.StopTracking());
 #if DEBUG
 				GC.Collect();
 				GC.WaitForPendingFinalizers();
@@ -88,11 +59,37 @@ namespace OneToolkit.Showcase.Views
 			}
 		}
 
-		private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void Namespaces_ItemInvoked(Microsoft.UI.Xaml.Controls.TreeView sender, Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs args)
 		{
-			var item = e.AddedItems[0] as TypeGroup;
-			DocsHub.Header = item.Name;
-			DocsFrame.Navigate(typeof(NamespacePage), item, new DrillInNavigationTransitionInfo());
+			args.Handled = Navigate(args.InvokedItem as IContentInfo);
+		}
+		
+		/* private List<Microsoft.UI.Xaml.Controls.TreeViewNode> GetAllNodes()
+		{
+			List<Microsoft.UI.Xaml.Controls.TreeViewNode> result = new();
+			foreach (var node in Namespaces.RootNodes) GetNodes(node, result);
+			return result;
+		}
+
+		private void GetNodes(Microsoft.UI.Xaml.Controls.TreeViewNode currentNode, List<Microsoft.UI.Xaml.Controls.TreeViewNode> nodes)
+		{
+			if (currentNode == null) return;
+			nodes.Add(currentNode);
+			foreach (var childNode in currentNode.Children) GetNodes(childNode, nodes);
+		} */
+
+		public bool Navigate(IContentInfo contentInfo)
+		{
+			if (!(CurrentInfoItem?.Equals(contentInfo)).GetValueOrDefault(false))
+			{
+				DocsFrame.Navigate(contentInfo.PageType, contentInfo, new DrillInNavigationTransitionInfo());
+				CurrentInfoItem = contentInfo;
+				Namespaces.SelectedNode = TreeViewHelper.GetAllNodes(Namespaces).First(node => node.Content.Equals(contentInfo));
+				if (Namespaces.SelectedNode.Parent != null) Namespaces.SelectedNode.Parent.IsExpanded = true;
+				return true;
+			}
+
+			return false;
 		}
 	}
 }

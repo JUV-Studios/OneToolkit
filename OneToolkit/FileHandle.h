@@ -49,7 +49,7 @@ namespace winrt::OneToolkit::Storage
             DeclareAutoProperty(FileSharingMode, SharingMode, {});
             DeclareAutoProperty(Windows::Storage::FileAccessMode, AccessMode, {});
             juv::uint64 FileSize() const;
-            juv::int64 UnderlyingValue() const noexcept;
+            StorageItemId Id() const noexcept;
             void Delete();
         private:
             file_handle m_FileHandle;

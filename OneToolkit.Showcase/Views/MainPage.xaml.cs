@@ -5,19 +5,15 @@ using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
 using OneToolkit.UI.Input;
 using OneToolkit.UI.Xaml.Controls;
 using OneToolkit.Showcase.ViewModels;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace OneToolkit.Showcase.Views
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class MainPage : UserControl
+	public sealed partial class MainPage : Page
 	{
 		public MainPage()
 		{
@@ -29,18 +25,21 @@ namespace OneToolkit.Showcase.Views
 			titleBar.ButtonBackgroundColor = Colors.Transparent;
 			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 			SettingsViewModel.Instance.Initialize();
+			Microsoft.UI.Xaml.Controls.BackdropMaterial.SetApplyToRootOrPageBackground(this, true);
 		}
 
-		public static ContentFrame Frame => (Window.Current.Content as MainPage).Presenter;
+		public static ContentFrame ContentFrame => (Window.Current.Content as MainPage).Presenter;
 
 		public static ComboBox NavigationMenu => (Window.Current.Content as MainPage).NavigationBox;
 
-		private void UserControl_Loaded(object sender, RoutedEventArgs e)
+		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
+			SetTitleBarMargin();
+			Window.Current.SetTitleBar(DragRegion);
 			NavigationBox.SelectedIndex = 0;
-			Presenter.PropertyChanged += Presenter_PropertyChanged;
+			Presenter.PropertyChanged += HandlePropertyChanged;
+			SettingsViewModel.Instance.PropertyChanged += HandlePropertyChanged;
 			SettingsViewModel.ViewServiceProvider.CoreAppView.CoreWindow.Dispatcher.AcceleratorKeyActivated += Dispatcher_AcceleratorKeyActivated;
-			Window.Current.SetTitleBar(TitleBar);
 		}
 
 		private void Dispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
@@ -52,24 +51,17 @@ namespace OneToolkit.Showcase.Views
 					if (args.VirtualKey == VirtualKey.Tab)
 					{
 						args.Handled = true;
-						NavigationBox.SelectedIndex = TabSwitcher.GetNewSelectionIndex(Convert.ToUInt32(NavigationBox.SelectedIndex), Convert.ToUInt32(NavigationBox.Items.Count), KeyStateHelper.IsKeyDown(VirtualKey.Shift));
+						NavigationBox.SelectedIndex = Convert.ToInt32(TabSwitcher.GetNewSelectionIndex(Convert.ToUInt32(NavigationBox.SelectedIndex), Convert.ToUInt32(NavigationBox.Items.Count),
+							KeyStateHelper.IsKeyDown(VirtualKey.Shift)));
 					}
 				}
-			}
-		}
-
-		private void Presenter_PropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			if (e.PropertyName == "CanGoBack")
-			{
-				SettingsViewModel.NavigationManager.AppViewBackButtonVisibility = Presenter.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
 			}
 		}
 
 		private void NavigationBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var type = Type.GetType((e.AddedItems[0] as FrameworkElement).Tag.ToString());
-			if (Presenter.Content.GetType() != type) Presenter.Navigate(App.PageTypeCache.GetInstance(type, (typeId) => Activator.CreateInstance(type)) as UIElement);
+			if (Presenter.Content?.GetType() != type) Presenter.Navigate(App.PageTypeCache.GetInstance(type, (typeId) => Activator.CreateInstance(type)) as UIElement);
 		}
 
 		private void Presenter_ContentChanged(ContentFrame sender, ContentFrameContentChangedEventArgs args)
@@ -79,17 +71,35 @@ namespace OneToolkit.Showcase.Views
 										 select item).First();
 		}
 
-		private void BackAccelerator_Invoked(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+		private void BackAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			args.Handled = true;
 			Presenter.GoBack();
 		}
 
-		private void BackClearAccelerator_Invoked(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+		private void BackClearAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			args.Handled = true;
 			NavigationBox.SelectedIndex = 0;
 			Presenter.ClearBackStack();
+		}
+
+		private void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "CanGoBack")
+			{
+				SettingsViewModel.NavigationManager.AppViewBackButtonVisibility = Presenter.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+			}
+			else if (e.PropertyName == "TitleBarInset")
+			{
+				SetTitleBarMargin();
+			}
+		}
+
+		private void SetTitleBarMargin()
+		{
+			var leftInset = SettingsViewModel.ViewServiceProvider.CoreAppView.TitleBar.SystemOverlayLeftInset;
+			(DragRegion.Children[0] as FrameworkElement).Margin = leftInset == 0 ? new(12, 0, 12, 0) : new(8, 0, 8, 0);
 		}
 	}
 }

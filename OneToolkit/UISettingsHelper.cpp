@@ -12,7 +12,7 @@ namespace winrt::OneToolkit::UI::implementation
 		static slim_mutex instanceLock;
 		const slim_lock_guard lockGuard { instanceLock };
 		static UISettings instance = nullptr;
-		if (instance == nullptr) instance = {};
+		if (!instance) instance = {};
 		return instance;
 	}
 }

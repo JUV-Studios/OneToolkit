@@ -33,11 +33,9 @@ namespace winrt::OneToolkit::UI
 
 	__interface __declspec(uuid("45D64A29-A63E-4CB6-B498-5781D298CB4F")) ICoreWindowInterop : ::IUnknown
 	{
-		HRESULT __stdcall get_WindowHandle(HWND* hwnd) noexcept;
-		HRESULT __stdcall put_MessageHandled(bool value) noexcept;
+		int __stdcall get_WindowHandle(HWND* hwnd) noexcept;
+		int __stdcall put_MessageHandled(bool value) noexcept;
 	};
-
-
 
 	namespace implementation
 	{
@@ -47,7 +45,7 @@ namespace winrt::OneToolkit::UI
 		public:
 			bool IsDialogShown()
 			{
-				return unbox_value_or(CoreApplication::Properties().TryLookup(DialogShownKey()), false);
+				return unbox_value_or(CoreApplication::Properties().TryLookup(GenerateStoreKey(L"IsDialogShown")), false);
 			}
 
 			void IsDialogShown(bool value)
@@ -56,16 +54,13 @@ namespace winrt::OneToolkit::UI
 				{
 					static slim_mutex dialogShownLock;
 					const slim_lock_guard lockGuard{ dialogShownLock };
-					CoreApplication::Properties().Insert(DialogShownKey(), box_value(value));
+					CoreApplication::Properties().Insert(GenerateStoreKey(L"IsDialogShown"), box_value(value));
 				}
 			}
-		private:
-			std::wstring m_DialogShownKey;
-
-			inline std::wstring& DialogShownKey()
+		protected:
+			inline auto GenerateStoreKey(std::wstring_view propertyName)
 			{
-				if (m_DialogShownKey.empty()) m_DialogShownKey = L"IsDialogShown-" + std::to_wstring(static_cast<Derived*>(this)->WindowHandle());
-				return m_DialogShownKey;
+				return std::format(L"{0}-{1}", propertyName, static_cast<Derived*>(this)->Id().Value);
 			}
 		};
 
@@ -99,9 +94,9 @@ namespace winrt::OneToolkit::UI
 				m_AppView.Title(value);
 			}
 
-			int64 WindowHandle() const
+			WindowId Id() const
 			{
-				return factory_implementation::ViewService::GetWindowHandle(m_CoreAppView.CoreWindow());
+				return factory_implementation::ViewService::GetCoreWindowId(m_CoreAppView.CoreWindow());
 			}
 
 			Rect Bounds() const
@@ -118,9 +113,9 @@ namespace winrt::OneToolkit::UI
 		struct ViewServiceDesktop : ViewServiceBase<ViewServiceDesktop>
 		{
 		public:
-			ViewServiceDesktop(int64 windowHandle)
+			ViewServiceDesktop(WindowId windowHandle)
 			{
-				m_WindowHandle = as_pointer<HWND>(windowHandle);
+				m_WindowHandle = as_pointer<HWND>(windowHandle.Value);
 			}
 
 			hstring Title() const
@@ -136,9 +131,30 @@ namespace winrt::OneToolkit::UI
 				if (Title() != value) check_bool(user32.GetProcAddress<SetWindowTextW>("SetWindowTextW")(m_WindowHandle, value.data()));
 			}
 
-			int64 WindowHandle() const
+			bool IsFullScreen()
 			{
-				return as_value<int64>(m_WindowHandle);
+				return unbox_value_or(CoreApplication::Properties().TryLookup(GenerateStoreKey(L"IsFullScreen")), false);
+			}
+
+			void IsFullScreen(bool value)
+			{
+				if (IsFullScreen() != value)
+				{
+					if (value)
+					{
+					}
+					else
+					{
+
+					}
+
+					CoreApplication::Properties().Insert(GenerateStoreKey(L"IsFullScreen"), box_value(value));
+				}
+			}
+
+			WindowId Id() const
+			{
+				return { as_value<uint64>(m_WindowHandle) };
 			}
 
 			Rect Bounds() const
@@ -166,7 +182,7 @@ namespace winrt::OneToolkit::UI
 			}
 		private:
 			HWND m_WindowHandle;
-			DynamicModule user32{ L"User32.dll" };
+			DynamicModule user32 { L"User32.dll" };
 		};
 	}
 
@@ -191,17 +207,17 @@ namespace winrt::OneToolkit::UI
 			return make<implementation::ViewServiceUniversal>();
 		}
 
-		OneToolkit::UI::ViewService ViewService::GetForWindowId(int64 windowHandle)
+		OneToolkit::UI::ViewService ViewService::GetForWindowId(WindowId windowId)
 		{
 			if (CoreApplication::Views().Size()) throw hresult_illegal_method_call(L"GetForWindowId must be invoked from desktop apps only. UWP apps should invoke GetForCurrentView instead.");
-			return make<implementation::ViewServiceDesktop>(windowHandle);
+			return make<implementation::ViewServiceDesktop>(windowId);
 		}
 
-		int64 ViewService::GetWindowHandle(CoreWindow const& coreWindow)
+		WindowId ViewService::GetCoreWindowId(CoreWindow const& coreWindow)
 		{
 			HWND windowHandle;
 			check_hresult(coreWindow.as<ICoreWindowInterop>()->get_WindowHandle(&windowHandle));
-			return as_value<int64>(windowHandle);
+			return { as_value<uint64>(windowHandle) };
 		}
 	}
 }

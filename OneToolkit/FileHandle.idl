@@ -2,15 +2,6 @@ import "IStorageItemHandle.idl";
 
 namespace OneToolkit.Storage
 {
-    [flags]
-    enum FileSharingMode
-    {
-        ShareNone = 0,
-        ShareRead = 0x1,
-        ShareWrite = 0x2,
-        ShareDelete = 0x4
-    };
-
     [default_interface]
     runtimeclass FileHandle : IStorageItemHandle
     {

@@ -5,34 +5,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:OneToolkit.UI.Xaml.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	Margin="0"
-	d:DesignHeight="300"
-	d:DesignWidth="400"
-	Background="Transparent"
 	Loaded="Hub_Loaded"
 	SectionsInViewChanged="Hub_SectionsInViewChanged"
-	mc:Ignorable="d">
-
-	<Hub.Resources>
-		<Style TargetType="HubSection">
-			<Setter Property="HeaderTemplate">
-				<Setter.Value>
-					<DataTemplate>
-						<TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
-					</DataTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-	</Hub.Resources>
-
-	<Hub.HeaderTemplate>
-		<DataTemplate x:DataType="x:String">
-			<TextBlock
-				Margin="{StaticResource HubPanelHeaderMargin}"
-				Style="{StaticResource HubPanelHeaderTextStyle}"
-				Text="{x:Bind}"
-				TextWrapping="NoWrap"
-				ToolTipService.ToolTip="{x:Bind}" />
-		</DataTemplate>
-	</Hub.HeaderTemplate>
-</Hub>
+	Style="{StaticResource DefaultHubPanelStyle}"
+	mc:Ignorable="d" />

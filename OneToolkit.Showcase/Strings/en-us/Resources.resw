@@ -117,17 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ClassesPanel.Header" xml:space="preserve">
-    <value>Classes</value>
-  </data>
   <data name="ClassText" xml:space="preserve">
     <value>class</value>
-  </data>
-  <data name="ContributeBlock.Text" xml:space="preserve">
-    <value>OneToolkit is open source! We welcome everyone to contribute and help improve our library.</value>
-  </data>
-  <data name="ContributeBtn.Content" xml:space="preserve">
-    <value>Contribute to OneToolkit</value>
   </data>
   <data name="CopyrightText" xml:space="preserve">
     <value>© 2021 JUV Studios. All rights reserved.</value>
@@ -138,6 +129,9 @@
   <data name="DiscordServerInviteLink.Content" xml:space="preserve">
     <value>Join our Discord server</value>
   </data>
+  <data name="EnumerationText" xml:space="preserve">
+    <value>enumeration</value>
+  </data>
   <data name="FeedbackNavItem.Content" xml:space="preserve">
     <value>Feedback</value>
   </data>
@@ -147,23 +141,59 @@
   <data name="HomeNavItem.Content" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="InterfaceText" xml:space="preserve">
+    <value>interface</value>
+  </data>
+  <data name="MacrosText" xml:space="preserve">
+    <value>Macros</value>
+  </data>
   <data name="NamespaceText" xml:space="preserve">
     <value>namespace</value>
   </data>
-  <data name="NavigationBox.AutomationProperties.Name" xml:space="preserve">
+  <data name="NavigationMenu.AutomationProperties.HelpText" xml:space="preserve">
+    <value>Use Ctrl+Tab to switch between the pages quickly, wherever you are.</value>
+  </data>
+  <data name="NavigationMenu.AutomationProperties.Name" xml:space="preserve">
     <value>Navigation menu</value>
+  </data>
+  <data name="PlaygroundHubPreview.Header" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="PlaygroundNavItem.Content" xml:space="preserve">
+    <value>Playground</value>
+  </data>
+  <data name="PreviewAutoRefreshSwitch.Header" xml:space="preserve">
+    <value>Automatically refresh playground's preview as I type</value>
   </data>
   <data name="ProgrammingLanguageBox.Header" xml:space="preserve">
     <value>Preferred programming language</value>
   </data>
+  <data name="ReferenceHubClasses.Header" xml:space="preserve">
+    <value>Classes</value>
+  </data>
+  <data name="ReferenceHubEnumerations.Header" xml:space="preserve">
+    <value>Enumerations</value>
+  </data>
+  <data name="ReferenceHubInterfaces.Header" xml:space="preserve">
+    <value>Interfaces</value>
+  </data>
   <data name="ReferenceHubNamespaces.Header" xml:space="preserve">
     <value>Namespaces</value>
+  </data>
+  <data name="ReferenceHubStructures.Header" xml:space="preserve">
+    <value>Structures</value>
   </data>
   <data name="ReferenceNavItem.Content" xml:space="preserve">
     <value>API reference</value>
   </data>
-  <data name="SettingsExpanderContribute.Header" xml:space="preserve">
-    <value>Contribute</value>
+  <data name="ReferenceSearchBox.PlaceholderText" xml:space="preserve">
+    <value>What are you looking for?</value>
+  </data>
+  <data name="SettingsExpanderDependencies.Header" xml:space="preserve">
+    <value>Dependencies &amp; references</value>
+  </data>
+  <data name="SettingsExpanderLinks.Header" xml:space="preserve">
+    <value>Useful links</value>
   </data>
   <data name="SettingsHubAbout.Header" xml:space="preserve">
     <value>About this app</value>
@@ -177,8 +207,11 @@
   <data name="SettingsNavItem.Content" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="StructureText" xml:space="preserve">
+    <value>structure</value>
+  </data>
   <data name="TermsOfUseLink.Content" xml:space="preserve">
-    <value>Terms of use</value>
+    <value>JUV Studios Terms of use</value>
   </data>
   <data name="TwitterFollowLink.Content" xml:space="preserve">
     <value>Follow us on Twitter</value>

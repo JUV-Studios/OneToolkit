@@ -5,8 +5,10 @@ namespace OneToolkit.UI.WinUI.Media.Animation
     [bindable]
     [default_interface]
     [Windows.Foundation.Metadata.WebHostHidden]
-    runtimeclass SlideContentTransition : IContentTransition
+    runtimeclass SlideContentTransition : IContentTransition, Microsoft.UI.Xaml.Data.INotifyPropertyChanged
     {
         SlideContentTransition();
+        Microsoft.UI.Xaml.Controls.Primitives.EdgeTransitionLocation BackEdge;
+        Microsoft.UI.Xaml.Controls.Primitives.EdgeTransitionLocation ForwardEdge;
     }
 }

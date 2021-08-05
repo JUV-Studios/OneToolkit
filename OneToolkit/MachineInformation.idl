@@ -1,7 +1,7 @@
 namespace OneToolkit.System
 {
     [default_interface]
-    static runtimeclass ApplianceInformation
+    static runtimeclass MachineInformation
     {
         static String DeviceName { get; };
         static String DeviceModel { get; };

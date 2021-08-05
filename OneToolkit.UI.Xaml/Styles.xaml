@@ -6,5 +6,76 @@
 	<x:Double x:Key="MediumWindowBreakpoint">641</x:Double>
 	<x:Double x:Key="LargeWindowBreakpoint">1008</x:Double>
 	<Thickness x:Key="HubPanelHeaderMargin">0,0,0,8</Thickness>
-	<StaticResource x:Key="HubPanelHeaderTextStyle" ResourceKey="DisplayTextBlockStyle" />
+	<Style
+		x:Key="DescriptiveButtonTitleTextStyle"
+		BasedOn="{StaticResource BaseTextBlockStyle}"
+		TargetType="TextBlock">
+		<Setter Property="TextWrapping" Value="NoWrap" />
+		<Setter Property="TextTrimming" Value="CharacterEllipsis" />
+	</Style>
+	<Style
+		x:Key="DescriptiveButtonCaptionTextStyle"
+		BasedOn="{StaticResource CaptionTextBlockStyle}"
+		TargetType="TextBlock" />
+	<Style x:Key="DefaultHubPanelStyle" TargetType="Hub">
+		<Setter Property="Margin" Value="0" />
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="HeaderTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<TextBlock
+						Margin="{StaticResource HubPanelHeaderMargin}"
+						Style="{StaticResource DisplayTextBlockStyle}"
+						Text="{Binding}"
+						TextWrapping="NoWrap"
+						ToolTipService.ToolTip="{Binding}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="DefaultHubPanelSectionStyle" TargetType="HubSection">
+		<Setter Property="HeaderTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding}" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="HorizontalListViewStyle" TargetType="ListView">
+		<Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto" />
+		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
+		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<ItemsStackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ItemContainerStyle">
+			<Setter.Value>
+				<Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem" />
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="VerticalListViewStyle" TargetType="ListView">
+		<Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+		<Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto" />
+		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<ItemsStackPanel Orientation="Vertical" />
+				</ItemsPanelTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ItemContainerStyle">
+			<Setter.Value>
+				<Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem" />
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>

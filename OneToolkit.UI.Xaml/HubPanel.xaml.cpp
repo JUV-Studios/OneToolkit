@@ -59,18 +59,10 @@ void HubPanel::SetProperties()
 		auto section = Sections->GetAt(index);
 		AutomationProperties::SetPositionInSet(section, index + 1);
 		AutomationProperties::SetSizeOfSet(section, Sections->Size);
-		if (Sections->Size == 1)
-		{
-			section->Padding = ThicknessHelper::FromLengths(Packing.Left, 0, Packing.Right, Packing.Bottom);
-		}
-		else
-		{
-			if (index == 0) section->Padding = ThicknessHelper::FromLengths(Packing.Left, 0, 0, Packing.Bottom);
-			else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(Spacing, 0, Packing.Right, Packing.Bottom);
-			else section->Padding = ThicknessHelper::FromLengths(Spacing, 0, 0, Packing.Bottom);
-		}
-
-		if (auto hubPanelSection = dynamic_cast<HubPanelSection^>(section)) hubPanelSection->Container = this;
+		if (Sections->Size == 1) section->Padding = ThicknessHelper::FromLengths(Packing.Left, 0, Packing.Right, Packing.Bottom);
+		else if (index == 0) section->Padding = ThicknessHelper::FromLengths(Packing.Left, 0, 0, Packing.Bottom);
+		else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(Spacing, 0, Packing.Right, Packing.Bottom);
+		else section->Padding = ThicknessHelper::FromLengths(Spacing, 0, 0, Packing.Bottom);
 	}
 }
 

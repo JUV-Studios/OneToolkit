@@ -12,10 +12,22 @@
 	Unloaded="UserControl_Unloaded"
 	mc:Ignorable="d">
 
+	<UserControl.Resources>
+		<Style TargetType="muxc:Expander">
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Setter Property="ExpandDirection" Value="Down" />
+		</Style>
+		<Style TargetType="StackPanel">
+			<Setter Property="Orientation" Value="Vertical" />
+			<Setter Property="Spacing" Value="8" />
+		</Style>
+	</UserControl.Resources>
+
 	<controls:HubPanel Loaded="HubPanel_Loaded">
 		<controls:HubPanelSection x:Uid="SettingsHubGeneral">
 			<wctControls:WrapPanel>
 				<ToggleSwitch x:Uid="DisableSoundEffectsSwitch" IsOn="{x:Bind viewModels:SettingsViewModel.Instance.DisableSoundEffects, Mode=TwoWay}" />
+				<ToggleSwitch x:Uid="PreviewAutoRefreshSwitch" IsOn="{x:Bind viewModels:SettingsViewModel.Instance.PreviewAutoRefresh, Mode=TwoWay}" />
 			</wctControls:WrapPanel>
 		</controls:HubPanelSection>
 		<controls:HubPanelSection x:Uid="SettingsHubBrowsing">
@@ -27,30 +39,23 @@
 			</wctControls:WrapPanel>
 		</controls:HubPanelSection>
 		<controls:HubPanelSection x:Uid="SettingsHubAbout">
-			<Grid x:Name="AboutPanel">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="8" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="0" Text="{x:Bind local:SettingsPage.AboutDisplayText}" />
+			<wctControls:WrapPanel x:Name="AboutPanel" Loaded="AboutPanel_Loaded">
+				<TextBlock IsTextSelectionEnabled="True" Text="{x:Bind local:SettingsPage.AboutDisplayText}" />
 				<muxc:Expander
-					x:Name="ContributeExpander"
-					x:Uid="SettingsExpanderContribute"
-					Grid.Row="2"
-					HorizontalAlignment="Stretch"
-					AutomationProperties.Name="{x:Bind local:SettingsPage.AboutAutomationText}"
-					ExpandDirection="Down"
-					Expanding="ContributeExpander_Expanding">
-					<wctControls:WrapPanel>
-						<TextBlock x:Uid="ContributeBlock" TextWrapping="Wrap" />
-						<Button
-							x:Uid="ContributeBtn"
-							HorizontalAlignment="Stretch"
-							Click="Contribute_Click" />
-					</wctControls:WrapPanel>
+					x:Name="LinksExpander"
+					x:Uid="SettingsExpanderLinks"
+					AutomationProperties.Name="{x:Bind local:SettingsPage.AboutAutomationText}">
+					<StackPanel>
+						<HyperlinkButton x:Uid="TermsOfUseLink" NavigateUri="https://sway.office.com/s/5JnZ4XUEqVN7bAsB/embed" />
+						<HyperlinkButton x:Uid="TwitterFollowLink" NavigateUri="https://twitter.com/Jaigane88727011" />
+						<HyperlinkButton x:Uid="DiscordServerInviteLink" NavigateUri="https://discord.com/invite/xKVWBWu" />
+						<HyperlinkButton x:Uid="YouTubeSubscribeLink" NavigateUri="https://www.youtube.com/channel/UCCgDUPx_XgBfgBx-If1uk1g?sub_confirmation=1" />
+					</StackPanel>
 				</muxc:Expander>
-			</Grid>
+				<muxc:Expander x:Uid="SettingsExpanderDependencies">
+					<StackPanel />
+				</muxc:Expander>
+			</wctControls:WrapPanel>
 		</controls:HubPanelSection>
 	</controls:HubPanel>
 </UserControl>

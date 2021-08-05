@@ -6,17 +6,18 @@
 	xmlns:local="using:OneToolkit.UI.Xaml.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	HorizontalContentAlignment="Left"
-	Style="{ThemeResource DefaultButtonStyle}"
+	Style="{StaticResource DefaultButtonStyle}"
+	ToolTipService.ToolTip="{x:Bind Title, Mode=OneWay}"
 	mc:Ignorable="d">
 
 	<StackPanel Orientation="Vertical">
 		<TextBlock
 			x:Name="TitleBlock"
-			Style="{ThemeResource BaseTextBlockStyle}"
-			Text="{x:Bind Title, Mode=TwoWay}" />
+			Style="{StaticResource DescriptiveButtonTitleTextStyle}"
+			Text="{x:Bind Title, Mode=OneWay}" />
 		<TextBlock
 			x:Name="CaptionBlock"
-			Style="{ThemeResource CaptionTextBlockStyle}"
-			Text="{x:Bind Caption, Mode=TwoWay}" />
+			Style="{StaticResource DescriptiveButtonCaptionTextStyle}"
+			Text="{x:Bind Caption, Mode=OneWay}" />
 	</StackPanel>
 </Button>
