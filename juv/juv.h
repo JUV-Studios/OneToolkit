@@ -449,3 +449,18 @@ namespace winrt::OneToolkit::Data
 		};
 	}
 }
+
+namespace winrt::OneToolkit::UI::Input
+{
+	struct TabSwitcher
+	{
+		TabSwitcher() = delete;
+
+		static inline juv::uint64 GetNewSelectionIndex(juv::uint64 currentIndex, juv::uint64 collectionSize, bool reverse)
+		{
+			if (collectionSize <= 1) return currentIndex;
+            else if (reverse) return currentIndex == 0 ? collectionSize - 1 : currentIndex - 1;
+            else return currentIndex == collectionSize - 1 ? 0 : currentIndex + 1;
+        }
+    }
+}

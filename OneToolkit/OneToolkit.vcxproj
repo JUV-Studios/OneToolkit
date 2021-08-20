@@ -274,10 +274,6 @@
       <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="TabSwitcher.h">
-      <DependentUpon>TabSwitcher.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="ThemeHelper.h">
       <DependentUpon>ThemeHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -339,10 +335,6 @@
     </ClCompile>
     <ClCompile Include="Reflection.cpp">
       <DependentUpon>Reflection.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="TabSwitcher.cpp">
-      <DependentUpon>TabSwitcher.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ThemeHelper.cpp">
@@ -437,9 +429,6 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="IStorageItemHandle.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="TabSwitcher.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ThemeHelper.idl">

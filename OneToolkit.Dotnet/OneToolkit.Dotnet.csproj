@@ -30,6 +30,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="UI\" />
+    <None Remove="UI\Input\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\LICENSE.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -40,5 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Runtime\" />
+    <Folder Include="UI\" />
+    <Folder Include="UI\Input\" />
   </ItemGroup>
 </Project>
