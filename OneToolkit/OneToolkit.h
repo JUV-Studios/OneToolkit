@@ -28,6 +28,9 @@ void Name(Type value) noexcept { m_##Name = value; }
 public: Type Name() const noexcept { return m_##Name; }\
 void Name(Type value) { SetProperty<Type>(m_##Name, value, L#Name); }
 
+#define DeclareSettingProperty(Type, Name, DefaultValue, Container) public: Type Name() const { return Container.GetValue(L#Name, box_value(DefaultValue)); }\
+void Name(Type value) const { Container.SetValue(L#Name, value); }
+
 namespace winrt::OneToolkit
 {
 	/// <summary>

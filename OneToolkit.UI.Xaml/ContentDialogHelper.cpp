@@ -2,28 +2,35 @@
 
 using namespace concurrency;
 using namespace Windows::Foundation;
-using namespace Windows::Foundation::Metadata;
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Controls;
 
 namespace OneToolkit::UI::Xaml::Controls
 {
-	[WebHostHidden]
+	[Windows::Foundation::Metadata::WebHostHidden]
 	public delegate IAsyncAction^ ContentDialogDisplayCompletionAsyncHandler(ContentDialog^ dialog, ContentDialogResult result);
 
-	[WebHostHidden]
+	[Windows::Foundation::Metadata::WebHostHidden]
 	public ref class ContentDialogHelper sealed
 	{
 	public:
-		IAsyncOperation<bool>^ TryShowAsync(ContentDialog^ dialog, ContentDialogPlacement placement, ContentDialogDisplayCompletionAsyncHandler^ completionHandler, ViewService^ viewService)
+		static property bool IsShown
+		{
+			bool get()
+			{
+				return dynamic_cast<ContentDialog^>(VisualTreeHelper::GetOpenPopups(Window::Current)) != nullptr;
+			}
+		}
+
+		static IAsyncOperation<bool>^ TryShowAsync(ContentDialog^ dialog, ContentDialogPlacement placement, ContentDialogDisplayCompletionAsyncHandler^ completionHandler)
 		{
 			return create_async([=]() -> task<bool>
 				{
-					if (!viewService->IsDialogShown)
+					if (!IsShown)
 					{
-						viewService->IsDialogShown = true;
 						auto result = co_await dialog->ShowAsync(placement);
 						co_await completionHandler(dialog, result);
-						viewService->IsDialogShown = false;
 						co_return true;
 					}
 

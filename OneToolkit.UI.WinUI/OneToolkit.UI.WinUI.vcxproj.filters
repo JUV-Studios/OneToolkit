@@ -38,9 +38,6 @@
     <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="ContentDialogHelper.idl">
-      <Filter>Controls</Filter>
-    </Midl>
     <Midl Include="WindowHelper.idl" />
     <Midl Include="IContentTransition.idl">
       <Filter>Media\Animation</Filter>

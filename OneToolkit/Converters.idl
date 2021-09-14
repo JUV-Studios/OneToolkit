@@ -1,5 +1,15 @@
 namespace OneToolkit.UI.Converters
 {
+	/* delegate void XamlDataConvertHandler(Object value, Windows.UI.Xaml.Interop.TypeName targetType, Object parameter, String language);
+
+	[bindable]
+	[default_interface]
+	runtimeclass CustomConverter : Windows.UI.Xaml.DependencyObject, Windows.UI.Xaml.Data.IValueConverter
+	{
+		CustomConverter();
+		
+	} */
+
 	[default_interface]
 	runtimeclass StringTypeConverter : Windows.UI.Xaml.Data.IValueConverter
 	{

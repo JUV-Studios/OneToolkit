@@ -125,10 +125,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ContentDialogHelper.h">
-      <DependentUpon>ContentDialogHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="DefaultContentTransition.h">
       <DependentUpon>DefaultContentTransition.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -144,10 +140,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ContentDialogHelper.cpp">
-      <DependentUpon>ContentDialogHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="DefaultContentTransition.cpp">
       <DependentUpon>DefaultContentTransition.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -181,9 +173,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="ContentDialogHelper.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="DefaultContentTransition.idl">
       <SubType>Designer</SubType>
     </Midl>

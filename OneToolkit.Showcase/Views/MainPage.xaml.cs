@@ -44,7 +44,7 @@ namespace OneToolkit.Showcase.Views
 
 		private void Dispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
 		{
-			if (!SettingsViewModel.ViewServiceProvider.IsDialogShown && args.EventType == CoreAcceleratorKeyEventType.KeyDown)
+			if (!ContentDialogHelper.IsShown && args.EventType == CoreAcceleratorKeyEventType.KeyDown)
 			{
 				if (KeyStateHelper.IsKeyDown(VirtualKey.Control))
 				{

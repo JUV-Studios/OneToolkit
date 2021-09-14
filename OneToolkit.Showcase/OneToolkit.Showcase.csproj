@@ -20,13 +20,14 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-    <PackageCertificateThumbprint>5CCEBF0C3FC0AE94563EB825317BA31243FE1A45</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>A1D1A35FEE34676025B10D322D0D69A2DB0B3E21</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm|arm64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <PackageCertificateKeyFile>OneToolkit.Showcase_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -250,10 +251,6 @@
       <Project>{ef690ebe-5bfe-428e-9e39-d0ef06b1fd1c}</Project>
       <Name>OneToolkit.Dotnet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OneToolkit.UI.Xaml\OneToolkit.UI.Xaml.vcxproj">
-      <Project>{95b918e4-ad86-45a6-be1a-77399535bad2}</Project>
-      <Name>OneToolkit.UI.Xaml</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OneToolkit\OneToolkit.vcxproj">
       <Project>{0dd5edd3-19b8-4924-8df1-add70803e693}</Project>
       <Name>OneToolkit</Name>
@@ -267,6 +264,14 @@
   </ItemGroup>
   <ItemGroup>
     <XliffResource Include="MultilingualResources\OneToolkit.Showcase.ta.xlf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OneToolkit.Showcase_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="OneToolkit.UI.Xaml">
+      <HintPath>..\Debug\OneToolkit.UI.Xaml\OneToolkit.UI.Xaml.winmd</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

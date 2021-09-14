@@ -30,8 +30,6 @@ Type OwnerType::Name::get() { return ::OneToolkit::UI::Xaml::GetValue<Type>(this
 
 namespace OneToolkit::UI::Xaml
 {
-
-
 	template <typename T = Platform::Object>
 	auto GetValue(Windows::UI::Xaml::DependencyObject^ dependencyObject, Windows::UI::Xaml::DependencyProperty^ dependencyProperty)
 	{
@@ -70,8 +68,6 @@ namespace OneToolkit::UI::Xaml
 #include <winrt/OneToolkit.UI.Xaml.Controls.h>
 #include <winrt/OneToolkit.UI.Xaml.Converters.h>
 #include <winrt/OneToolkit.UI.Xaml.Media.Animation.h>
-
-
 
 namespace winrt
 {

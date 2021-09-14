@@ -42,21 +42,6 @@ namespace winrt::OneToolkit::UI
 		template <typename Derived>
 		struct ViewServiceBase : ViewServiceT<Derived, non_agile>
 		{
-		public:
-			bool IsDialogShown()
-			{
-				return unbox_value_or(CoreApplication::Properties().TryLookup(GenerateStoreKey(L"IsDialogShown")), false);
-			}
-
-			void IsDialogShown(bool value)
-			{
-				if (IsDialogShown() != value)
-				{
-					static slim_mutex dialogShownLock;
-					const slim_lock_guard lockGuard{ dialogShownLock };
-					CoreApplication::Properties().Insert(GenerateStoreKey(L"IsDialogShown"), box_value(value));
-				}
-			}
 		protected:
 			inline auto GenerateStoreKey(std::wstring_view propertyName)
 			{

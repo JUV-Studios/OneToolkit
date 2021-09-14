@@ -13,7 +13,6 @@ namespace OneToolkit.UI
         static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         String Title;
         Boolean IsFullScreen;
-        Boolean IsDialogShown;
         WindowId Id { get; };
         Windows.Foundation.Rect Bounds { get; };
         [noexcept] Windows.UI.ViewManagement.ApplicationView AppView { get; };

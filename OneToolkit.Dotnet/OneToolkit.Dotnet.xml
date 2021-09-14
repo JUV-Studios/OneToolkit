@@ -49,11 +49,15 @@
             Replaces a single character in a string without allocating a new one.
             </summary>
         </member>
+        <member name="T:OneToolkit.Data.Text.TextEncoding">
+            <summary>
+            Represents an encoding of a text buffer.
+            </summary>
+        </member>
         <member name="T:OneToolkit.Data.Text.TextEncodingHelper">
             <summary>
             Provides the ability to find out and detect the encoding of a text buffer.
             </summary>
-            <remarks>This class is only capable of detecting ASCII, UTF8 and UTF16 encodings.</remarks>
         </member>
         <member name="M:OneToolkit.Data.Text.TextEncodingHelper.IsAscii(System.ReadOnlySpan{System.Byte})">
             <summary>
@@ -75,9 +79,26 @@
             Attempts to detect the encoding using various methods.
             </summary>
         </member>
-        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.DetectWithBom(System.ReadOnlySpan{System.Byte})">
+        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.AsEncoding(OneToolkit.Data.Text.TextEncoding)">
             <summary>
-            Attempts to detect the encoding based on the BOM if it exists.
+            Gets the encoding information for the specified text encoding.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Lifecycle.MemoryManager">
+            <summary>
+            Provides helpers to manage object lifetime.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Lifecycle.MemoryManager.Delete``1(``0@)">
+            <summary>
+            Deletes an object reference. Disposes the object if it implements IDisposable and nulls the reference out.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="reference"></param>
+        </member>
+        <member name="M:OneToolkit.Lifecycle.MemoryManager.Delete``1(``0@,System.Action{``0})">
+            <summary>
+            Deletes an object reference using a custom deleter and nulls out the reference.
             </summary>
         </member>
         <member name="T:OneToolkit.Mvvm.IBackingProvider`1">
@@ -131,6 +152,12 @@
             <summary>
             Occurs when the value held by this object changes.
             </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.ObservableBase.SetProperty``1(``0@,``0,System.String,System.Action{System.String,OneToolkit.Mvvm.PropertyEventType})">
+            <summary>
+            Automatically sets a property value and raises the property changing/property changed events through an user provided raiser.
+            </summary>
+            <returns>True if the value was set, false if the value passed was equal to the existing value.</returns>
         </member>
         <member name="M:OneToolkit.Mvvm.ObservableBase.SetProperty``1(OneToolkit.Mvvm.ObservableBase,``0@,``0,System.String)">
             <summary>
@@ -327,6 +354,12 @@
             <summary>
             Provides a bindable command which can choose to execute or not.
             </summary>
+        </member>
+        <member name="M:OneToolkit.Mvvm.RelayCommand.#ctor(OneToolkit.Mvvm.RelayCommand)">
+            <summary>
+            Creates a new instance of ObservableProperty based on an existing one.
+            </summary>
+            <param name="other">The other instance whose properties will be copied.</param>
         </member>
         <member name="M:OneToolkit.Mvvm.RelayCommand.#ctor(System.Action{OneToolkit.Mvvm.RelayCommand,System.Object})">
             <summary>

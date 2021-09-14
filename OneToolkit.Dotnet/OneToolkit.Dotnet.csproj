@@ -24,10 +24,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>C:\Users\jaiga\Desktop\source\OneToolkit\OneToolkit.Mvvm.Dotnet\OneToolkit.Dotnet.xml</DocumentationFile>
+    <DocumentationFile>OneToolkit.Dotnet.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>OneToolkit.Dotnet.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\LICENSE.txt">

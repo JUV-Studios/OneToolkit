@@ -10,8 +10,15 @@ namespace winrt::OneToolkit::UI::WinUI::implementation
 {
 	WindowId WindowHelper::GetWindowId(Window const& window)
 	{
-		HWND result;
-		check_hresult(window.as<IWindowNative>()->get_WindowHandle(&result));
-		return { as_value<uint64>(result) };
+		if (auto nativeWindow = window.try_as<IWindowNative>())
+		{
+			HWND result;
+			check_hresult(nativeWindow->get_WindowHandle(&result));
+			return { as_value<uint64>(result) };
+		}
+		else
+		{
+			return ViewService::GetCoreWindowId(window.CoreWindow());
+		}
 	}
 }

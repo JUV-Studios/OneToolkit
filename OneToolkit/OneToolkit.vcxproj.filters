@@ -97,9 +97,6 @@
     <Midl Include="MachineInformation.idl">
       <Filter>System</Filter>
     </Midl>
-    <Midl Include="TabSwitcher.idl">
-      <Filter>UI\Input</Filter>
-    </Midl>
     <Midl Include="TypeNameHelper.idl">
       <Filter>Runtime</Filter>
     </Midl>
