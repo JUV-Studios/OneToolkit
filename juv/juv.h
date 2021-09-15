@@ -450,17 +450,30 @@ namespace winrt::OneToolkit::Data
 	}
 }
 
-namespace winrt::OneToolkit::UI::Input
+namespace winrt::OneToolkit::UI
 {
-	struct TabSwitcher
+	struct ColorUtility
 	{
-		TabSwitcher() = delete;
-
-		static inline juv::uint64 GetNewSelectionIndex(juv::uint64 currentIndex, juv::uint64 collectionSize, bool reverse)
+		ColorUtility() = delete;
+		
+		static inline juv::uint8 InvertComponent(juv::uint8 component)
 		{
-			if (collectionSize <= 1) return currentIndex;
-            else if (reverse) return currentIndex == 0 ? collectionSize - 1 : currentIndex - 1;
-            else return currentIndex == collectionSize - 1 ? 0 : currentIndex + 1;
-        }
-    }
+			return 255 - component;
+		}
+	};
+
+	namespace Input
+	{
+		struct TabSwitcher
+		{
+			TabSwitcher() = delete;
+
+			static inline juv::uint64 GetNewSelectionIndex(juv::uint64 currentIndex, juv::uint64 collectionSize, bool reverse)
+			{
+				if (collectionSize <= 1) return currentIndex;
+				else if (reverse) return currentIndex == 0 ? collectionSize - 1 : currentIndex - 1;
+				else return currentIndex == collectionSize - 1 ? 0 : currentIndex + 1;
+			}
+		}
+	}
 }
