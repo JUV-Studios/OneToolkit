@@ -60,6 +60,7 @@ void SlideContentTransition::SetContent(ContentPresenter^ presenter, UIElement^ 
 
 	double originalOpacity = 1;
 	auto element = dynamic_cast<UIElement^>(presenter->Content);
+	auto eventArgs = ref new ContentTransitionCompletedEventArgs(presenter, element, content, navigationType);
 	if (element)
 	{
 		originalOpacity = element->Opacity;
@@ -68,4 +69,5 @@ void SlideContentTransition::SetContent(ContentPresenter^ presenter, UIElement^ 
 
 	presenter->Content = content;
 	if (element) element->Opacity = originalOpacity;
+	ContentTransitionCompleted(this, eventArgs);
 }

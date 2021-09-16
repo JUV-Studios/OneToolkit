@@ -19,6 +19,8 @@ namespace OneToolkit::UI::Xaml::Media::Animation
 			void set(WUXC::Primitives::EdgeTransitionLocation value);
 		}
 
+		virtual event ContentTransitionCompletedEventHandler^ ContentTransitionCompleted;
+
 		virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
 
 		virtual void SetContent(WUXC::ContentPresenter^ presenter, Windows::UI::Xaml::UIElement^ content, NavigationType navigationType);

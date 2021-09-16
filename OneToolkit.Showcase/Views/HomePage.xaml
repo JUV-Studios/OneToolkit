@@ -13,10 +13,20 @@
 
 	<controls:HubPanel x:Uid="HomeHub">
 		<controls:HubPanelSection Header="Getting started">
-			<wctControls:WrapPanel>
+			<GridView
+				ItemContainerTransitions="{x:Null}"
+				ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+				ScrollViewer.HorizontalScrollMode="Auto"
+				ScrollViewer.VerticalScrollBarVisibility="Disabled"
+				ScrollViewer.VerticalScrollMode="Disabled">
+				<GridView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid Orientation="Vertical" />
+					</ItemsPanelTemplate>
+				</GridView.ItemsPanel>
 				<controls:DescriptiveButton Caption="Install the NuGet packages that OneToolkit provides" Click="Install_Click">Install NuGet packages</controls:DescriptiveButton>
-				<controls:DescriptiveButton>Read the docs</controls:DescriptiveButton>
-			</wctControls:WrapPanel>
+				<controls:DescriptiveButton Caption="Learn how to leverage OneToolkit to build great apps">Read the docs</controls:DescriptiveButton>
+			</GridView>
 		</controls:HubPanelSection>
 	</controls:HubPanel>
 </UserControl>

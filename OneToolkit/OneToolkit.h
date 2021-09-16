@@ -29,7 +29,7 @@ public: Type Name() const noexcept { return m_##Name; }\
 void Name(Type value) { SetProperty<Type>(m_##Name, value, L#Name); }
 
 #define DeclareSettingProperty(Type, Name, DefaultValue, Container) public: Type Name() const { return Container.GetValue(L#Name, box_value(DefaultValue)); }\
-void Name(Type value) const { Container.SetValue(L#Name, value); }
+void Name(Type value) const { if (Name() != value) { Container.SetValue(L#Name, value); Raise(L#Name); } }
 
 namespace winrt::OneToolkit
 {
@@ -142,9 +142,9 @@ namespace winrt::OneToolkit
 		class DynamicModule
 		{
 		public:
-			DynamicModule(winrt::hstring const& fileName) : m_FileName(fileName)
+			DynamicModule(winrt::hstring const& fileName, bool isPackagedLibrary = false) : m_FileName(fileName), m_IsPackagedLibrary(isPackagedLibrary)
 			{
-				Handle(WINRT_IMPL_LoadLibraryW(fileName.data()));
+				Handle(isPackagedLibrary ? LoadPackagedLibrary(fileName.data(), 0) : WINRT_IMPL_LoadLibraryW(fileName.data()));
 			}
 
 			DynamicModule(DynamicModule const& another)
@@ -171,7 +171,7 @@ namespace winrt::OneToolkit
 
 			bool operator==(DynamicModule const& another) const noexcept
 			{
-				return m_FileName == another.m_FileName && m_Handle == another.m_Handle;
+				return m_FileName == another.m_FileName && m_IsPackagedLibrary == another.m_IsPackagedLibrary && m_Handle == another.m_Handle;
 			}
 
 			bool operator!=(DynamicModule const& another) const noexcept
@@ -215,6 +215,8 @@ namespace winrt::OneToolkit
 
 			hstring m_FileName;
 
+			bool m_IsPackagedLibrary;
+
 			void Handle(void* newHandle)
 			{
 				if (!newHandle) throw_last_error();
@@ -223,15 +225,18 @@ namespace winrt::OneToolkit
 
 			void Copy(DynamicModule const& another)
 			{
-				Handle(WINRT_IMPL_LoadLibraryW(another.m_FileName.data()));
+				Handle(another.m_IsPackagedLibrary ? LoadPackagedLibrary(another.m_FileName.data(), 0) : WINRT_IMPL_LoadLibraryW(another.m_FileName.data()));
 				m_FileName = another.m_FileName;
+				m_IsPackagedLibrary = another.m_IsPackagedLibrary;
+
 			}
 
 			void Move(DynamicModule&& another) noexcept
 			{
 				Handle(another.m_Handle);
-				m_FileName = another.m_FileName;
 				another.m_Handle = nullptr;
+				m_FileName = another.m_FileName;
+				m_IsPackagedLibrary = another.m_IsPackagedLibrary;
 			}
 		};
 	}

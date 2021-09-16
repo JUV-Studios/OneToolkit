@@ -9,7 +9,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
 using OneToolkit.UI.Input;
 using OneToolkit.UI.Xaml.Controls;
+using OneToolkit.UI.Xaml.Media.Animation;
 using OneToolkit.Showcase.ViewModels;
+using Microsoft.Toolkit.Uwp.UI;
 
 namespace OneToolkit.Showcase.Views
 {
