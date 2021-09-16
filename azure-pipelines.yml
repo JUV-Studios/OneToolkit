@@ -23,7 +23,7 @@ steps:
 
 - task: BatchScript@1
   inputs:
-    filename: 'build-juv.cmd'
+    filename: 'juv-build.cmd'
 
 - task: VSBuild@1
   inputs:
@@ -32,3 +32,4 @@ steps:
     platform: 'x86'
     configuration: '$(buildConfiguration)'
     maximumCpuCount: true
+    msbuildArchitecture: 'x64'
