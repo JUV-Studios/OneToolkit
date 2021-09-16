@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "UI.Converters.CustomConverter.g.h"
 #include "UI.Converters.StringTypeConverter.g.h"
 #include "UI.Converters.StringVersionConverter.g.h"
 #include "UI.Converters.StringFileSizeConverter.g.h"
@@ -22,6 +23,14 @@ namespace winrt::OneToolkit::UI::Converters
 
 	namespace implementation
 	{
+		struct CustomConverter : CustomConverterT<CustomConverter>, Mvvm::ObservableBase<CustomConverter>
+		{
+			DeclareObservableProperty(XamlDataConvertHandler, ConvertDelegate, nullptr);
+			DeclareObservableProperty(XamlDataConvertHandler, ConvertBackDelegate, nullptr);
+			IInspectable Convert(Windows::Foundation::IInspectable const& value, Windows::UI::Xaml::Interop::TypeName targetType, Windows::Foundation::IInspectable const& parameter, hstring const& language) const;
+			IInspectable ConvertBack(Windows::Foundation::IInspectable const& value, Windows::UI::Xaml::Interop::TypeName targetType, Windows::Foundation::IInspectable const& parameter, hstring const& language) const;
+		};
+
 		struct StringTypeConverter : StringTypeConverterT<StringTypeConverter>, TwoWayConverterBase<StringTypeConverter>
 		{
 			IInspectable ConvertValue(IInspectable const& value, Windows::UI::Xaml::Interop::TypeName targetType, IInspectable const& parameter, hstring const& language);
@@ -47,6 +56,10 @@ namespace winrt::OneToolkit::UI::Converters
 
 	namespace factory_implementation
 	{
+		struct CustomConverter : CustomConverterT<CustomConverter, implementation::CustomConverter>
+		{
+		};
+
 		struct StringTypeConverter : StringTypeConverterT<StringTypeConverter, implementation::StringTypeConverter>
 		{
 		};

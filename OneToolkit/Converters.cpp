@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "Converters.h"
+#include "UI.Converters.CustomConverter.g.cpp"
 #include "UI.Converters.StringTypeConverter.g.cpp"
 #include "UI.Converters.StringVersionConverter.g.cpp"
 #include "UI.Converters.StringFileSizeConverter.g.cpp"
@@ -17,6 +18,20 @@ using namespace OneToolkit::ApplicationModel;
 
 namespace winrt::OneToolkit::UI::Converters::implementation
 {
+	IInspectable CustomConverter::Convert(IInspectable const& value, TypeName targetType, IInspectable const& parameter, hstring const& language) const
+	{
+		if (m_ConvertDelegate) return m_ConvertDelegate(value, targetType, parameter, language);
+		else if (m_ConvertBackDelegate) return m_ConvertBackDelegate(value, targetType, parameter, language);
+		else return nullptr;
+	}
+
+	IInspectable CustomConverter::ConvertBack(IInspectable const& value, TypeName targetType, IInspectable const& parameter, hstring const& language) const
+	{
+		if (m_ConvertBackDelegate) return m_ConvertBackDelegate(value, targetType, parameter, language);
+		else if (m_ConvertDelegate) return m_ConvertDelegate(value, targetType, parameter, language);
+		else return nullptr;
+	}
+
 	IInspectable StringTypeConverter::ConvertValue(IInspectable const& value, TypeName targetType, IInspectable const&, hstring const&)
 	{
 		if (auto typeName = value.try_as<TypeName>()) return box_value(typeName->Name);
@@ -37,7 +52,6 @@ namespace winrt::OneToolkit::UI::Converters::implementation
 		else if (auto string = value.try_as<hstring>()) return box_value(FileSizeHelper::FromFormattedString(*string, m_UseBinaryPrefix));
 		else return nullptr;
 	}
-
 
 	IInspectable StringLocalizationConverter::ConvertValue(IInspectable const& value, TypeName targetType, IInspectable const&, hstring const&)
 	{
