@@ -251,7 +251,7 @@
       <Project>{ef690ebe-5bfe-428e-9e39-d0ef06b1fd1c}</Project>
       <Name>OneToolkit.Dotnet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OneToolkit.UI.Xaml\OneToolkit.UI.Xaml.vcxproj" Condition="'$(Platform)' != 'x86'">
+    <ProjectReference Include="..\OneToolkit.UI.Xaml\OneToolkit.UI.Xaml.vcxproj">
       <Project>{95b918e4-ad86-45a6-be1a-77399535bad2}</Project>
       <Name>OneToolkit.UI.Xaml</Name>
     </ProjectReference>
