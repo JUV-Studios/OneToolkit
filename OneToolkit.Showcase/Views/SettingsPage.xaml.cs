@@ -28,10 +28,10 @@ namespace OneToolkit.Showcase.Views
 
 		private void AboutPanel_Loaded(object sender, RoutedEventArgs e)
 		{
-			var target = sender as WrapPanel;
-			var actualWidth = target.ActualWidth;
+		 	var target = sender as WrapPanel;
+			/*var actualWidth = target.ActualWidth;
 			LinksExpander.Width = actualWidth;
-			LinksExpander.MaxWidth = actualWidth;
+			LinksExpander.MaxWidth = actualWidth;*/
 			target.Loaded -= AboutPanel_Loaded;
 		}
 		private void UserControl_Unloaded(object sender, RoutedEventArgs e)

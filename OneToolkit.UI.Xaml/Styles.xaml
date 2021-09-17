@@ -20,6 +20,7 @@
 	<Style x:Key="DefaultHubPanelStyle" TargetType="Hub">
 		<Setter Property="Margin" Value="0" />
 		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Padding" Value="48,48,48,0" />
 		<Setter Property="HeaderTemplate">
 			<Setter.Value>
 				<DataTemplate>

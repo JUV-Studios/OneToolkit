@@ -9,16 +9,12 @@
 namespace OneToolkit::UI::Xaml::Controls
 {
 	[Windows::Foundation::Metadata::WebHostHidden]
-	public ref class HubPanel sealed : Windows::UI::Xaml::Data::INotifyPropertyChanged
+	public ref class HubPanel sealed
 	{
 	public:
 		HubPanel();
 
 		DeclareDependencyProperty(double, Spacing);
-
-		DeclareDependencyProperty(Windows::UI::Xaml::Thickness, Packing);
-
-		virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler^ PropertyChanged;
 	internal:
 		void SetProperties();
 	private:

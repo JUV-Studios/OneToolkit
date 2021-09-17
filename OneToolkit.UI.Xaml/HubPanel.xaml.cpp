@@ -22,13 +22,12 @@ using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::ViewManagement;
+using namespace OneToolkit::UI::Converters;
 using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 DefineDependencyProperty(double, HubPanel, Spacing, 36.0);
-
-DefineDependencyProperty(Thickness, HubPanel, Packing, ThicknessHelper::FromUniformLength(48));
 
 HubPanel::HubPanel()
 {
@@ -48,21 +47,15 @@ void HubPanel::DependencyPropertyChanged(DependencyObject^ sender, DependencyPro
 
 void HubPanel::SetProperties()
 {
-	Thickness paddingValue;
-	paddingValue.Left = Packing.Left;
-	paddingValue.Top = Packing.Top;
-	paddingValue.Right = Packing.Right;
-	paddingValue.Bottom = 0;
-	Padding = paddingValue;
 	for (uint32 index = 0; index < Sections->Size; ++index)
 	{
 		auto section = Sections->GetAt(index);
 		AutomationProperties::SetPositionInSet(section, index + 1);
 		AutomationProperties::SetSizeOfSet(section, Sections->Size);
-		if (Sections->Size == 1) section->Padding = ThicknessHelper::FromLengths(Packing.Left, 0, Packing.Right, Packing.Bottom);
-		else if (index == 0) section->Padding = ThicknessHelper::FromLengths(Packing.Left, 0, 0, Packing.Bottom);
-		else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(Spacing, 0, Packing.Right, Packing.Bottom);
-		else section->Padding = ThicknessHelper::FromLengths(Spacing, 0, 0, Packing.Bottom);
+		if (Sections->Size == 1) section->Padding = ThicknessHelper::FromLengths(Padding.Left, 0, Padding.Right, Padding.Top);
+		else if (index == 0) section->Padding = ThicknessHelper::FromLengths(Padding.Left, 0, 0, Padding.Bottom);
+		else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(Spacing, 0, Padding.Right, Padding.Top);
+		else section->Padding = ThicknessHelper::FromLengths(Spacing, 0, 0, Padding.Top);
 	}
 }
 

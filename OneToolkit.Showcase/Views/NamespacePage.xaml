@@ -48,26 +48,38 @@
 		<controls:HubPanelSection
 			x:Name="Classes"
 			x:Uid="ReferenceHubClasses"
+			DataContext="{x:Bind GroupData.Classes}"
 			Loaded="Classes_Loaded">
-			<GridView ItemsSource="{x:Bind GroupData.Classes}" />
+			<DataTemplate>
+				<GridView ItemsSource="{x:Bind}" />
+			</DataTemplate>
 		</controls:HubPanelSection>
 		<controls:HubPanelSection
 			x:Name="Enumerations"
 			x:Uid="ReferenceHubEnumerations"
+			DataContext="{x:Bind GroupData.Enumerations}"
 			Loaded="Enumerations_Loaded">
-			<GridView ItemsSource="{x:Bind GroupData.Enumerations}" />
+			<DataTemplate>
+				<GridView ItemsSource="{x:Bind}" />
+			</DataTemplate>
 		</controls:HubPanelSection>
 		<controls:HubPanelSection
 			x:Name="Interfaces"
 			x:Uid="ReferenceHubInterfaces"
+			DataContext="{x:Bind GroupData.Interfaces}"
 			Loaded="Interfaces_Loaded">
-			<GridView ItemsSource="{x:Bind GroupData.Interfaces}" />
+			<DataTemplate>
+				<GridView ItemsSource="{x:Bind}" />
+			</DataTemplate>
 		</controls:HubPanelSection>
 		<controls:HubPanelSection
 			x:Name="Structures"
 			x:Uid="ReferenceHubStructures"
+			DataContext="{x:Bind GroupData.Structures}"
 			Loaded="Structures_Loaded">
-			<GridView ItemsSource="{x:Bind GroupData.Structures}" />
+			<DataTemplate>
+				<GridView ItemsSource="{x:Bind}" />
+			</DataTemplate>
 		</controls:HubPanelSection>
 	</controls:HubPanel>
 </Page>

@@ -7,16 +7,5 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DesignHeight="300"
 	d:DesignWidth="400"
-	DataContext="{x:Null}"
-	mc:Ignorable="d">
-	<HubSection.HeaderTemplate>
-		<DataTemplate x:DataType="x:String">
-			<TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{x:Bind}" />
-		</DataTemplate>
-	</HubSection.HeaderTemplate>
-	<HubSection.ContentTemplate>
-		<DataTemplate>
-			<ContentPresenter Loaded="ContentPresenter_Loaded" />
-		</DataTemplate>
-	</HubSection.ContentTemplate>
-</HubSection>
+	Style="{StaticResource DefaultHubPanelSectionStyle}"
+	mc:Ignorable="d" />

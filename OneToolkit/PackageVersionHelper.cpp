@@ -15,7 +15,7 @@ namespace winrt::OneToolkit::ApplicationModel::implementation
 
 	PackageVersion PackageVersionHelper::FromFormattedString(hstring const& formattedString)
 	{
-		auto SetVersionField = [](std::wstring& token, uint16& field)
+		auto setVersionField = [](std::wstring& token, uint16& field)
 		{
 			if (!token.empty()) field = static_cast<uint16>(std::stoul(token));
 		};
@@ -33,10 +33,10 @@ namespace winrt::OneToolkit::ApplicationModel::implementation
 			++index;
 		}
 
-		SetVersionField(tokens[0], result.Major);
-		SetVersionField(tokens[1], result.Minor);
-		SetVersionField(tokens[2], result.Build);
-		SetVersionField(tokens[3], result.Revision);
+		setVersionField(tokens[0], result.Major);
+		setVersionField(tokens[1], result.Minor);
+		setVersionField(tokens[2], result.Build);
+		setVersionField(tokens[3], result.Revision);
 		return result;	
 	}
 }

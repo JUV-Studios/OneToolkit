@@ -22,14 +22,14 @@ namespace winrt::OneToolkit::UI::Converters::implementation
 	{
 		if (m_ConvertDelegate) return m_ConvertDelegate(value, targetType, parameter, language);
 		else if (m_ConvertBackDelegate) return m_ConvertBackDelegate(value, targetType, parameter, language);
-		else return nullptr;
+		else return parameter;
 	}
 
 	IInspectable CustomConverter::ConvertBack(IInspectable const& value, TypeName targetType, IInspectable const& parameter, hstring const& language) const
 	{
 		if (m_ConvertBackDelegate) return m_ConvertBackDelegate(value, targetType, parameter, language);
 		else if (m_ConvertDelegate) return m_ConvertDelegate(value, targetType, parameter, language);
-		else return nullptr;
+		else return parameter;
 	}
 
 	IInspectable StringTypeConverter::ConvertValue(IInspectable const& value, TypeName targetType, IInspectable const&, hstring const&)
