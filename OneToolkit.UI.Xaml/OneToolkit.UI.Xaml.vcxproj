@@ -370,6 +370,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OneToolkit\OneToolkit.vcxproj">
       <Project>{0dd5edd3-19b8-4924-8df1-add70803e693}</Project>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

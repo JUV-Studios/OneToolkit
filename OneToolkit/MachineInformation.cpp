@@ -14,7 +14,13 @@ using namespace OneToolkit::ApplicationModel;
 
 namespace winrt::OneToolkit::System::implementation
 {
-	EasClientDeviceInformation ClientDeviceInformation;
+	EasClientDeviceInformation m_ClientDeviceInformation = nullptr;
+
+	static inline EasClientDeviceInformation ClientDeviceInformation()
+	{
+		if (!m_ClientDeviceInformation) m_ClientDeviceInformation = {};
+		return m_ClientDeviceInformation;
+	}
 
 	__interface __declspec(uuid("AF86E2E0-B12D-4c6a-9C5A-D7AA65101E90")) abi_IInspectable : ::IUnknown
 	{
@@ -30,12 +36,12 @@ namespace winrt::OneToolkit::System::implementation
 
 	hstring MachineInformation::DeviceName()
 	{
-		return ClientDeviceInformation.FriendlyName();
+		return ClientDeviceInformation().FriendlyName();
 	}
 
 	hstring MachineInformation::DeviceModel()
 	{
-		return ClientDeviceInformation.SystemProductName();
+		return ClientDeviceInformation().SystemProductName();
 	}
 
 	hstring MachineInformation::DeviceFamily()
@@ -45,7 +51,7 @@ namespace winrt::OneToolkit::System::implementation
 
 	hstring MachineInformation::DeviceManufacturer()
 	{
-		return ClientDeviceInformation.SystemManufacturer();
+		return ClientDeviceInformation().SystemManufacturer();
 	}
 
 	hstring MachineInformation::OperatingSystem()
@@ -58,7 +64,7 @@ namespace winrt::OneToolkit::System::implementation
 		}
 		else
 		{
-			return ClientDeviceInformation.OperatingSystem();
+			return ClientDeviceInformation().OperatingSystem();
 		}
 	}
 

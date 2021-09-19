@@ -3,6 +3,7 @@ namespace OneToolkit.Runtime
     [default_interface]
     static runtimeclass Reflection
     {
+        static Object ActivateType(Windows.UI.Xaml.Interop.TypeName typeId);
         static String GetMetadataFileLocation(Windows.UI.Xaml.Interop.TypeName typeId);
     }
 }

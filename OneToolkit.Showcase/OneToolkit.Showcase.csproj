@@ -251,14 +251,6 @@
       <Project>{ef690ebe-5bfe-428e-9e39-d0ef06b1fd1c}</Project>
       <Name>OneToolkit.Dotnet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OneToolkit.UI.Xaml\OneToolkit.UI.Xaml.vcxproj">
-      <Project>{95b918e4-ad86-45a6-be1a-77399535bad2}</Project>
-      <Name>OneToolkit.UI.Xaml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OneToolkit\OneToolkit.vcxproj">
-      <Project>{0dd5edd3-19b8-4924-8df1-add70803e693}</Project>
-      <Name>OneToolkit</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-us\Resources.resw" />

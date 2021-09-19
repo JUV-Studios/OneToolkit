@@ -39,35 +39,11 @@ namespace winrt::OneToolkit::UI
 
 	namespace implementation
 	{
-		template <typename Derived>
-		struct ViewServiceBase : ViewServiceT<Derived, non_agile>
-		{
-		protected:
-			inline auto GenerateStoreKey(std::wstring_view propertyName)
-			{
-				return std::format(L"{0}-{1}", propertyName, static_cast<Derived*>(this)->Id().Value);
-			}
-		};
-
-		struct ViewServiceUniversal : ViewServiceBase<ViewServiceUniversal>
+		struct ViewServiceUniversal : ViewServiceT<ViewServiceUniversal, IViewServiceUniversal, non_agile>
 		{
 			DeclareAutoProperty(ApplicationView, AppView, ApplicationView::GetForCurrentView());
 
 			DeclareAutoProperty(CoreApplicationView, CoreAppView, CoreApplication::GetCurrentView());
-
-			bool IsFullScreen() const
-			{
-				return m_AppView.IsFullScreenMode();
-			}
-
-			void IsFullScreen(bool value)
-			{
-				if (m_AppView.IsFullScreenMode() != value)
-				{
-					if (value) m_AppView.TryEnterFullScreenMode();
-					else m_AppView.ExitFullScreenMode();
-				}
-			}
 
 			hstring Title() const
 			{
@@ -95,7 +71,7 @@ namespace winrt::OneToolkit::UI
 			}
 		};
 
-		struct ViewServiceDesktop : ViewServiceBase<ViewServiceDesktop>
+		struct ViewServiceDesktop : ViewServiceT<ViewServiceDesktop, non_agile>
 		{
 		public:
 			ViewServiceDesktop(WindowId windowHandle)
@@ -113,28 +89,7 @@ namespace winrt::OneToolkit::UI
 
 			void Title(hstring const& value)
 			{
-				if (Title() != value) check_bool(user32.GetProcAddress<SetWindowTextW>("SetWindowTextW")(m_WindowHandle, value.data()));
-			}
-
-			bool IsFullScreen()
-			{
-				return unbox_value_or(CoreApplication::Properties().TryLookup(GenerateStoreKey(L"IsFullScreen")), false);
-			}
-
-			void IsFullScreen(bool value)
-			{
-				if (IsFullScreen() != value)
-				{
-					if (value)
-					{
-					}
-					else
-					{
-
-					}
-
-					CoreApplication::Properties().Insert(GenerateStoreKey(L"IsFullScreen"), box_value(value));
-				}
+				check_bool(user32.GetProcAddress<SetWindowTextW>("SetWindowTextW")(m_WindowHandle, value.data()));
 			}
 
 			WindowId Id() const
@@ -149,16 +104,6 @@ namespace winrt::OneToolkit::UI
 				float width = static_cast<float>(result.right - result.left);
 				float height = static_cast<float>(result.bottom - result.top);
 				return { static_cast<float>(result.left), static_cast<float>(result.top), width, height };
-			}
-
-			ApplicationView AppView() const noexcept
-			{
-				return nullptr;
-			}
-
-			CoreApplicationView CoreAppView() const noexcept
-			{
-				return nullptr;
 			}
 
 			IAsyncOperation<bool> CloseAsync() const
@@ -194,7 +139,7 @@ namespace winrt::OneToolkit::UI
 
 		OneToolkit::UI::ViewService ViewService::GetForWindowId(WindowId windowId)
 		{
-			if (CoreApplication::Views().Size()) throw hresult_illegal_method_call(L"GetForWindowId must be invoked from desktop apps only. UWP apps should invoke GetForCurrentView instead.");
+			if (CoreApplication::Views().Size()) throw hresult_illegal_method_call(L"GetForWindowId must be invoked from traditional desktop apps only. Universal apps should invoke GetForCurrentView instead.");
 			return make<implementation::ViewServiceDesktop>(windowId);
 		}
 

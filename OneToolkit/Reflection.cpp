@@ -8,6 +8,11 @@ using namespace Windows::UI::Xaml::Interop;
 
 namespace winrt::OneToolkit::Runtime::implementation
 {
+	winrt::Windows::Foundation::IInspectable Reflection::ActivateType(TypeName typeId)
+	{
+		throw hresult_not_implemented();
+	}
+
 	hstring Reflection::GetMetadataFileLocation(TypeName typeId)
 	{
 		hstring path;

@@ -8,6 +8,7 @@ namespace winrt::OneToolkit::Runtime
 		struct Reflection : ReflectionT<Reflection>
 		{
 			Reflection() = delete;
+			static IInspectable ActivateType(Windows::UI::Xaml::Interop::TypeName typeId);
 			static hstring GetMetadataFileLocation(Windows::UI::Xaml::Interop::TypeName typeId);
 		};
 	}

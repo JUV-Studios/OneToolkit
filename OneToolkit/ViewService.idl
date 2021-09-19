@@ -6,18 +6,21 @@ namespace OneToolkit.UI
     {
         UInt64 Value;
     };
+    
+    interface IViewServiceUniversal
+    {
+        [noexcept] Windows.UI.ViewManagement.ApplicationView AppView { get; };
+        [noexcept] Windows.ApplicationModel.Core.CoreApplicationView CoreAppView { get; };
+    };
 
     [default_interface]
     runtimeclass ViewService
     {
-        static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         String Title;
-        Boolean IsFullScreen;
         WindowId Id { get; };
         Windows.Foundation.Rect Bounds { get; };
-        [noexcept] Windows.UI.ViewManagement.ApplicationView AppView { get; };
-        [noexcept] Windows.ApplicationModel.Core.CoreApplicationView CoreAppView { get; };
         Windows.Foundation.IAsyncOperation<Boolean> CloseAsync();
+        static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         static ViewService GetForCurrentView();
         static ViewService GetForWindowId(WindowId windowId);
         static WindowId GetCoreWindowId(Windows.UI.Core.CoreWindow coreWindow);
