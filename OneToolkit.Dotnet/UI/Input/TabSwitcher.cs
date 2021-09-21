@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OneToolkit.UI.Input
+﻿namespace OneToolkit.UI.Input
 {
+	/// <summary>
+	/// Provides static helper methods for building your own tabbing system.
+	/// </summary>
 	public static class TabSwitcher
 	{
+		/// <summary>
+		/// Gets the tab index to be selected next.
+		/// </summaray>
 		public static ulong GetNewSelectionIndex(ulong currentIndex, ulong collectionSize, bool reverse)
 		{
 			if (collectionSize <= 1) return currentIndex;

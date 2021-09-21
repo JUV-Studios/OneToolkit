@@ -445,5 +445,22 @@
             The value after the change.
             </summary>
         </member>
+        <member name="T:OneToolkit.UI.ColorUtility">
+            <summary>
+            Provides static helper methods for manipulating colors.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:OneToolkit.UI.ColorUtility.Invert(System.Drawing.Color)" -->
+        <member name="M:OneToolkit.UI.ColorUtility.InvertComponent(System.Byte)">
+            <summary>
+            Finds the inverse of a single component.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.UI.Input.TabSwitcher">
+            <summary>
+            Provides static helper methods for building your own tabbing system.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:OneToolkit.UI.Input.TabSwitcher.GetNewSelectionIndex(System.UInt64,System.UInt64,System.Boolean)" -->
     </members>
 </doc>

@@ -28,6 +28,9 @@
     <Filter Include="Lifecycle">
       <UniqueIdentifier>{2c787057-96e1-45a1-95cf-a4e6b073db0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Collections">
+      <UniqueIdentifier>{09df98cf-ac34-4e45-82c4-21383e23526e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ViewService.cpp">

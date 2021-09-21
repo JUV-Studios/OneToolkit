@@ -2,15 +2,15 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>juv</id>
-    <version>1.0.0.6</version>
+    <version>1.0.0.8</version>
     <title>juv</title>
     <authors>Jaiganesh Kumaran</authors>
     <owners>JUV Studios</owners>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
 	<license type="file">LICENSE.txt</license>
-    <projectUrl>https://sites.google.com/view/juv-studios/onetoolkit</projectUrl>
-    <description>Provides commonly used, platform independent functionality for use in C++ projects as part of OneToolkit. Requires C++17 or later.</description>
-    <releaseNotes>Brings some functionality from OneToolkit to be cross-platform such as LineEndingHelper.</releaseNotes>
+    <projectUrl>https://dev.azure.com/JUV-Studios/OneToolkit</projectUrl>
+    <description>Provides commonly used, platform independent functionality for use in C++ projects as part of OneToolkit. Requires C++20 or later.</description>
+    <releaseNotes>Fixed build error.</releaseNotes>
     <copyright>© 2021 JUV Studios. All rights reserved.</copyright>
     <language>en-us</language>
     <tags>cpp native nativepackage helpers onetoolkit juvstudios juv</tags>

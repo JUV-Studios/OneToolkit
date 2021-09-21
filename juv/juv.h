@@ -452,10 +452,16 @@ namespace winrt::OneToolkit::Data
 
 namespace winrt::OneToolkit::UI
 {
+	/// <summary>
+	/// Provides static helper methods for manipulating colors.
+	/// </summary>
 	struct ColorUtility
 	{
 		ColorUtility() = delete;
 		
+		/// <summary>
+		/// Finds the inverse of a single component.
+		/// </summary>
 		static inline juv::uint8 InvertComponent(juv::uint8 component)
 		{
 			return 255 - component;
@@ -464,16 +470,22 @@ namespace winrt::OneToolkit::UI
 
 	namespace Input
 	{
+		/// <summary>
+		/// Provides static helper methods for building your own tabbing system.
+		/// </summary>
 		struct TabSwitcher
 		{
 			TabSwitcher() = delete;
 
+			/// <summary>
+			/// Gets the tab index to be selected next.
+			/// </summaray>
 			static inline juv::uint64 GetNewSelectionIndex(juv::uint64 currentIndex, juv::uint64 collectionSize, bool reverse)
 			{
 				if (collectionSize <= 1) return currentIndex;
 				else if (reverse) return currentIndex == 0 ? collectionSize - 1 : currentIndex - 1;
 				else return currentIndex == collectionSize - 1 ? 0 : currentIndex + 1;
 			}
-		}
+		};
 	}
 }
