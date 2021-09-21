@@ -9,9 +9,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
 using OneToolkit.UI.Input;
 using OneToolkit.UI.Xaml.Controls;
-using OneToolkit.UI.Xaml.Media.Animation;
 using OneToolkit.Showcase.ViewModels;
-using Microsoft.Toolkit.Uwp.UI;
 
 namespace OneToolkit.Showcase.Views
 {
@@ -20,7 +18,8 @@ namespace OneToolkit.Showcase.Views
 		public MainPage()
 		{
 			InitializeComponent();
-			SettingsViewModel.ViewServiceProvider.AppView.SetPreferredMinSize(new(500, 500));
+			var universalViewService = SettingsViewModel.ViewServiceProvider;
+			universalViewService.AppView.SetPreferredMinSize(new(500, 500));
 			SettingsViewModel.ViewServiceProvider.CoreAppView.TitleBar.ExtendViewIntoTitleBar = true;
 			var titleBar = SettingsViewModel.ViewServiceProvider.AppView.TitleBar;
 			titleBar.BackgroundColor = Colors.Transparent;

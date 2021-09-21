@@ -9,6 +9,9 @@
 #include <algorithm>
 #include <string_view>
 #include <type_traits>
+#ifndef CPPWINRT_VERSION
+#include "winrt-polyfill.h"
+#endif
 
 namespace juv
 {
@@ -462,9 +465,22 @@ namespace winrt::OneToolkit::UI
 		/// <summary>
 		/// Finds the inverse of a single component.
 		/// </summary>
-		static inline juv::uint8 InvertComponent(juv::uint8 component)
+		static juv::uint8 InvertComponent(const juv::uint8 component) noexcept
 		{
 			return 255 - component;
+		}
+
+		/// <summary>
+		/// Finds the inverse of a color.
+		/// </summary>
+		static auto Invert(const Windows::UI::Color color) noexcept
+		{
+			Windows::UI::Color result;
+			result.A = InvertComponent(color.A);
+			result.R = InvertComponent(color.R);
+			result.G = InvertComponent(color.G);
+			result.B = InvertComponent(color.B);
+			return result;
 		}
 	};
 

@@ -9,7 +9,7 @@ namespace winrt::OneToolkit::Storage
 		{
 			FileSizeHelper() = delete;
 			static hstring ToFormattedString(juv::uint64 size, bool useBinaryPrefix);
-			static juv::uint64 FromFormattedString(hstring const& formattedstring, bool useBinaryPrefix);
+			static juv::uint64 FromFormattedString(hstring const& formattedString, bool useBinaryPrefix);
 		};
 	}
 	

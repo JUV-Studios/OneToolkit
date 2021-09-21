@@ -450,10 +450,14 @@
             Provides static helper methods for manipulating colors.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:OneToolkit.UI.ColorUtility.Invert(System.Drawing.Color)" -->
         <member name="M:OneToolkit.UI.ColorUtility.InvertComponent(System.Byte)">
             <summary>
             Finds the inverse of a single component.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.UI.ColorUtility.Invert(System.Drawing.Color)">
+            <summary>
+            Finds the inverse of a color.
             </summary>
         </member>
         <member name="T:OneToolkit.UI.Input.TabSwitcher">
@@ -461,6 +465,10 @@
             Provides static helper methods for building your own tabbing system.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:OneToolkit.UI.Input.TabSwitcher.GetNewSelectionIndex(System.UInt64,System.UInt64,System.Boolean)" -->
+        <member name="M:OneToolkit.UI.Input.TabSwitcher.GetNewSelectionIndex(System.UInt64,System.UInt64,System.Boolean)">
+            <summary>
+            Gets the tab index to be selected next.
+            </summary>
+        </member>
     </members>
 </doc>

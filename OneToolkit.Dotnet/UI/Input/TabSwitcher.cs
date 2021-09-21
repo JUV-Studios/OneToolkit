@@ -7,7 +7,7 @@
 	{
 		/// <summary>
 		/// Gets the tab index to be selected next.
-		/// </summaray>
+		/// </summary>
 		public static ulong GetNewSelectionIndex(ulong currentIndex, ulong collectionSize, bool reverse)
 		{
 			if (collectionSize <= 1) return currentIndex;

@@ -13,10 +13,10 @@ namespace winrt::OneToolkit::Storage::implementation
 	{
 		uint8 index = 0;
 		auto preciseSize = static_cast<double>(size);
-		const auto exponent = useBinaryPrefix ? 1024 : 1000;
-		while (preciseSize >= exponent)
+		const auto multiple = useBinaryPrefix ? 1024 : 1000;
+		while (preciseSize >= multiple)
 		{
-			preciseSize /= exponent;
+			preciseSize /= multiple;
 			++index;
 		}
 
@@ -29,7 +29,7 @@ namespace winrt::OneToolkit::Storage::implementation
 		return hstring(std::format(L"{0} {1}", preciseSize, useBinaryPrefix ? BinaryUnits[index] : DecimalUnits[index]));
 	}
 
-	uint64 FileSizeHelper::FromFormattedString(hstring const& formattedstring, bool useBinaryPrefix)
+	uint64 FileSizeHelper::FromFormattedString(hstring const& formattedString, bool useBinaryPrefix)
 	{
 		throw hresult_not_implemented();
 	}

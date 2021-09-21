@@ -39,7 +39,7 @@ namespace winrt::OneToolkit::UI
 
 	namespace implementation
 	{
-		struct ViewServiceUniversal : ViewServiceT<ViewServiceUniversal, IViewServiceUniversal, non_agile>
+		struct ViewServiceUniversal : ViewServiceT<ViewServiceUniversal, non_agile>
 		{
 			DeclareAutoProperty(ApplicationView, AppView, ApplicationView::GetForCurrentView());
 
@@ -106,6 +106,16 @@ namespace winrt::OneToolkit::UI
 				return { static_cast<float>(result.left), static_cast<float>(result.top), width, height };
 			}
 
+			ApplicationView AppView() const noexcept
+			{
+				return nullptr;
+			}
+
+			CoreApplicationView CoreAppView() const noexcept
+			{
+				return nullptr;
+			}
+
 			IAsyncOperation<bool> CloseAsync() const
 			{
 				co_return user32.GetProcAddress<DestroyWindow>("DestroyWindow")(m_WindowHandle) != false;
@@ -138,7 +148,7 @@ namespace winrt::OneToolkit::UI
 		}
 
 		OneToolkit::UI::ViewService ViewService::GetForWindowId(WindowId windowId)
-		{
+		{			
 			if (CoreApplication::Views().Size()) throw hresult_illegal_method_call(L"GetForWindowId must be invoked from traditional desktop apps only. Universal apps should invoke GetForCurrentView instead.");
 			return make<implementation::ViewServiceDesktop>(windowId);
 		}

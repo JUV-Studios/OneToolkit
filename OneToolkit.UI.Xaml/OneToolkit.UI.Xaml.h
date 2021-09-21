@@ -1,21 +1,6 @@
 #pragma once
+#include <OneToolkit.h>
 #ifdef __cplusplus_winrt
-#include <type_traits>
-
-namespace juv
-{
-	template <typename T>
-	struct remove_hat 
-	{ 
-		using type = T;
-	};
-
-	template <typename T>
-	struct remove_hat<T^> 
-	{
-		using type = typename remove_hat<T>::type;
-	};
-}
 
 namespace WUXC = Windows::UI::Xaml::Controls;
 namespace MUXC = Microsoft::UI::Xaml::Controls;
@@ -30,6 +15,9 @@ Type OwnerType::Name::get() { return ::OneToolkit::UI::Xaml::GetValue<Type>(this
 
 namespace OneToolkit::UI::Xaml
 {
+	/// <summary>
+	/// Gets the value of a DependencyProperty as the specified type.
+	/// </summary>
 	template <typename T = Platform::Object>
 	auto GetValue(Windows::UI::Xaml::DependencyObject^ dependencyObject, Windows::UI::Xaml::DependencyProperty^ dependencyProperty)
 	{
@@ -41,7 +29,6 @@ namespace OneToolkit::UI::Xaml
 }
 
 #else
-#include <OneToolkit.h>
 #include <winrt/Windows.UI.Xaml.Automation.Text.h>
 #include <winrt/Windows.UI.Xaml.Automation.Peers.h>
 #include <winrt/Windows.UI.Xaml.Automation.Provider.h>
@@ -72,6 +59,15 @@ namespace winrt
 {
 	namespace WUXC = Windows::UI::Xaml::Controls;
 	namespace MUXC = Microsoft::UI::Xaml::Controls;
+
+	namespace OneToolkit::UI::Xaml
+	{
+		template <typename T = Windows::Foundation::IInspectable>
+		auto GetValue(Windows::UI::Xaml::DependencyObject const& dependencyObject, Windows::UI::Xaml::DependencyProperty const& dependencyProperty)
+		{
+			return unbox_value<T>(dependencyObject.GetValue(dependencyProperty));
+		}
+	}
 }
 
 #endif

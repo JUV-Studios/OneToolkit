@@ -6,7 +6,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:OneToolkit.UI.Xaml.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	Loaded="Hub_Loaded"
-	SectionsInViewChanged="Hub_SectionsInViewChanged"
+	Loaded="{x:Bind SetPaddingProperties}"
+	SectionsInViewChanged="{x:Bind SetPaddingProperties}"
 	Style="{StaticResource DefaultHubPanelStyle}"
 	mc:Ignorable="d" />

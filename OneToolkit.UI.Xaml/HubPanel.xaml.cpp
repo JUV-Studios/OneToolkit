@@ -32,20 +32,14 @@ DefineDependencyProperty(double, HubPanel, Spacing, 36.0);
 HubPanel::HubPanel()
 {
 	InitializeComponent();
-	RegisterPropertyChangedCallback(HeaderProperty, ref new DependencyPropertyChangedCallback(this, &HubPanel::DependencyPropertyBaseChanged));
-}
-
-void HubPanel::Hub_Loaded(Object^ sender, RoutedEventArgs^ e)
-{
-	SetProperties();
 }
 
 void HubPanel::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)
 {
-	dynamic_cast<HubPanel^>(sender)->SetProperties();
+	dynamic_cast<HubPanel^>(sender)->SetPaddingProperties();
 }
 
-void HubPanel::SetProperties()
+void HubPanel::SetPaddingProperties()
 {
 	for (uint32 index = 0; index < Sections->Size; ++index)
 	{
@@ -57,14 +51,4 @@ void HubPanel::SetProperties()
 		else if (index == Sections->Size - 1) section->Padding = ThicknessHelper::FromLengths(Spacing, 0, Padding.Right, Padding.Top);
 		else section->Padding = ThicknessHelper::FromLengths(Spacing, 0, 0, Padding.Top);
 	}
-}
-
-void HubPanel::Hub_SectionsInViewChanged(Object^ sender, SectionsInViewChangedEventArgs^ e)
-{
-	SetProperties();
-}
-
-void HubPanel::DependencyPropertyBaseChanged(DependencyObject^ sender, DependencyProperty^ dependencyProperty)
-{
-	SetProperties();
 }

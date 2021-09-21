@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "juv", "juv", "{A31BD13B-939
 		juv\juv.h = juv\juv.h
 		juv\juv.nuspec = juv\juv.nuspec
 		juv\juv.props = juv\juv.props
+		juv\winrt-polyfill.h = juv\winrt-polyfill.h
 	EndProjectSection
 EndProject
 Global
@@ -81,8 +82,6 @@ Global
 		{07E880F8-3550-49C3-86DB-B8F0F3513398}.Debug|ARM.Build.0 = Debug|ARM
 		{07E880F8-3550-49C3-86DB-B8F0F3513398}.Debug|ARM.Deploy.0 = Debug|ARM
 		{07E880F8-3550-49C3-86DB-B8F0F3513398}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{07E880F8-3550-49C3-86DB-B8F0F3513398}.Debug|ARM64.Build.0 = Debug|ARM64
-		{07E880F8-3550-49C3-86DB-B8F0F3513398}.Debug|ARM64.Deploy.0 = Debug|ARM64
 		{07E880F8-3550-49C3-86DB-B8F0F3513398}.Debug|x64.ActiveCfg = Debug|x64
 		{07E880F8-3550-49C3-86DB-B8F0F3513398}.Debug|x64.Build.0 = Debug|x64
 		{07E880F8-3550-49C3-86DB-B8F0F3513398}.Debug|x64.Deploy.0 = Debug|x64

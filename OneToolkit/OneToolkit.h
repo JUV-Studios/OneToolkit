@@ -1,6 +1,25 @@
 // (c) 2021 JUV Studios. All rights reserved. Included as part of OneToolkit for use in C++ projects targeting the Windows platform.
 
 #pragma once
+#ifdef __cplusplus_winrt
+#include <type_traits>
+
+namespace juv
+{
+	template <typename T>
+	struct remove_hat
+	{
+		using type = T;
+	};
+
+	template <typename T>
+	struct remove_hat<T^>
+	{
+		using type = typename remove_hat<T>::type;
+	};
+}
+
+#else
 #include <juv.h>
 #include <concepts>
 #include <functional>
@@ -27,9 +46,6 @@ void Name(Type value) noexcept { m_##Name = value; }
 #define DeclareObservableProperty(Type, Name, DefaultValue) private: Type m_##Name = DefaultValue;\
 public: Type Name() const noexcept { return m_##Name; }\
 void Name(Type value) { SetProperty<Type>(m_##Name, value, L#Name); }
-
-#define DeclareSettingProperty(Type, Name, DefaultValue, Container) public: Type Name() const { return Container.GetValue(L#Name, box_value(DefaultValue)); }\
-void Name(Type value) const { if (Name() != value) { Container.SetValue(L#Name, value); Raise(L#Name); } }
 
 namespace winrt::OneToolkit
 {
@@ -453,3 +469,5 @@ namespace winrt::OneToolkit
 		};
 	}
 }
+
+#endif
