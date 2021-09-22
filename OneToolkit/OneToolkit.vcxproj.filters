@@ -35,7 +35,6 @@
     <ClCompile Include="MachineInformation.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="TypeCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OneToolkit.def" />
@@ -49,6 +48,7 @@
     <ClInclude Include="MachineInformation.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="TypeCache.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="FontHelper.idl">
