@@ -309,7 +309,6 @@
       <DependentUpon>ThemeHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="TypeCache.h" />
     <ClInclude Include="TypeNameHelper.h">
       <DependentUpon>TypeNameHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -372,10 +371,7 @@
       <DependentUpon>ThemeHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="TypeCache.cpp">
-      <DependentUpon>TypeCache.h</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
+    <ClCompile Include="TypeCache.cpp" />
     <ClCompile Include="TypeNameHelper.cpp">
       <DependentUpon>TypeNameHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -413,6 +409,7 @@
     <None Include="OneToolkit.def" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="OneToolkit.targets" />
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
   </ItemGroup>

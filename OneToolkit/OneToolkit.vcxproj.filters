@@ -25,12 +25,6 @@
     <Filter Include="Runtime">
       <UniqueIdentifier>{751f88c8-284a-4ded-a6d0-b8d6934c4a21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lifecycle">
-      <UniqueIdentifier>{2c787057-96e1-45a1-95cf-a4e6b073db0d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Collections">
-      <UniqueIdentifier>{09df98cf-ac34-4e45-82c4-21383e23526e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ViewService.cpp">
@@ -41,20 +35,19 @@
     <ClCompile Include="MachineInformation.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="TypeCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OneToolkit.def" />
     <None Include="PropertySheet.props" />
     <None Include="packages.config" />
+    <None Include="OneToolkit.targets" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="OneToolkit.h" />
     <ClInclude Include="MachineInformation.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeCache.h">
-      <Filter>Lifecycle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -115,12 +108,10 @@
     <Midl Include="ThemeHelper.idl">
       <Filter>UI</Filter>
     </Midl>
-    <Midl Include="Lifecycle.idl">
-      <Filter>Lifecycle</Filter>
-    </Midl>
     <Midl Include="IStorageItemHandle.idl">
       <Filter>Storage</Filter>
     </Midl>
+    <Midl Include="Lifecycle.idl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />

@@ -14,9 +14,9 @@ namespace winrt::OneToolkit::Imaging::implementation
 {
 	inline Uri PickerUri { L"microsoft.windows.photos.crop:" };
 
-	IAsyncOperation<bool> CropDialog::CropAsync(StorageFile input, StorageFile destination) const try
+	IAsyncOperation<bool> CropDialog::CropAsync(StorageFile origin, StorageFile destination) const try
 	{
-		SharedFile sharedInput { input };
+		SharedFile sharedInput { origin };
 		SharedFile sharedDestination { destination };
 		auto cropWidth = static_cast<int>(m_CropSize.Width);
 		auto cropHeight = static_cast<int>(m_CropSize.Height);

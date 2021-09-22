@@ -8,7 +8,7 @@ namespace winrt::OneToolkit::Imaging
         struct CropDialog : CropDialogT<CropDialog>
         {
             static Windows::Foundation::IAsyncOperation<bool> IsSupportedAsync();
-            Windows::Foundation::IAsyncOperation<bool> CropAsync(Windows::Storage::StorageFile input, Windows::Storage::StorageFile destination) const;
+            Windows::Foundation::IAsyncOperation<bool> CropAsync(Windows::Storage::StorageFile origin, Windows::Storage::StorageFile destination) const;
             DeclareAutoProperty(bool, IsEllipticalCrop, false);
             DeclareAutoProperty(Windows::Foundation::Size, CropSize, Windows::Foundation::Size(500, 500));
         };
