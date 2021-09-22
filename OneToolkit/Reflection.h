@@ -8,7 +8,10 @@ namespace winrt::OneToolkit::Runtime
 		struct Reflection : ReflectionT<Reflection>
 		{
 			Reflection() = delete;
+			static Windows::UI::Xaml::Interop::TypeName GetTypeId(hstring const& typeName);
+			static juv::uint64 GetSizeOf(Windows::UI::Xaml::Interop::TypeName typeId);
 			static IInspectable ActivateType(Windows::UI::Xaml::Interop::TypeName typeId);
+			static hstring ExtractNamespace(Windows::UI::Xaml::Interop::TypeName typeId);
 			static hstring GetMetadataFileLocation(Windows::UI::Xaml::Interop::TypeName typeId);
 		};
 	}

@@ -310,10 +310,6 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="TypeCache.h" />
-    <ClInclude Include="TypeNameHelper.h">
-      <DependentUpon>TypeNameHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="UISettingsHelper.h">
       <DependentUpon>UISettingsHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -374,10 +370,6 @@
     </ClCompile>
     <ClCompile Include="TypeCache.cpp">
       <DependentUpon>TypeCache.h</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="TypeNameHelper.cpp">
-      <DependentUpon>TypeNameHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
     </ClCompile>
     <ClInclude Include="OneToolkit.h">
       <FileType>Document</FileType>
@@ -463,9 +455,6 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ThemeHelper.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="TypeNameHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="UISettingsHelper.idl">

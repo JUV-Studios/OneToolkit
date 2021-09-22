@@ -93,9 +93,6 @@
     <Midl Include="MachineInformation.idl">
       <Filter>System</Filter>
     </Midl>
-    <Midl Include="TypeNameHelper.idl">
-      <Filter>Runtime</Filter>
-    </Midl>
     <Midl Include="Converters.idl">
       <Filter>UI</Filter>
     </Midl>
