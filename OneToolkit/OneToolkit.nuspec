@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+	<metadata>
+		<id>OneToolkit</id>
+		<version>1.0.0.4-beta</version>
+		<title>OneToolkit</title>
+		<authors>Jaiganesh Kumaran</authors>
+		<owners>JUV Studios</owners>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
+		<licenseUrl>https://sway.office.com/s/5JnZ4XUEqVN7bAsB/embed</licenseUrl>
+		<projectUrl>https://dev.azure.com/JUV-Studios/OneToolkit</projectUrl>
+		<description>OneToolkit provides a set of controls, converters and helpers that help you build modern Windows apps. This package provides the core OneToolkit functionality that's independent of any UI framework or app model.</description>
+		<releaseNotes>
+			Second preview release of 1.0.0.4.
+
+			- Improved performance and functionality.
+			
+			- XAML Converters are back.
+			
+			- Experimental native reflection support.
+			
+			- FontHelper now provides you with the default system font for text in addition to the font for icons.
+		</releaseNotes>
+		<copyright>© 2021 JUV Studios. All rights reserved.</copyright>
+		<language>en-US</language>
+		<tags>winrt winmd windows uwp winui win32 cpp native nativepackage csharp managed juvstudios onetoolkit</tags>
+		<dependencies>
+			<group />
+			<group targetFramework="native0.0">
+				<dependency id="juv" version="1.0.0.9" />
+				<dependency id="Microsoft.Windows.CppWinRT" version="2.0.210913.7" />
+			</group>
+			<group targetFramework=".NETStandard2.0">
+				<dependency id="OneToolkit.Mvvm.Dotnet" version="1.0.0.6" />
+			</group>
+		</dependencies>
+	</metadata>
+</package>

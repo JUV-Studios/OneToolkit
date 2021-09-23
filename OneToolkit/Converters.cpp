@@ -35,7 +35,13 @@ namespace winrt::OneToolkit::UI::Converters::implementation
 	IInspectable StringTypeConverter::ConvertValue(IInspectable const& value, TypeName targetType, IInspectable const&, hstring const&)
 	{
 		if (auto typeName = value.try_as<TypeName>()) return box_value(typeName->Name);
-		else if (auto string = value.try_as<hstring>()) return box_value(Reflection::GetTypeId(*string));
+		else if (auto string = value.try_as<hstring>())
+		{
+			TypeName result;
+			result.Name = *string;
+			result.Kind = TypeInfo::IsTypePrimitive(*string) ? TypeKind::Primitive : TypeKind::Metadata;
+			return box_value(result);
+		}
 		else return nullptr;
 	}
 

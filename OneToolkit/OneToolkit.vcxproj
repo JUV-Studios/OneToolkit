@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210922.5\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210922.5\build\native\Microsoft.Windows.CppWinRT.props')" />
   <Import Project="..\packages\juv.1.0.0.8\build\native\juv.props" Condition="Exists('..\packages\juv.1.0.0.8\build\native\juv.props')" />
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210913.7\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210913.7\build\native\Microsoft.Windows.CppWinRT.props')" />
   <Import Project="..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props" Condition="Exists('..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
@@ -288,15 +288,15 @@
       <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="MetadataFile.h">
+      <DependentUpon>MetadataFile.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="PackageVersionHelper.h">
       <DependentUpon>PackageVersionHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Reflection.h">
-      <DependentUpon>Reflection.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="SettingsService.h">
       <DependentUpon>SettingsService.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -310,6 +310,10 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="TypeCache.h" />
+    <ClInclude Include="TypeInfo.h">
+      <DependentUpon>TypeInfo.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="UISettingsHelper.h">
       <DependentUpon>UISettingsHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -360,8 +364,8 @@
       <DependentUpon>MemoryBufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="Reflection.cpp">
-      <DependentUpon>Reflection.idl</DependentUpon>
+    <ClCompile Include="MetadataFile.cpp">
+      <DependentUpon>MetadataFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ThemeHelper.cpp">
@@ -391,6 +395,10 @@
       <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="TypeInfo.cpp">
+      <DependentUpon>TypeInfo.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="UISettingsHelper.cpp">
       <DependentUpon>UISettingsHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -404,6 +412,9 @@
     <None Include="OneToolkit.def" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="OneToolkit.nuspec">
+      <FileType>XML</FileType>
+    </None>
     <None Include="OneToolkit.targets" />
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
@@ -438,11 +449,11 @@
     <Midl Include="MemoryBufferHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="NavigationType.idl" />
-    <Midl Include="PackageVersionHelper.idl">
+    <Midl Include="MetadataFile.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="Reflection.idl">
+    <Midl Include="NavigationType.idl" />
+    <Midl Include="PackageVersionHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="SettingsService.idl">
@@ -455,6 +466,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ThemeHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="TypeInfo.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="UISettingsHelper.idl">
@@ -471,15 +485,15 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210913.7\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210913.7\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210922.5\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210922.5\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210913.7\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210913.7\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210913.7\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210913.7\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('..\packages\juv.1.0.0.8\build\native\juv.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\juv.1.0.0.8\build\native\juv.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210922.5\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210922.5\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210922.5\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210922.5\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
 </Project>

@@ -12,6 +12,14 @@ namespace winrt::OneToolkit::UI::implementation
 {
 	using RtlGetVersion = int(_stdcall*)(PRTL_OSVERSIONINFOW);
 
+	hstring FontHelper::DefaultTextFontFamily()
+	{
+		RTL_OSVERSIONINFOW versionInfo{ .dwOSVersionInfoSize = sizeof(RTL_OSVERSIONINFOW) };
+		Runtime::DynamicModule ntdll{ L"ntdll.dll" };
+		ntdll.GetProcAddress<RtlGetVersion>("RtlGetVersion")(&versionInfo);
+		return versionInfo.dwBuildNumber >= 21376 ? L"Segoe UI Variable" : L"Segoe UI";
+	}
+
 	hstring FontHelper::DefaultIconFontFamily()
 	{
 		RTL_OSVERSIONINFOW versionInfo { .dwOSVersionInfoSize = sizeof(RTL_OSVERSIONINFOW) };
@@ -20,7 +28,7 @@ namespace winrt::OneToolkit::UI::implementation
 		return versionInfo.dwBuildNumber >= 21327 ? L"Segoe Fluent Icons" : L"Segoe MDL2 Assets";
 	}
 
-	IVectorView<hstring> FontHelper::GetInstalledFontFamilies()
+	IVectorView<hstring> FontHelper::InstalledFontFamilies()
 	{
 		std::vector<hstring> fontFamilies;
 		com_ptr<IDWriteFactory> factory;

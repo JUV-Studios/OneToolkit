@@ -3,7 +3,8 @@ namespace OneToolkit.UI
     [default_interface]
     static runtimeclass FontHelper
     {
+        static String DefaultTextFontFamily { get; };
         static String DefaultIconFontFamily { get; };
-        static IVectorView<String> GetInstalledFontFamilies();
+        static IVectorView<String> InstalledFontFamilies { get; };
     }
 }

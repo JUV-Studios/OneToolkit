@@ -12,7 +12,7 @@ namespace winrt::OneToolkit::Storage::implementation
 {
 	SettingsService::SettingsService(ApplicationDataContainer const& dataContainer) : m_DataContainer(dataContainer)
 	{
-		if (dataContainer == nullptr) throw hresult_invalid_argument(L"DataContainer for a SettingsService instance must not be null.");
+		if (!dataContainer) throw hresult_invalid_argument(L"DataContainer for a SettingsService instance must not be null.");
 	}
 
 	IInspectable SettingsService::GetValue(hstring const& key, IInspectable const& defaultValue) const

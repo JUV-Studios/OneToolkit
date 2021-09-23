@@ -1,0 +1,21 @@
+import "MetadataFile.idl";
+
+namespace OneToolkit.Runtime
+{
+    [default_interface]
+    runtimeclass TypeInfo
+    {
+        TypeInfo(Windows.UI.Xaml.Interop.TypeName typeId);
+        [noexcept] Windows.UI.Xaml.Interop.TypeName Id { get; };
+        [noexcept] String Name { get; };
+        [noexcept] String Namespace { get; };
+        [noexcept] Windows.UI.Xaml.Interop.TypeKind Kind{ get; };
+        [noexcept] String QualifiedName { get; };
+        UInt64 BaseSize { get; };
+        MetadataFile Metadata { get; };
+        Object CreateInstance();
+        Object CreateInstance(Object[] args);
+        static TypeInfo GetTypeInfo(String qualifiedName);
+        static Boolean IsTypePrimitive(String qualifiedName);
+    }
+}

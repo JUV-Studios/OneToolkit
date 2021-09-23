@@ -8,8 +8,9 @@ namespace winrt::OneToolkit::UI
         struct FontHelper : FontHelperT<FontHelper>
         {
             FontHelper() = delete;
+            static hstring DefaultTextFontFamily();
             static hstring DefaultIconFontFamily();
-            static Windows::Foundation::Collections::IVectorView<hstring> GetInstalledFontFamilies();
+            static Windows::Foundation::Collections::IVectorView<hstring> InstalledFontFamilies();
         };
     }
 

@@ -41,6 +41,7 @@
     <None Include="PropertySheet.props" />
     <None Include="packages.config" />
     <None Include="OneToolkit.targets" />
+    <None Include="OneToolkit.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -99,9 +100,6 @@
     <Midl Include="FileSizeHelper.idl">
       <Filter>Storage</Filter>
     </Midl>
-    <Midl Include="Reflection.idl">
-      <Filter>Runtime</Filter>
-    </Midl>
     <Midl Include="ThemeHelper.idl">
       <Filter>UI</Filter>
     </Midl>
@@ -109,6 +107,12 @@
       <Filter>Storage</Filter>
     </Midl>
     <Midl Include="Lifecycle.idl" />
+    <Midl Include="TypeInfo.idl">
+      <Filter>Runtime</Filter>
+    </Midl>
+    <Midl Include="MetadataFile.idl">
+      <Filter>Runtime</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
