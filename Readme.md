@@ -10,4 +10,5 @@ OneToolkit provides a set of controls, converters and helpers that help you buil
 
 [Get it on NuGet](https://www.nuget.org/packages/OneToolkit/)\
 [Send us feedback](https://www.nuget.org/packages/OneToolkit/1.0.0.3/ContactOwners)\
-[Get help on Discord](http://discord.com/invite/CZpBpPQjq8)
+[Get help on Discord](http://discord.com/invite/CZpBpPQjq8)\
+[Read the documentation](https://dev.azure.com/JUV-Studios/OneToolkit/_wiki/wikis)
