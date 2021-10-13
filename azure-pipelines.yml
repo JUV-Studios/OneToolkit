@@ -13,4 +13,4 @@ steps:
 - task: NuGetToolInstaller@1
 - task: BatchScript@1
   inputs:
-    filename: 'build.cmd'
+    filename: 'juv/build.cmd'
