@@ -1,7 +1,7 @@
 ﻿namespace OneToolkit.UI.Input
 {
 	/// <summary>
-	/// Provides static helper methods for building your own tabbing system.
+	/// Provides helper methods for building your own tabbing system.
 	/// </summary>
 	public static class TabSwitcher
 	{

@@ -15,9 +15,13 @@ namespace OneToolkit::UI::Xaml::Controls
 		HubPanel();
 
 		DeclareDependencyProperty(double, Spacing);
+
+		DeclareDependencyProperty(bool, UseAutoOrientation);
 		
 		void SetPaddingProperties();
 	private:
+		void Hub_SizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e);
+		void OrientationPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyProperty^ dp);
 		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
 	};
 }

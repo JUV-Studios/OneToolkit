@@ -1,43 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>OneToolkit</RootNamespace>
-    <LangVersion>9.0</LangVersion>
-    <Title>OneToolkit for .NET</Title>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageId>OneToolkit.Dotnet</PackageId>
-    <Version>1.0.0.8</Version>
-    <Authors>Jaiganesh Kumaran</Authors>
-    <Company>JUV Studios</Company>
-    <Product>OneToolkit</Product>
-    <Description>OneToolkit provides a set of controls, converters and helpers that help you build modern Windows apps. This package provides a set of functionality (including the MVVM framework) that can be used on any platform with .NET Standard 2.0 or later.</Description>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageLicenseExpression></PackageLicenseExpression>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <PackageReleaseNotes>Fixed an issue which prevented using ObservableProperty instances for XAML data binding.</PackageReleaseNotes>
-    <Copyright>© 2021 JUV Studios. All rights reserved.</Copyright>
-    <PackageTags>mvvm onetoolkit juvstudios dotnet</PackageTags>
-    <AssemblyVersion>1.0.0.8</AssemblyVersion>
-    <FileVersion>1.0.0.8</FileVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>OneToolkit.Dotnet.xml</DocumentationFile>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>OneToolkit.Dotnet.xml</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\LICENSE.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Memory" Version="4.5.4" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<RootNamespace>OneToolkit</RootNamespace>
+		<LangVersion>9.0</LangVersion>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<OutputPath>..\Artifacts\OneToolkit.Dotnet\$(Configuration)</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<Title>OneToolkit for .NET</Title>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageId>OneToolkit.Dotnet</PackageId>
+		<Version>1.0.0.8</Version>
+		<Authors>Jaiganesh Kumaran</Authors>
+		<Company>JUV Studios</Company>
+		<Product>OneToolkit</Product>
+		<Description>OneToolkit provides a set of controls, converters and helpers that help you build modern Windows apps and cross-platform .NET apps. This package provides a set of functionality that can be used on any platform with .NET Standard 2.0 or later.</Description>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageLicenseUrl>https://sway.office.com/s/5JnZ4XUEqVN7bAsB/embed</PackageLicenseUrl>
+		<PackageReleaseNotes>Fixed an issue which prevented using ObservableProperty instances for XAML data binding.</PackageReleaseNotes>
+		<Copyright>© 2021 JUV Studios. All rights reserved.</Copyright>
+		<PackageTags>mvvm onetoolkit juvstudios dotnet</PackageTags>
+		<AssemblyVersion>1.0.0.8</AssemblyVersion>
+		<FileVersion>1.0.0.8</FileVersion>
+		<RepositoryUrl>https://dev.azure.com/JUV-Studios/OneToolkit</RepositoryUrl>
+		<PackageProjectUrl>https://dev.azure.com/JUV-Studios/OneToolkit</PackageProjectUrl>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile></DocumentationFile>
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DocumentationFile></DocumentationFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Memory" Version="4.5.4" />
+		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.0" />
+	</ItemGroup>
 </Project>

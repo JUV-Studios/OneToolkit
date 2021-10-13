@@ -18,7 +18,11 @@ namespace OneToolkit::UI::Xaml::Controls
 		DeclareDependencyProperty(Platform::String^, Title);
 
 		DeclareDependencyProperty(Platform::String^, Caption);
+		
+		DeclareDependencyProperty(Windows::Foundation::Uri^, NavigateUri);
 	private:
+		Windows::Foundation::EventRegistrationToken m_ClickHandlerToken;
+		void Button_Click(Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		static void DependencyPropertyChanged(Windows::UI::Xaml::DependencyObject^ sender, Windows::UI::Xaml::DependencyPropertyChangedEventArgs^ e);
 	};
 }

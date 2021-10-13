@@ -1,14 +1,20 @@
-﻿using System;
-using Windows.System;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace OneToolkit.Showcase.Views
 {
-	public sealed partial class HomePage : UserControl
+	public sealed partial class HomePage : Page
 	{
 		public HomePage() => InitializeComponent();
 
-		private async void Install_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new("https://www.nuget.org/profiles/JUVStudios"));
+		private void ReferenceGridItem_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(ApiReference), (sender as FrameworkElement).DataContext, App.PageTransition);
+		}
+
+		private void PlaygroundsButton_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(Playgrounds), null, App.PageTransition);
+		}
 	}
 }

@@ -10,5 +10,6 @@ namespace OneToolkit.Storage
         UInt64 FileSize { get; };
         [noexcept] FileSharingMode SharingMode { get; };
         [noexcept] Windows.Storage.FileAccessMode AccessMode { get; };
+        Windows.Foundation.IAsyncOperation<Windows.Storage.StorageFile> GetStorageFileAsync();
     }
 }

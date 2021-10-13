@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "ImageResizer.h"
-#include "Imaging.ImageResizer.g.cpp"
+#include "Media.Imaging.ImageResizer.g.cpp"
 
 using namespace juv;
 using namespace winrt;
@@ -8,7 +8,7 @@ using namespace Windows::Foundation;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Graphics::Imaging;
 
-namespace winrt::OneToolkit::Imaging::implementation
+namespace winrt::OneToolkit::Media::Imaging::implementation
 {
 	IAsyncAction ImageResizer::RescaleAsync(Size desiredSize, BitmapInterpolationMode interpolationMode, IRandomAccessStream const& inputStream, IRandomAccessStream const& outputStream)
 	{

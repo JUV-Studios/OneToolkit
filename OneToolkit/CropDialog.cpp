@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "CropDialog.h"
-#include "Imaging.CropDialog.g.cpp"
+#include "Media.Imaging.CropDialog.g.cpp"
 
 using namespace winrt;
 using namespace Windows::System;
@@ -10,10 +10,8 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::ApplicationModel::DataTransfer;
 using namespace OneToolkit::Storage;
 
-namespace winrt::OneToolkit::Imaging::implementation
+namespace winrt::OneToolkit::Media::Imaging::implementation
 {
-	inline Uri PickerUri { L"microsoft.windows.photos.crop:" };
-
 	IAsyncOperation<bool> CropDialog::CropAsync(StorageFile origin, StorageFile destination) const try
 	{
 		SharedFile sharedInput { origin };
@@ -28,15 +26,20 @@ namespace winrt::OneToolkit::Imaging::implementation
 		parameters.Insert(L"EllipticalCrop", box_value(m_IsEllipticalCrop));
 		LauncherOptions options;
 		options.TargetApplicationPackageFamilyName(L"Microsoft.Windows.Photos_8wekyb3d8bbwe");
-		auto result = co_await Launcher::LaunchUriForResultsAsync(PickerUri, options);
+		auto result = co_await Launcher::LaunchUriForResultsAsync(PickerUri(), options);
 		if (result.Status() != LaunchUriStatus::Success || result.Result() == nullptr) co_return false;
 		else co_return true;
 	}
 	catch (hresult_error const&) { co_return false;	}
 
+	Uri CropDialog::PickerUri()
+	{
+		return Uri(L"microsoft.windows.photos.crop:");
+	}
+
 	IAsyncOperation<bool> CropDialog::IsSupportedAsync()
 	{
-		auto status = co_await Launcher::QueryUriSupportAsync(PickerUri, LaunchQuerySupportType::UriForResults, L"Microsoft.Windows.Photos_8wekyb3d8bbwe");
+		auto status = co_await Launcher::QueryUriSupportAsync(PickerUri(), LaunchQuerySupportType::UriForResults, L"Microsoft.Windows.Photos_8wekyb3d8bbwe");
 		co_return status == LaunchQuerySupportStatus::Available;
 	}
 }

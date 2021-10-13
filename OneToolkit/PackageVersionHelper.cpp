@@ -1,19 +1,19 @@
 ﻿#include "pch.h"
 #include "PackageVersionHelper.h"
-#include "ApplicationModel.PackageVersionHelper.g.cpp"
+#include "System.PackageVersionHelper.g.cpp"
 
 using namespace juv;
 using namespace winrt;
 using namespace Windows::ApplicationModel;
 
-namespace winrt::OneToolkit::ApplicationModel::implementation
+namespace winrt::OneToolkit::System::implementation
 {
-	hstring PackageVersionHelper::ToFormattedString(PackageVersion packageVersion)
+	hstring PackageVersionHelper::Stringify(PackageVersion packageVersion)
 	{
 		return hstring(std::format(L"{0}.{1}.{2}.{3}", packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision));
 	}
 
-	PackageVersion PackageVersionHelper::FromFormattedString(hstring const& formattedString)
+	PackageVersion PackageVersionHelper::Parse(hstring const& formattedString)
 	{
 		auto setVersionField = [](std::wstring& token, uint16& field)
 		{

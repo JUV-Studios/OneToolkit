@@ -1,7 +1,7 @@
 ﻿#pragma once
-#include "Imaging.ImageResizer.g.h"
+#include "Media.Imaging.ImageResizer.g.h"
 
-namespace winrt::OneToolkit::Imaging
+namespace winrt::OneToolkit::Media::Imaging
 {
     namespace implementation
     {

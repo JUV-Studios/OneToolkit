@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppMenuAboutItem.Text" xml:space="preserve">
+    <value>About this app</value>
+  </data>
+  <data name="AppMenuCloseItem.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="AppMenuFeedbackItem.Text" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="AppMenuHelpItem.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="AppMenuMinimizeItem.Text" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="AppMenuSettingsItem.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="ClassText" xml:space="preserve">
     <value>class</value>
   </data>
@@ -126,20 +144,29 @@
   <data name="DisableSoundEffectsSwitch.Header" xml:space="preserve">
     <value>Disable sound effects</value>
   </data>
-  <data name="DiscordServerInviteLink.Content" xml:space="preserve">
-    <value>Join our Discord server</value>
-  </data>
   <data name="EnumerationText" xml:space="preserve">
     <value>enumeration</value>
+  </data>
+  <data name="ExitFullScreenText" xml:space="preserve">
+    <value>Exit full screen</value>
   </data>
   <data name="FeedbackNavItem.Content" xml:space="preserve">
     <value>Feedback</value>
   </data>
+  <data name="FullScreenText" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="GetStartedSection.Header" xml:space="preserve">
+    <value>Get started</value>
+  </data>
   <data name="HomeHub.Header" xml:space="preserve">
     <value>Welcome</value>
   </data>
-  <data name="HomeNavItem.Content" xml:space="preserve">
-    <value>Home</value>
+  <data name="InstallPackagesButton.Caption" xml:space="preserve">
+    <value>Install the applicable NuGet packages that OneToolkit provides</value>
+  </data>
+  <data name="InstallPackagesButton.Title" xml:space="preserve">
+    <value>Install NuGet packages</value>
   </data>
   <data name="InterfaceText" xml:space="preserve">
     <value>interface</value>
@@ -147,26 +174,35 @@
   <data name="MacrosText" xml:space="preserve">
     <value>Macros</value>
   </data>
+  <data name="MoreButton.AutomationProperties.Name" xml:space="preserve">
+    <value>App menu</value>
+  </data>
+  <data name="MoreButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>App menu (Alt+F)</value>
+  </data>
   <data name="NamespaceText" xml:space="preserve">
     <value>namespace</value>
   </data>
-  <data name="NavigationMenu.AutomationProperties.HelpText" xml:space="preserve">
-    <value>Use Ctrl+Tab to switch between the pages quickly, wherever you are.</value>
+  <data name="OptionsSection.Header" xml:space="preserve">
+    <value>Options</value>
   </data>
-  <data name="NavigationMenu.AutomationProperties.Name" xml:space="preserve">
-    <value>Navigation menu</value>
+  <data name="PlaygroundsButton.Caption" xml:space="preserve">
+    <value>Prototype your UI quickly</value>
   </data>
-  <data name="PlaygroundHubPreview.Header" xml:space="preserve">
-    <value>Preview</value>
-  </data>
-  <data name="PlaygroundNavItem.Content" xml:space="preserve">
-    <value>Playground</value>
+  <data name="PlaygroundsButton.Title" xml:space="preserve">
+    <value>Playgrounds</value>
   </data>
   <data name="PreviewAutoRefreshSwitch.Header" xml:space="preserve">
     <value>Automatically refresh playground's preview as I type</value>
   </data>
   <data name="ProgrammingLanguageBox.Header" xml:space="preserve">
     <value>Preferred programming language</value>
+  </data>
+  <data name="ReadDocsButton.Caption" xml:space="preserve">
+    <value>Learn how to leverage OneToolkit to build great apps with best practices</value>
+  </data>
+  <data name="ReadDocsButton.Title" xml:space="preserve">
+    <value>Read the docs</value>
   </data>
   <data name="ReferenceHubClasses.Header" xml:space="preserve">
     <value>Classes</value>
@@ -183,43 +219,28 @@
   <data name="ReferenceHubStructures.Header" xml:space="preserve">
     <value>Structures</value>
   </data>
-  <data name="ReferenceNavItem.Content" xml:space="preserve">
-    <value>API reference</value>
-  </data>
   <data name="ReferenceSearchBox.PlaceholderText" xml:space="preserve">
     <value>What are you looking for?</value>
   </data>
-  <data name="SettingsExpanderDependencies.Header" xml:space="preserve">
-    <value>Dependencies &amp; references</value>
+  <data name="ReferenceSection.Header" xml:space="preserve">
+    <value>API reference</value>
   </data>
-  <data name="SettingsExpanderLinks.Header" xml:space="preserve">
-    <value>Useful links</value>
+  <data name="SearchBox.PlaceholderText" xml:space="preserve">
+    <value>What are you looking for?</value>
   </data>
-  <data name="SettingsHubAbout.Header" xml:space="preserve">
-    <value>About this app</value>
+  <data name="SearchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Search</value>
   </data>
-  <data name="SettingsHubBrowsing.Header" xml:space="preserve">
-    <value>Browsing</value>
-  </data>
-  <data name="SettingsHubGeneral.Header" xml:space="preserve">
-    <value>General</value>
-  </data>
-  <data name="SettingsNavItem.Content" xml:space="preserve">
-    <value>Settings</value>
+  <data name="SearchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Search (Ctrl+F)</value>
   </data>
   <data name="StructureText" xml:space="preserve">
     <value>structure</value>
   </data>
   <data name="TermsOfUseLink.Content" xml:space="preserve">
-    <value>JUV Studios Terms of use</value>
-  </data>
-  <data name="TwitterFollowLink.Content" xml:space="preserve">
-    <value>Follow us on Twitter</value>
+    <value>JUV Studios Terms of Use</value>
   </data>
   <data name="VersionText" xml:space="preserve">
     <value>Version {0}</value>
-  </data>
-  <data name="YouTubeSubscribeLink.Content" xml:space="preserve">
-    <value>Subscribe to Jaiganesh Useful Videos</value>
   </data>
 </root>

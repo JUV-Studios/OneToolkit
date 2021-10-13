@@ -7,6 +7,7 @@ namespace winrt::OneToolkit::UI
     {
         struct ViewService : ViewServiceT<ViewService, ViewService>
         {
+            static bool IsFreeWindowingSupported();
             static Windows::UI::ViewManagement::UserInteractionMode InteractionMode();
             static OneToolkit::UI::ViewService GetForCurrentView();
             static OneToolkit::UI::ViewService GetForWindowId(WindowId windowId);

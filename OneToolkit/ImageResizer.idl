@@ -1,4 +1,4 @@
-namespace OneToolkit.Imaging
+namespace OneToolkit.Media.Imaging
 {
     [default_interface]
     static runtimeclass ImageResizer

@@ -3,7 +3,7 @@
 namespace OneToolkit.UI
 {
 	/// <summary>
-	/// Provides static helper methods for manipulating colors.
+	/// Provides helper methods for manipulating colors.
 	/// </summary>
 	public static class ColorUtility
 	{
@@ -15,6 +15,6 @@ namespace OneToolkit.UI
 		/// <summary>
 		/// Finds the inverse of a color.
 		/// </summary>
-		public static Color Invert(Color color) => Color.FromArgb(InvertComponent(color.A), InvertComponent(color.R), InvertComponent(color.G), InvertComponent(color.B));
+		public static Color Invert(this Color color) => Color.FromArgb(InvertComponent(color.A), InvertComponent(color.R), InvertComponent(color.G), InvertComponent(color.B));
 	}
 }

@@ -1,15 +1,15 @@
 ﻿#pragma once
-#include "ApplicationModel.PackageVersionHelper.g.h"
+#include "System.PackageVersionHelper.g.h"
 
-namespace winrt::OneToolkit::ApplicationModel
+namespace winrt::OneToolkit::System
 {
     namespace implementation
     {
         struct PackageVersionHelper : PackageVersionHelperT<PackageVersionHelper>
         {
             PackageVersionHelper() = delete;
-            static hstring ToFormattedString(Windows::ApplicationModel::PackageVersion packageVersion);
-            static Windows::ApplicationModel::PackageVersion FromFormattedString(hstring const& formattedString);
+            static hstring Stringify(Windows::ApplicationModel::PackageVersion packageVersion);
+            static Windows::ApplicationModel::PackageVersion Parse(hstring const& formattedString);
         };
     }
 

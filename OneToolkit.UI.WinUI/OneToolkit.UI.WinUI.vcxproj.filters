@@ -2,51 +2,15 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Resources">
-      <UniqueIdentifier>accd3aa8-1ba0-4223-9bbe-0c431709210b</UniqueIdentifier>
+      <UniqueIdentifier>479408d4-9b0c-4fd1-b875-18f9b78055e0</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Controls">
-      <UniqueIdentifier>{2db97031-ede0-4010-98fd-fbfae1a15d8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Media">
-      <UniqueIdentifier>{ff1f5a06-2ba8-4333-bc57-b8b33b5b47c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Media\Animation">
-      <UniqueIdentifier>{4b0f314f-5cb4-483e-ab64-0f9998e24012}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="WindowHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="WindowHelper.h" />
+    <ClInclude Include="OneToolkit.UI.WinUI.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="OneToolkit_UI_WinUI.def" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PropertySheet.props" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="readme.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="WindowHelper.idl" />
-    <Midl Include="IContentTransition.idl">
-      <Filter>Media\Animation</Filter>
-    </Midl>
-    <Midl Include="DefaultContentTransition.idl">
-      <Filter>Media\Animation</Filter>
-    </Midl>
-    <Midl Include="SlideContentTransition.idl">
-      <Filter>Media\Animation</Filter>
-    </Midl>
   </ItemGroup>
 </Project>

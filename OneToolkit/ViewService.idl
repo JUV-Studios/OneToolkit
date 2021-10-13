@@ -8,14 +8,21 @@ namespace OneToolkit.UI
     };
     
     [default_interface]
-    runtimeclass ViewService
+    runtimeclass ViewService : Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         String Title;
         WindowId Id { get; };
+        Boolean IsFullScreen;
         Windows.Foundation.Rect Bounds { get; };
+        Double TitleBarHeight { get; };
+        Windows.UI.Xaml.Thickness TitleBarInset { get; };
         [noexcept] Windows.UI.ViewManagement.ApplicationView AppView { get; };
         [noexcept] Windows.ApplicationModel.Core.CoreApplicationView CoreAppView { get; };
-        Windows.Foundation.IAsyncOperation<Boolean> CloseAsync();
+        [noexcept] Windows.UI.Core.SystemNavigationManager NavigationManager { get; };
+        void ToggleFullScreen();
+        void CloseView();
+        Windows.Foundation.IAsyncOperation<Boolean> TryCloseAsync();
+        static Boolean IsFreeWindowingSupported { get; };
         static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         static ViewService GetForCurrentView();
         static ViewService GetForWindowId(WindowId windowId);

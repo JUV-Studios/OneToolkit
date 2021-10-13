@@ -1,57 +1,45 @@
 ﻿#pragma once
-#include "Lifecycle.WeakTypeCache.g.h"
-#include "Lifecycle.StrongTypeCache.g.h"
+#include "Lifecycle.TypeCache.g.h"
 
 namespace winrt::OneToolkit::Lifecycle
 {
 	namespace implementation
 	{
-		template <typename T>
-		struct TypeCacheBase
+		struct TypeCacheReference
 		{
 		public:
-			bool IsTypePresent(Windows::UI::Xaml::Interop::TypeName typeId)
+			TypeCacheReference();
+			void operator=(std::pair<Windows::Foundation::IInspectable, TypeCacheKind> value) noexcept;
+			operator Windows::Foundation::IInspectable() const noexcept;
+			operator bool() const noexcept;
+			~TypeCacheReference() noexcept;
+		private:
+			bool m_IsWeak = false;
+			union
 			{
-				const slim_lock_guard lockGuard{ m_AccessLock };
-				return static_cast<bool>(m_TypeCache[typeId.Name]);
-			}
+				Windows::Foundation::IInspectable m_Strong;
+				weak_ref<Windows::Foundation::IInspectable> m_Weak;
+			};
+		};
 
-			void Emplace(Windows::UI::Xaml::Interop::TypeName typeId, Windows::Foundation::IInspectable const& instance)
-			{
-				const slim_lock_guard lockGuard{ m_AccessLock };
-				m_TypeCache[typeId.Name] = instance;
-			}
-
-			void Remove(Windows::UI::Xaml::Interop::TypeName typeId)
-			{
-				const slim_lock_guard lockGuard{ m_AccessLock };
-				m_TypeCache.erase(typeId.Name);
-			}
-		protected:
+		struct TypeCache : TypeCacheT<TypeCache>
+		{
+		public:
+			TypeCache(TypeCacheKind kind);
+			DeclareAutoProperty(TypeCacheKind, Kind, {});
+			bool IsTypePresent(Windows::UI::Xaml::Interop::TypeName typeId);
+			void Emplace(Windows::UI::Xaml::Interop::TypeName typeId, IInspectable const& instance);
+			void Remove(Windows::UI::Xaml::Interop::TypeName typeId);
+			IInspectable GetInstance(Windows::UI::Xaml::Interop::TypeName typeId, SingletonInstanceProvider instanceProvider = nullptr);
+		private:
 			slim_mutex m_AccessLock;
-			std::map<hstring, T> m_TypeCache;
-		};
-
-		struct WeakTypeCache : WeakTypeCacheT<WeakTypeCache>, TypeCacheBase<weak_ref<Windows::Foundation::IInspectable>>
-		{
-			IInspectable GetInstance(Windows::UI::Xaml::Interop::TypeName typeId);
-			IInspectable GetInstance(Windows::UI::Xaml::Interop::TypeName typeId, SingletonInstanceProvider const& provider);
-		};
-
-		struct StrongTypeCache : StrongTypeCacheT<StrongTypeCache>, TypeCacheBase<Windows::Foundation::IInspectable>
-		{
-			IInspectable GetInstance(Windows::UI::Xaml::Interop::TypeName typeId);
-			IInspectable GetInstance(Windows::UI::Xaml::Interop::TypeName typeId, SingletonInstanceProvider const& provider);
+			std::map<hstring, TypeCacheReference> m_Storage;
 		};
 	}
 
 	namespace factory_implementation
 	{
-		struct WeakTypeCache : WeakTypeCacheT<WeakTypeCache, implementation::WeakTypeCache>
-		{
-		};
-
-		struct StrongTypeCache : StrongTypeCacheT<StrongTypeCache, implementation::StrongTypeCache>
+		struct TypeCache : TypeCacheT<TypeCache, implementation::TypeCache>
 		{
 		};
 	}

@@ -1,0 +1,8 @@
+namespace OneToolkit.Metadata
+{
+	[attributeusage(target_struct, target_enum, target_interface, target_runtimeclass, target_event, target_method, target_property)]
+	attribute DescriptionAttribute
+	{
+		String Text;
+	}
+}

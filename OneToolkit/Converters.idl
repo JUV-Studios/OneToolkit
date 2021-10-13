@@ -1,20 +1,27 @@
 namespace OneToolkit.UI.Converters
 {
-	delegate Object XamlDataConvertHandler(Object value, Windows.UI.Xaml.Interop.TypeName targetType, Object parameter, String language);
-	
-	[bindable]
 	[default_interface]
-	runtimeclass CustomConverter : Windows.UI.Xaml.Data.IValueConverter, Windows.UI.Xaml.Data.INotifyPropertyChanged
+	runtimeclass NullToBoolConverter : Windows.UI.Xaml.Data.IValueConverter
 	{
-		CustomConverter();
-		XamlDataConvertHandler ConvertDelegate;
-		XamlDataConvertHandler ConvertBackDelegate;
+		NullToBoolConverter();
 	}
 
 	[default_interface]
-	runtimeclass StringTypeConverter : Windows.UI.Xaml.Data.IValueConverter
+	runtimeclass VisibilityToOpacityConverter : Windows.UI.Xaml.Data.IValueConverter
 	{
-		StringTypeConverter();
+		VisibilityToOpacityConverter();
+	}
+
+	[default_interface]
+	runtimeclass BoolReverseConverter : Windows.UI.Xaml.Data.IValueConverter
+	{
+		BoolReverseConverter();
+	}
+
+	[default_interface]
+	runtimeclass StringTypeIdConverter : Windows.UI.Xaml.Data.IValueConverter
+	{
+		StringTypeIdConverter();
 	}
 
 	[default_interface]
@@ -35,5 +42,11 @@ namespace OneToolkit.UI.Converters
 	{
 		StringLocalizationConverter();
 		Windows.ApplicationModel.Resources.ResourceLoader Context;
+	}
+
+	[default_interface]
+	runtimeclass StringToVisibilityConverter : Windows.UI.Xaml.Data.IValueConverter
+	{
+		StringToVisibilityConverter();
 	}
 }

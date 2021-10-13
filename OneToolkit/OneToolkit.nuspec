@@ -7,23 +7,15 @@
 		<authors>Jaiganesh Kumaran</authors>
 		<owners>JUV Studios</owners>
 		<requireLicenseAcceptance>true</requireLicenseAcceptance>
-		<licenseUrl>https://sway.office.com/s/5JnZ4XUEqVN7bAsB/embed</licenseUrl>
 		<projectUrl>https://dev.azure.com/JUV-Studios/OneToolkit</projectUrl>
-		<description>OneToolkit provides a set of controls, converters and helpers that help you build modern Windows apps. This package provides the core OneToolkit functionality that's independent of any UI framework or app model.</description>
-		<releaseNotes>
-			Second preview release of 1.0.0.4.
-
-			- Improved performance and functionality.
-			
-			- XAML Converters are back.
-			
-			- Experimental native reflection support.
-			
-			- FontHelper now provides you with the default system font for text in addition to the font for icons.
-		</releaseNotes>
+		<licenseUrl>https://sway.office.com/s/5JnZ4XUEqVN7bAsB/embed</licenseUrl>
+		<summary>If you're using C++, don't forget to include OneToolkit.h in your precompiled header for getting access to everything provided with this package.</summary>
+		<description>OneToolkit provides a set of controls, converters and helpers that help you build modern Windows apps and cross-platform .NET apps. This package provides the core OneToolkit functionality for Windows that's independent of any UI framework or app model.</description>
+		<releaseNotes>Second preview release of 1.0.0.4.</releaseNotes>
 		<copyright>© 2021 JUV Studios. All rights reserved.</copyright>
 		<language>en-US</language>
 		<tags>winrt winmd windows uwp winui win32 cpp native nativepackage csharp managed juvstudios onetoolkit</tags>
+		<serviceable>true</serviceable>
 		<dependencies>
 			<group />
 			<group targetFramework="native0.0">
@@ -31,8 +23,21 @@
 				<dependency id="Microsoft.Windows.CppWinRT" version="2.0.210913.7" />
 			</group>
 			<group targetFramework=".NETStandard2.0">
-				<dependency id="OneToolkit.Mvvm.Dotnet" version="1.0.0.6" />
+				<dependency id="OneToolkit.Dotnet" version="1.0.0.8" />
 			</group>
 		</dependencies>
 	</metadata>
+	<files>
+		<file src="OneToolkit.targets" target="build\native" />
+		<file src="OneToolkit.h" target="build\native\include" />
+		<file src="..\Artifacts\OneToolkit\Release\Win32\OneToolkit.winmd" target="lib\uap10.0" />
+		<file src="..\Artifacts\OneToolkit\Release\ARM\OneToolkit.dll" target="runtimes\win10-arm\native" />
+		<file src="..\Artifacts\OneToolkit\Release\ARM\OneToolkit.pri" target="runtimes\win10-arm\native" />
+		<file src="..\Artifacts\OneToolkit\Release\ARM64\OneToolkit.dll" target="runtimes\win10-arm64\native" />
+		<file src="..\Artifacts\OneToolkit\Release\ARM64\OneToolkit.pri" target="runtimes\win10-arm64\native" />
+		<file src="..\Artifacts\OneToolkit\Release\x64\OneToolkit.dll" target="runtimes\win10-x64\native" />
+		<file src="..\Artifacts\OneToolkit\Release\x64\OneToolkit.pri" target="runtimes\win10-x64\native" />
+		<file src="..\Artifacts\OneToolkit\Release\Win32\OneToolkit.dll" target="runtimes\win10-x86\native" />
+		<file src="..\Artifacts\OneToolkit\Release\Win32\OneToolkit.pri" target="runtimes\win10-x86\native" />
+	</files>
 </package>

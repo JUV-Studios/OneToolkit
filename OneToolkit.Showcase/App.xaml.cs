@@ -4,8 +4,9 @@ using Windows.ApplicationModel.Activation;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;
-using OneToolkit.Lifecycle;
 using OneToolkit.Showcase.Views;
+using OneToolkit.Lifecycle;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace OneToolkit.Showcase
 {
@@ -24,7 +25,7 @@ namespace OneToolkit.Showcase
             AppCenter.Start("c1fa7718-3c52-47a4-b969-abbe4d7816c5", typeof(Analytics), typeof(Crashes));
         }
 
-        public static readonly WeakTypeCache PageTypeCache = new();
+        public static readonly DrillInNavigationTransitionInfo PageTransition = new();
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -45,7 +46,5 @@ namespace OneToolkit.Showcase
 
 namespace System.Runtime.CompilerServices
 {
-    internal sealed class IsExternalInit
-	{
-	}
+    internal static class IsExternalInit { }   
 }

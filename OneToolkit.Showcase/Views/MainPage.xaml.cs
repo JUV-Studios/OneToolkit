@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Linq;
-using System.ComponentModel;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls;
-using OneToolkit.UI.Input;
 using OneToolkit.UI.Xaml.Controls;
+using OneToolkit.System;
+using OneToolkit.Showcase.Dialogs;
 using OneToolkit.Showcase.ViewModels;
+using Windows.ApplicationModel;
 
 namespace OneToolkit.Showcase.Views
 {
@@ -18,89 +17,37 @@ namespace OneToolkit.Showcase.Views
 		public MainPage()
 		{
 			InitializeComponent();
-			var universalViewService = SettingsViewModel.ViewServiceProvider;
-			universalViewService.AppView.SetPreferredMinSize(new(500, 500));
+			SettingsViewModel.ViewServiceProvider.AppView.SetPreferredMinSize(new(500, 500));
 			SettingsViewModel.ViewServiceProvider.CoreAppView.TitleBar.ExtendViewIntoTitleBar = true;
+			SettingsViewModel.ViewServiceProvider.NavigationManager.BackRequested += NavigationManager_BackRequested;
 			var titleBar = SettingsViewModel.ViewServiceProvider.AppView.TitleBar;
 			titleBar.BackgroundColor = Colors.Transparent;
 			titleBar.ButtonBackgroundColor = Colors.Transparent;
 			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-			SettingsViewModel.Instance.Initialize();
 			Microsoft.UI.Xaml.Controls.BackdropMaterial.SetApplyToRootOrPageBackground(this, true);
 		}
 
-		public static ContentFrame ContentFrame => (Window.Current.Content as MainPage).Presenter;
-
-		public static ComboBox NavigationMenu => (Window.Current.Content as MainPage).NavigationBox;
-
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			SetTitleBarMargin();
 			Window.Current.SetTitleBar(DragRegion);
-			NavigationBox.SelectedIndex = 0;
-			Presenter.PropertyChanged += HandlePropertyChanged;
-			SettingsViewModel.Instance.PropertyChanged += HandlePropertyChanged;
-			SettingsViewModel.ViewServiceProvider.CoreAppView.CoreWindow.Dispatcher.AcceleratorKeyActivated += Dispatcher_AcceleratorKeyActivated;
+			Presenter.Navigate(typeof(HomePage));
 		}
 
-		private void Dispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
+		private void NavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
 		{
-			if (!ContentDialogHelper.IsShown && args.EventType == CoreAcceleratorKeyEventType.KeyDown)
+			if (Presenter.CanGoBack)
 			{
-				if (KeyStateHelper.IsKeyDown(VirtualKey.Control))
-				{
-					if (args.VirtualKey == VirtualKey.Tab)
-					{
-						args.Handled = true;
-						NavigationBox.SelectedIndex = Convert.ToInt32(TabSwitcher.GetNewSelectionIndex(Convert.ToUInt32(NavigationBox.SelectedIndex), Convert.ToUInt32(NavigationBox.Items.Count),
-							KeyStateHelper.IsKeyDown(VirtualKey.Shift)));
-					}
-				}
+				e.Handled = true;
+				Presenter.GoBack();
 			}
 		}
 
-		private void NavigationBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			var type = Type.GetType((e.AddedItems[0] as FrameworkElement).Tag.ToString());
-			if (Presenter.Content?.GetType() != type) Presenter.Navigate(App.PageTypeCache.GetInstance(type, (typeId) => Activator.CreateInstance(type)) as UIElement);
-		}
+		private async void HelpItem_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new("http://discord.com/invite/CZpBpPQjq8"));
 
-		private void Presenter_ContentChanged(ContentFrame sender, ContentFrameContentChangedEventArgs args)
-		{
-			NavigationBox.SelectedItem = (from item in NavigationBox.Items
-										 where (item as FrameworkElement).Tag.ToString() == args.NewContent.GetType().FullName
-										 select item).First();
-		}
+		private async void FeedbackItem_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new($"https://www.nuget.org/packages/OneToolkit/{PackageVersionHelper.Stringify(Package.Current.Id.Version)}/ContactOwners"));
 
-		private void BackAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
-		{
-			args.Handled = true;
-			Presenter.GoBack();
-		}
+		private async void SettingsItem_Click(object sender, RoutedEventArgs e) => await ContentDialogHelper.TryShowAsync(new SettingsDialog(), ContentDialogPlacement.Popup);
 
-		private void BackClearAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
-		{
-			args.Handled = true;
-			NavigationBox.SelectedIndex = 0;
-			Presenter.ClearBackStack();
-		}
-
-		private void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			if (e.PropertyName == "CanGoBack")
-			{
-				SettingsViewModel.NavigationManager.AppViewBackButtonVisibility = Presenter.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
-			}
-			else if (e.PropertyName == "TitleBarInset")
-			{
-				SetTitleBarMargin();
-			}
-		}
-
-		private void SetTitleBarMargin()
-		{
-			var leftInset = SettingsViewModel.ViewServiceProvider.CoreAppView.TitleBar.SystemOverlayLeftInset;
-			(DragRegion.Children[0] as FrameworkElement).Margin = leftInset == 0 ? new(12, 0, 12, 0) : new(8, 0, 8, 0);
-		}
+		private async void AboutItem_Click(object sender, RoutedEventArgs e) => await ContentDialogHelper.TryShowAsync(new AboutDialog(), ContentDialogPlacement.Popup);
 	}
 }

@@ -1,9 +1,0 @@
-namespace OneToolkit.Storage
-{
-    [default_interface]
-    static runtimeclass FileSizeHelper
-    {
-        static String ToFormattedString(UInt64 size, Boolean useBinaryPrefix);
-        static UInt64 FromFormattedString(String formattedString, Boolean useBinaryPrefix);
-    }
-}

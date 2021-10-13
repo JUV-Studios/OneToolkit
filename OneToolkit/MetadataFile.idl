@@ -4,5 +4,6 @@ namespace OneToolkit.Runtime
     runtimeclass MetadataFile
     {
         [noexcept] String Path { get; };
+        String RuntimeVersion { get; };
     }
 }

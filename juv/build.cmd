@@ -1,0 +1,1 @@
+start nuget.exe pack juv.nuspec -OutputDirectory ..\Artifacts

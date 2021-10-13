@@ -10,18 +10,9 @@ using namespace Windows::ApplicationModel;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Metadata;
 using namespace Windows::Security::ExchangeActiveSyncProvisioning;
-using namespace OneToolkit::ApplicationModel;
 
 namespace winrt::OneToolkit::System::implementation
 {
-	EasClientDeviceInformation m_ClientDeviceInformation = nullptr;
-
-	static inline EasClientDeviceInformation ClientDeviceInformation()
-	{
-		if (!m_ClientDeviceInformation) m_ClientDeviceInformation = {};
-		return m_ClientDeviceInformation;
-	}
-
 	__interface __declspec(uuid("AF86E2E0-B12D-4c6a-9C5A-D7AA65101E90")) abi_IInspectable : ::IUnknown
 	{
 		int __stdcall GetIids(uint32_t* count, guid** ids) noexcept;
@@ -33,6 +24,8 @@ namespace winrt::OneToolkit::System::implementation
 	{
 		int __stdcall ProductName(void** value) noexcept;
 	};
+
+	EasClientDeviceInformation m_ClientDeviceInformation = nullptr;
 
 	hstring MachineInformation::DeviceName()
 	{
@@ -80,8 +73,18 @@ namespace winrt::OneToolkit::System::implementation
 		};
 	}
 
-	ProcessorArchitecture MachineInformation::HardwareArchitecture()
+	ProcessorArchitecture MachineInformation::ProcessorArchitecture()
 	{
-		return Package::Current().Id().Architecture();
+		uint16 nativeMachine;
+		uint16 processMachine;
+		IsWow64Process2(GetCurrentProcess(), &processMachine, &nativeMachine);
+		if (nativeMachine == IMAGE_FILE_MACHINE_UNKNOWN) return ProcessorArchitecture::Unknown;
+		else throw hresult_not_implemented(); // TODO implement detection for other architectures.
+	}
+
+	EasClientDeviceInformation MachineInformation::ClientDeviceInformation()
+	{
+		if (!m_ClientDeviceInformation) m_ClientDeviceInformation = {};
+		return m_ClientDeviceInformation;
 	}
 }

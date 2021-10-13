@@ -25,15 +25,14 @@ namespace juv
 #include <functional>
 #include <unknwn.h>
 #include <Windows.h>
+#include <winrt/Windows.UI.Xaml.Data.h>
+#include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/OneToolkit.System.h>
-#include <winrt/OneToolkit.Imaging.h>
 #include <winrt/OneToolkit.Storage.h>
-#include <winrt/OneToolkit.Runtime.h>
+#include <winrt/OneToolkit.Lifecycle.h>
 #include <winrt/OneToolkit.UI.Input.h>
 #include <winrt/OneToolkit.UI.Converters.h>
-#include <winrt/Windows.UI.Xaml.Data.h>
-#include <winrt/OneToolkit.Lifecycle.h>
-#include <winrt/OneToolkit.ApplicationModel.h>
+#include <winrt/OneToolkit.Media.Imaging.h>
 
 #define DeclareEvent(Type, Name) private: ::winrt::event<Type> m_##Name;\
 public: ::winrt::event_token Name(Type const& handler) { return m_##Name.add(handler); }\
@@ -55,142 +54,159 @@ namespace winrt::OneToolkit
 	template <typename T>
 	concept WindowsRuntimeType = winrt::impl::has_category_v<T>;
 
-	/// <summary>
-	/// Provides the ability to find about and communicate with the debugger.
-	/// </summary>
-	class Debugger
-	{
-	public:
-		Debugger() = delete;
-
-		/// <summary>
-		/// Signals a breakpoint to an attached debugger for the current process.
-		/// </summary>
-		static void Break() noexcept
-		{
-			DebugBreak();
-		}
-
-		/// <summary>
-		/// Gets whether a debugger is attached to the current process.
-		/// </summary>
-		static bool IsAttached() noexcept
-		{
-			return IsDebuggerPresent() != 0;
-		}
-
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
-		/// <summary>
-		/// Signals a breakpoint to an attached debugger for the specified process using its handle.
-		/// </summary>
-		static void Break(HANDLE processHandle)
-		{
-			check_bool(DebugBreakProcess(processHandle));
-		}
-
-		/// <summary>
-		/// Gets whether a debugger is attached to a specified process using its handle.
-		/// </summary>
-		static bool IsAttached(HANDLE processHandle)
-		{
-			int result;
-			check_bool(CheckRemoteDebuggerPresent(processHandle, &result));
-			return result != false;
-		}
-#endif
-
-		/// <summary>
-		/// Writes text to the output window.
-		/// </summary>
-		static void Write(std::string_view text)
-		{
-			OutputDebugStringA(text.data());
-		}
-
-		/// <summary>
-		/// Writes text to the output window.
-		/// </summary>
-		static void Write(std::wstring_view text)
-		{
-			OutputDebugStringW(text.data());
-		}
-
-		/// <summary>
-		/// Writes text to the output window.
-		/// </summary>
-		static void Write(std::u8string_view text)
-		{
-			OutputDebugStringA(reinterpret_cast<const char*>(text.data()));
-		}
-
-		/// <summary>
-		/// Writes text to the output window.
-		/// </summary>
-		static void Write(std::u16string_view text)
-		{
-			OutputDebugStringW(reinterpret_cast<const wchar_t*>(text.data()));
-		}
-
-		/// <summary>
-		/// Writes text to the output window.
-		/// </summary>
-		static void Write(std::u32string_view text)
-		{
-			throw hresult_not_implemented();
-		}
-
-		/// <summary>
-		/// Writes a line to the output window.
-		/// </summary>
-		template <typename String>
-		static void WriteLine(String& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
-		{
-			auto newLine = Data::Text::LineEndingHelper::GetNewLineString<typename String::value_type>(lineEnding).data();
-			Write(line + newLine);
-		}
-	};
-
 	namespace Runtime
 	{
+		inline auto GetTypeId(hstring const& typeName)
+		{
+			Windows::UI::Xaml::Interop::TypeName result;
+			result.Name = typeName;
+			result.Kind = std::find(result.Name.begin(), result.Name.end(), L'.') == result.Name.end() ? Windows::UI::Xaml::Interop::TypeKind::Primitive : Windows::UI::Xaml::Interop::TypeKind::Metadata;
+			return result;
+		}
+
+		struct TypeDetails
+		{
+		public:
+			TypeDetails(hstring const& typeName) : TypeDetails(GetTypeId(typeName)) {}
+
+			TypeDetails(Windows::UI::Xaml::Interop::TypeName const& typeId) : m_TypeId(typeId)
+			{
+				std::wstring_view typeNameView = typeId.Name;
+				m_Name = typeNameView.substr(typeNameView.find_last_of(L'.') + 1);
+				m_Namespace = typeNameView.substr(0, typeNameView.find_last_of(L'.') - 1);
+			}
+
+			std::wstring_view Name() const noexcept
+			{
+				return m_Name;
+			}
+
+			std::wstring_view Namespace() const noexcept
+			{
+				return m_Namespace;
+			}
+			
+			std::wstring_view QualifiedName() const noexcept
+			{
+				return m_TypeId.Name;
+			}
+
+			Windows::UI::Xaml::Interop::TypeKind Kind() const noexcept
+			{
+				return m_TypeId.Kind;
+			}
+
+			size_t BaseSize() const
+			{
+				if (m_TypeId == xaml_typename<bool>()) return sizeof(bool);
+				else if (m_TypeId == xaml_typename<juv::char16>()) return sizeof(juv::char16);
+				else if (m_TypeId == xaml_typename<juv::uint8>()) return sizeof(juv::uint8);
+				else if (m_TypeId == xaml_typename<juv::int8>()) return sizeof(juv::int8);
+				else if (m_TypeId == xaml_typename<juv::uint16>()) return sizeof(juv::uint16);
+				else if (m_TypeId == xaml_typename<juv::int16>()) return sizeof(juv::int16);
+				else if (m_TypeId == xaml_typename<juv::uint32>()) return sizeof(juv::uint32);
+				else if (m_TypeId == xaml_typename<juv::int32>()) return sizeof(juv::int32);
+				else if (m_TypeId == xaml_typename<juv::uint64>()) return sizeof(juv::uint64);
+				else if (m_TypeId == xaml_typename<juv::int64>()) return sizeof(juv::int64);
+				else if (m_TypeId == xaml_typename<float>()) return sizeof(float);
+				else if (m_TypeId == xaml_typename<double>()) return sizeof(double);
+				else if (m_TypeId == xaml_typename<hstring>()) return sizeof(hstring);
+				else if (m_TypeId == xaml_typename<guid>()) return sizeof(guid);
+				else if (m_TypeId == xaml_typename<Windows::Foundation::Point>()) return sizeof(Windows::Foundation::Point);
+				else if (m_TypeId == xaml_typename<Windows::Foundation::Size>()) return sizeof(Windows::Foundation::Size);
+				else if (m_TypeId == xaml_typename<Windows::Foundation::Rect>()) return sizeof(Windows::Foundation::Rect);
+				else if (m_TypeId == xaml_typename<Windows::Foundation::DateTime>()) return sizeof(Windows::Foundation::DateTime);
+				else if (m_TypeId == xaml_typename<Windows::Foundation::TimeSpan>()) return sizeof(Windows::Foundation::TimeSpan);
+				else return sizeof(size_t); // TODO Calculate type's size from metadata if it's a value type.
+			}
+
+			operator Windows::UI::Xaml::Interop::TypeName() const noexcept
+			{
+				return m_TypeId;
+			}
+
+			Windows::Foundation::IInspectable CreateInstance() const
+			{
+				if (m_TypeId == xaml_typename<bool>()) return box_value(bool());
+				else if (m_TypeId == xaml_typename<juv::char16>()) return box_value(juv::char16());
+				else if (m_TypeId == xaml_typename<juv::uint8>()) return box_value(juv::uint8());
+				else if (m_TypeId == xaml_typename<juv::int8>()) return box_value(juv::int8());
+				else if (m_TypeId == xaml_typename<juv::uint16>()) return box_value(juv::uint16());
+				else if (m_TypeId == xaml_typename<juv::int16>()) return box_value(juv::int16());
+				else if (m_TypeId == xaml_typename<juv::uint32>()) return box_value(juv::uint32());
+				else if (m_TypeId == xaml_typename<juv::int32>()) return box_value(juv::int32());
+				else if (m_TypeId == xaml_typename<juv::uint64>()) return box_value(juv::uint64());
+				else if (m_TypeId == xaml_typename<juv::int64>()) return box_value(juv::int64());
+				else if (m_TypeId == xaml_typename<float>()) return box_value(float());
+				else if (m_TypeId == xaml_typename<double>()) return box_value(double());
+				else if (m_TypeId == xaml_typename<hstring>()) return box_value(hstring());
+				else if (m_TypeId == xaml_typename<guid>()) return box_value(guid());
+				else if (m_TypeId == xaml_typename<Windows::Foundation::Point>()) return box_value(Windows::Foundation::Point());
+				else if (m_TypeId == xaml_typename<Windows::Foundation::Size>()) return box_value(Windows::Foundation::Size());
+				else if (m_TypeId == xaml_typename<Windows::Foundation::Rect>()) return box_value(Windows::Foundation::Rect());
+				else if (m_TypeId == xaml_typename<Windows::Foundation::DateTime>()) return box_value(Windows::Foundation::DateTime());
+				else if (m_TypeId == xaml_typename<Windows::Foundation::TimeSpan>()) return box_value(Windows::Foundation::TimeSpan());
+				else
+				{
+					// TODO Implementing creating a value type defined in metadata.
+				}
+			}
+
+			template <typename Result>
+			auto CreateInstance()
+			{
+				return CreateInstance().try_as<Result>();
+			}
+
+			static auto GetTypeOf(Windows::Foundation::IInspectable const& value)
+			{
+				return TypeDetails(get_class_name(value));
+			}
+		private:
+			std::wstring_view m_Name;
+			std::wstring_view m_Namespace;
+			Windows::UI::Xaml::Interop::TypeName m_TypeId;
+		};
+
 		/// <summary>
 		/// Represents a dynamic link library and enables the ability to use exported functions or variables.
 		/// </summary>
-		class DynamicModule
+		struct DynamicLibrary
 		{
 		public:
-			DynamicModule(winrt::hstring const& fileName, bool isPackagedLibrary = false) : m_FileName(fileName), m_IsPackagedLibrary(isPackagedLibrary)
+			DynamicLibrary(hstring const& fileName, bool isPackagedLibrary = false) : m_FileName(fileName), m_IsPackagedLibrary(isPackagedLibrary)
 			{
 				Handle(isPackagedLibrary ? LoadPackagedLibrary(fileName.data(), 0) : WINRT_IMPL_LoadLibraryW(fileName.data()));
 			}
 
-			DynamicModule(DynamicModule const& another)
+			DynamicLibrary(DynamicLibrary const& another)
 			{
 				Copy(another);
 			}
 
-			DynamicModule(DynamicModule&& another) noexcept
+			DynamicLibrary(DynamicLibrary&& another) noexcept
 			{
 				Move(std::move(another));
 			}
 
-			DynamicModule& operator=(const DynamicModule& another)
+			DynamicLibrary& operator=(const DynamicLibrary& another)
 			{
 				Copy(another);
 				return *this;
 			}
 
-			DynamicModule& operator=(DynamicModule&& another) noexcept
+			DynamicLibrary& operator=(DynamicLibrary&& another) noexcept
 			{
 				Move(std::move(another));
 				return *this;
 			}
 
-			bool operator==(DynamicModule const& another) const noexcept
+			bool operator==(DynamicLibrary const& another) const noexcept
 			{
 				return m_FileName == another.m_FileName && m_IsPackagedLibrary == another.m_IsPackagedLibrary && m_Handle == another.m_Handle;
 			}
 
-			bool operator!=(DynamicModule const& another) const noexcept
+			bool operator!=(DynamicLibrary const& another) const noexcept
 			{
 				return !operator==(another);
 			}
@@ -221,8 +237,8 @@ namespace winrt::OneToolkit
 				if (!result) throw_last_error();
 				return reinterpret_cast<Pointer>(result);
 			}
-	
-			~DynamicModule()
+
+			~DynamicLibrary()
 			{
 				if (m_Handle) WINRT_IMPL_FreeLibrary(m_Handle);
 			}
@@ -239,7 +255,7 @@ namespace winrt::OneToolkit
 				m_Handle = static_cast<HMODULE>(newHandle);
 			}
 
-			void Copy(DynamicModule const& another)
+			void Copy(DynamicLibrary const& another)
 			{
 				Handle(another.m_IsPackagedLibrary ? LoadPackagedLibrary(another.m_FileName.data(), 0) : WINRT_IMPL_LoadLibraryW(another.m_FileName.data()));
 				m_FileName = another.m_FileName;
@@ -247,7 +263,7 @@ namespace winrt::OneToolkit
 
 			}
 
-			void Move(DynamicModule&& another) noexcept
+			void Move(DynamicLibrary&& another) noexcept
 			{
 				Handle(another.m_Handle);
 				another.m_Handle = nullptr;
@@ -255,6 +271,105 @@ namespace winrt::OneToolkit
 				m_IsPackagedLibrary = another.m_IsPackagedLibrary;
 			}
 		};
+	}
+
+	namespace System
+	{
+		/// <summary>
+		/// Provides the ability to find about and communicate with the debugger.
+		/// </summary>
+		namespace Debugger
+		{
+			/// <summary>
+			/// Signals a breakpoint to an attached debugger for the current process.
+			/// </summary>
+			inline void Break() noexcept
+			{
+				DebugBreak();
+			}
+
+			/// <summary>
+			/// Gets whether a debugger is attached to the current process.
+			/// </summary>
+			inline bool IsAttached() noexcept
+			{
+				return IsDebuggerPresent() != 0;
+			}
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+			/// <summary>
+			/// Signals a breakpoint to an attached debugger for the specified process using its handle.
+			/// </summary>
+			inline void Break(HANDLE processHandle)
+			{
+				check_bool(DebugBreakProcess(processHandle));
+			}
+
+			/// <summary>
+			/// Gets whether a debugger is attached to a specified process using its handle.
+			/// </summary>
+			inline bool IsAttached(HANDLE processHandle)
+			{
+				int result;
+				check_bool(CheckRemoteDebuggerPresent(processHandle, &result));
+				return result != false;
+			}
+#endif
+
+			/// <summary>
+			/// Writes text to the output window.
+			/// </summary>
+			/// <remarks>The specified string must be null terminated.</remarks>
+			inline void Write(std::string_view text)
+			{
+				OutputDebugStringA(text.data());
+			}
+
+			/// <summary>
+			/// Writes text to the output window.
+			/// </summary>
+			/// <remarks>The specified string must be null terminated.</remarks>
+			inline void Write(std::wstring_view text)
+			{
+				OutputDebugStringW(text.data());
+			}
+
+			/// <summary>
+			/// Writes text to the output window.
+			/// </summary>
+			/// <remarks>The specified string must be null terminated.</remarks>
+			inline void Write(std::u8string_view text)
+			{
+				OutputDebugStringA(reinterpret_cast<const char*>(text.data()));
+			}
+
+			/// <summary>
+			/// Writes text to the output window.
+			/// </summary>
+			/// <remarks>The specified string must be null terminated.</remarks>
+			inline void Write(std::u16string_view text)
+			{
+				OutputDebugStringW(reinterpret_cast<const wchar_t*>(text.data()));
+			}
+
+			/// <summary>
+			/// Writes text to the output window.
+			/// </summary>
+			/// <remarks>The specified string must be null terminated.</remarks>
+			inline void Write(std::u32string_view text)
+			{
+			}
+
+			/// <summary>
+			/// Writes a line to the output window.
+			/// </summary>
+			template <typename String>
+			inline void WriteLine(String& line, Data::Text::LineEnding lineEnding = Data::Text::LineEnding::LF)
+			{
+				auto newLine = Data::Text::LineEndingHelper::GetNewLineString<typename String::value_type>(lineEnding).data();
+				Write(line + newLine);
+			}
+		}
 	}
 
 	namespace Mvvm
@@ -266,7 +381,7 @@ namespace winrt::OneToolkit
 		concept PropertyChangedDelegate = std::is_invocable_r_v<void, Delegate, Windows::Foundation::IInspectable, Args>;
 
 		/// <summary>
-		/// Provides a base class for view models and observable objects.
+		/// Provides a base struct for view models and observable objects.
 		/// </summary>
 		template <typename Derived, PropertyChangedArgs ChangedArgs = Windows::UI::Xaml::Data::PropertyChangedEventArgs, PropertyChangedDelegate<ChangedArgs> ChangedDelegate = Windows::UI::Xaml::Data::PropertyChangedEventHandler>
 		struct ObservableBase
@@ -304,7 +419,7 @@ namespace winrt::OneToolkit
 			}
 		protected:
 			/// <summary>
-			/// Creates a new instance of ObservableBase from a derived class. 
+			/// Creates a new instance of ObservableBase from a derived struct. 
 			/// </summary>
 			/// <param name="suppressEvents">Optional initial value for the SuppressEvents property.</param>
 			ObservableBase(bool suppressEvents = false) : m_SuppressEvents(suppressEvents)
@@ -327,7 +442,7 @@ namespace winrt::OneToolkit
 			{
 				if (!juv::has_only_whitespaces(propertyName) && Decide(propertyName) && !m_SuppressEvents)
 				{
-					ChangedArgs args { propertyName };
+					ChangedArgs args{ propertyName };
 					m_PropertyChanged(*static_cast<Derived*>(this), args);
 					WhenPropertyChanged(args);
 				}
@@ -340,9 +455,9 @@ namespace winrt::OneToolkit
 			template <WindowsRuntimeType T>
 			bool SetProperty(T& field, T newValue, hstring const& propertyName)
 			{
-				return SetProperty(field, newValue, propertyName, [this](hstring const& propertyName) 
+				return SetProperty(field, newValue, propertyName, [this](hstring const& propertyName)
 					{
-						Raise(propertyName); 
+						Raise(propertyName);
 					});
 			}
 
@@ -369,9 +484,9 @@ namespace winrt::OneToolkit
 	namespace Lifecycle
 	{
 		/// <summary>
-		/// Provides a base class to conveniently implement the IClosable interface.
+		/// Provides a base struct to conveniently implement the IClosable interface.
 		/// </summary>
-		/// <remarks>Your derived class must provide a Dispose method which will be called by Close when the object hasn't been closed yet.</remarks>
+		/// <remarks>Your derived struct must provide a Dispose method which will be called by Close when the object hasn't been closed yet.</remarks>
 		template <typename Derived>
 		struct Disposable
 		{
@@ -408,7 +523,7 @@ namespace winrt::OneToolkit
 		};
 
 		/// <summary>
-		/// Provides a base class to conveniently implement the ISuspendable interface.
+		/// Provides a base struct to conveniently implement the ISuspendable interface.
 		/// </summary>
 		template <typename Derived>
 		struct Suspendable
@@ -449,23 +564,67 @@ namespace winrt::OneToolkit
 		private:
 			bool m_IsSuspended;
 		};
-		
-		/// <summary>
-		/// Provides a base class to conveniently implement the IAsyncInitialize interface. 
-		/// </summary>
-		template <typename Derived>
-		struct AsyncInitialize : Mvvm::ObservableBase<Derived>
+
+		template <typename Result>
+		struct AsyncOperationWrapper : implements<AsyncOperationWrapper<Result>, Windows::Foundation::IAsyncOperation<Result>>
 		{
 		public:
-			AsyncInitialize(AsyncInitialize&&) = delete;
+			AsyncOperationWrapper(Result result) : m_Result(result) {}
 
-			AsyncInitialize(AsyncInitialize const&) = delete;
+			auto Id() const noexcept
+			{
+				return juv::as_value<juv::uint32>(this);
+			}
 
-			DeclareObservableProperty(bool, IsLoading, false);
+			auto ErrorCode() const noexcept
+			{
+				return hresult(0);
+			}
 
-			DeclareObservableProperty(bool, HasInitialized, false);
-		protected:
-			AsyncInitialize() = default;
+			auto Status() const noexcept
+			{
+				return Windows::Foundation::AsyncStatus::Completed;
+			}
+
+			auto Completed() const noexcept
+			{
+				return m_Completed;
+			}
+
+			void Completed(Windows::Foundation::AsyncOperationCompletedHandler<Result> const& value)
+			{
+				value(*this, Windows::Foundation::AsyncStatus::Completed);
+				m_Completed = value;
+			}
+
+			auto GetResults() const noexcept
+			{
+				return m_Result;
+			}
+
+			void Cancel() const noexcept {}
+
+			void Close() const noexcept {}
+		private:
+			Result m_Result;
+			Windows::Foundation::AsyncOperationCompletedHandler<Result> m_Completed;
+		};
+	}
+
+	namespace UI::Converters
+	{
+		template <typename Derived>
+		struct TwoWayConverter
+		{
+			Windows::Foundation::IInspectable Convert(Windows::Foundation::IInspectable const& value, Windows::UI::Xaml::Interop::TypeName targetType, Windows::Foundation::IInspectable const& parameter, hstring const& language)
+			{
+				return static_cast<Derived*>(this)->ConvertValue(value, targetType, parameter, language);
+			}
+
+			Windows::Foundation::IInspectable ConvertBack(Windows::Foundation::IInspectable const& value, Windows::UI::Xaml::Interop::TypeName targetType, Windows::Foundation::IInspectable const& parameter, hstring const& language)
+			{
+				return static_cast<Derived*>(this)->ConvertValue(value, targetType, parameter, language);
+			}
 		};
 	}
 }

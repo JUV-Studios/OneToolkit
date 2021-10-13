@@ -3,7 +3,6 @@ namespace OneToolkit.UI
     [default_interface]
     static runtimeclass ThemeHelper
     {
-        static Windows.UI.Xaml.ApplicationTheme SystemAppsTheme { get; };
-        static Windows.UI.Xaml.ApplicationTheme SystemShellTheme { get; };
+        static Windows.UI.Xaml.ApplicationTheme SystemTheme { get; };
     }
 }

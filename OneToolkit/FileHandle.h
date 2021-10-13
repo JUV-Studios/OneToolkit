@@ -50,9 +50,11 @@ namespace winrt::OneToolkit::Storage
             DeclareAutoProperty(Windows::Storage::FileAccessMode, AccessMode, {});
             juv::uint64 FileSize() const;
             StorageItemId Id() const noexcept;
+            Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> GetStorageFileAsync() const;
             void Delete();
         private:
             file_handle m_FileHandle;
+            Windows::Storage::IStorageItem m_StorageItem;
         };
     }
 

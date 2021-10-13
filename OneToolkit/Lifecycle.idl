@@ -1,55 +1,33 @@
+import "Metadata.idl";
+
 namespace OneToolkit.Lifecycle
 {
-	delegate Object SingletonInstanceProvider(Windows.UI.Xaml.Interop.TypeName typeId);
-
 	delegate void SuspendableStateChangedEventHandler(ISuspendable sender, SuspendableEventType eventType);
 
+	[OneToolkit.Metadata.Description("Indicates the type of a suspending event.")]
 	enum SuspendableEventType
 	{
 		Suspended, Resumed
 	};
 
+	[OneToolkit.Metadata.Description("Represents an object that can suspend and resume.")]
 	interface ISuspendable
 	{
 		[noexcept] Boolean IsSuspended { get; };
 		event SuspendableStateChangedEventHandler StateChanged;
 	};
 
+	[OneToolkit.Metadata.Description("Represents an object that can be disposed asynchronously.")]
 	interface IAsyncClosable requires Windows.Foundation.IClosable
 	{
 		Windows.Foundation.IAsyncAction CloseAsync();
 		Windows.Foundation.IAsyncOperation<Boolean> RequestCloseAsync();
 	};
 
+	[OneToolkit.Metadata.Description("Represents an object that can be suspended or resumed asynchronously.")]
 	interface IAsyncSuspendable requires ISuspendable
 	{
 		Windows.Foundation.IAsyncAction SuspendAsync();
 		Windows.Foundation.IAsyncAction ResumeAsync();
 	};
-
-	enum TypeCacheKind
-	{
-		Weak, Strong
-	};
-
-	interface ITypeCache
-	{
-		Boolean IsTypePresent(Windows.UI.Xaml.Interop.TypeName typeId);
-		Object GetInstance(Windows.UI.Xaml.Interop.TypeName typeId);
-		Object GetInstance(Windows.UI.Xaml.Interop.TypeName typeId, SingletonInstanceProvider provider);
-		void Emplace(Windows.UI.Xaml.Interop.TypeName typeId, Object instance);
-		void Remove(Windows.UI.Xaml.Interop.TypeName typeId);
-	};
-
-	[default_interface]
-	runtimeclass WeakTypeCache : ITypeCache
-	{
-		WeakTypeCache();
-	}
-
-	[default_interface]
-	runtimeclass StrongTypeCache : ITypeCache
-	{
-		StrongTypeCache();
-	}
 }

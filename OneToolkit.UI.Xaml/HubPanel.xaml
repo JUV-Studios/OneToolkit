@@ -8,5 +8,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Loaded="{x:Bind SetPaddingProperties}"
 	SectionsInViewChanged="{x:Bind SetPaddingProperties}"
+	SizeChanged="Hub_SizeChanged"
 	Style="{StaticResource DefaultHubPanelStyle}"
 	mc:Ignorable="d" />

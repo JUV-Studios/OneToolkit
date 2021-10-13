@@ -10,20 +10,17 @@
     <Filter Include="Storage">
       <UniqueIdentifier>{e5424560-e0f5-4540-833d-f318f65edc80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Imaging">
-      <UniqueIdentifier>{419a548f-56eb-4cfc-855d-d6da7847cf3a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI\Input">
       <UniqueIdentifier>{bc0906ea-cd09-4eb6-9e18-09c3cc7d72af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ApplicationModel">
-      <UniqueIdentifier>{a4e30534-44bb-4022-a65a-209282212388}</UniqueIdentifier>
     </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{d14577f3-68a8-4c5b-8eda-5998d52117b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Runtime">
-      <UniqueIdentifier>{751f88c8-284a-4ded-a6d0-b8d6934c4a21}</UniqueIdentifier>
+    <Filter Include="Media">
+      <UniqueIdentifier>{0ad71127-7f6a-42a9-96ae-d597154e2978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Media\Imaging">
+      <UniqueIdentifier>{419a548f-56eb-4cfc-855d-d6da7847cf3a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,7 +46,6 @@
     <ClInclude Include="MachineInformation.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="TypeCache.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="FontHelper.idl">
@@ -61,23 +57,17 @@
     <Midl Include="ViewService.idl">
       <Filter>UI</Filter>
     </Midl>
-    <Midl Include="MemoryBufferHelper.idl">
-      <Filter>Storage</Filter>
-    </Midl>
     <Midl Include="FileHandle.idl">
       <Filter>Storage</Filter>
     </Midl>
     <Midl Include="ImageResizer.idl">
-      <Filter>Imaging</Filter>
+      <Filter>Media\Imaging</Filter>
     </Midl>
     <Midl Include="SettingsService.idl">
       <Filter>Storage</Filter>
     </Midl>
     <Midl Include="CropDialog.idl">
-      <Filter>Imaging</Filter>
-    </Midl>
-    <Midl Include="UISettingsHelper.idl">
-      <Filter>UI</Filter>
+      <Filter>Media\Imaging</Filter>
     </Midl>
     <Midl Include="SharedFile.idl">
       <Filter>Storage</Filter>
@@ -85,20 +75,11 @@
     <Midl Include="KeyStateHelper.idl">
       <Filter>UI\Input</Filter>
     </Midl>
-    <Midl Include="NavigationType.idl">
-      <Filter>UI</Filter>
-    </Midl>
-    <Midl Include="PackageVersionHelper.idl">
-      <Filter>ApplicationModel</Filter>
-    </Midl>
     <Midl Include="MachineInformation.idl">
       <Filter>System</Filter>
     </Midl>
     <Midl Include="Converters.idl">
       <Filter>UI</Filter>
-    </Midl>
-    <Midl Include="FileSizeHelper.idl">
-      <Filter>Storage</Filter>
     </Midl>
     <Midl Include="ThemeHelper.idl">
       <Filter>UI</Filter>
@@ -107,14 +88,13 @@
       <Filter>Storage</Filter>
     </Midl>
     <Midl Include="Lifecycle.idl" />
-    <Midl Include="TypeInfo.idl">
-      <Filter>Runtime</Filter>
+    <Midl Include="TypeCache.idl" />
+    <Midl Include="PackageVersionHelper.idl">
+      <Filter>System</Filter>
     </Midl>
-    <Midl Include="MetadataFile.idl">
-      <Filter>Runtime</Filter>
+    <Midl Include="Metadata.idl" />
+    <Midl Include="NavigationType.idl">
+      <Filter>UI</Filter>
     </Midl>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="readme.txt" />
   </ItemGroup>
 </Project>

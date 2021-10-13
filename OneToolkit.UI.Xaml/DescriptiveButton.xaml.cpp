@@ -9,6 +9,7 @@
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::System;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
@@ -26,6 +27,8 @@ DefineDependencyProperty(String^, DescriptiveButton, Title, "");
 
 DefineDependencyProperty(String^, DescriptiveButton, Caption, "");
 
+DefineDependencyProperty(Uri^, DescriptiveButton, NavigateUri, nullptr);
+
 DescriptiveButton::DescriptiveButton()
 {
 	InitializeComponent();
@@ -35,6 +38,14 @@ void DescriptiveButton::DependencyPropertyChanged(DependencyObject^ sender, Depe
 {
 	auto target = dynamic_cast<DescriptiveButton^>(sender);
 	AutomationProperties::SetName(target, target->Title + L", " + target->Caption);
-	target->TitleBlock->Visibility = target->Title ? ::Visibility::Visible : ::Visibility::Collapsed;
-	target->CaptionBlock->Visibility = target->Caption ? ::Visibility::Visible : ::Visibility::Collapsed;
+	if (e->Property == m_NavigateUriProperty)
+	{
+		if (e->NewValue) target->m_ClickHandlerToken = target->Click += ref new RoutedEventHandler(target, &DescriptiveButton::Button_Click);
+		else target->Click -= target->m_ClickHandlerToken;
+	}
+}
+
+void DescriptiveButton::Button_Click(Object^ sender, RoutedEventArgs^ e)
+{
+	Launcher::LaunchUriAsync(NavigateUri);
 }

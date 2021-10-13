@@ -15,7 +15,7 @@ namespace winrt::OneToolkit::UI::implementation
 	hstring FontHelper::DefaultTextFontFamily()
 	{
 		RTL_OSVERSIONINFOW versionInfo{ .dwOSVersionInfoSize = sizeof(RTL_OSVERSIONINFOW) };
-		Runtime::DynamicModule ntdll{ L"ntdll.dll" };
+		Runtime::DynamicLibrary ntdll{ L"ntdll.dll" };
 		ntdll.GetProcAddress<RtlGetVersion>("RtlGetVersion")(&versionInfo);
 		return versionInfo.dwBuildNumber >= 21376 ? L"Segoe UI Variable" : L"Segoe UI";
 	}
@@ -23,7 +23,7 @@ namespace winrt::OneToolkit::UI::implementation
 	hstring FontHelper::DefaultIconFontFamily()
 	{
 		RTL_OSVERSIONINFOW versionInfo { .dwOSVersionInfoSize = sizeof(RTL_OSVERSIONINFOW) };
-		Runtime::DynamicModule ntdll { L"ntdll.dll" };
+		Runtime::DynamicLibrary ntdll { L"ntdll.dll" };
 		ntdll.GetProcAddress<RtlGetVersion>("RtlGetVersion")(&versionInfo);
 		return versionInfo.dwBuildNumber >= 21327 ? L"Segoe Fluent Icons" : L"Segoe MDL2 Assets";
 	}

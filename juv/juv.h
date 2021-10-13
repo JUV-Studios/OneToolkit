@@ -5,13 +5,53 @@
 #include <array>
 #include <string>
 #include <vector>
+#include <cstdint>
 #include <optional>
 #include <algorithm>
 #include <string_view>
 #include <type_traits>
-#ifndef CPPWINRT_VERSION
-#include "winrt-polyfill.h"
+
+namespace winrt::Windows
+{
+#if __has_include(<winrt/Windows.UI.h>)
+#include <winrt/Windows.UI.h>
+#else
+	namespace UI
+	{
+		struct Color
+		{
+			uint8_t A;
+			uint8_t R;
+			uint8_t G;
+			uint8_t B;
+		};
+
+		inline bool operator==(Color const& left, Color const& right) noexcept
+		{
+			return left.A == right.A && left.R == right.R && left.G == right.G && left.B == right.B;
+		}
+
+		inline bool operator!=(Color const& left, Color const& right) noexcept
+		{
+			return !(left == right);
+		}
+	}
 #endif
+
+#if __has_include(<winrt/Windows.Security.Cryptography.h>)
+#include <winrt/Windows.Security.Cryptography.h>
+#else
+	namespace Security::Cryptography
+	{
+		enum class BinaryStringEncoding : int32_t
+		{
+			Utf8 = 0,
+			Utf16LE = 1,
+			Utf16BE = 2,
+		};
+	}
+#endif
+}
 
 namespace juv
 {
@@ -32,7 +72,7 @@ namespace juv
 	/// Safely casts a pointer's value into an integer.
 	/// </summary>
 	template <typename Integer, typename Pointer>
-	auto as_value(Pointer pointer) noexcept requires std::is_integral_v<Integer> && std::is_pointer_v<Pointer>
+	auto as_value(Pointer pointer) noexcept requires std::is_integral_v<Integer>&& std::is_pointer_v<Pointer>
 	{
 		return static_cast<Integer>(reinterpret_cast<size_t>(pointer));
 	}
@@ -41,7 +81,7 @@ namespace juv
 	/// Safely casts an integer value into a pointer type.
 	/// </summary>
 	template <typename Pointer, typename Integer>
-	auto as_pointer(Integer value) noexcept requires std::is_integral_v<Integer> && std::is_pointer_v<Pointer>
+	auto as_pointer(Integer value) noexcept requires std::is_integral_v<Integer>&& std::is_pointer_v<Pointer>
 	{
 		return reinterpret_cast<Pointer>(static_cast<size_t>(value));
 	}
@@ -52,7 +92,7 @@ namespace juv
 	template <typename Pointer>
 	std::optional<typename std::remove_pointer_t<Pointer>> as_optional(Pointer pointer) noexcept requires std::is_pointer_v<Pointer>
 	{
-		if (!pointer) return {};
+		if (!pointer) return std::nullopt;
 		else return { *pointer };
 	}
 
@@ -89,7 +129,7 @@ namespace juv
 	}
 
 	/// <summary>
-	/// Checks whether a string is empty or that it only contains whitespace characters.
+	/// Determines whether a string is empty or that it only contains whitespace characters.
 	/// </summary>
 	template <typename String>
 	bool has_only_whitespaces(String const text)
@@ -97,12 +137,18 @@ namespace juv
 		return std::find_if(text.begin(), text.end(), [](auto const character) { return !is_space(character); }) == text.end();
 	}
 
+	/// <summary>
+	/// Replaces all occurrences of a specific character in a string.
+	/// </summary>
 	template <typename String>
 	void replace_all(String& text, typename String::value_type replaced, typename String::value_type replacedWith)
 	{
 		std::replace(text.begin(), text.end(), replaced, replacedWith);
 	}
 
+	/// <summary>
+	/// Replaces all occurrences of a specific substring in a string.
+	/// </summary>
 	template <typename String>
 	void replace_all(String& text, std::basic_string_view<typename String::value_type> const replaced, std::basic_string_view<typename String::value_type> const replacedWith)
 	{
@@ -116,392 +162,390 @@ namespace juv
 	}
 }
 
-namespace winrt::OneToolkit::Data
+namespace winrt::OneToolkit
 {
-	enum class Endianness : juv::uint8
-	{
-		None, Little, Big
-	};
-
-	namespace Text
+	namespace Data
 	{
 		/// <summary>
-		/// Represents an encoding of a text buffer.
+		/// Represents the order of bytes.
 		/// </summary>
-		enum class TextEncoding : juv::uint8
+		enum class Endianness : juv::uint8
 		{
-			Unknown, Ascii, Utf8, Utf16LE, Utf16BE
+			None, Little, Big
 		};
 
-		/// <summary>
-		/// Provides the ability to find out and detect the encoding of a text buffer.
-		/// </summary>
-		class TextEncodingHelper
+		namespace Text
 		{
-		public:
-			TextEncodingHelper() = delete;
-
 			/// <summary>
-			/// Gets whether the buffer contains ASCII encoded text or not.
+			/// Provides the ability to find out and detect the encoding of a text buffer.
 			/// </summary>
-			static bool IsAscii(std::span<juv::uint8 const> const buffer) noexcept
+			class TextEncodingHelper
 			{
-				for (auto chr : buffer)
+			public:
+				TextEncodingHelper() = delete;
+
+				/// <summary>
+				/// Gets whether the buffer contains UTF8 encoded text or not.
+				/// </summary>
+				static bool IsUtf8(std::span<juv::uint8 const> const buffer) noexcept
 				{
-					if (chr > 128) return false;
+					/*
+						UTF8 valid sequences:
+						0xxxxxxx  ASCII
+						110xxxxx 10xxxxxx 2-byte
+						1110xxxx 10xxxxxx 10xxxxxx 3-byte
+						11110xxx 10xxxxxx 10xxxxxx 10xxxxxx 4-byte
+
+						Width in UTF8:
+						0-127 - 1 byte
+						194-223	- 2 bytes
+						224-239	- 3 bytes
+						240-244 - 4 bytes
+						Subsequent chars are in the range 128-191
+					*/
+
+					size_t position = 0;
+					juv::uint8 moreCharacters;
+					while (position < buffer.size())
+					{
+						auto character = buffer[position++];
+						if (character == 0) return false;
+						else if (character <= 127) moreCharacters = 0;
+						else if (character >= 194 && character <= 223) moreCharacters = 1;
+						else if (character >= 224 && character <= 239) moreCharacters = 2;
+						else if (character >= 240 && character <= 244) moreCharacters = 3;
+						else return false;
+
+						// Check secondary characters are in range if we are expecting any.
+						while (moreCharacters > 0 && position < buffer.size())
+						{
+							character = buffer[position++];
+							if (character < 128 || character > 191) return false;
+							moreCharacters--;
+						}
+					}
+
+					return true;
 				}
 
-				return true;
-			}
-
-			/// <summary>
-			/// Gets whether the buffer contains UTF8 encoded text or not.
-			/// </summary>
-			static bool IsUtf8(std::span<juv::uint8 const> const buffer) noexcept
-			{
-				/*
-					UTF8 valid sequences:
-					0xxxxxxx  ASCII
-					110xxxxx 10xxxxxx 2-byte
-					1110xxxx 10xxxxxx 10xxxxxx 3-byte
-					11110xxx 10xxxxxx 10xxxxxx 10xxxxxx 4-byte
-
-					Width in UTF8:
-					0-127 - 1 byte
-					194-223	- 2 bytes
-					224-239	- 3 bytes
-					240-244 - 4 bytes
-					Subsequent chars are in the range 128-191
-				*/
-
-				size_t position = 0;
-				juv::uint8 moreCharacters;
-				while (position < buffer.size())
+				/// <summary>
+				/// Gets whether the buffer contains UTF16 encoded text or not.
+				/// </summary>
+				static bool IsUtf16(std::span<juv::uint8 const> const buffer, Endianness& endianness) noexcept
 				{
-					auto character = buffer[position++];
-					if (character == 0) return false;
-					else if (character <= 127) moreCharacters = 0;
-					else if (character >= 194 && character <= 223) moreCharacters = 1;
-					else if (character >= 224 && character <= 239) moreCharacters = 2;
-					else if (character >= 240 && character <= 244) moreCharacters = 3;
-					else return false;
+					if (IsUtf16Regular(buffer, endianness)) return true;
+					else return IsUtf16Ascii(buffer, endianness);
+				}
 
-					// Check secondary characters are in range if we are expecting any.
-					while (moreCharacters > 0 && position < buffer.size())
+				/// <summary>
+				/// Determines the the encoding of a text buffer using various methods.
+				/// </summary>
+				static std::optional<BinaryStringEncoding> Detect(std::span<juv::uint8 const> const buffer)
+				{
+					if (buffer.size() >= 2 && buffer[0] == ByteOrderMarkUtf16LE[0] && buffer[1] == ByteOrderMarkUtf16LE[1]) return BinaryStringEncoding::Utf16LE;
+					else if (buffer.size() >= 2 && buffer[0] == ByteOrderMarkUtf16BE[0] && buffer[1] == ByteOrderMarkUtf16BE[1]) return BinaryStringEncoding::Utf16BE;
+					else if (buffer.size() >= 3 && buffer[0] == ByteOrderMarkUtf8[0] && buffer[1] == ByteOrderMarkUtf8[1] && buffer[2] == ByteOrderMarkUtf8[2]) return BinaryStringEncoding::Utf8;
+					else if (IsUtf8(buffer)) return BinaryStringEncoding::Utf8;
+					else
 					{
-						character = buffer[position++];
-						if (character < 128 || character > 191) return false;
-						moreCharacters--;
+						Endianness endianness;
+						if (IsUtf16(buffer, endianness)) return endianness == Endianness::Little ? BinaryStringEncoding::Utf16LE : BinaryStringEncoding::Utf16BE;
+						else return std::nullopt;
 					}
 				}
-
-				return true;
-			}
-
-			static bool IsUtf16(std::span<juv::uint8 const> const buffer, Endianness& endianness) noexcept
-			{
-				if (IsUtf16Regular(buffer, endianness)) return true;
-				else return IsUtf16Ascii(buffer, endianness);
-			}
-
-			static TextEncoding Detect(std::span<juv::uint8 const> const buffer)
-			{
-				if (buffer.size() >= 2 && buffer[0] == BOM::Utf16LE[0] && buffer[1] == BOM::Utf16LE[1]) return TextEncoding::Utf16LE;
-				else if (buffer.size() >= 2 && buffer[0] == BOM::Utf16BE[0] && buffer[1] == BOM::Utf16BE[1]) return TextEncoding::Utf16BE;
-				else if (buffer.size() >= 3 && buffer[0] == BOM::Utf8[0] && buffer[1] == BOM::Utf8[1] && buffer[2] == BOM::Utf8[2]) return TextEncoding::Utf8;
-				else if (IsUtf8(buffer)) return IsAscii(buffer) ? TextEncoding::Ascii : TextEncoding::Ascii;
-				else
+			private:
+				struct ByteOrderMark
 				{
-					Endianness endianness;
-					if (IsUtf16(buffer, endianness)) return endianness == Endianness::Little ? TextEncoding::Utf16LE : TextEncoding::Utf16BE;
-					else return TextEncoding::Unknown;
-				}
-			}
-		private:
-			struct BOM
-			{
-				BOM() = delete;
-				static constexpr std::array Utf8{ 0xEF, 0xBB, 0xBF };
-				static constexpr std::array Utf16LE{ 0xFF, 0xFE };
-				static constexpr std::array Utf16BE{ 0xFE, 0xFF };
-			};
+					ByteOrderMark() = delete;
+					static constexpr std::array Utf8{ 0xEF, 0xBB, 0xBF };
+					static constexpr std::array Utf16LE{ 0xFF, 0xFE };
+					static constexpr std::array Utf16BE{ 0xFE, 0xFF };
+				};
 
-			static bool IsUtf16Regular(std::span<juv::uint8 const> const buffer, Endianness& endianness) noexcept
-			{
-				auto size = buffer.size();
-				if (size < 2)
+				static bool IsUtf16Regular(std::span<juv::uint8 const> const buffer, Endianness& endianness) noexcept
 				{
-					endianness = Endianness::None;
-					return false;
-				}
-
-				size--; // Reduce size by 1 so we don't need to worry about bounds checking for pairs of bytes.
-				size_t leControlCharacters = 0;
-				size_t beControlCharacters = 0;
-				juv::uint8 ch1, ch2;
-				size_t pos = 0;
-				while (pos < size)
-				{
-					ch1 = buffer[pos++];
-					ch2 = buffer[pos++];
-					if (!ch1 && (ch2 == 0x0a || ch2 == 0x0d)) beControlCharacters++;
-					else if (!ch2 && (ch1 == 0x0a || ch1 == 0x0d)) leControlCharacters++;
-					if (leControlCharacters && beControlCharacters)
+					auto size = buffer.size();
+					if (size < 2)
 					{
-						// If we're finding both LE and BE control characters, it's not UTF16.
+						endianness = Endianness::None;
+						return false;
+					}
+
+					size--; // Reduce size by 1 so we don't need to worry about bounds checking for pairs of bytes.
+					size_t leControlCharacters = 0;
+					size_t beControlCharacters = 0;
+					juv::uint8 ch1, ch2;
+					size_t pos = 0;
+					while (pos < size)
+					{
+						ch1 = buffer[pos++];
+						ch2 = buffer[pos++];
+						if (!ch1 && (ch2 == 0x0a || ch2 == 0x0d)) beControlCharacters++;
+						else if (!ch2 && (ch1 == 0x0a || ch1 == 0x0d)) leControlCharacters++;
+						if (leControlCharacters && beControlCharacters)
+						{
+							// If we're finding both LE and BE control characters, it's not UTF16.
+							endianness = Endianness::None;
+							return false;
+						}
+					}
+
+					if (leControlCharacters)
+					{
+						endianness = Endianness::Little;
+						return true;
+					}
+					else if (beControlCharacters)
+					{
+						endianness = Endianness::Big;
+						return true;
+					}
+					else
+					{
 						endianness = Endianness::None;
 						return false;
 					}
 				}
 
-				if (leControlCharacters)
+				static bool IsUtf16Ascii(std::span<juv::uint8 const> const buffer, Endianness& endianness) noexcept
 				{
-					endianness = Endianness::Little;
-					return true;
-				}
-				else if (beControlCharacters)
-				{
-					endianness = Endianness::Big;
-					return true;
-				}
-				else
-				{
-					endianness = Endianness::None;
-					return false;
-				}
-			}
-
-			static bool IsUtf16Ascii(std::span<juv::uint8 const> const buffer, Endianness& endianness) noexcept
-			{
-				// Get the number of even and odd nulls.
-				size_t oddNulls = 0;
-				size_t evenNulls = 0;
-				for (size_t position = 0; position < buffer.size(); ++position)
-				{
-					if (buffer[position] == 0)
+					// Get the number of even and odd nulls.
+					size_t oddNulls = 0;
+					size_t evenNulls = 0;
+					for (size_t position = 0; position < buffer.size(); ++position)
 					{
-						if (position % 2 == 0) evenNulls++;
-						else oddNulls++;
+						if (buffer[position] == 0)
+						{
+							if (position % 2 == 0) evenNulls++;
+							else oddNulls++;
+						}
+					}
+
+					double evenNullThreshold = (evenNulls * 2.0) / buffer.size();
+					double oddNullThreshold = (oddNulls * 2.0) / buffer.size();
+					double expectedNullThreshold = 70 / 100.0;
+					double unexpectedNullThreshold = 10 / 100.0;
+					if (evenNullThreshold < unexpectedNullThreshold && oddNullThreshold > expectedNullThreshold) // Lots of odd nulls, low number of even nulls.
+					{
+						endianness = Endianness::Little;
+						return true;
+					}
+					else if (oddNullThreshold < unexpectedNullThreshold && evenNullThreshold > expectedNullThreshold) // Lots of even nulls, low number of odd nulls.
+					{
+						endianness = Endianness::Big;
+						return true;
+					}
+					else
+					{
+						endianness = Endianness::None;
+						return false;
+					}
+				}
+			};
+
+			/// <summary>
+			/// Represents a line ending scheme.
+			/// </summary>
+			enum class LineEnding : juv::uint8
+			{
+				CR, LF, CRLF, LFCR, Mixed
+			};
+
+			/// <summary>
+			/// Provides helper methods for dealing with line endings.
+			/// </summary>
+			namespace LineEndingHelper
+			{
+				/// <summary>
+				/// Gets a string that represents the desired line ending.
+				/// </summary>
+				template <typename Character>
+				constexpr std::basic_string_view<Character> GetNewLineString(LineEnding const lineEnding) noexcept
+				{
+					if constexpr (std::is_same_v<Character, char>)
+					{
+						switch (lineEnding)
+						{
+						case LineEnding::CR: return "\r";
+						case LineEnding::LF: return "\n";
+						case LineEnding::CRLF: return "\r\n";
+						case LineEnding::LFCR: return "\n\r";
+						}
+					}
+					else if constexpr (std::is_same_v<Character, juv::wchar>)
+					{
+						switch (lineEnding)
+						{
+						case LineEnding::CR: return L"\r";
+						case LineEnding::LF: return L"\n";
+						case LineEnding::CRLF: return L"\r\n";
+						case LineEnding::LFCR: return L"\n\r";
+						}
+					}
+					else if constexpr (std::is_same_v<Character, juv::char8> || std::is_same_v<Character, unsigned char>)
+					{
+						switch (lineEnding)
+						{
+						case LineEnding::CR: return u8"\r";
+						case LineEnding::LF: return u8"\n";
+						case LineEnding::CRLF: return u8"\r\n";
+						case LineEnding::LFCR: return u8"\n\r";
+						}
+					}
+					else if constexpr (std::is_same_v<Character, juv::char16>)
+					{
+						switch (lineEnding)
+						{
+						case LineEnding::CR: return u"\r";
+						case LineEnding::LF: return u"\n";
+						case LineEnding::CRLF: return u"\r\n";
+						case LineEnding::LFCR: return u"\n\r";
+						}
+					}
+					else if constexpr (std::is_same_v<Character, juv::char32>)
+					{
+						switch (lineEnding)
+						{
+						case LineEnding::CR: return U"\r";
+						case LineEnding::LF: return U"\n";
+						case LineEnding::CRLF: return U"\r\n";
+						case LineEnding::LFCR: return U"\n\r";
+						}
+					}
+					else
+					{
+						static_assert(false, "GetNewLineString doesn't support the specified character type.");
+					}
+
+					return {};
+				}
+
+				/// <summary>
+				/// Gets whether a string represents a new line.
+				/// </summary>
+				template <typename StringView>
+				constexpr bool IsNewLineString(StringView const text, LineEnding& lineEnding) noexcept
+				{
+					if (text == GetNewLineString<typename StringView::value_type>(LineEnding::CR))
+					{
+						lineEnding = LineEnding::CR;
+						return true;
+					}
+					else if (text == GetNewLineString<typename StringView::value_type>(LineEnding::LF))
+					{
+						lineEnding = LineEnding::LF;
+						return true;
+					}
+					else if (text == GetNewLineString<typename StringView::value_type>(LineEnding::CRLF))
+					{
+						lineEnding = LineEnding::CRLF;
+						return true;
+					}
+					else if (text == GetNewLineString<typename StringView::value_type>(LineEnding::LFCR))
+					{
+						lineEnding = LineEnding::LFCR;
+						return true;
+					}
+					else
+					{
+						lineEnding = LineEnding::Mixed;
+						return false;
 					}
 				}
 
-				double evenNullThreshold = (evenNulls * 2.0) / buffer.size();
-				double oddNullThreshold = (oddNulls * 2.0) / buffer.size();
-				double expectedNullThreshold = 70 / 100.0;
-				double unexpectedNullThreshold = 10 / 100.0;
-				if (evenNullThreshold < unexpectedNullThreshold && oddNullThreshold > expectedNullThreshold) // Lots of odd nulls, low number of even nulls.
+				/// <summary>
+				/// Normalizes a string to use a single line ending for every new line.
+				/// </summary>
+				template <typename StringView>
+				auto Normalize(StringView const text, LineEnding const lineEnding)
 				{
-					endianness = Endianness::Little;
-					return true;
-				}
-				else if (oddNullThreshold < unexpectedNullThreshold && evenNullThreshold > expectedNullThreshold) // Lots of even nulls, low number of odd nulls.
-				{
-					endianness = Endianness::Big;
-					return true;
-				}
-				else
-				{
-					endianness = Endianness::None;
-					return false;
-				}
-			}
-		};
+					std::basic_string<typename StringView::value_type> result{ text };
+					if (lineEnding == LineEnding::CR)
+					{
+						juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::CRLF), GetNewLineString<typename StringView::value_type>(LineEnding::CR));
+						juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::LFCR), GetNewLineString<typename StringView::value_type>(LineEnding::CR));
+						juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::LF), GetNewLineString<typename StringView::value_type>(LineEnding::CR));
+					}
+					else if (lineEnding == LineEnding::LF)
+					{
+						juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::CRLF), GetNewLineString<typename StringView::value_type>(LineEnding::LF));
+						juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::LFCR), GetNewLineString<typename StringView::value_type>(LineEnding::LF));
+						juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::CR), GetNewLineString<typename StringView::value_type>(LineEnding::LF));
+					}
+					else if (lineEnding == LineEnding::CRLF)
+					{
+						result = Normalize(text, LineEnding::CR);
+						juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::CR), GetNewLineString<typename StringView::value_type>(LineEnding::CRLF));
+					}
+					else if (lineEnding == LineEnding::LFCR)
+					{
+						result = Normalize(text, LineEnding::LF);
+						juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::LF), GetNewLineString<typename StringView::value_type>(LineEnding::LFCR));
+					}
 
-		/// <summary>
-		/// Represents a line ending scheme.
-		/// </summary>
-		enum class LineEnding : juv::uint8
+					return result;
+				}
+			};
+		}
+	}
+
+	namespace Storage
+	{
+		struct FileSizeHelper
 		{
-			CR, LF, CRLF, LFCR, Mixed
-		};
-
-		/// <summary>
-		/// Provides helper methods for dealing with line endings.
-		/// </summary>
-		namespace LineEndingHelper
-		{
-			/// <summary>
-			/// Gets a string that represents the desired line ending.
-			/// </summary>
-			template <typename Character>
-			constexpr std::basic_string_view<Character> GetNewLineString(LineEnding lineEnding) noexcept
-			{
-				if constexpr (std::is_same_v<Character, char>)
-				{
-					switch (lineEnding)
-					{
-					case LineEnding::CR: return "\r";
-					case LineEnding::LF: return "\n";
-					case LineEnding::CRLF: return "\r\n";
-					case LineEnding::LFCR: return "\n\r";
-					}
-				}
-				else if constexpr (std::is_same_v<Character, juv::wchar>)
-				{
-					switch (lineEnding)
-					{
-					case LineEnding::CR: return L"\r";
-					case LineEnding::LF: return L"\n";
-					case LineEnding::CRLF: return L"\r\n";
-					case LineEnding::LFCR: return L"\n\r";
-					}
-				}
-				else if constexpr (std::is_same_v<Character, juv::char8> || std::is_same_v<Character, unsigned char>)
-				{
-					switch (lineEnding)
-					{
-					case LineEnding::CR: return u8"\r";
-					case LineEnding::LF: return u8"\n";
-					case LineEnding::CRLF: return u8"\r\n";
-					case LineEnding::LFCR: return u8"\n\r";
-					}
-				}
-				else if constexpr (std::is_same_v<Character, juv::char16>)
-				{
-					switch (lineEnding)
-					{
-					case LineEnding::CR: return u"\r";
-					case LineEnding::LF: return u"\n";
-					case LineEnding::CRLF: return u"\r\n";
-					case LineEnding::LFCR: return u"\n\r";
-					}
-				}
-				else if constexpr (std::is_same_v<Character, juv::char32>)
-				{
-					switch (lineEnding)
-					{
-					case LineEnding::CR: return U"\r";
-					case LineEnding::LF: return U"\n";
-					case LineEnding::CRLF: return U"\r\n";
-					case LineEnding::LFCR: return U"\n\r";
-					}
-				}
-				else
-				{
-					static_assert(false, "GetNewLineString doesn't support the specified character type.");
-				}
-
-				return {};
-			}
-
-			/// <summary>
-			/// Gets whether a string represents a new line.
-			/// </summary>
-			template <typename StringView>
-			constexpr bool IsNewLineString(StringView const text, LineEnding& lineEnding) noexcept
-			{
-				if (text == GetNewLineString<typename StringView::value_type>(LineEnding::CR))
-				{
-					lineEnding = LineEnding::CR;
-					return true;
-				}
-				else if (text == GetNewLineString<typename StringView::value_type>(LineEnding::LF))
-				{
-					lineEnding = LineEnding::LF;
-					return true;
-				}
-				else if (text == GetNewLineString<typename StringView::value_type>(LineEnding::CRLF))
-				{
-					lineEnding = LineEnding::CRLF;
-					return true;
-				}
-				else if (text == GetNewLineString<typename StringView::value_type>(LineEnding::LFCR))
-				{
-					lineEnding = LineEnding::LFCR;
-					return true;
-				}
-				else
-				{
-					lineEnding = LineEnding::Mixed;
-					return false;
-				}
-			}
-
-			/// <summary>
-			/// Normalizes a string to use a single line ending for every new line.
-			/// </summary>
-			template <typename StringView>
-			auto Normalize(StringView const text, LineEnding lineEnding)
-			{
-				std::basic_string<typename StringView::value_type> result{ text };
-				if (lineEnding == LineEnding::CR)
-				{
-					juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::CRLF), GetNewLineString<typename StringView::value_type>(LineEnding::CR));
-					juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::LFCR), GetNewLineString<typename StringView::value_type>(LineEnding::CR));
-					juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::LF), GetNewLineString<typename StringView::value_type>(LineEnding::CR));
-				}
-				else if (lineEnding == LineEnding::LF)
-				{
-					juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::CRLF), GetNewLineString<typename StringView::value_type>(LineEnding::LF));
-					juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::LFCR), GetNewLineString<typename StringView::value_type>(LineEnding::LF));
-					juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::CR), GetNewLineString<typename StringView::value_type>(LineEnding::LF));
-				}
-				else if (lineEnding == LineEnding::CRLF)
-				{
-					result = Normalize(text, LineEnding::CR);
-					juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::CR), GetNewLineString<typename StringView::value_type>(LineEnding::CRLF));
-				}
-				else if (lineEnding == LineEnding::LFCR)
-				{
-					result = Normalize(text, LineEnding::LF);
-					juv::replace_all(result, GetNewLineString<typename StringView::value_type>(LineEnding::LF), GetNewLineString<typename StringView::value_type>(LineEnding::LFCR));
-				}
-
-				return result;
-			}
+		public:
+		private:
+			static constexpr std::array BinaryUnits{ "B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB" };
+			static constexpr std::array DecimalUnits{ "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 		};
 	}
-}
 
-namespace winrt::OneToolkit::UI
-{
-	/// <summary>
-	/// Provides static helper methods for manipulating colors.
-	/// </summary>
-	struct ColorUtility
-	{
-		ColorUtility() = delete;
-		
-		/// <summary>
-		/// Finds the inverse of a single component.
-		/// </summary>
-		static juv::uint8 InvertComponent(const juv::uint8 component) noexcept
-		{
-			return 255 - component;
-		}
-
-		/// <summary>
-		/// Finds the inverse of a color.
-		/// </summary>
-		static auto Invert(const Windows::UI::Color color) noexcept
-		{
-			Windows::UI::Color result;
-			result.A = InvertComponent(color.A);
-			result.R = InvertComponent(color.R);
-			result.G = InvertComponent(color.G);
-			result.B = InvertComponent(color.B);
-			return result;
-		}
-	};
-
-	namespace Input
+	namespace UI
 	{
 		/// <summary>
-		/// Provides static helper methods for building your own tabbing system.
+		/// Provides helper methods for manipulating colors.
 		/// </summary>
-		struct TabSwitcher
+		namespace ColorUtility
 		{
-			TabSwitcher() = delete;
+			/// <summary>
+			/// Finds the inverse of a single component.
+			/// </summary>
+			constexpr juv::uint8 InvertComponent(juv::uint8 const component) noexcept
+			{
+				return 255 - component;
+			}
 
 			/// <summary>
-			/// Gets the tab index to be selected next.
-			/// </summaray>
-			static inline juv::uint64 GetNewSelectionIndex(juv::uint64 currentIndex, juv::uint64 collectionSize, bool reverse)
+			/// Finds the inverse of a color.
+			/// </summary>
+			constexpr auto Invert(Windows::UI::Color const color) noexcept
 			{
-				if (collectionSize <= 1) return currentIndex;
-				else if (reverse) return currentIndex == 0 ? collectionSize - 1 : currentIndex - 1;
-				else return currentIndex == collectionSize - 1 ? 0 : currentIndex + 1;
+				Windows::UI::Color result;
+				result.A = InvertComponent(color.A);
+				result.R = InvertComponent(color.R);
+				result.G = InvertComponent(color.G);
+				result.B = InvertComponent(color.B);
+				return result;
 			}
-		};
+		}
+
+		namespace Input
+		{
+			/// <summary>
+			/// Provides helper methods for building your own tabbing system.
+			/// </summary>
+			namespace TabSwitcher
+			{
+				/// <summary>
+				/// Gets the tab index to be selected next.
+				/// </summaray>
+				constexpr juv::uint64 GetNewSelectionIndex(juv::uint64 const currentIndex, juv::uint64 const collectionSize, bool const reverse)
+				{
+					if (collectionSize <= 1) return currentIndex;
+					else if (reverse) return currentIndex == 0 ? collectionSize - 1 : currentIndex - 1;
+					else return currentIndex == collectionSize - 1 ? 0 : currentIndex + 1;
+				}
+			};
+		}
 	}
 }

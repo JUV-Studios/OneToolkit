@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("OneToolkit Showcase")]
-[assembly: AssemblyDescription("Discover the rich functionality that OneToolkit offers for Windows app developers!")]
+[assembly: AssemblyDescription("Discover the rich functionality that OneToolkit offers for app developers!")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("JUV Studios")]
 [assembly: AssemblyProduct("OneToolkit")]
@@ -24,6 +24,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.0.0.4")]
+[assembly: AssemblyFileVersion("1.0.0.4")]
 [assembly: ComVisible(false)]
