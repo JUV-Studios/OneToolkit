@@ -11,18 +11,18 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageId>OneToolkit.Dotnet</PackageId>
-		<Version>1.0.0.8</Version>
+		<Version>1.0.0.9</Version>
 		<Authors>Jaiganesh Kumaran</Authors>
 		<Company>JUV Studios</Company>
 		<Product>OneToolkit</Product>
-		<Description>OneToolkit provides a set of controls, converters and helpers that help you build modern Windows apps and cross-platform .NET apps. This package provides a set of functionality that can be used on any platform with .NET Standard 2.0 or later.</Description>
+		<Description>OneToolkit provides a set of controls, converters and helpers that help you build modern Windows apps and cross-platform .NET apps. This package provides a set of functionality for managed apps that can be used on any platform with .NET Standard 2.0 or later.</Description>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<PackageLicenseUrl>https://sway.office.com/s/5JnZ4XUEqVN7bAsB/embed</PackageLicenseUrl>
-		<PackageReleaseNotes>Fixed an issue which prevented using ObservableProperty instances for XAML data binding.</PackageReleaseNotes>
+		<PackageReleaseNotes></PackageReleaseNotes>
 		<Copyright>© 2021 JUV Studios. All rights reserved.</Copyright>
-		<PackageTags>mvvm onetoolkit juvstudios dotnet</PackageTags>
-		<AssemblyVersion>1.0.0.8</AssemblyVersion>
-		<FileVersion>1.0.0.8</FileVersion>
+		<PackageTags>csharp managed dotnet onetoolkit juvstudios juv</PackageTags>
+		<AssemblyVersion>1.0.0.9</AssemblyVersion>
+		<FileVersion>1.0.0.9</FileVersion>
 		<RepositoryUrl>https://dev.azure.com/JUV-Studios/OneToolkit</RepositoryUrl>
 		<PackageProjectUrl>https://dev.azure.com/JUV-Studios/OneToolkit</PackageProjectUrl>
 	</PropertyGroup>
@@ -35,6 +35,5 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="System.Memory" Version="4.5.4" />
-		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.0" />
 	</ItemGroup>
 </Project>

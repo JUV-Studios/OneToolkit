@@ -132,17 +132,38 @@
   <data name="AppMenuMinimizeItem.Text" xml:space="preserve">
     <value>Minimize</value>
   </data>
+  <data name="AppMenuProgrammingLanguageItem.Text" xml:space="preserve">
+    <value>Preferred programming language</value>
+  </data>
   <data name="AppMenuSettingsItem.Text" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ClassesText" xml:space="preserve">
+    <value>Classes</value>
   </data>
   <data name="ClassText" xml:space="preserve">
     <value>class</value>
   </data>
+  <data name="ContributeLink.Content" xml:space="preserve">
+    <value>Contribute to OneToolkit</value>
+  </data>
+  <data name="ConvertersSection.Header" xml:space="preserve">
+    <value>Converters</value>
+  </data>
   <data name="CopyrightText" xml:space="preserve">
     <value>© 2021 JUV Studios. All rights reserved.</value>
   </data>
-  <data name="DisableSoundEffectsSwitch.Header" xml:space="preserve">
+  <data name="DelegatesText" xml:space="preserve">
+    <value>Delegates</value>
+  </data>
+  <data name="DisableSoundEffectsSwitch.Text" xml:space="preserve">
     <value>Disable sound effects</value>
+  </data>
+  <data name="EnumerationsText" xml:space="preserve">
+    <value>Enumerations</value>
   </data>
   <data name="EnumerationText" xml:space="preserve">
     <value>enumeration</value>
@@ -162,11 +183,17 @@
   <data name="HomeHub.Header" xml:space="preserve">
     <value>Welcome</value>
   </data>
+  <data name="ImportButton.Label" xml:space="preserve">
+    <value>Import</value>
+  </data>
   <data name="InstallPackagesButton.Caption" xml:space="preserve">
     <value>Install the applicable NuGet packages that OneToolkit provides</value>
   </data>
   <data name="InstallPackagesButton.Title" xml:space="preserve">
     <value>Install NuGet packages</value>
+  </data>
+  <data name="InterfacesText" xml:space="preserve">
+    <value>Interfaces</value>
   </data>
   <data name="InterfaceText" xml:space="preserve">
     <value>interface</value>
@@ -183,20 +210,32 @@
   <data name="NamespaceText" xml:space="preserve">
     <value>namespace</value>
   </data>
+  <data name="OpenFromFileButton.Caption" xml:space="preserve">
+    <value>Import to playground from a file</value>
+  </data>
+  <data name="OpenFromFileButton.Title" xml:space="preserve">
+    <value>Open from file</value>
+  </data>
+  <data name="OpenText" xml:space="preserve">
+    <value>Open</value>
+  </data>
   <data name="OptionsSection.Header" xml:space="preserve">
     <value>Options</value>
   </data>
-  <data name="PlaygroundsButton.Caption" xml:space="preserve">
-    <value>Prototype your UI quickly</value>
+  <data name="OverviewSection.Header" xml:space="preserve">
+    <value>Overview</value>
   </data>
-  <data name="PlaygroundsButton.Title" xml:space="preserve">
+  <data name="PlaygroundsButton.Caption" xml:space="preserve">
+    <value>Quickly prototype your UI with XAML</value>
+  </data>
+  <data name="PlaygroundsHub.Header" xml:space="preserve">
     <value>Playgrounds</value>
   </data>
-  <data name="PreviewAutoRefreshSwitch.Header" xml:space="preserve">
-    <value>Automatically refresh playground's preview as I type</value>
+  <data name="PreviewAutoRefreshSwitch.Text" xml:space="preserve">
+    <value>Auto-refresh playgrounds preview</value>
   </data>
-  <data name="ProgrammingLanguageBox.Header" xml:space="preserve">
-    <value>Preferred programming language</value>
+  <data name="PreviewSection.Header" xml:space="preserve">
+    <value>Preview</value>
   </data>
   <data name="ReadDocsButton.Caption" xml:space="preserve">
     <value>Learn how to leverage OneToolkit to build great apps with best practices</value>
@@ -204,35 +243,32 @@
   <data name="ReadDocsButton.Title" xml:space="preserve">
     <value>Read the docs</value>
   </data>
-  <data name="ReferenceHubClasses.Header" xml:space="preserve">
-    <value>Classes</value>
-  </data>
-  <data name="ReferenceHubEnumerations.Header" xml:space="preserve">
-    <value>Enumerations</value>
-  </data>
-  <data name="ReferenceHubInterfaces.Header" xml:space="preserve">
-    <value>Interfaces</value>
-  </data>
-  <data name="ReferenceHubNamespaces.Header" xml:space="preserve">
-    <value>Namespaces</value>
-  </data>
-  <data name="ReferenceHubStructures.Header" xml:space="preserve">
-    <value>Structures</value>
-  </data>
   <data name="ReferenceSearchBox.PlaceholderText" xml:space="preserve">
     <value>What are you looking for?</value>
   </data>
   <data name="ReferenceSection.Header" xml:space="preserve">
     <value>API reference</value>
   </data>
+  <data name="SaveText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveToFileButton.Caption" xml:space="preserve">
+    <value>Export to a file from playground</value>
+  </data>
+  <data name="SaveToFileButton.Title" xml:space="preserve">
+    <value>Save to file</value>
+  </data>
   <data name="SearchBox.PlaceholderText" xml:space="preserve">
     <value>What are you looking for?</value>
   </data>
-  <data name="SearchButton.AutomationProperties.Name" xml:space="preserve">
-    <value>Search</value>
+  <data name="ShareButton.Caption" xml:space="preserve">
+    <value>Share your playground with the world</value>
   </data>
-  <data name="SearchButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Search (Ctrl+F)</value>
+  <data name="ShareButton.Title" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="StructuresText" xml:space="preserve">
+    <value>Structures</value>
   </data>
   <data name="StructureText" xml:space="preserve">
     <value>structure</value>

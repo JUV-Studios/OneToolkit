@@ -1,0 +1,10 @@
+import "StorageItemHandle.idl";
+
+namespace OneToolkit.Storage
+{
+    [default_interface]
+    static runtimeclass FileOperations
+    {
+        static Windows.Foundation.IAsyncAction WriteBufferAsync(FileHandle fileHandle, Windows.Storage.Streams.IBuffer buffer);
+    }
+}

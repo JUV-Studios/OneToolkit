@@ -14,5 +14,8 @@ namespace OneToolkit.Storage
         [default_overload]
         static Boolean IsIndexValid(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
         static Boolean IsIndexValid(Windows.Foundation.IMemoryBufferReference reference, UInt32 index);
+
+        static Windows.Storage.Streams.IBuffer EmptyBuffer { get; };
+        static Windows.Foundation.IMemoryBuffer EmptyMemoryBuffer { get; };
     }
 }

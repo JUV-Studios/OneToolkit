@@ -4,11 +4,11 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using OneToolkit.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
+using Windows.ApplicationModel;
 using OneToolkit.System;
 using OneToolkit.Showcase.Dialogs;
 using OneToolkit.Showcase.ViewModels;
-using Windows.ApplicationModel;
 
 namespace OneToolkit.Showcase.Views
 {
@@ -42,12 +42,15 @@ namespace OneToolkit.Showcase.Views
 			}
 		}
 
+		private void Presenter_Navigated(object sender, NavigationEventArgs e)
+		{
+			SettingsViewModel.ViewServiceProvider.NavigationManager.AppViewBackButtonVisibility = Presenter.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+		}
+
 		private async void HelpItem_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new("http://discord.com/invite/CZpBpPQjq8"));
 
 		private async void FeedbackItem_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new($"https://www.nuget.org/packages/OneToolkit/{PackageVersionHelper.Stringify(Package.Current.Id.Version)}/ContactOwners"));
 
-		private async void SettingsItem_Click(object sender, RoutedEventArgs e) => await ContentDialogHelper.TryShowAsync(new SettingsDialog(), ContentDialogPlacement.Popup);
-
-		private async void AboutItem_Click(object sender, RoutedEventArgs e) => await ContentDialogHelper.TryShowAsync(new AboutDialog(), ContentDialogPlacement.Popup);
+		private async void AboutItem_Click(object sender, RoutedEventArgs e) => await new AboutDialog().ShowAsync();
 	}
 }

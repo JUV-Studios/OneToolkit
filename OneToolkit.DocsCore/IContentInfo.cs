@@ -12,7 +12,7 @@ namespace OneToolkit.DocsCore
 		IEnumerable<IContentInfo> Children { get; }
 	}
 
-	public interface IContentInfoPage
+	public interface IContentInfoPresenter
 	{
 		IContentInfo ContentInfo { get; }
 	}

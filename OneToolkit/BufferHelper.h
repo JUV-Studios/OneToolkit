@@ -14,6 +14,8 @@ namespace winrt::OneToolkit::Storage
             static void SetAt(Windows::Foundation::IMemoryBufferReference const& reference, juv::uint32 index, juv::uint8 value);
             static bool IsIndexValid(Windows::Storage::Streams::IBuffer const& buffer, juv::uint32 index);
             static bool IsIndexValid(Windows::Foundation::IMemoryBufferReference const& reference, juv::uint32 index);
+            static Windows::Storage::Streams::IBuffer EmptyBuffer();
+            static Windows::Foundation::IMemoryBuffer EmptyMemoryBuffer();
         };
     }
 

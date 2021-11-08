@@ -4,12 +4,14 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:triggers="using:OneToolkit.UI.Xaml.Triggers"
+	xmlns:ui="using:OneToolkit.UI"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	Loaded="Page_Loaded"
 	mc:Ignorable="d">
-	<UserControl.Resources>
+	<Page.Resources>
 		<x:String x:Key="FullScreenTextId">FullScreenText</x:String>
 		<x:String x:Key="ExitFullScreenTextId">ExitFullScreenText</x:String>
 		<MenuFlyout x:Key="AppMenu">
@@ -29,21 +31,17 @@
 					<KeyboardAccelerator Key="F1" Modifiers="Shift" />
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutItem
-				x:Uid="AppMenuSettingsItem"
-				Click="SettingsItem_Click"
-				Icon="Setting">
-				<MenuFlyoutItem.KeyboardAccelerators>
-					<KeyboardAccelerator Key="I" Modifiers="Menu" />
-				</MenuFlyoutItem.KeyboardAccelerators>
-			</MenuFlyoutItem>
+			<MenuFlyoutSubItem x:Uid="AppMenuSettingsItem" Icon="Setting">
+				<MenuFlyoutSubItem x:Uid="AppMenuProgrammingLanguageItem">
+					<muxc:RadioMenuFlyoutItem />
+				</MenuFlyoutSubItem>
+				<ToggleMenuFlyoutItem x:Uid="DisableSoundEffectsSwitch" IsChecked="{x:Bind viewModels:SettingsViewModel.Instance.DisableSoundEffects, Mode=TwoWay}" />
+				<ToggleMenuFlyoutItem x:Uid="PreviewAutoRefreshSwitch" IsChecked="{x:Bind viewModels:SettingsViewModel.Instance.PreviewAutoRefresh, Mode=TwoWay}" />
+			</MenuFlyoutSubItem>
 			<MenuFlyoutItem x:Uid="AppMenuAboutItem" Click="AboutItem_Click">
 				<MenuFlyoutItem.Icon>
 					<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE946;" />
 				</MenuFlyoutItem.Icon>
-				<MenuFlyoutItem.KeyboardAccelerators>
-					<KeyboardAccelerator Key="I" Modifiers="Menu,Shift" />
-				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
 			<MenuFlyoutSeparator />
 			<MenuFlyoutItem
@@ -57,11 +55,11 @@
 			</MenuFlyoutItem>
 			<MenuFlyoutItem
 				x:Uid="AppMenuCloseItem"
-				Click="{x:Bind viewModels:SettingsViewModel.ViewServiceProvider.CloseView}"
+				Click="{x:Bind viewModels:SettingsViewModel.Close}"
 				Icon="Clear"
 				KeyboardAcceleratorTextOverride="Alt+F4" />
 		</MenuFlyout>
-	</UserControl.Resources>
+	</Page.Resources>
 
 	<Grid>
 		<Grid.RowDefinitions>
@@ -72,7 +70,8 @@
 			Grid.Row="0"
 			Height="{x:Bind viewModels:SettingsViewModel.ViewServiceProvider.TitleBarHeight, Mode=OneWay}"
 			MinHeight="32"
-			Margin="{x:Bind viewModels:SettingsViewModel.ViewServiceProvider.TitleBarInset, Mode=OneWay}">
+			Margin="{x:Bind viewModels:SettingsViewModel.ViewServiceProvider.TitleBarInset, Mode=OneWay}"
+			Visibility="{x:Bind viewModels:SettingsViewModel.ViewServiceProvider.TitleBarVisibility, Mode=OneWay}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
@@ -108,49 +107,34 @@
 			</StackPanel>
 			<StackPanel
 				Grid.Column="1"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
 				Orientation="Horizontal"
 				Spacing="4">
+				<StackPanel.Resources>
+					<ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml" />
+				</StackPanel.Resources>
 				<AutoSuggestBox
 					x:Name="SearchBox"
 					x:Uid="SearchBox"
 					Width="240"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					QueryIcon="Find" />
-				<Button
-					x:Name="SearchButton"
-					x:Uid="SearchButton"
 					Height="24"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					ContextFlyout="{StaticResource AppMenu}">
-					<Button.Content>
-						<SymbolIcon
-							HorizontalAlignment="Stretch"
-							VerticalAlignment="Stretch"
-							Symbol="Find" />
-					</Button.Content>
-					<Button.KeyboardAccelerators>
-						<KeyboardAccelerator Key="F3" />
-						<KeyboardAccelerator Key="F" Modifiers="Control" />
-					</Button.KeyboardAccelerators>
-				</Button>
+					QueryIcon="Find" />
 				<Button
 					x:Uid="MoreButton"
 					Height="24"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
 					AccessKey="F"
 					ContextFlyout="{StaticResource AppMenu}"
 					Flyout="{StaticResource AppMenu}">
-					<SymbolIcon Symbol="More" />
+					<FontIcon FontFamily="{x:Bind ui:Fonts.DefaultIconFontFamily}" Glyph="&#xE10C;" />
 				</Button>
 			</StackPanel>
 		</Grid>
 		<Frame
 			x:Name="Presenter"
 			Grid.Row="1"
-			Background="{ThemeResource LayerFillColorDefaultBrush}" />
+			Background="{ThemeResource LayerFillColorDefaultBrush}"
+			Navigated="Presenter_Navigated" />
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
 				<VisualState>
@@ -159,7 +143,6 @@
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="SearchBox.Visibility" Value="Collapsed" />
-						<Setter Target="SearchButton.Visibility" Value="Visible" />
 					</VisualState.Setters>
 				</VisualState>
 				<VisualState>
@@ -168,8 +151,6 @@
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="SearchBox.Visibility" Value="Visible" />
-						<Setter Target="SearchButton.Visibility" Value="Collapsed" />
-
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

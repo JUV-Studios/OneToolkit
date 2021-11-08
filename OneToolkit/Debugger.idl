@@ -1,0 +1,16 @@
+import "Metadata.idl";
+
+namespace OneToolkit.System
+{
+    [default_interface]
+    runtimeclass Debugger
+    {
+        Boolean IsPresent { get; };
+        void Break();
+        static void Write(String text);
+        static void WriteLine(String lineText);
+        static void WriteLine(String lineText, UInt8 lineEnding);
+        static Debugger GetForCurrentProcess();
+        static Debugger GetFromProcessId(UInt32 processId);
+    }
+}

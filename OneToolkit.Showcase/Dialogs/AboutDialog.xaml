@@ -7,9 +7,13 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	CloseButtonText="{Binding Source={StaticResource CloseTextId}, Converter={StaticResource ResourceLocalizationConverter}}"
 	DefaultButton="Close"
-	Loaded="ContentDialog_Loaded"
 	Style="{StaticResource DefaultContentDialogStyle}"
 	mc:Ignorable="d">
+	<ContentDialog.Resources>
+		<Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="HyperlinkButton">
+			<Setter Property="Margin" Value="-11,0,-11,0" />
+		</Style>
+	</ContentDialog.Resources>
 
 	<StackPanel>
 		<TextBlock
@@ -17,5 +21,6 @@
 			IsTextSelectionEnabled="True"
 			Text="{x:Bind AboutDisplayText}" />
 		<HyperlinkButton x:Uid="TermsOfUseLink" NavigateUri="https://sway.office.com/s/5JnZ4XUEqVN7bAsB/embed" />
+		<HyperlinkButton x:Uid="ContributeLink" />
 	</StackPanel>
 </ContentDialog>

@@ -19,8 +19,8 @@
     <Filter Include="Media">
       <UniqueIdentifier>{0ad71127-7f6a-42a9-96ae-d597154e2978}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Media\Imaging">
-      <UniqueIdentifier>{419a548f-56eb-4cfc-855d-d6da7847cf3a}</UniqueIdentifier>
+    <Filter Include="Runtime">
+      <UniqueIdentifier>{ee0a8823-8163-4fa6-8aa8-4589d4f133f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +31,13 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="MachineInformation.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewService.cpp" />
+    <ClCompile Include="StorageItemHandle.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="Assembly.cpp">
+      <Filter>Runtime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -46,9 +53,21 @@
     <ClInclude Include="MachineInformation.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ViewService.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="StorageItemHandle.h">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Debugger.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Assembly.h">
+      <Filter>Runtime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="FontHelper.idl">
+    <Midl Include="Fonts.idl">
       <Filter>UI</Filter>
     </Midl>
     <Midl Include="BufferHelper.idl">
@@ -57,17 +76,8 @@
     <Midl Include="ViewService.idl">
       <Filter>UI</Filter>
     </Midl>
-    <Midl Include="FileHandle.idl">
-      <Filter>Storage</Filter>
-    </Midl>
-    <Midl Include="ImageResizer.idl">
-      <Filter>Media\Imaging</Filter>
-    </Midl>
     <Midl Include="SettingsService.idl">
       <Filter>Storage</Filter>
-    </Midl>
-    <Midl Include="CropDialog.idl">
-      <Filter>Media\Imaging</Filter>
     </Midl>
     <Midl Include="SharedFile.idl">
       <Filter>Storage</Filter>
@@ -78,23 +88,37 @@
     <Midl Include="MachineInformation.idl">
       <Filter>System</Filter>
     </Midl>
-    <Midl Include="Converters.idl">
+    <Midl Include="ThemeService.idl">
       <Filter>UI</Filter>
     </Midl>
-    <Midl Include="ThemeHelper.idl">
-      <Filter>UI</Filter>
-    </Midl>
-    <Midl Include="IStorageItemHandle.idl">
-      <Filter>Storage</Filter>
-    </Midl>
-    <Midl Include="Lifecycle.idl" />
-    <Midl Include="TypeCache.idl" />
     <Midl Include="PackageVersionHelper.idl">
       <Filter>System</Filter>
     </Midl>
-    <Midl Include="Metadata.idl" />
-    <Midl Include="NavigationType.idl">
+    <Midl Include="Navigation.idl">
       <Filter>UI</Filter>
     </Midl>
+    <Midl Include="TypeNameHelper.idl">
+      <Filter>Runtime</Filter>
+    </Midl>
+    <Midl Include="FileOperations.idl">
+      <Filter>Storage</Filter>
+    </Midl>
+    <Midl Include="Imaging.idl">
+      <Filter>Media</Filter>
+    </Midl>
+    <Midl Include="StorageItemHandle.idl">
+      <Filter>Storage</Filter>
+    </Midl>
+    <Midl Include="Debugger.idl">
+      <Filter>System</Filter>
+    </Midl>
+    <Midl Include="Metadata.idl" />
+    <Midl Include="Lifecycle.idl" />
+    <Midl Include="Assembly.idl">
+      <Filter>Runtime</Filter>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="OneToolkit.xml" />
   </ItemGroup>
 </Project>

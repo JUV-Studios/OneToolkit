@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "MachineInformation.h"
 #include "System.MachineInformation.g.cpp"
+#include <Inspectable.h>
 
 using namespace juv;
 using namespace winrt;
@@ -13,19 +14,12 @@ using namespace Windows::Security::ExchangeActiveSyncProvisioning;
 
 namespace winrt::OneToolkit::System::implementation
 {
-	__interface __declspec(uuid("AF86E2E0-B12D-4c6a-9C5A-D7AA65101E90")) abi_IInspectable : ::IUnknown
-	{
-		int __stdcall GetIids(uint32_t* count, guid** ids) noexcept;
-		int __stdcall GetRuntimeClassName(void** name) noexcept;
-		int __stdcall GetTrustLevel(TrustLevel* level) noexcept;
-	};
-
-	__interface __declspec(uuid("76E915B1-FF36-407C-9F57-160D3E540747")) IAnalyticsVersionInfo2 : abi_IInspectable
+	__interface __declspec(uuid("76E915B1-FF36-407C-9F57-160D3E540747")) IAnalyticsVersionInfo2 : ::IInspectable
 	{
 		int __stdcall ProductName(void** value) noexcept;
 	};
 
-	EasClientDeviceInformation m_ClientDeviceInformation = nullptr;
+	EasClientDeviceInformation clientDeviceInformation = nullptr;
 
 	hstring MachineInformation::DeviceName()
 	{
@@ -47,7 +41,60 @@ namespace winrt::OneToolkit::System::implementation
 		return ClientDeviceInformation().SystemManufacturer();
 	}
 
-	hstring MachineInformation::OperatingSystem()
+	ProcessorArchitectureInfo MachineInformation::ArchitectureInfo()
+	{
+		ProcessorArchitectureInfo result;
+		uint16 nativeMachine;
+		uint16 processMachine;
+		check_bool(IsWow64Process2(GetCurrentProcess(), &processMachine, &nativeMachine));
+		switch (nativeMachine)
+		{
+		case IMAGE_FILE_MACHINE_I386:
+			result.SystemArchitecture = ProcessorArchitecture::X86;
+			break;
+		case IMAGE_FILE_MACHINE_AMD64:
+			result.SystemArchitecture = ProcessorArchitecture::X64;
+			break;
+		case IMAGE_FILE_MACHINE_ARM: 
+			result.SystemArchitecture = ProcessorArchitecture::Arm; 
+			break;
+		case IMAGE_FILE_MACHINE_ARMNT: 
+			result.SystemArchitecture = ProcessorArchitecture::Arm;
+			break;
+		case IMAGE_FILE_MACHINE_ARM64:
+			result.SystemArchitecture = ProcessorArchitecture::Arm64; 
+			break;
+		default:
+			result.SystemArchitecture = ProcessorArchitecture::Unknown;
+			break;
+		}
+
+		switch (processMachine)
+		{
+		case IMAGE_FILE_MACHINE_I386: 
+			result.SystemArchitecture == ProcessorArchitecture::Arm64 ? ProcessorArchitecture::X86OnArm64 : ProcessorArchitecture::X86;
+			break;
+		case IMAGE_FILE_MACHINE_AMD64: 
+			result.SystemArchitecture = ProcessorArchitecture::X64;
+			break;
+		case IMAGE_FILE_MACHINE_ARM:
+			result.SystemArchitecture = ProcessorArchitecture::Arm;
+			break;
+		case IMAGE_FILE_MACHINE_ARMNT: 
+			result.SystemArchitecture = ProcessorArchitecture::Arm;
+			break;
+		case IMAGE_FILE_MACHINE_ARM64:
+			result.SystemArchitecture = ProcessorArchitecture::Arm64;
+			break;
+		default: 
+			result.SystemArchitecture = ProcessorArchitecture::Neutral;
+			break;
+		}
+
+		return result;
+	}
+
+	hstring MachineInformation::OperatingSystemName()
 	{
 		if (auto versionInfo2 = AnalyticsInfo::VersionInfo().try_as<IAnalyticsVersionInfo2>())
 		{
@@ -61,7 +108,7 @@ namespace winrt::OneToolkit::System::implementation
 		}
 	}
 
-	PackageVersion MachineInformation::SoftwareVersion()
+	PackageVersion MachineInformation::OperatingSystemVersion()
 	{
 		auto versionInfo = std::stoull(AnalyticsInfo::VersionInfo().DeviceFamilyVersion().data());
 		return PackageVersion
@@ -73,18 +120,9 @@ namespace winrt::OneToolkit::System::implementation
 		};
 	}
 
-	ProcessorArchitecture MachineInformation::ProcessorArchitecture()
-	{
-		uint16 nativeMachine;
-		uint16 processMachine;
-		IsWow64Process2(GetCurrentProcess(), &processMachine, &nativeMachine);
-		if (nativeMachine == IMAGE_FILE_MACHINE_UNKNOWN) return ProcessorArchitecture::Unknown;
-		else throw hresult_not_implemented(); // TODO implement detection for other architectures.
-	}
-
 	EasClientDeviceInformation MachineInformation::ClientDeviceInformation()
 	{
-		if (!m_ClientDeviceInformation) m_ClientDeviceInformation = {};
-		return m_ClientDeviceInformation;
+		if (!clientDeviceInformation) clientDeviceInformation = {};
+		return clientDeviceInformation;
 	}
 }

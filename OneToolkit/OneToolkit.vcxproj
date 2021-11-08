@@ -195,6 +195,14 @@
       <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</RuntimeTypeInfo>
       <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</RuntimeTypeInfo>
       <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</RuntimeTypeInfo>
+      <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </ScanSourceForModuleDependencies>
+      <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+      </ScanSourceForModuleDependencies>
+      <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ScanSourceForModuleDependencies>
+      <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ScanSourceForModuleDependencies>
     </ClCompile>
     <Link>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">%(AdditionalDependencies)</AdditionalDependencies>
@@ -244,6 +252,14 @@
       <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</RuntimeTypeInfo>
       <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</RuntimeTypeInfo>
       <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</RuntimeTypeInfo>
+      <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </ScanSourceForModuleDependencies>
+      <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+      </ScanSourceForModuleDependencies>
+      <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ScanSourceForModuleDependencies>
+      <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ScanSourceForModuleDependencies>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -259,24 +275,16 @@
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="Converters.h">
-      <DependentUpon>Converters.idl</DependentUpon>
+    <ClInclude Include="Debugger.h">
+      <DependentUpon>Debugger.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="CropDialog.h">
-      <DependentUpon>CropDialog.idl</DependentUpon>
+    <ClInclude Include="Fonts.h">
+      <DependentUpon>Fonts.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="FileHandle.h">
-      <DependentUpon>FileHandle.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="FontHelper.h">
-      <DependentUpon>FontHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="ImageResizer.h">
-      <DependentUpon>ImageResizer.idl</DependentUpon>
+    <ClInclude Include="Imaging.h">
+      <DependentUpon>Imaging.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="KeyStateHelper.h">
@@ -285,6 +293,10 @@
     </ClInclude>
     <ClInclude Include="MachineInformation.h">
       <DependentUpon>MachineInformation.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="Assembly.h">
+      <DependentUpon>Assembly.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="PackageVersionHelper.h">
@@ -300,12 +312,9 @@
       <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="ThemeHelper.h">
-      <DependentUpon>ThemeHelper.idl</DependentUpon>
+    <ClInclude Include="StorageItemHandle.h">
+      <DependentUpon>StorageItemHandle.idl</DependentUpon>
       <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="TypeCache.h">
-      <DependentUpon>TypeCache.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="ViewService.h">
       <DependentUpon>ViewService.idl</DependentUpon>
@@ -317,24 +326,20 @@
       <DependentUpon>BufferHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="Converters.cpp">
-      <DependentUpon>Converters.idl</DependentUpon>
+    <ClCompile Include="Debugger.cpp">
+      <DependentUpon>Debugger.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="CropDialog.cpp">
-      <DependentUpon>CropDialog.idl</DependentUpon>
+    <ClCompile Include="FileOperations.cpp">
+      <DependentUpon>FileOperations.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="FileHandle.cpp">
-      <DependentUpon>FileHandle.idl</DependentUpon>
+    <ClCompile Include="Fonts.cpp">
+      <DependentUpon>Fonts.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="FontHelper.cpp">
-      <DependentUpon>FontHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ImageResizer.cpp">
-      <DependentUpon>ImageResizer.idl</DependentUpon>
+    <ClCompile Include="Imaging.cpp">
+      <DependentUpon>Imaging.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="KeyStateHelper.cpp">
@@ -345,8 +350,20 @@
       <DependentUpon>MachineInformation.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ThemeHelper.cpp">
-      <DependentUpon>ThemeHelper.idl</DependentUpon>
+    <ClCompile Include="Assembly.cpp">
+      <DependentUpon>Assembly.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="StorageItemHandle.cpp">
+      <DependentUpon>StorageItemHandle.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="ThemeService.cpp">
+      <DependentUpon>ThemeService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="ViewService.cpp">
+      <DependentUpon>ViewService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClInclude Include="OneToolkit.h">
@@ -369,11 +386,8 @@
       <DependentUpon>SharedFile.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="TypeCache.cpp">
-      <DependentUpon>TypeCache.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="ViewService.cpp">
-      <DependentUpon>ViewService.idl</DependentUpon>
+    <ClCompile Include="TypeNameHelper.cpp">
+      <DependentUpon>TypeNameHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
   </ItemGroup>
@@ -389,23 +403,20 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="Debugger.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="FileOperations.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="Imaging.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="MachineInformation.idl" />
     <Midl Include="BufferHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="Converters.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="CropDialog.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="FileHandle.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="FontHelper.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ImageResizer.idl">
+    <Midl Include="Fonts.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="KeyStateHelper.idl">
@@ -413,7 +424,8 @@
     </Midl>
     <Midl Include="Lifecycle.idl" />
     <Midl Include="Metadata.idl" />
-    <Midl Include="NavigationType.idl" />
+    <Midl Include="Assembly.idl" />
+    <Midl Include="Navigation.idl" />
     <Midl Include="PackageVersionHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -423,16 +435,21 @@
     <Midl Include="SharedFile.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="IStorageItemHandle.idl">
+    <Midl Include="StorageItemHandle.idl" />
+    <Midl Include="ThemeService.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="ThemeHelper.idl">
+    <Midl Include="TypeNameHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="TypeCache.idl" />
     <Midl Include="ViewService.idl">
       <SubType>Designer</SubType>
     </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="OneToolkit.xml">
+      <DeploymentContent>false</DeploymentContent>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,7 +2,7 @@
 	x:Class="OneToolkit.Showcase.App"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:converters="using:OneToolkit.UI.Converters">
+	xmlns:converters="using:OneToolkit.UI.Xaml.Converters">
 
 	<Application.Resources>
 		<ResourceDictionary>
@@ -12,6 +12,7 @@
 			</ResourceDictionary.MergedDictionaries>
 			<converters:BoolReverseConverter x:Key="BoolNegationConverter" />
 			<converters:StringLocalizationConverter x:Key="ResourceLocalizationConverter" />
+			<x:String x:Key="CancelTextId">CancelText</x:String>
 			<x:String x:Key="CloseTextId">AppMenuCloseItem/Text</x:String>
 		</ResourceDictionary>
 	</Application.Resources>

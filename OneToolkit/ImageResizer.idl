@@ -1,8 +1,0 @@
-namespace OneToolkit.Media.Imaging
-{
-    [default_interface]
-    static runtimeclass ImageResizer
-    {
-        static Windows.Foundation.IAsyncAction RescaleAsync(Windows.Foundation.Size desiredSize, Windows.Graphics.Imaging.BitmapInterpolationMode interpolationMode, Windows.Storage.Streams.IRandomAccessStream inputStream, Windows.Storage.Streams.IRandomAccessStream outputStream);
-    }
-}

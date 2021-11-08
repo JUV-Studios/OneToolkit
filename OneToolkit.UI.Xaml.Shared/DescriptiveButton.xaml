@@ -1,0 +1,33 @@
+﻿<Button
+	x:Class="OneToolkit.UI.Xaml.Controls.DescriptiveButton"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters="using:OneToolkit.UI.Xaml.Converters"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:OneToolkit.UI.Xaml.Controls"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Style="{StaticResource DefaultDescriptiveButtonStyle}"
+	mc:Ignorable="d">
+	<Button.Resources>
+		<converters:StringToVisibilityConverter x:Key="ConvertStringToVisibility" />
+	</Button.Resources>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="11" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<ContentPresenter Grid.Column="0" Content="{x:Bind Visuals, Mode=OneWay}" />
+		<StackPanel Grid.Column="2" Orientation="Vertical">
+			<TextBlock
+				Style="{StaticResource DescriptiveButtonTitleTextStyle}"
+				Text="{x:Bind Title, Mode=OneWay}"
+				Visibility="{x:Bind Title, Mode=OneWay, Converter={StaticResource ConvertStringToVisibility}}" />
+			<TextBlock
+				Style="{StaticResource DescriptiveButtonCaptionTextStyle}"
+				Text="{x:Bind Caption, Mode=OneWay}"
+				Visibility="{x:Bind Caption, Mode=OneWay, Converter={StaticResource ConvertStringToVisibility}}" />
+		</StackPanel>
+	</Grid>
+</Button>

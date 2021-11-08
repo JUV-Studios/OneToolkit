@@ -8,7 +8,10 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	HorizontalAlignment="Stretch"
 	VerticalAlignment="Stretch"
+	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 
-	<controls:HubPanel Header="{x:Bind local:ApiReference.GetDisplayName(ContentInfo)}" />
+	<controls:Hub Header="{x:Bind local:ApiReference.GetDisplayName(ContentInfo)}">
+		<controls:HubSection x:Uid="OverviewSection" />
+	</controls:Hub>
 </Page>

@@ -1,0 +1,42 @@
+namespace OneToolkit.Storage
+{
+	[flags]
+	enum FileSharingMode
+	{
+		ShareNone = 0,
+		ShareRead = 0x1,
+		ShareWrite = 0x2,
+		ShareDelete = 0x4
+	};
+
+	struct StorageItemId
+	{
+		UInt64 Value;
+	};
+
+	interface IStorageItemHandle
+	{
+		String ItemName { get; };
+		String DisplayName { get; };
+		[noexcept] StorageItemId Id { get; };
+		[noexcept] FileSharingMode SharingMode { get; };
+		[noexcept] Windows.Storage.FileAccessMode AccessMode { get; };
+		void Delete();
+	};
+
+    [default_interface]
+    runtimeclass FileHandle : IStorageItemHandle
+    {
+        FileHandle(Windows.Storage.StorageFile file, Windows.Storage.FileAccessMode accessMode, FileSharingMode sharingMode);
+        FileHandle(Windows.Storage.StorageFolder folder, String fileName, Windows.Storage.FileAccessMode accessMode, FileSharingMode sharingMode);
+        UInt64 FileSize { get; };
+        Windows.Foundation.IAsyncOperation<Windows.Storage.StorageFile> GetStorageFileAsync();
+    }
+
+	[default_interface]
+	runtimeclass FolderHandle : IStorageItemHandle
+	{
+		FolderHandle(Windows.Storage.StorageFolder folder,  Windows.Storage.FileAccessMode accessMode, FileSharingMode sharingMode);
+		Windows.Foundation.IAsyncOperation<Windows.Storage.StorageFolder> GetStorageFolderAsync();
+	}
+}

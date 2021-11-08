@@ -7,33 +7,33 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit", "OneToolkit\On
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneToolkit.Dotnet", "OneToolkit.Dotnet\OneToolkit.Dotnet.csproj", "{EF690EBE-5BFE-428E-9E39-D0EF06B1FD1C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit.UI.Xaml", "OneToolkit.UI.Xaml\OneToolkit.UI.Xaml.vcxproj", "{95B918E4-AD86-45A6-BE1A-77399535BAD2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit.UI.Xaml.Uwp", "OneToolkit.UI.Xaml.Uwp\OneToolkit.UI.Xaml.Uwp.vcxproj", "{95B918E4-AD86-45A6-BE1A-77399535BAD2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "juv", "juv", "{A31BD13B-9396-4772-B6A9-4C61343A72AC}"
 	ProjectSection(SolutionItems) = preProject
 		juv\build.cmd = juv\build.cmd
+		juv\juv.cx.h = juv\juv.cx.h
 		juv\juv.h = juv\juv.h
 		juv\juv.nuspec = juv\juv.nuspec
 		juv\juv.props = juv\juv.props
+		juv\winrt-polyfill.h = juv\winrt-polyfill.h
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneToolkit.Showcase", "OneToolkit.Showcase\OneToolkit.Showcase.csproj", "{07E880F8-3550-49C3-86DB-B8F0F3513398}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit.UI.Shared", "OneToolkit.UI.Shared\OneToolkit.UI.Shared.vcxitems", "{8F018EB9-C80F-403E-9476-13C7AF342CAF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit.UI.Xaml.Shared", "OneToolkit.UI.Xaml.Shared\OneToolkit.UI.Xaml.Shared.vcxitems", "{8F018EB9-C80F-403E-9476-13C7AF342CAF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit.UI.WinUI", "OneToolkit.UI.WinUI\OneToolkit.UI.WinUI.vcxproj", "{22FEF31E-10AC-458F-9F7B-1B184B487DAA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit.UI.Xaml.WinUI", "OneToolkit.UI.Xaml.WinUI\OneToolkit.UI.Xaml.WinUI.vcxproj", "{22FEF31E-10AC-458F-9F7B-1B184B487DAA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneToolkit.DocsCore", "OneToolkit.DocsCore\OneToolkit.DocsCore.csproj", "{F1747D4A-9DA9-4E3E-89C1-417DE90BC35D}"
 EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "OneToolkit.Showcase.Package", "OneToolkit.Showcase.Package\OneToolkit.Showcase.Package.wapproj", "{4F701BE6-9B9D-4711-B2ED-FEC2621FC7FD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneToolkit.UnitTest", "OneToolkit.UnitTest\OneToolkit.UnitTest.vcxproj", "{89A5F225-13F2-46FB-BC05-1037775608D0}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		OneToolkit.UI.Shared\OneToolkit.UI.Shared.vcxitems*{22fef31e-10ac-458f-9f7b-1b184b487daa}*SharedItemsImports = 4
-		OneToolkit.UI.Shared\OneToolkit.UI.Shared.vcxitems*{8f018eb9-c80f-403e-9476-13c7af342caf}*SharedItemsImports = 9
-		OneToolkit.UI.Shared\OneToolkit.UI.Shared.vcxitems*{95b918e4-ad86-45a6-be1a-77399535bad2}*SharedItemsImports = 4
+		OneToolkit.UI.Xaml.Shared\OneToolkit.UI.Xaml.Shared.vcxitems*{22fef31e-10ac-458f-9f7b-1b184b487daa}*SharedItemsImports = 4
+		OneToolkit.UI.Xaml.Shared\OneToolkit.UI.Xaml.Shared.vcxitems*{8f018eb9-c80f-403e-9476-13c7af342caf}*SharedItemsImports = 9
+		OneToolkit.UI.Xaml.Shared\OneToolkit.UI.Xaml.Shared.vcxitems*{95b918e4-ad86-45a6-be1a-77399535bad2}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -190,20 +190,6 @@ Global
 		{4F701BE6-9B9D-4711-B2ED-FEC2621FC7FD}.Release|x86.ActiveCfg = Release|x86
 		{4F701BE6-9B9D-4711-B2ED-FEC2621FC7FD}.Release|x86.Build.0 = Release|x86
 		{4F701BE6-9B9D-4711-B2ED-FEC2621FC7FD}.Release|x86.Deploy.0 = Release|x86
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Debug|ARM.ActiveCfg = Debug|Win32
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Debug|ARM64.ActiveCfg = Debug|Win32
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Debug|x64.ActiveCfg = Debug|x64
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Debug|x64.Build.0 = Debug|x64
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Debug|x86.ActiveCfg = Debug|Win32
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Debug|x86.Build.0 = Debug|Win32
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Release|Any CPU.ActiveCfg = Release|Win32
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Release|ARM.ActiveCfg = Release|Win32
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Release|ARM64.ActiveCfg = Release|Win32
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Release|x64.ActiveCfg = Release|x64
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Release|x64.Build.0 = Release|x64
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Release|x86.ActiveCfg = Release|Win32
-		{89A5F225-13F2-46FB-BC05-1037775608D0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

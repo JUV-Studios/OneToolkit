@@ -8,10 +8,7 @@ namespace OneToolkit.DocsCore
 	{
 		private readonly string _Name;
 		private readonly IEnumerable<TypeInfo> _Children;
-		private IEnumerable<TypeInfo> _Classes;
-		private IEnumerable<TypeInfo> _Enumerations;
-		private IEnumerable<TypeInfo> _Interfaces;
-		private IEnumerable<TypeInfo> _Structures;
+		private IEnumerable<IGrouping<TypeKind, TypeInfo>> _GroupedChildren;
 
 		public TypeGroup(string name, IEnumerable<Type> types)
 		{
@@ -27,28 +24,12 @@ namespace OneToolkit.DocsCore
 
 		public IEnumerable<IContentInfo> Children => _Children;
 
-		public IEnumerable<IContentInfo> Classes => _Classes ??= from child in _Children
-																 where child.Kind == TypeKind.Class
-																 select child;
-
-		public IEnumerable<IContentInfo> Enumerations => _Enumerations ??= from child in _Children
-																		   where child.Kind == TypeKind.Enumeration
-																		   select child;
-
-		public IEnumerable<IContentInfo> Interfaces => _Interfaces ??= from child in _Children
-																	   where child.Kind == TypeKind.Interface
-																	   select child;
-
-		public IEnumerable<IContentInfo> Structures => _Structures ??= from child in _Children
-																	   where child.Kind == TypeKind.Structure
-																	   select child;
+		public IEnumerable<IGrouping<TypeKind, TypeInfo>> GroupedChildren => _GroupedChildren ??= from child in _Children
+																								  group child by child.Kind;
 
 		public void Dispose()
 		{
-			_Classes = null;
-			_Enumerations = null;
-			_Interfaces = null;
-			_Structures = null;
+			_GroupedChildren = null;
 		}
 	}
 }

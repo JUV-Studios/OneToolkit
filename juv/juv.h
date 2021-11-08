@@ -1,57 +1,21 @@
 // (c) 2021 JUV Studios. All rights reserved. Included as part of OneToolkit for use in cross-platform C++ projects.
 
 #pragma once
+#ifdef __cplusplus_winrt
+#include "juv.cx.h"
+#else
 #include <span>
 #include <array>
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <cstddef>
 #include <optional>
 #include <algorithm>
+#include <functional>
 #include <string_view>
 #include <type_traits>
-
-namespace winrt::Windows
-{
-#if __has_include(<winrt/Windows.UI.h>)
-#include <winrt/Windows.UI.h>
-#else
-	namespace UI
-	{
-		struct Color
-		{
-			uint8_t A;
-			uint8_t R;
-			uint8_t G;
-			uint8_t B;
-		};
-
-		inline bool operator==(Color const& left, Color const& right) noexcept
-		{
-			return left.A == right.A && left.R == right.R && left.G == right.G && left.B == right.B;
-		}
-
-		inline bool operator!=(Color const& left, Color const& right) noexcept
-		{
-			return !(left == right);
-		}
-	}
-#endif
-
-#if __has_include(<winrt/Windows.Security.Cryptography.h>)
-#include <winrt/Windows.Security.Cryptography.h>
-#else
-	namespace Security::Cryptography
-	{
-		enum class BinaryStringEncoding : int32_t
-		{
-			Utf8 = 0,
-			Utf16LE = 1,
-			Utf16BE = 2,
-		};
-	}
-#endif
-}
+#include "winrt-polyfill.h"
 
 namespace juv
 {
@@ -59,6 +23,7 @@ namespace juv
 	using char16 = char16_t;
 	using char32 = char32_t;
 	using wchar = wchar_t;
+	using size = size_t;
 	using int8 = int8_t;
 	using uint8 = uint8_t;
 	using int16 = int16_t;
@@ -68,13 +33,36 @@ namespace juv
 	using int64 = int64_t;
 	using uint64 = uint64_t;
 
+	template <typename T>
+	struct property
+	{
+	public:
+		property(std::function<T()> getter, std::function<void(T)> setter = {}) : m_Getter(getter), m_Setter(setter) {}
+		T operator()() const { return m_Getter(); }
+		void operator()(T newValue) { m_Setter(newValue); }
+	private:
+		std::function<T()> const m_Getter;
+		std::function<void(T)> const m_Setter;
+	};
+
+	template <typename T>
+	struct auto_property final : property<T>
+	{
+	public:
+		auto_property(T defaultValue = {}) : property<T>(std::bind(&auto_property<T>::get, this), std::bind(&auto_property<T>::set, this, std::placeholders::_1)), m_BackingField(defaultValue) {}
+	private:
+		T m_BackingField;
+		T get() const noexcept { return m_BackingField; }
+		void set(T newValue) { m_BackingField = newValue; }
+	};
+
 	/// <summary>
 	/// Safely casts a pointer's value into an integer.
 	/// </summary>
 	template <typename Integer, typename Pointer>
 	auto as_value(Pointer pointer) noexcept requires std::is_integral_v<Integer>&& std::is_pointer_v<Pointer>
 	{
-		return static_cast<Integer>(reinterpret_cast<size_t>(pointer));
+		return static_cast<Integer>(reinterpret_cast<size>(pointer));
 	}
 
 	/// <summary>
@@ -83,7 +71,7 @@ namespace juv
 	template <typename Pointer, typename Integer>
 	auto as_pointer(Integer value) noexcept requires std::is_integral_v<Integer>&& std::is_pointer_v<Pointer>
 	{
-		return reinterpret_cast<Pointer>(static_cast<size_t>(value));
+		return reinterpret_cast<Pointer>(static_cast<size>(value));
 	}
 
 	/// <summary>
@@ -187,7 +175,7 @@ namespace winrt::OneToolkit
 				/// <summary>
 				/// Gets whether the buffer contains UTF8 encoded text or not.
 				/// </summary>
-				static bool IsUtf8(std::span<juv::uint8 const> const buffer) noexcept
+				static bool IsUtf8(std::span<std::byte const> const buffer) noexcept
 				{
 					/*
 						UTF8 valid sequences:
@@ -204,11 +192,11 @@ namespace winrt::OneToolkit
 						Subsequent chars are in the range 128-191
 					*/
 
-					size_t position = 0;
+					juv::size position = 0;
 					juv::uint8 moreCharacters;
 					while (position < buffer.size())
 					{
-						auto character = buffer[position++];
+						auto character = std::to_integer<juv::uint8>(buffer[position++]);
 						if (character == 0) return false;
 						else if (character <= 127) moreCharacters = 0;
 						else if (character >= 194 && character <= 223) moreCharacters = 1;
@@ -219,7 +207,7 @@ namespace winrt::OneToolkit
 						// Check secondary characters are in range if we are expecting any.
 						while (moreCharacters > 0 && position < buffer.size())
 						{
-							character = buffer[position++];
+							character = std::to_integer<juv::uint8>(buffer[position++]);
 							if (character < 128 || character > 191) return false;
 							moreCharacters--;
 						}
@@ -231,7 +219,7 @@ namespace winrt::OneToolkit
 				/// <summary>
 				/// Gets whether the buffer contains UTF16 encoded text or not.
 				/// </summary>
-				static bool IsUtf16(std::span<juv::uint8 const> const buffer, Endianness& endianness) noexcept
+				static bool IsUtf16(std::span<std::byte const> const buffer, Endianness& endianness) noexcept
 				{
 					if (IsUtf16Regular(buffer, endianness)) return true;
 					else return IsUtf16Ascii(buffer, endianness);
@@ -240,16 +228,16 @@ namespace winrt::OneToolkit
 				/// <summary>
 				/// Determines the the encoding of a text buffer using various methods.
 				/// </summary>
-				static std::optional<BinaryStringEncoding> Detect(std::span<juv::uint8 const> const buffer)
+				static std::optional<Windows::Security::Cryptography::BinaryStringEncoding> Detect(std::span<std::byte const> const buffer)
 				{
-					if (buffer.size() >= 2 && buffer[0] == ByteOrderMarkUtf16LE[0] && buffer[1] == ByteOrderMarkUtf16LE[1]) return BinaryStringEncoding::Utf16LE;
-					else if (buffer.size() >= 2 && buffer[0] == ByteOrderMarkUtf16BE[0] && buffer[1] == ByteOrderMarkUtf16BE[1]) return BinaryStringEncoding::Utf16BE;
-					else if (buffer.size() >= 3 && buffer[0] == ByteOrderMarkUtf8[0] && buffer[1] == ByteOrderMarkUtf8[1] && buffer[2] == ByteOrderMarkUtf8[2]) return BinaryStringEncoding::Utf8;
-					else if (IsUtf8(buffer)) return BinaryStringEncoding::Utf8;
+					if (buffer.size() >= 2 && buffer[0] == ByteOrderMark::Utf16LE[0] && buffer[1] == ByteOrderMark::Utf16LE[1]) return Windows::Security::Cryptography::BinaryStringEncoding::Utf16LE;
+					else if (buffer.size() >= 2 && buffer[0] == ByteOrderMark::Utf16BE[0] && buffer[1] == ByteOrderMark::Utf16BE[1]) return Windows::Security::Cryptography::BinaryStringEncoding::Utf16BE;
+					else if (buffer.size() >= 3 && buffer[0] == ByteOrderMark::Utf8[0] && buffer[1] == ByteOrderMark::Utf8[1] && buffer[2] == ByteOrderMark::Utf8[2]) return Windows::Security::Cryptography::BinaryStringEncoding::Utf8;
+					else if (IsUtf8(buffer)) return Windows::Security::Cryptography::BinaryStringEncoding::Utf8;
 					else
 					{
 						Endianness endianness;
-						if (IsUtf16(buffer, endianness)) return endianness == Endianness::Little ? BinaryStringEncoding::Utf16LE : BinaryStringEncoding::Utf16BE;
+						if (IsUtf16(buffer, endianness)) return endianness == Endianness::Little ? Windows::Security::Cryptography::BinaryStringEncoding::Utf16LE : Windows::Security::Cryptography::BinaryStringEncoding::Utf16BE;
 						else return std::nullopt;
 					}
 				}
@@ -257,12 +245,12 @@ namespace winrt::OneToolkit
 				struct ByteOrderMark
 				{
 					ByteOrderMark() = delete;
-					static constexpr std::array Utf8{ 0xEF, 0xBB, 0xBF };
-					static constexpr std::array Utf16LE{ 0xFF, 0xFE };
-					static constexpr std::array Utf16BE{ 0xFE, 0xFF };
+					static constexpr std::array Utf8{ std::byte(0xEF), std::byte(0xBB), std::byte(0xBF) };
+					static constexpr std::array Utf16LE{ std::byte(0xFF), std::byte(0xFE) };
+					static constexpr std::array Utf16BE{ std::byte(0xFE), std::byte(0xFF) };
 				};
 
-				static bool IsUtf16Regular(std::span<juv::uint8 const> const buffer, Endianness& endianness) noexcept
+				static bool IsUtf16Regular(std::span<std::byte const> const buffer, Endianness& endianness) noexcept
 				{
 					auto size = buffer.size();
 					if (size < 2)
@@ -272,14 +260,14 @@ namespace winrt::OneToolkit
 					}
 
 					size--; // Reduce size by 1 so we don't need to worry about bounds checking for pairs of bytes.
-					size_t leControlCharacters = 0;
-					size_t beControlCharacters = 0;
+					juv::size leControlCharacters = 0;
+					juv::size beControlCharacters = 0;
 					juv::uint8 ch1, ch2;
-					size_t pos = 0;
+					juv::size pos = 0;
 					while (pos < size)
 					{
-						ch1 = buffer[pos++];
-						ch2 = buffer[pos++];
+						ch1 = std::to_integer<juv::uint8>(buffer[pos++]);
+						ch2 = std::to_integer<juv::uint8>(buffer[pos++]);
 						if (!ch1 && (ch2 == 0x0a || ch2 == 0x0d)) beControlCharacters++;
 						else if (!ch2 && (ch1 == 0x0a || ch1 == 0x0d)) leControlCharacters++;
 						if (leControlCharacters && beControlCharacters)
@@ -307,14 +295,14 @@ namespace winrt::OneToolkit
 					}
 				}
 
-				static bool IsUtf16Ascii(std::span<juv::uint8 const> const buffer, Endianness& endianness) noexcept
+				static bool IsUtf16Ascii(std::span<std::byte const> const buffer, Endianness& endianness) noexcept
 				{
 					// Get the number of even and odd nulls.
-					size_t oddNulls = 0;
-					size_t evenNulls = 0;
-					for (size_t position = 0; position < buffer.size(); ++position)
+					juv::size oddNulls = 0;
+					juv::size evenNulls = 0;
+					for (juv::size position = 0; position < buffer.size(); ++position)
 					{
-						if (buffer[position] == 0)
+						if (std::to_integer<juv::uint8>(buffer[position]) == 0)
 						{
 							if (position % 2 == 0) evenNulls++;
 							else oddNulls++;
@@ -494,6 +482,7 @@ namespace winrt::OneToolkit
 		struct FileSizeHelper
 		{
 		public:
+
 		private:
 			static constexpr std::array BinaryUnits{ "B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB" };
 			static constexpr std::array DecimalUnits{ "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
@@ -503,12 +492,28 @@ namespace winrt::OneToolkit
 	namespace UI
 	{
 		/// <summary>
+		/// Provides helper methods for building your own tabbing system.
+		/// </summary>
+		namespace TabSwitcher
+		{
+			/// <summary>
+			/// Gets the tab index to be selected next.
+			/// </summaray>
+			constexpr juv::uint64 GetNewSelectionIndex(juv::uint64 const currentIndex, juv::uint64 const collectionSize, bool const reverse)
+			{
+				if (collectionSize <= 1) return currentIndex;
+				else if (reverse) return currentIndex == 0 ? collectionSize - 1 : currentIndex - 1;
+				else return currentIndex == collectionSize - 1 ? 0 : currentIndex + 1;
+			}
+		}
+
+		/// <summary>
 		/// Provides helper methods for manipulating colors.
 		/// </summary>
 		namespace ColorUtility
 		{
 			/// <summary>
-			/// Finds the inverse of a single component.
+			/// Finds and returns the inverse of a single component.
 			/// </summary>
 			constexpr juv::uint8 InvertComponent(juv::uint8 const component) noexcept
 			{
@@ -516,36 +521,14 @@ namespace winrt::OneToolkit
 			}
 
 			/// <summary>
-			/// Finds the inverse of a color.
+			/// Finds and returns the inverse of a color.
 			/// </summary>
-			constexpr auto Invert(Windows::UI::Color const color) noexcept
+			inline auto Invert(Windows::UI::Color const color) noexcept
 			{
-				Windows::UI::Color result;
-				result.A = InvertComponent(color.A);
-				result.R = InvertComponent(color.R);
-				result.G = InvertComponent(color.G);
-				result.B = InvertComponent(color.B);
-				return result;
+				return Windows::UI::Color { .A = InvertComponent(color.A), .R = InvertComponent(color.R), .G = InvertComponent(color.G), .B = InvertComponent(color.B) };
 			}
-		}
-
-		namespace Input
-		{
-			/// <summary>
-			/// Provides helper methods for building your own tabbing system.
-			/// </summary>
-			namespace TabSwitcher
-			{
-				/// <summary>
-				/// Gets the tab index to be selected next.
-				/// </summaray>
-				constexpr juv::uint64 GetNewSelectionIndex(juv::uint64 const currentIndex, juv::uint64 const collectionSize, bool const reverse)
-				{
-					if (collectionSize <= 1) return currentIndex;
-					else if (reverse) return currentIndex == 0 ? collectionSize - 1 : currentIndex - 1;
-					else return currentIndex == collectionSize - 1 ? 0 : currentIndex + 1;
-				}
-			};
 		}
 	}
 }
+
+#endif

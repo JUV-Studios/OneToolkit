@@ -12,9 +12,9 @@ namespace winrt::OneToolkit::System
             static hstring DeviceModel();
             static hstring DeviceFamily();
             static hstring DeviceManufacturer();
-            static hstring OperatingSystem();
-            static Windows::ApplicationModel::PackageVersion SoftwareVersion();
-            static Windows::System::ProcessorArchitecture ProcessorArchitecture();
+            static ProcessorArchitectureInfo ArchitectureInfo();
+            static hstring OperatingSystemName();
+            static Windows::ApplicationModel::PackageVersion OperatingSystemVersion();
             static Windows::Security::ExchangeActiveSyncProvisioning::EasClientDeviceInformation ClientDeviceInformation();
         };
     }

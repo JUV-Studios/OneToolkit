@@ -7,24 +7,75 @@
 	xmlns:local="using:OneToolkit.Showcase.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	xmlns:ui="using:OneToolkit.UI"
 	mc:Ignorable="d">
 
-	<Page.Resources>
-		<x:String x:Key="PlaygroundsTextId">PlaygroundsButton/Title</x:String>
-	</Page.Resources>
-
 	<muxc:TwoPaneView
-		MinTallModeHeight="{StaticResource MinWindowBreakpoint}"
-		MinWideModeWidth="{StaticResource LargeWindowBreakpoint}"
-		PanePriority="Pane2"
-		TallModeConfiguration="BottomTop"
-		WideModeConfiguration="LeftRight">
+		Pane1Length="*"
+		Pane2Length="2*"
+		PanePriority="Pane2">
 		<muxc:TwoPaneView.Pane1>
-			<RichEditBox />
+			<RichEditBox
+				x:Name="Editor"
+				Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+				BorderBrush="Transparent"
+				BorderThickness="0"
+				CornerRadius="0"
+				TextChanged="Editor_TextChanged" />
 		</muxc:TwoPaneView.Pane1>
 		<muxc:TwoPaneView.Pane2>
-			<controls:HubPanel Header="{Binding Source={StaticResource PlaygroundsTextId}, Converter={StaticResource ResourceLocalizationConverter}}" />
+			<controls:Hub x:Uid="PlaygroundsHub">
+				<controls:HubSection x:Uid="OptionsSection">
+					<DataTemplate>
+						<GridView Style="{StaticResource ButtonsGridViewStyle}">
+							<controls:DescriptiveButton x:Uid="OpenFromFileButton" Click="OpenFromFile_Click">
+								<controls:DescriptiveButton.Visuals>
+									<FontIcon
+										FontFamily="{x:Bind ui:Fonts.DefaultIconFontFamily}"
+										FontSize="32"
+										Glyph="&#xE1A5;" />
+								</controls:DescriptiveButton.Visuals>
+								<controls:DescriptiveButton.KeyboardAccelerators>
+									<KeyboardAccelerator Key="O" Modifiers="Control" />
+								</controls:DescriptiveButton.KeyboardAccelerators>
+							</controls:DescriptiveButton>
+							<controls:DescriptiveButton x:Uid="SaveToFileButton" Click="SaveToFile_Click">
+								<controls:DescriptiveButton.Visuals>
+									<FontIcon
+										FontFamily="{x:Bind ui:Fonts.DefaultIconFontFamily}"
+										FontSize="32"
+										Glyph="&#xE792;" />
+								</controls:DescriptiveButton.Visuals>
+								<controls:DescriptiveButton.KeyboardAccelerators>
+									<KeyboardAccelerator Key="S" Modifiers="Control" />
+								</controls:DescriptiveButton.KeyboardAccelerators>
+							</controls:DescriptiveButton>
+							<controls:DescriptiveButton x:Uid="ShareButton" Click="Share_Click">
+								<controls:DescriptiveButton.Visuals>
+									<FontIcon
+										FontFamily="{x:Bind ui:Fonts.DefaultIconFontFamily}"
+										FontSize="32"
+										Glyph="&#xE72D;" />
+								</controls:DescriptiveButton.Visuals>
+								<controls:DescriptiveButton.KeyboardAccelerators>
+									<KeyboardAccelerator Key="H" Modifiers="Control" />
+								</controls:DescriptiveButton.KeyboardAccelerators>
+							</controls:DescriptiveButton>
+						</GridView>
+					</DataTemplate>
+				</controls:HubSection>
+				<controls:HubSection x:Uid="PreviewSection">
+					<DataTemplate>
+						<ContentPresenter Loaded="PreviewPresenter_Loaded">
+							<ContentPresenter.ContentTransitions>
+								<TransitionCollection>
+									<ContentThemeTransition />
+								</TransitionCollection>
+							</ContentPresenter.ContentTransitions>
+						</ContentPresenter>
+					</DataTemplate>
+				</controls:HubSection>
+			</controls:Hub>
 		</muxc:TwoPaneView.Pane2>
 	</muxc:TwoPaneView>
 </Page>

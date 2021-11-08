@@ -138,9 +138,7 @@
     <Compile Include="Dialogs\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\SettingsDialog.xaml.cs">
-      <DependentUpon>SettingsDialog.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Models\PlaygroundsFile.cs" />
     <Compile Include="Views\ApiReference.xaml.cs">
       <DependentUpon>ApiReference.xaml</DependentUpon>
     </Compile>
@@ -174,15 +172,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Content Include="Assets\Playground.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Content>
     <Page Include="Dialogs\AboutDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\SettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,14 +200,20 @@
     <PackageReference Include="Microsoft.AppCenter.Crashes">
       <Version>4.4.0</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.12</Version>
+    <PackageReference Include="Microsoft.Toolkit.Mvvm">
+      <Version>7.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
+      <Version>7.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.7.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="ObservableVector">
+      <Version>2.1.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -229,9 +225,9 @@
       <Project>{ef690ebe-5bfe-428e-9e39-d0ef06b1fd1c}</Project>
       <Name>OneToolkit.Dotnet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OneToolkit.UI.Xaml\OneToolkit.UI.Xaml.vcxproj">
+    <ProjectReference Include="..\OneToolkit.UI.Xaml.Uwp\OneToolkit.UI.Xaml.Uwp.vcxproj">
       <Project>{95b918e4-ad86-45a6-be1a-77399535bad2}</Project>
-      <Name>OneToolkit.UI.Xaml</Name>
+      <Name>OneToolkit.UI.Xaml.Uwp</Name>
     </ProjectReference>
     <ProjectReference Include="..\OneToolkit\OneToolkit.vcxproj">
       <Project>{0dd5edd3-19b8-4924-8df1-add70803e693}</Project>

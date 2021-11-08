@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Collections.Generic;
 
 namespace OneToolkit.DocsCore
@@ -19,7 +20,7 @@ namespace OneToolkit.DocsCore
 		{
 			get
 			{
-				if (Type.IsClass) return Type.BaseType != typeof(Delegate) ? TypeKind.Class : TypeKind.Delegate;
+				if (Type.IsClass) return typeof(Delegate).IsAssignableFrom(Type) ? TypeKind.Class : TypeKind.Delegate;
 				else if (Type.IsEnum) return TypeKind.Enumeration;
 				else if (Type.IsInterface) return TypeKind.Interface;
 				else if (Type.IsValueType) return TypeKind.Structure;
@@ -27,7 +28,9 @@ namespace OneToolkit.DocsCore
 			}
 		}
 
-		public string Metadata => Path.GetFileName(Type.Assembly.Location);
+		public string MetadataFileName => Path.GetFileName(Type.Assembly.Location);
+
+		public string HeaderFileName => Type.Assembly.GetName().ContentType == AssemblyContentType.WindowsRuntime ? $"winrt/{Type.Namespace}" : string.Empty;
 	}
 }
 

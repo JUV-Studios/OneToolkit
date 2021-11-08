@@ -1,8 +1,8 @@
-import "Lifecycle.idl";
+import "Metadata.idl";
 
 namespace OneToolkit.UI
 {
-    struct WindowId
+    struct WindowHandle
     {
         UInt64 Value;
     };
@@ -11,21 +11,20 @@ namespace OneToolkit.UI
     runtimeclass ViewService : Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         String Title;
-        WindowId Id { get; };
+        WindowHandle Handle { get; };
         Boolean IsFullScreen;
         Windows.Foundation.Rect Bounds { get; };
         Double TitleBarHeight { get; };
         Windows.UI.Xaml.Thickness TitleBarInset { get; };
+        Windows.UI.Xaml.Visibility TitleBarVisibility { get; };
         [noexcept] Windows.UI.ViewManagement.ApplicationView AppView { get; };
         [noexcept] Windows.ApplicationModel.Core.CoreApplicationView CoreAppView { get; };
         [noexcept] Windows.UI.Core.SystemNavigationManager NavigationManager { get; };
         void ToggleFullScreen();
-        void CloseView();
         Windows.Foundation.IAsyncOperation<Boolean> TryCloseAsync();
-        static Boolean IsFreeWindowingSupported { get; };
         static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         static ViewService GetForCurrentView();
-        static ViewService GetForWindowId(WindowId windowId);
-        static WindowId GetCoreWindowId(Windows.UI.Core.CoreWindow coreWindow);
+        [OneToolkit.Metadata.DesktopOnly] static ViewService GetFromWindowHandle(WindowHandle windowHandle);
+        static WindowHandle GetHandleFromCoreWindow(Windows.UI.Core.CoreWindow coreWindow);
     }
 }

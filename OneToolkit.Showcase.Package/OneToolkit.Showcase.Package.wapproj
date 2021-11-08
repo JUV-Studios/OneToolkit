@@ -67,6 +67,8 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.19041.8" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OneToolkit.Showcase\OneToolkit.Showcase.csproj" />
+    <ProjectReference Include="..\OneToolkit.Showcase\OneToolkit.Showcase.csproj">
+      <TrustLevel>Partial</TrustLevel>
+    </ProjectReference>
   </ItemGroup>
 </Project>

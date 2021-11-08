@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace OneToolkit.Showcase.Views
@@ -12,7 +13,7 @@ namespace OneToolkit.Showcase.Views
 			Frame.Navigate(typeof(ApiReference), (sender as FrameworkElement).DataContext, App.PageTransition);
 		}
 
-		private void PlaygroundsButton_Click(object sender, RoutedEventArgs e)
+		private void Playgrounds_Click(object sender, RoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(Playgrounds), null, App.PageTransition);
 		}

@@ -1,9 +1,0 @@
-namespace OneToolkit.Runtime
-{
-    [default_interface]
-    runtimeclass MetadataFile
-    {
-        [noexcept] String Path { get; };
-        String RuntimeVersion { get; };
-    }
-}

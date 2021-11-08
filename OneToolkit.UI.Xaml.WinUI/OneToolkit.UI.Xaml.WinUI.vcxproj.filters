@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>479408d4-9b0c-4fd1-b875-18f9b78055e0</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Controls">
+      <UniqueIdentifier>{71fad8ea-a09b-46e4-80ff-c866d9b7313a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="OneToolkit.UI.Xaml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="..\OneToolkit.UI.Xaml.Shared\DescriptiveButton.xaml">
+      <Filter>Controls</Filter>
+    </Page>
+    <Page Include="..\OneToolkit.UI.Xaml.Shared\Hub.xaml">
+      <Filter>Controls</Filter>
+    </Page>
+    <Page Include="..\OneToolkit.UI.Xaml.Shared\HubSection.xaml">
+      <Filter>Controls</Filter>
+    </Page>
+  </ItemGroup>
+</Project>
