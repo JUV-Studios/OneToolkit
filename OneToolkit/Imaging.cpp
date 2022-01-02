@@ -1,7 +1,11 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "Imaging.h"
-#include "Media.Imaging.CropDialog.g.cpp"
+#include "Media.Imaging.ImageCropUI.g.cpp"
 #include "Media.Imaging.ImageResizer.g.cpp"
+#include <winrt/Windows.System.h>
+#include <winrt/Windows.Graphics.Imaging.h>
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.ApplicationModel.DataTransfer.h>
 
 using namespace juv;
 using namespace winrt;
@@ -16,32 +20,38 @@ using namespace OneToolkit::Storage;
 
 namespace winrt::OneToolkit::Media::Imaging::implementation
 {
-	IAsyncOperation<bool> CropDialog::CropAsync(StorageFile origin, StorageFile destination) const try
+	IAsyncOperation<bool> ImageCropUI::CropAsync(StorageFile origin, StorageFile destination) const
 	{
-		SharedFile sharedInput{ origin };
-		SharedFile sharedDestination{ destination };
-		auto cropWidth = static_cast<int>(CropSize().Width);
-		auto cropHeight = static_cast<int>(CropSize().Height);
-		ValueSet parameters;
-		parameters.Insert(L"InputToken", box_value(sharedInput.Token()));
-		parameters.Insert(L"DestinationToken", box_value(sharedDestination.Token()));
-		parameters.Insert(L"CropWidthPixels", box_value(cropWidth));
-		parameters.Insert(L"CropHeightPixels", box_value(cropHeight));
-		parameters.Insert(L"EllipticalCrop", box_value(IsEllipticalCrop()));
-		LauncherOptions options;
-		options.TargetApplicationPackageFamilyName(L"Microsoft.Windows.Photos_8wekyb3d8bbwe");
-		auto result = co_await Launcher::LaunchUriForResultsAsync(PickerUri(), options);
-		if (result.Status() != LaunchUriStatus::Success || result.Result() == nullptr) co_return false;
-		else co_return true;
+		try
+		{
+			SharedFile sharedInput{ origin };
+			SharedFile sharedDestination{ destination };
+			auto cropWidth = static_cast<int>(CropSize().Width);
+			auto cropHeight = static_cast<int>(CropSize().Height);
+			ValueSet parameters;
+			parameters.Insert(L"InputToken", box_value(sharedInput.Token()));
+			parameters.Insert(L"DestinationToken", box_value(sharedDestination.Token()));
+			parameters.Insert(L"CropWidthPixels", box_value(cropWidth));
+			parameters.Insert(L"CropHeightPixels", box_value(cropHeight));
+			parameters.Insert(L"EllipticalCrop", box_value(IsEllipticalCrop()));
+			LauncherOptions options;
+			options.TargetApplicationPackageFamilyName(L"Microsoft.Windows.Photos_8wekyb3d8bbwe");
+			auto result = co_await Launcher::LaunchUriForResultsAsync(PickerUri(), options);
+			if (result.Status() != LaunchUriStatus::Success || result.Result() == nullptr) co_return false;
+			else co_return true;
+		}
+		catch (hresult_error const&)
+		{
+			co_return false;
+		}
 	}
-	catch (hresult_error const&) { co_return false; }
 
-	Uri CropDialog::PickerUri()
+	Uri ImageCropUI::PickerUri()
 	{
 		return Uri(L"microsoft.windows.photos.crop:");
 	}
 
-	IAsyncOperation<bool> CropDialog::IsSupportedAsync()
+	IAsyncOperation<bool> ImageCropUI::IsSupportedAsync()
 	{
 		auto status = co_await Launcher::QueryUriSupportAsync(PickerUri(), LaunchQuerySupportType::UriForResults, L"Microsoft.Windows.Photos_8wekyb3d8bbwe");
 		co_return status == LaunchQuerySupportStatus::Available;

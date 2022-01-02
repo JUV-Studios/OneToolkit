@@ -1,12 +1,12 @@
 ﻿#pragma once
-#include "Media.Imaging.CropDialog.g.h"
+#include "Media.Imaging.ImageCropUI.g.h"
 #include "Media.Imaging.ImageResizer.g.h"
 
 namespace winrt::OneToolkit::Media::Imaging
 {
     namespace implementation
     {
-        struct CropDialog : CropDialogT<CropDialog>
+        struct ImageCropUI : ImageCropUIT<ImageCropUI>
         {
             Windows::Foundation::IAsyncOperation<bool> CropAsync(Windows::Storage::StorageFile origin, Windows::Storage::StorageFile destination) const;
             juv::auto_property<bool> IsEllipticalCrop;
@@ -25,7 +25,7 @@ namespace winrt::OneToolkit::Media::Imaging
 
     namespace factory_implementation
     {
-        struct CropDialog : CropDialogT<CropDialog, implementation::CropDialog>
+        struct ImageCropUI : ImageCropUIT<ImageCropUI, implementation::ImageCropUI>
         {
         };
 

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AttachedProperties.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Converters.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)FullScreenStateTrigger.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SwitchPresenter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TreeViewHelper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Converters.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OneToolkit.UI.Xaml.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SwitchPresenter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AttachedProperties.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)OneToolkit.UI.Xaml.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Styles.xaml" />
+  </ItemGroup>
+</Project>

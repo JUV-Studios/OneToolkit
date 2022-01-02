@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Diagnostics;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Notifications;
 using Windows.ApplicationModel.Core;
@@ -32,7 +33,7 @@ namespace OneToolkit.Showcase
 
 		private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-            if (!CrashNotificationSent)
+            if (!CrashNotificationSent && !Debugger.IsAttached)
 			{
                 e.Handled = true;
                 var toast = new ToastContent()
@@ -48,7 +49,7 @@ namespace OneToolkit.Showcase
 
                             Attribution = new()
                             {
-                                Text = e.Message
+                                Text = e.Exception.Message
 							}
                         }
                     }

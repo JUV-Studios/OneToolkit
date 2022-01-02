@@ -4,7 +4,7 @@
 #include "SwitchPresenter.h"
 
 using namespace Platform;
-using namespace Framework;
+using namespace AppFramework;
 using namespace Windows::UI::Xaml::Interop;
 using namespace OneToolkit::UI::Xaml::Controls;
 
@@ -77,7 +77,7 @@ void SwitchPresenter::EvaluateCases()
 				// If there are multiple default cases provided, this will override and just grab the last one, the developer will have to fix this in their XAML. We call this out in the case comments.
 				defaultCase = switchCase;
 			}
-			else if (switchCase->Value == Value)
+			else if (switchCase->Value->Equals(Value))
 			{
 				newCase = switchCase;
 			}

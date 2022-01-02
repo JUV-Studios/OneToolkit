@@ -1,34 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resources">
-      <UniqueIdentifier>a940e529-311c-4630-9e7a-800a9117be03</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Controls">
-      <UniqueIdentifier>{d7b30e04-574d-44f6-b89b-eb516ccd5b55}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="CustomControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="OneToolkit.UI.Xaml.h" />
+    <ClInclude Include="CustomControl.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="OneToolkit.UI.Xaml.targets" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Controls">
+      <UniqueIdentifier>{44220021-743a-4e52-82d8-8022be11cb6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\OneToolkit.UI.Xaml.Shared\DescriptiveButton.xaml">
       <Filter>Controls</Filter>
     </Page>
-    <Page Include="..\OneToolkit.UI.Xaml.Shared\Hub.xaml">
+    <Page Include="..\OneToolkit.UI.Xaml.Shared\HubPanel.xaml">
       <Filter>Controls</Filter>
     </Page>
-    <Page Include="..\OneToolkit.UI.Xaml.Shared\HubSection.xaml">
+    <Page Include="..\OneToolkit.UI.Xaml.Shared\HubPanelSection.xaml">
       <Filter>Controls</Filter>
     </Page>
+    <Page Include="Themes\Generic.xaml" />
   </ItemGroup>
 </Project>

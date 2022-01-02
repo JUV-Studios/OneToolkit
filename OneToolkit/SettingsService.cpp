@@ -1,12 +1,12 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "SettingsService.h"
 #include "Storage.SettingsService.g.cpp"
+#include <winrt/Windows.Foundation.Collections.h>
 
 using namespace juv;
 using namespace winrt;
 using namespace Windows::Storage;
 using namespace Windows::Foundation;
-using namespace Windows::Data::Json;
 
 namespace winrt::OneToolkit::Storage::implementation
 {

@@ -1,6 +1,8 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "Fonts.h"
 #include "UI.Fonts.g.cpp"
+#include <dwrite.h>
+#include <winrt/Windows.Foundation.Collections.h>
 
 using namespace juv;
 using namespace winrt;

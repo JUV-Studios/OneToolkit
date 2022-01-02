@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.211028.7\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.211028.7\build\native\Microsoft.Windows.CppWinRT.props')" />
   <Import Project="..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props" Condition="Exists('..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
@@ -15,7 +15,7 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.22000.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
     <CppWinRTFastAbi>true</CppWinRTFastAbi>
     <CppWinRTLibs>true</CppWinRTLibs>
@@ -57,7 +57,7 @@
   </ItemGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -111,40 +111,66 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <PublicModuleDirectories>
+    </PublicModuleDirectories>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <PublicModuleDirectories>
+    </PublicModuleDirectories>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <PublicModuleDirectories>
+    </PublicModuleDirectories>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <PublicModuleDirectories>
+    </PublicModuleDirectories>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <PublicModuleDirectories>
+    </PublicModuleDirectories>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <PublicModuleDirectories>
+    </PublicModuleDirectories>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <PublicModuleDirectories>
+    </PublicModuleDirectories>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <PublicModuleDirectories>
+    </PublicModuleDirectories>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
@@ -203,6 +229,22 @@
       </ScanSourceForModuleDependencies>
       <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ScanSourceForModuleDependencies>
+      <AdditionalModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </AdditionalModuleDependencies>
+      <AdditionalModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+      </AdditionalModuleDependencies>
+      <AdditionalModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalModuleDependencies>
+      <AdditionalModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalModuleDependencies>
+      <EnableModules Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </EnableModules>
+      <EnableModules Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+      </EnableModules>
+      <EnableModules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </EnableModules>
+      <EnableModules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </EnableModules>
     </ClCompile>
     <Link>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">%(AdditionalDependencies)</AdditionalDependencies>
@@ -260,6 +302,22 @@
       </ScanSourceForModuleDependencies>
       <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ScanSourceForModuleDependencies>
+      <AdditionalModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </AdditionalModuleDependencies>
+      <AdditionalModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+      </AdditionalModuleDependencies>
+      <AdditionalModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </AdditionalModuleDependencies>
+      <AdditionalModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalModuleDependencies>
+      <EnableModules Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </EnableModules>
+      <EnableModules Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+      </EnableModules>
+      <EnableModules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </EnableModules>
+      <EnableModules Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </EnableModules>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -273,10 +331,6 @@
   <ItemGroup>
     <ClInclude Include="BufferHelper.h">
       <DependentUpon>BufferHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="Debugger.h">
-      <DependentUpon>Debugger.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Fonts.h">
@@ -303,7 +357,6 @@
       <DependentUpon>PackageVersionHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="SettingsService.h">
       <DependentUpon>SettingsService.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -316,18 +369,19 @@
       <DependentUpon>StorageItemHandle.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="ThemeService.h">
+      <DependentUpon>ThemeService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ViewService.h">
       <DependentUpon>ViewService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\juv\juv.ixx" />
     <ClCompile Include="BufferHelper.cpp">
       <DependentUpon>BufferHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="Debugger.cpp">
-      <DependentUpon>Debugger.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="FileOperations.cpp">
@@ -354,6 +408,24 @@
       <DependentUpon>Assembly.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="OneToolkit.ixx">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+      </PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+      </PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PreprocessToFile>
+    </ClCompile>
     <ClCompile Include="StorageItemHandle.cpp">
       <DependentUpon>StorageItemHandle.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -367,15 +439,11 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClInclude Include="OneToolkit.h">
-      <FileType>Document</FileType>
+      <FileType>CppHeader</FileType>
     </ClInclude>
     <ClCompile Include="PackageVersionHelper.cpp">
       <DependentUpon>PackageVersionHelper.idl</DependentUpon>
       <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <DependentUpon>pch.h</DependentUpon>
-      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="SettingsService.cpp">
@@ -403,9 +471,6 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="Debugger.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="FileOperations.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -453,14 +518,14 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.211028.7\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.211028.7\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.211028.7\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.211028.7\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.211028.7\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.211028.7\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
 </Project>

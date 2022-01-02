@@ -1,6 +1,7 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "SharedFile.h"
 #include "Storage.SharedFile.g.cpp"
+#include <winrt/Windows.ApplicationModel.DataTransfer.h>
 
 using namespace winrt;
 using namespace Windows::Storage;

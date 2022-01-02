@@ -4,15 +4,15 @@
 //
 
 #pragma once
-#include "Hub.xaml.h"
-#include "HubSection.g.h"
+#include "HubPanel.xaml.h"
+#include "HubPanelSection.g.h"
 
 namespace OneToolkit::UI::Xaml::Controls
 {
 	[Windows::Foundation::Metadata::WebHostHidden]
-	public ref class HubSection sealed
+	public ref class HubPanelSection sealed
 	{
 	public:
-		HubSection();
+		HubPanelSection();
 	};
 }

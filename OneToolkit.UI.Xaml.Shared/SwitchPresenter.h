@@ -5,22 +5,22 @@
 namespace OneToolkit::UI::Xaml::Controls
 {
 	[Windows::Foundation::Metadata::WebHostHidden]
-	[Framework::Markup::ContentProperty(Name = "Content")]
-	public ref class Case sealed : Framework::DependencyObject
+	[AppFramework::Markup::ContentProperty(Name = "Content")]
+	public ref class Case sealed : AppFramework::DependencyObject
 	{
 	public:
 		declare_dependency_property(bool, IsDefault);
 
 		declare_dependency_property(Platform::Object^, Value);
 
-		declare_dependency_property(Framework::UIElement^, Content);
+		declare_dependency_property(AppFramework::UIElement^, Content);
 	private:
-		static void DependencyPropertyChanged(Framework::DependencyObject^ sender, Framework::DependencyPropertyChangedEventArgs^ e) {}
+		static void DependencyPropertyChanged(AppFramework::DependencyObject^ sender, AppFramework::DependencyPropertyChangedEventArgs^ e) {}
 	};
 
 	[Windows::Foundation::Metadata::WebHostHidden]
-	[Framework::Markup::ContentProperty(Name = "SwitchCases")]
-	public ref class SwitchPresenter sealed : Framework::Controls::ContentPresenter
+	[AppFramework::Markup::ContentProperty(Name = "SwitchCases")]
+	public ref class SwitchPresenter sealed : AppFramework::Controls::ContentPresenter
 	{
 	public:
 		SwitchPresenter();
@@ -32,22 +32,22 @@ namespace OneToolkit::UI::Xaml::Controls
 			Case^ get();
 		}
 
-		property Framework::DependencyObjectCollection^ SwitchCases
+		property AppFramework::DependencyObjectCollection^ SwitchCases
 		{
-			Framework::DependencyObjectCollection^ get();
+			AppFramework::DependencyObjectCollection^ get();
 		}
 
-		static property Framework::DependencyProperty^ CurrentCaseProperty
+		static property AppFramework::DependencyProperty^ CurrentCaseProperty
 		{
-			Framework::DependencyProperty^ get();
+			AppFramework::DependencyProperty^ get();
 		}
 	protected:
 		void OnApplyTemplate() override;
 	private:
-		Framework::DependencyObjectCollection m_SwitchCases;
+		AppFramework::DependencyObjectCollection m_SwitchCases;
 		void EvaluateCases();
-		void SwitchPresenter_Loaded(Platform::Object^ sender, Framework::RoutedEventArgs^ e);
-		static Framework::DependencyProperty^ m_CurrentCaseProperty;
-		static void DependencyPropertyChanged(Framework::DependencyObject^ sender, Framework::DependencyPropertyChangedEventArgs^ e);
+		void SwitchPresenter_Loaded(Platform::Object^ sender, AppFramework::RoutedEventArgs^ e);
+		static AppFramework::DependencyProperty^ m_CurrentCaseProperty;
+		static void DependencyPropertyChanged(AppFramework::DependencyObject^ sender, AppFramework::DependencyPropertyChangedEventArgs^ e);
 	};
 }

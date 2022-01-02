@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppMenuAboutItem.Text" xml:space="preserve">
+  <data name="AboutExpander.Header" xml:space="preserve">
     <value>About this app</value>
+  </data>
+  <data name="AppMenuBackItem.Text" xml:space="preserve">
+    <value>Back</value>
   </data>
   <data name="AppMenuCloseItem.Text" xml:space="preserve">
     <value>Close</value>
@@ -126,17 +129,26 @@
   <data name="AppMenuFeedbackItem.Text" xml:space="preserve">
     <value>Feedback</value>
   </data>
+  <data name="AppMenuForwardItem.Text" xml:space="preserve">
+    <value>Forward</value>
+  </data>
   <data name="AppMenuHelpItem.Text" xml:space="preserve">
     <value>Help</value>
+  </data>
+  <data name="AppMenuHomeItem.Text" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="AppMenuMinimizeItem.Text" xml:space="preserve">
     <value>Minimize</value>
   </data>
-  <data name="AppMenuProgrammingLanguageItem.Text" xml:space="preserve">
-    <value>Preferred programming language</value>
+  <data name="AppTeachingTip.CloseButtonContent" xml:space="preserve">
+    <value>Got it</value>
   </data>
-  <data name="AppMenuSettingsItem.Text" xml:space="preserve">
-    <value>Settings</value>
+  <data name="AppTeachingTip.Subtitle" xml:space="preserve">
+    <value>Click or tap on this icon to access various options</value>
+  </data>
+  <data name="AppTeachingTip.Title" xml:space="preserve">
+    <value>Welcome to OneToolkit Showcase</value>
   </data>
   <data name="CancelText" xml:space="preserve">
     <value>Cancel</value>
@@ -159,9 +171,6 @@
   <data name="DelegatesText" xml:space="preserve">
     <value>Delegates</value>
   </data>
-  <data name="DisableSoundEffectsSwitch.Text" xml:space="preserve">
-    <value>Disable sound effects</value>
-  </data>
   <data name="EnumerationsText" xml:space="preserve">
     <value>Enumerations</value>
   </data>
@@ -170,9 +179,6 @@
   </data>
   <data name="ExitFullScreenText" xml:space="preserve">
     <value>Exit full screen</value>
-  </data>
-  <data name="FeedbackNavItem.Content" xml:space="preserve">
-    <value>Feedback</value>
   </data>
   <data name="FullScreenText" xml:space="preserve">
     <value>Full screen</value>
@@ -198,15 +204,6 @@
   <data name="InterfaceText" xml:space="preserve">
     <value>interface</value>
   </data>
-  <data name="MacrosText" xml:space="preserve">
-    <value>Macros</value>
-  </data>
-  <data name="MoreButton.AutomationProperties.Name" xml:space="preserve">
-    <value>App menu</value>
-  </data>
-  <data name="MoreButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>App menu (Alt+F)</value>
-  </data>
   <data name="NamespaceText" xml:space="preserve">
     <value>namespace</value>
   </data>
@@ -228,11 +225,14 @@
   <data name="PlaygroundsButton.Caption" xml:space="preserve">
     <value>Quickly prototype your UI with XAML</value>
   </data>
+  <data name="PlaygroundsButton.Title" xml:space="preserve">
+    <value>Playgrounds</value>
+  </data>
   <data name="PlaygroundsHub.Header" xml:space="preserve">
     <value>Playgrounds</value>
   </data>
-  <data name="PreviewAutoRefreshSwitch.Text" xml:space="preserve">
-    <value>Auto-refresh playgrounds preview</value>
+  <data name="PreviewAutoRefreshToggle.Header" xml:space="preserve">
+    <value>Auto-refresh</value>
   </data>
   <data name="PreviewSection.Header" xml:space="preserve">
     <value>Preview</value>
@@ -243,11 +243,8 @@
   <data name="ReadDocsButton.Title" xml:space="preserve">
     <value>Read the docs</value>
   </data>
-  <data name="ReferenceSearchBox.PlaceholderText" xml:space="preserve">
-    <value>What are you looking for?</value>
-  </data>
   <data name="ReferenceSection.Header" xml:space="preserve">
-    <value>API reference</value>
+    <value>APIs by namespace</value>
   </data>
   <data name="SaveText" xml:space="preserve">
     <value>Save</value>
@@ -258,8 +255,8 @@
   <data name="SaveToFileButton.Title" xml:space="preserve">
     <value>Save to file</value>
   </data>
-  <data name="SearchBox.PlaceholderText" xml:space="preserve">
-    <value>What are you looking for?</value>
+  <data name="SettingsSection.Header" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="ShareButton.Caption" xml:space="preserve">
     <value>Share your playground with the world</value>

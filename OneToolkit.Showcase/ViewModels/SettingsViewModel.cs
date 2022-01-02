@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Windows.System;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
 using Windows.ApplicationModel.DataTransfer;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using OneToolkit.UI;
+using OneToolkit.System;
 using OneToolkit.Storage;
-using OneToolkit.Showcase.Models;
 
 namespace OneToolkit.Showcase.ViewModels
 {
@@ -23,8 +22,6 @@ namespace OneToolkit.Showcase.ViewModels
 
 		private readonly SettingsService AppSettings = new(ApplicationData.Current.RoamingSettings);
 
-		public static SettingsViewModel Instance { get; } = new();
-
 		public static readonly SystemNavigationManager NavigationManager = SystemNavigationManager.GetForCurrentView();
 
 		public static readonly ResourceLoader Resources = ResourceLoader.GetForViewIndependentUse();
@@ -33,23 +30,30 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public static readonly DataTransferManager TransferManager = DataTransferManager.GetForCurrentView();
 
-		public static readonly IEnumerable<string> ProgrammingLanguages = new string[]
-		{
-			"C#", "C++/CX", "C++/CLI", "C++/WinRT", "Rust", "Visual Basic"
-		};
+		public static SettingsViewModel Instance { get; } = new();
 
-		public readonly ObservableCollection<PlaygroundsFile> Playgrounds = new();
+		public string AboutDisplayText => $"OneToolkit Showcase\n{string.Format(Resources.GetString("VersionText"), PackageVersionHelper.Stringify(Package.Current.Id.Version))}\n{Resources.GetString("CopyrightText")}";
+
+		public string AboutAutomationText => AboutDisplayText.Replace("\n", "");
+
+		public bool ShowTeachingTip
+		{
+			get => Convert.ToBoolean(AppSettings.GetValue(nameof(ShowTeachingTip), true));
+			set
+			{
+				if (ShowTeachingTip != value) SetAppSetting(nameof(ShowTeachingTip), value);
+			}
+		}
 
 		public bool DisableSoundEffects
 		{
 			get => Convert.ToBoolean(AppSettings.GetValue(nameof(DisableSoundEffects), false));
-			set
+			set	
 			{
 				if (DisableSoundEffects != value)
 				{
 					ElementSoundPlayer.State = value ? ElementSoundPlayerState.Off : ElementSoundPlayerState.On;
-					AppSettings.SetValue(nameof(DisableSoundEffects), value);
-					OnPropertyChanged(nameof(DisableSoundEffects));
+					SetAppSetting(nameof(DisableSoundEffects), value);
 				}
 			}
 		}
@@ -59,29 +63,27 @@ namespace OneToolkit.Showcase.ViewModels
 			get => Convert.ToBoolean(AppSettings.GetValue(nameof(PreviewAutoRefresh), true));
 			set
 			{
-				if (PreviewAutoRefresh != value)
-				{
-					AppSettings.SetValue(nameof(PreviewAutoRefresh), value);
-					OnPropertyChanged(nameof(PreviewAutoRefresh));
-				}
+				if (PreviewAutoRefresh != value) SetAppSetting(nameof(PreviewAutoRefresh), value);
 			}
 		}
 
-		public string SelectedProgrammingLanguage
+		public string SelectedCodeLanguage
 		{
-			get => AppSettings.GetValue(nameof(SelectedProgrammingLanguage), "C#").ToString();
+			get => AppSettings.GetValue(nameof(SelectedCodeLanguage), "C#").ToString();
 			set
 			{
-				if (SelectedProgrammingLanguage != value)
-				{
-					AppSettings.SetValue(nameof(SelectedProgrammingLanguage), value);
-					OnPropertyChanged(nameof(SelectedProgrammingLanguage));
-				}
+				if (SelectedCodeLanguage != value) SetAppSetting(nameof(SelectedCodeLanguage), value);
 			}
 		}
 
 		public static async void Close() => await ViewServiceProvider.TryCloseAsync();
 
-		public static async void Suspend() => await (await AppDiagnosticInfo.RequestInfoForAppAsync())[0].GetResourceGroups()[0].StartSuspendAsync();
+		public static async void Suspend() => await ViewServiceProvider.TryMinimizeAsync();
+
+		private void SetAppSetting(string key, object newValue)
+		{
+			AppSettings.SetValue(key, newValue);
+			OnPropertyChanged(key);
+		}
 	}
 }

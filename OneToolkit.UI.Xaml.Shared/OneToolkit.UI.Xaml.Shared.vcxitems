@@ -16,21 +16,24 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContentDialogHelper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AttachedProperties.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Converters.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FullScreenStateTrigger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SwitchPresenter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TreeViewHelper.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)WindowHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AttachedProperties.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Converters.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)OneToolkit.UI.Xaml.Shared.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OneToolkit.UI.Xaml.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SwitchPresenter.h" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Styles.xaml">
       <DeploymentContent>true</DeploymentContent>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)OneToolkit.UI.Xaml.targets" />
   </ItemGroup>
 </Project>

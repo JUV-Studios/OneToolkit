@@ -28,7 +28,6 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="MachineInformation.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -39,6 +38,8 @@
     <ClCompile Include="Assembly.cpp">
       <Filter>Runtime</Filter>
     </ClCompile>
+    <ClCompile Include="OneToolkit.ixx" />
+    <ClCompile Include="..\juv\juv.ixx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OneToolkit.def" />
@@ -48,7 +49,6 @@
     <None Include="OneToolkit.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="OneToolkit.h" />
     <ClInclude Include="MachineInformation.h">
       <Filter>System</Filter>
@@ -59,11 +59,11 @@
     <ClInclude Include="StorageItemHandle.h">
       <Filter>Storage</Filter>
     </ClInclude>
-    <ClInclude Include="Debugger.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="Assembly.h">
       <Filter>Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="ThemeService.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,9 +108,6 @@
     </Midl>
     <Midl Include="StorageItemHandle.idl">
       <Filter>Storage</Filter>
-    </Midl>
-    <Midl Include="Debugger.idl">
-      <Filter>System</Filter>
     </Midl>
     <Midl Include="Metadata.idl" />
     <Midl Include="Lifecycle.idl" />

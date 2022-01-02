@@ -12,6 +12,7 @@ namespace OneToolkit::UI::Xaml::Controls
 		/// <summary>
 		/// Gets all the nodes of a TreeView control in a single list including nested nodes.
 		/// </summary>
+		[Windows::Foundation::Metadata::DefaultOverload]
 		static IVectorView<Windows::UI::Xaml::Controls::TreeViewNode^>^ GetAllNodes(Windows::UI::Xaml::Controls::TreeView^ treeView)
 		{
 			return GetAllNodes<Windows::UI::Xaml::Controls::TreeViewNode^>(treeView);
@@ -20,7 +21,6 @@ namespace OneToolkit::UI::Xaml::Controls
 		/// <summary>
 		/// Gets all the nodes of a TreeView control in a single list including nested nodes.
 		/// </summary>
-		[Windows::Foundation::Metadata::DefaultOverload]
 		static IVectorView<Microsoft::UI::Xaml::Controls::TreeViewNode^>^ GetAllNodes(Microsoft::UI::Xaml::Controls::TreeView^ treeView)
 		{
 			return GetAllNodes<Microsoft::UI::Xaml::Controls::TreeViewNode^>(treeView);

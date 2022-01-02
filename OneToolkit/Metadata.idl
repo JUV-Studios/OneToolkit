@@ -1,5 +1,5 @@
 namespace OneToolkit.Metadata
 {
-	[attributeusage(target_method, target_property)]
+	[attributeusage(target_method)]
 	attribute DesktopOnlyAttribute {}
 }

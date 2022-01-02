@@ -6,23 +6,20 @@
 		<title>juv</title>
 		<authors>Jaiganesh Kumaran</authors>
 		<owners>JUV Studios</owners>
-		<requireLicenseAcceptance>true</requireLicenseAcceptance>
 		<projectUrl>https://dev.azure.com/JUV-Studios/OneToolkit</projectUrl>
-		<licenseUrl>https://sway.office.com/s/5JnZ4XUEqVN7bAsB/embed</licenseUrl>
-		<description>Provides commonly used, platform independent functionality for use in C++ projects as part of OneToolkit. Requires C++20 or later for full support. Limited support is provided for C++/CX with C++11 or later.</description>
-		<releaseNotes>Fixed build error.</releaseNotes>
+		<description>OneToolkit provides a set of controls, converters, services and helpers that help you build modern Windows apps and cross-platform .NET apps. This package provides commonly used, platform independent functionality for use in C++ projects. Requires C++20 or later for full support. Limited support is provided for C++11 or later, including C++/CX.</description>
+		<releaseNotes>Now works on more platforms!</releaseNotes>
 		<copyright>© 2021 JUV Studios. All rights reserved.</copyright>
 		<language>en-us</language>
 		<tags>cpp native nativepackage helpers onetoolkit juvstudios juv</tags>
-		<serviceable>true</serviceable>
 		<dependencies>
 			<group targetFramework="native0.0" />
 		</dependencies>
 	</metadata>
 	<files>
 		<file src="juv.props" target="build\native" />
+		<file src="juv.ixx" target="build\native\" />
 		<file src="juv.h" target="build\native\include" />
-		<file src="juv.cx.h" target="build\native\include" />
-		<file src="winrt-polyfill.h" target="build\native\include" />
+		<file src="debug-trap.h" target="build\native\include" />
 	</files>
 </package>

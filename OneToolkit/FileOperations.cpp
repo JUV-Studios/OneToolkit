@@ -1,5 +1,6 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "Storage.FileOperations.g.h"
+#include <winrt/Windows.Foundation.h>
 
 using namespace juv;
 using namespace winrt;

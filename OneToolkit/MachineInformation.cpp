@@ -1,7 +1,10 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "MachineInformation.h"
 #include "System.MachineInformation.g.cpp"
-#include <Inspectable.h>
+#include <winrt/Windows.System.h>
+#include <winrt/Windows.System.Profile.h>
+#include <winrt/Windows.Foundation.Metadata.h>
+#include <winrt/Windows.Security.ExchangeActiveSyncProvisioning.h>
 
 using namespace juv;
 using namespace winrt;
@@ -14,11 +17,6 @@ using namespace Windows::Security::ExchangeActiveSyncProvisioning;
 
 namespace winrt::OneToolkit::System::implementation
 {
-	__interface __declspec(uuid("76E915B1-FF36-407C-9F57-160D3E540747")) IAnalyticsVersionInfo2 : ::IInspectable
-	{
-		int __stdcall ProductName(void** value) noexcept;
-	};
-
 	EasClientDeviceInformation clientDeviceInformation = nullptr;
 
 	hstring MachineInformation::DeviceName()
@@ -96,16 +94,7 @@ namespace winrt::OneToolkit::System::implementation
 
 	hstring MachineInformation::OperatingSystemName()
 	{
-		if (auto versionInfo2 = AnalyticsInfo::VersionInfo().try_as<IAnalyticsVersionInfo2>())
-		{
-			hstring result;
-			check_hresult(versionInfo2->ProductName(put_abi(result)));
-			return result;
-		}
-		else
-		{
-			return ClientDeviceInformation().OperatingSystem();
-		}
+		return ApiInformation::IsPropertyPresent(name_of<AnalyticsVersionInfo>(), L"ProductName") ? AnalyticsInfo::VersionInfo().ProductName() : ClientDeviceInformation().OperatingSystem();
 	}
 
 	PackageVersion MachineInformation::OperatingSystemVersion()

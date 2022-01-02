@@ -7,7 +7,7 @@ namespace winrt::OneToolkit::UI::factory_implementation
 	{
 		static Windows::UI::ViewManagement::UserInteractionMode InteractionMode();
 		static OneToolkit::UI::ViewService GetForCurrentView();
-		static OneToolkit::UI::ViewService GetFromWindowHandle(WindowHandle windowHandle);
-		static WindowHandle GetHandleFromCoreWindow(Windows::UI::Core::CoreWindow const& coreWindow);
+		static OneToolkit::UI::ViewService GetForWindowId(Windows::UI::WindowId windowId);
+		static Windows::UI::WindowId GetIdForCoreWindow(Windows::UI::Core::CoreWindow const& coreWindow);
 	};
 }

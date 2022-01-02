@@ -2,19 +2,52 @@
 	x:Class="OneToolkit.Showcase.Views.MainPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:triggers="using:OneToolkit.UI.Xaml.Triggers"
-	xmlns:ui="using:OneToolkit.UI"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 	<Page.Resources>
-		<x:String x:Key="FullScreenTextId">FullScreenText</x:String>
-		<x:String x:Key="ExitFullScreenTextId">ExitFullScreenText</x:String>
-		<MenuFlyout x:Key="AppMenu">
+		<MenuFlyout x:Name="AppMenu">
+			<MenuFlyoutItem
+				x:Name="AppMenuBackItem"
+				x:Uid="AppMenuBackItem"
+				Icon="Back"
+				IsEnabled="{x:Bind Presenter.CanGoBack, Mode=OneWay}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="Left" Modifiers="Menu" />
+				</MenuFlyoutItem.KeyboardAccelerators>
+				<interactivity:Interaction.Behaviors>
+					<core:EventTriggerBehavior EventName="Click" SourceObject="{x:Bind AppMenuBackItem}">
+						<core:CallMethodAction MethodName="GoBack" TargetObject="{x:Bind Presenter}" />
+					</core:EventTriggerBehavior>
+				</interactivity:Interaction.Behaviors>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+				x:Uid="AppMenuForwardItem"
+				Click="{x:Bind Presenter.GoForward}"
+				Icon="Forward"
+				IsEnabled="{x:Bind Presenter.CanGoForward, Mode=OneWay}">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="Right" Modifiers="Menu" />
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutItem
+				x:Name="AppMenuHomeItem"
+				x:Uid="AppMenuHomeItem"
+				Click="HomeItem_Click"
+				Icon="Home"
+				IsEnabled="False">
+				<MenuFlyoutItem.KeyboardAccelerators>
+					<KeyboardAccelerator Key="Home" Modifiers="Menu" />
+				</MenuFlyoutItem.KeyboardAccelerators>
+			</MenuFlyoutItem>
+			<MenuFlyoutSeparator />
 			<MenuFlyoutItem
 				x:Uid="AppMenuHelpItem"
 				Click="HelpItem_Click"
@@ -30,18 +63,6 @@
 				<MenuFlyoutItem.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F1" Modifiers="Shift" />
 				</MenuFlyoutItem.KeyboardAccelerators>
-			</MenuFlyoutItem>
-			<MenuFlyoutSubItem x:Uid="AppMenuSettingsItem" Icon="Setting">
-				<MenuFlyoutSubItem x:Uid="AppMenuProgrammingLanguageItem">
-					<muxc:RadioMenuFlyoutItem />
-				</MenuFlyoutSubItem>
-				<ToggleMenuFlyoutItem x:Uid="DisableSoundEffectsSwitch" IsChecked="{x:Bind viewModels:SettingsViewModel.Instance.DisableSoundEffects, Mode=TwoWay}" />
-				<ToggleMenuFlyoutItem x:Uid="PreviewAutoRefreshSwitch" IsChecked="{x:Bind viewModels:SettingsViewModel.Instance.PreviewAutoRefresh, Mode=TwoWay}" />
-			</MenuFlyoutSubItem>
-			<MenuFlyoutItem x:Uid="AppMenuAboutItem" Click="AboutItem_Click">
-				<MenuFlyoutItem.Icon>
-					<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE946;" />
-				</MenuFlyoutItem.Icon>
 			</MenuFlyoutItem>
 			<MenuFlyoutSeparator />
 			<MenuFlyoutItem
@@ -86,13 +107,14 @@
 				VerticalAlignment="Stretch"
 				Orientation="Horizontal">
 				<Button
+					x:Name="AppIconButton"
 					Grid.Column="2"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
-					ContextFlyout="{StaticResource AppMenu}"
+					Click="{x:Bind ShowAppMenu}"
 					CornerRadius="0"
-					Flyout="{StaticResource AppMenu}"
 					IsTabStop="False"
+					RightTapped="{x:Bind ShowAppMenu}"
 					Style="{StaticResource AppIconButtonStyle}">
 					<Image
 						Width="16"
@@ -114,20 +136,14 @@
 				<StackPanel.Resources>
 					<ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml" />
 				</StackPanel.Resources>
-				<AutoSuggestBox
-					x:Name="SearchBox"
-					x:Uid="SearchBox"
-					Width="240"
-					Height="24"
-					QueryIcon="Find" />
-				<Button
-					x:Uid="MoreButton"
-					Height="24"
-					AccessKey="F"
-					ContextFlyout="{StaticResource AppMenu}"
-					Flyout="{StaticResource AppMenu}">
-					<FontIcon FontFamily="{x:Bind ui:Fonts.DefaultIconFontFamily}" Glyph="&#xE10C;" />
-				</Button>
+				<ComboBox SelectedValue="{x:Bind viewModels:SettingsViewModel.Instance.SelectedCodeLanguage, Mode=TwoWay}">
+					<x:String>C#</x:String>
+					<x:String>C++/CX</x:String>
+					<x:String>C++/WinRT</x:String>
+					<x:String>Python</x:String>
+					<x:String>Rust</x:String>
+					<x:String>Visual Basic</x:String>
+				</ComboBox>
 			</StackPanel>
 		</Grid>
 		<Frame
@@ -135,25 +151,22 @@
 			Grid.Row="1"
 			Background="{ThemeResource LayerFillColorDefaultBrush}"
 			Navigated="Presenter_Navigated" />
+		<muxc:TeachingTip
+			x:Name="AppTeachingTip"
+			x:Uid="AppTeachingTip"
+			Grid.Row="1"
+			IsOpen="{x:Bind viewModels:SettingsViewModel.Instance.ShowTeachingTip, Mode=OneTime}"
+			Target="{x:Bind AppIconButton}">
+			<interactivity:Interaction.Behaviors>
+				<core:EventTriggerBehavior EventName="Closed" SourceObject="{x:Bind AppTeachingTip}">
+					<core:ChangePropertyAction
+						PropertyName="ShowTeachingTip"
+						TargetObject="{x:Bind viewModels:SettingsViewModel.Instance}"
+						Value="False" />
+				</core:EventTriggerBehavior>
+			</interactivity:Interaction.Behaviors>
+		</muxc:TeachingTip>
 		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup>
-				<VisualState>
-					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowWidth="{StaticResource MinWindowBreakpoint}" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="SearchBox.Visibility" Value="Collapsed" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualState>
-					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowWidth="{StaticResource MediumWindowBreakpoint}" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="SearchBox.Visibility" Value="Visible" />
-					</VisualState.Setters>
-				</VisualState>
-			</VisualStateGroup>
 			<VisualStateGroup>
 				<VisualState>
 					<VisualState.StateTriggers>
@@ -161,7 +174,7 @@
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="FullScreenMenuItem.Icon" Value="FullScreen" />
-						<Setter Target="FullScreenMenuItem.Text" Value="{Binding Source={StaticResource FullScreenTextId}, Converter={StaticResource ResourceLocalizationConverter}}" />
+						<Setter Target="FullScreenMenuItem.Text" Value="{Binding Source='FullScreenText', Converter={StaticResource ResourceLocalizationConverter}}" />
 					</VisualState.Setters>
 				</VisualState>
 				<VisualState>
@@ -170,7 +183,7 @@
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="FullScreenMenuItem.Icon" Value="BackToWindow" />
-						<Setter Target="FullScreenMenuItem.Text" Value="{Binding Source={StaticResource ExitFullScreenTextId}, Converter={StaticResource ResourceLocalizationConverter}}" />
+						<Setter Target="FullScreenMenuItem.Text" Value="{Binding Source='ExitFullScreenText', Converter={StaticResource ResourceLocalizationConverter}}" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>

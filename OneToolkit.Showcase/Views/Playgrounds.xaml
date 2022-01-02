@@ -4,10 +4,10 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:OneToolkit.UI.Xaml.Controls"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:local="using:OneToolkit.Showcase.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:ui="using:OneToolkit.UI"
+	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
 	mc:Ignorable="d">
 
 	<muxc:TwoPaneView
@@ -24,8 +24,8 @@
 				TextChanged="Editor_TextChanged" />
 		</muxc:TwoPaneView.Pane1>
 		<muxc:TwoPaneView.Pane2>
-			<controls:Hub x:Uid="PlaygroundsHub">
-				<controls:HubSection x:Uid="OptionsSection">
+			<controls:HubPanel x:Uid="PlaygroundsHub">
+				<controls:HubPanelSection x:Uid="OptionsSection">
 					<DataTemplate>
 						<GridView Style="{StaticResource ButtonsGridViewStyle}">
 							<controls:DescriptiveButton x:Uid="OpenFromFileButton" Click="OpenFromFile_Click">
@@ -63,19 +63,22 @@
 							</controls:DescriptiveButton>
 						</GridView>
 					</DataTemplate>
-				</controls:HubSection>
-				<controls:HubSection x:Uid="PreviewSection">
+				</controls:HubPanelSection>
+				<controls:HubPanelSection x:Uid="PreviewSection">
 					<DataTemplate>
-						<ContentPresenter Loaded="PreviewPresenter_Loaded">
-							<ContentPresenter.ContentTransitions>
-								<TransitionCollection>
-									<ContentThemeTransition />
-								</TransitionCollection>
-							</ContentPresenter.ContentTransitions>
-						</ContentPresenter>
+						<StackPanel Spacing="8">
+							<ToggleSwitch x:Uid="PreviewAutoRefreshToggle" IsOn="{x:Bind viewModels:SettingsViewModel.Instance.PreviewAutoRefresh, Mode=TwoWay}" />
+							<ContentPresenter Loaded="PreviewPresenter_Loaded">
+								<ContentPresenter.ContentTransitions>
+									<TransitionCollection>
+										<ContentThemeTransition />
+									</TransitionCollection>
+								</ContentPresenter.ContentTransitions>
+							</ContentPresenter>
+						</StackPanel>
 					</DataTemplate>
-				</controls:HubSection>
-			</controls:Hub>
+				</controls:HubPanelSection>
+			</controls:HubPanel>
 		</muxc:TwoPaneView.Pane2>
 	</muxc:TwoPaneView>
 </Page>

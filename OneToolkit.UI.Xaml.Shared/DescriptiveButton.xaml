@@ -4,22 +4,24 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:converters="using:OneToolkit.UI.Xaml.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:local="using:OneToolkit.UI.Xaml.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:ui="using:OneToolkit.UI"
 	Style="{StaticResource DefaultDescriptiveButtonStyle}"
 	mc:Ignorable="d">
 	<Button.Resources>
 		<converters:StringToVisibilityConverter x:Key="ConvertStringToVisibility" />
 	</Button.Resources>
 
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="11" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
-		<ContentPresenter Grid.Column="0" Content="{x:Bind Visuals, Mode=OneWay}" />
-		<StackPanel Grid.Column="2" Orientation="Vertical">
+	<StackPanel Orientation="{x:Bind Orientation}" Spacing="11">
+		<ContentPresenter Content="{x:Bind Visuals, Mode=OneWay}">
+			<ContentPresenter.Resources>
+				<Style TargetType="FontIcon">
+					<Setter Property="FontSize" Value="32" />
+					<Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
+				</Style>
+			</ContentPresenter.Resources>
+		</ContentPresenter>
+		<StackPanel Orientation="Vertical">
 			<TextBlock
 				Style="{StaticResource DescriptiveButtonTitleTextStyle}"
 				Text="{x:Bind Title, Mode=OneWay}"
@@ -29,5 +31,5 @@
 				Text="{x:Bind Caption, Mode=OneWay}"
 				Visibility="{x:Bind Caption, Mode=OneWay, Converter={StaticResource ConvertStringToVisibility}}" />
 		</StackPanel>
-	</Grid>
+	</StackPanel>
 </Button>

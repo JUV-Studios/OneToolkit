@@ -1,9 +1,9 @@
 namespace OneToolkit.Media.Imaging
 {
     [default_interface]
-    runtimeclass CropDialog
+    runtimeclass ImageCropUI
     {
-        CropDialog();
+        ImageCropUI();
         Windows.Foundation.IAsyncOperation<Boolean> CropAsync(Windows.Storage.StorageFile origin, Windows.Storage.StorageFile destination);
         [noexcept] Boolean IsEllipticalCrop;
         [noexcept] Windows.Foundation.Size CropSize;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 
@@ -12,7 +11,19 @@ namespace OneToolkit.DocsCore
 
 	public sealed record TypeInfo(Type Type, WeakReference<IContentInfo> Parent) : IContentInfo
 	{
-		public string Name => Type.Name;
+		public Assembly Metadata => Type.Assembly;
+
+		public HeaderFile Header
+		{
+			get
+			{
+				
+				var assemblyName = Type.Assembly.GetName();
+				if (assemblyName.Name == "OneToolkit.Dotnet") return HeaderFile.GetInstance("juv.h", new[] { "C++/CX", "C++/WinRT" });
+				else if (assemblyName.ContentType == AssemblyContentType.WindowsRuntime) return HeaderFile.GetInstance($"winrt/{Type.Namespace}", new[] { "C++/WinRT" });
+				else return null;
+			}
+		}
 
 		public IEnumerable<IContentInfo> Children => null;
 
@@ -28,9 +39,27 @@ namespace OneToolkit.DocsCore
 			}
 		}
 
-		public string MetadataFileName => Path.GetFileName(Type.Assembly.Location);
+		public IEnumerable<string> SupportedLanguages => null;
 
-		public string HeaderFileName => Type.Assembly.GetName().ContentType == AssemblyContentType.WindowsRuntime ? $"winrt/{Type.Namespace}" : string.Empty;
+		public string GetName(string codeLanguage) => Type.Name;
+
+		public string GetSyntax(string codeLanguage)
+		{
+			string prefix = null;
+			if (codeLanguage == "C#")
+			{
+				return Kind switch
+				{
+					TypeKind.Class => Type.IsSealed ? "sealed class" : "class",
+					TypeKind.Delegate => "delegate",
+					TypeKind.Enumeration => "enum",
+					TypeKind.Interface => "interface",
+					TypeKind.Structure => "struct"
+				} + Type.Name;
+			}
+
+			return prefix;
+		}
 	}
 }
 

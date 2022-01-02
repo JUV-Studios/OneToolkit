@@ -1,10 +1,9 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "Assembly.h"
 
 using namespace juv;
 using namespace winrt;
 using namespace Windows::UI::Xaml::Interop;
-using namespace OneToolkit::System;
 
 namespace winrt::OneToolkit::Runtime::implementation
 {

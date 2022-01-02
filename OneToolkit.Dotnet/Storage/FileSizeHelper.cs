@@ -2,12 +2,18 @@
 
 namespace OneToolkit.Storage
 {
+	/// <summary>
+	/// Provides static helper methods to convert file size to a human readable string and vice versa.
+	/// </summary>
 	public static class FileSizeHelper
 	{
 		private static string[] BinaryUnits = { "B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB" };
 
 		private static string[] DecimalUnits = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
+		/// <summary>
+		/// Formats file size to a human readable string. 
+		/// </summary>
 		public static string Stringify(ulong sizeInBytes, bool useBinaryPrefix)
 		{
 			byte index = 0;

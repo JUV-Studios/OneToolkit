@@ -1,9 +1,9 @@
 ﻿namespace OneToolkit.UI
 {
 	/// <summary>
-	/// Provides helper methods for building your own tabbing system.
+	/// Provides static helper methods for building your own tabbing system.
 	/// </summary>
-	public static class TabSwitcher
+	public static class TabSwitchHelper
 	{
 		/// <summary>
 		/// Gets the tab index to be selected next.

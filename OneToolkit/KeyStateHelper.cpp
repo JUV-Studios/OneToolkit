@@ -1,6 +1,10 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "KeyStateHelper.h"
 #include "UI.Input.KeyStateHelper.g.cpp"
+#include <winrt/Windows.System.h>
+#include <winrt/Windows.UI.Core.h>
+#include <winrt/Windows.ApplicationModel.Core.h>
+#include <winrt/Windows.Foundation.Collections.h>
 
 using namespace winrt;
 using namespace Windows::System;

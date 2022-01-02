@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Collections.Generic;
 
 namespace OneToolkit.DocsCore
@@ -18,7 +19,9 @@ namespace OneToolkit.DocsCore
 						select new TypeInfo(type, weakThis);
 		}
 
-		public string Name => _Name;
+		public Assembly Metadata => null;
+
+		public HeaderFile Header => null;
 
 		public WeakReference<IContentInfo> Parent => null;
 
@@ -26,6 +29,12 @@ namespace OneToolkit.DocsCore
 
 		public IEnumerable<IGrouping<TypeKind, TypeInfo>> GroupedChildren => _GroupedChildren ??= from child in _Children
 																								  group child by child.Kind;
+
+		public IEnumerable<string> SupportedLanguages => null;
+
+		public string GetName(string codeLanguage) => codeLanguage.StartsWith("C++") ? _Name.Replace(".", "::") : _Name;
+
+		public string GetSyntax(string codeLanguage) => null;
 
 		public void Dispose()
 		{

@@ -2,17 +2,12 @@ import "Metadata.idl";
 
 namespace OneToolkit.UI
 {
-    struct WindowHandle
-    {
-        UInt64 Value;
-    };
-    
     [default_interface]
     runtimeclass ViewService : Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         String Title;
-        WindowHandle Handle { get; };
         Boolean IsFullScreen;
+        Windows.UI.WindowId Id { get; };
         Windows.Foundation.Rect Bounds { get; };
         Double TitleBarHeight { get; };
         Windows.UI.Xaml.Thickness TitleBarInset { get; };
@@ -22,9 +17,10 @@ namespace OneToolkit.UI
         [noexcept] Windows.UI.Core.SystemNavigationManager NavigationManager { get; };
         void ToggleFullScreen();
         Windows.Foundation.IAsyncOperation<Boolean> TryCloseAsync();
+        Windows.Foundation.IAsyncOperation<Boolean> TryMinimizeAsync();
         static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         static ViewService GetForCurrentView();
-        [OneToolkit.Metadata.DesktopOnly] static ViewService GetFromWindowHandle(WindowHandle windowHandle);
-        static WindowHandle GetHandleFromCoreWindow(Windows.UI.Core.CoreWindow coreWindow);
+        [OneToolkit.Metadata.DesktopOnly] static ViewService GetForWindowId(Windows.UI.WindowId windowId);
+        static Windows.UI.WindowId GetIdForCoreWindow(Windows.UI.Core.CoreWindow coreWindow);
     }
 }

@@ -1,9 +1,20 @@
 namespace OneToolkit.UI
 {
+    delegate void AppThemeChangedEventHandler(Windows.UI.Xaml.ApplicationTheme newTheme);
+
+    interface ICustomTheme requires Windows.Foundation.IStringable
+    {
+        void Apply();
+    };
+
     [default_interface]
     static runtimeclass ThemeService
     {
+        [noexcept] static Windows.UI.Xaml.ElementTheme AppThemeOverride;
+        [noexcept] static IObservableVector<ICustomTheme> CustomThemes { get; };
         static Windows.UI.Xaml.ApplicationTheme SystemAppsTheme { get; };
         static Windows.UI.Xaml.ApplicationTheme SystemShellTheme { get; };
+        static event AppThemeChangedEventHandler AppThemeChanged;
+        static Windows.UI.Xaml.ApplicationTheme ElementToApplicationTheme(Windows.UI.Xaml.ElementTheme elementTheme);
     }
 }

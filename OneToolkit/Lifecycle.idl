@@ -1,7 +1,5 @@
 namespace OneToolkit.Lifecycle
 {
-	delegate void SuspendableStateChangedEventHandler(ISuspendable sender, SuspendableEventType eventType);
-
 	enum SuspendableEventType
 	{
 		Suspended, Resumed
@@ -10,7 +8,7 @@ namespace OneToolkit.Lifecycle
 	interface ISuspendable
 	{
 		[noexcept] Boolean IsSuspended { get; };
-		event SuspendableStateChangedEventHandler StateChanged;
+		event Windows.Foundation.TypedEventHandler<ISuspendable, SuspendableEventType> StateChanged;
 	};
 
 	interface IAsyncClosable requires Windows.Foundation.IClosable

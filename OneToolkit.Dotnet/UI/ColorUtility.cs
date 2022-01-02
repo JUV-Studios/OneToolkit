@@ -3,7 +3,7 @@
 namespace OneToolkit.UI
 {
 	/// <summary>
-	/// Provides helper methods for manipulating colors.
+	/// Provides static helper methods for manipulating colors.
 	/// </summary>
 	public static class ColorUtility
 	{

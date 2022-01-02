@@ -1,30 +1,32 @@
 ﻿//
-// Hub.xaml.cpp
-// Implementation of the Hub class
+// HubPanel.xaml.cpp
+// Implementation of the HubPanel class
 //
 
 #include "pch.h"
-#include "Hub.xaml.h"
+#include "HubPanel.xaml.h"
 
-using namespace Framework;
-using namespace Framework::Automation;
+using namespace Platform;
+using namespace AppFramework;
+using namespace AppFramework::Automation;
 using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-define_dependency_property(double, Hub, Spacing, 36.0);
+define_dependency_property(double, HubPanel, Spacing, 36.0);
 
-define_dependency_property(bool, Hub, UseAutoOrientation, true);
+define_dependency_property(bool, HubPanel, UseAutoOrientation, true);
 
-Hub::Hub()
+HubPanel::HubPanel()
 {
 	InitializeComponent();
-	RegisterPropertyChangedCallback(OrientationProperty, ref new DependencyPropertyChangedCallback(this, &Hub::OrientationPropertyChanged));
+	//DefaultStyleKey = HubPanel::typeid->FullName;
+	RegisterPropertyChangedCallback(OrientationProperty, ref new DependencyPropertyChangedCallback(this, &HubPanel::OrientationPropertyChanged));
 }
 
-void Hub::SetPaddingProperties()
+void HubPanel::SetPaddingValues()
 {
-	std::vector<Framework::Controls::HubSection^> visibleSections;
+	std::vector<AppFramework::Controls::HubSection^> visibleSections;
 	for (auto const& section : Sections)
 	{
 		if (section->Visibility == ::Visibility::Visible && section->Opacity != 0) visibleSections.emplace_back(section);
@@ -52,19 +54,26 @@ void Hub::SetPaddingProperties()
 	}
 }
 
-void Hub::Hub_SizeChanged(Object^ sender, SizeChangedEventArgs^ e)
+void HubPanel::Hub_SizeChanged(Object^ sender, SizeChangedEventArgs^ e)
 {
-	double mediumWindowBreakpoint = 641;
-	if (Resources->HasKey("MediumWindowBreakpoint")) mediumWindowBreakpoint = static_cast<double>(Resources->Lookup("MediumWindowBreakpoint"));
-	if (UseAutoOrientation) Orientation = e->NewSize.Width >= mediumWindowBreakpoint ? ::Controls::Orientation::Horizontal : ::Controls::Orientation::Vertical;
+	if (UseAutoOrientation)
+	{
+		double mediumWindowBreakpoint = 641;
+		if (Resources->HasKey("MediumWindowBreakpoint"))
+		{
+			if (auto propertyValue = dynamic_cast<IBox<double>^>(Resources->Lookup("MediumWindowBreakpoint"))) mediumWindowBreakpoint = propertyValue->Value;
+		}
+
+		Orientation = e->NewSize.Width >= mediumWindowBreakpoint ? ::Controls::Orientation::Horizontal : ::Controls::Orientation::Vertical;
+	}
 }
 
-void Hub::OrientationPropertyChanged(DependencyObject^ sender, DependencyProperty^ dp)
+void HubPanel::OrientationPropertyChanged(DependencyObject^ sender, DependencyProperty^ dp)
 {
-	SetPaddingProperties();
+	SetPaddingValues();
 }
 
-void Hub::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)
+void HubPanel::DependencyPropertyChanged(DependencyObject^ sender, DependencyPropertyChangedEventArgs^ e)
 {
-	dynamic_cast<Hub^>(sender)->SetPaddingProperties();
+	dynamic_cast<HubPanel^>(sender)->SetPaddingValues();
 }

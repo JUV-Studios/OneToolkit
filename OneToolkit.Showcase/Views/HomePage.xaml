@@ -3,92 +3,105 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:controls="using:OneToolkit.UI.Xaml.Controls"
-	xmlns:converters="using:OneToolkit.UI.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:docsCore="using:OneToolkit.DocsCore"
 	xmlns:local="using:OneToolkit.Showcase.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:models="using:OneToolkit.Showcase.Models"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	xmlns:ui="using:OneToolkit.UI"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
 	mc:Ignorable="d">
 	<Page.Resources>
-		<x:String x:Key="MacrosTextId">MacrosText</x:String>
-		<x:String x:Key="NamespacesTextId">ReferenceHubNamespaces/Header</x:String>
-		<DataTemplate x:Key="ApiInfoTemplate">
-			<GridView ItemsSource="{Binding}" Style="{StaticResource ButtonsGridViewStyle}">
-				<GridView.ItemTemplate>
-					<DataTemplate>
-						<controls:DescriptiveButton Title="{Binding Name}" />
-					</DataTemplate>
-				</GridView.ItemTemplate>
-			</GridView>
+		<DataTemplate x:Key="TypeInfoTemplate" x:DataType="docsCore:TypeInfo">
+			<controls:DescriptiveButton Title="{x:Bind GetName(x:Null)}" Caption="{x:Bind Metadata.FullName}" />
 		</DataTemplate>
 	</Page.Resources>
 
-	<controls:Hub x:Uid="HomeHub">
-		<controls:HubSection x:Uid="GetStartedSection">
+	<controls:HubPanel x:Uid="HomeHub">
+		<controls:HubPanelSection x:Uid="GetStartedSection">
 			<DataTemplate>
-				<GridView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Style="{StaticResource ButtonsGridViewStyle}">
+				<GridView Style="{StaticResource ButtonsGridViewStyle}">
 					<controls:DescriptiveButton x:Uid="InstallPackagesButton" NavigateUri="https://www.nuget.org/profiles/JUVStudios">
 						<controls:DescriptiveButton.Visuals>
-							<FontIcon
-								FontFamily="{x:Bind ui:Fonts.DefaultIconFontFamily}"
-								FontSize="32"
-								Glyph="&#xE118;" />
+							<FontIcon Glyph="&#xE118;" />
 						</controls:DescriptiveButton.Visuals>
 					</controls:DescriptiveButton>
 					<controls:DescriptiveButton x:Uid="ReadDocsButton" NavigateUri="https://dev.azure.com/JUV-Studios/OneToolkit/_wiki/wikis/OneToolkit%20documentation">
 						<controls:DescriptiveButton.Visuals>
-							<FontIcon
-								FontFamily="{x:Bind ui:Fonts.DefaultIconFontFamily}"
-								FontSize="32"
-								Glyph="&#xE7BC;" />
+							<FontIcon Glyph="&#xE7BC;" />
 						</controls:DescriptiveButton.Visuals>
 					</controls:DescriptiveButton>
-					<controls:DescriptiveButton x:Uid="PlaygroundsButton" Click="Playgrounds_Click" />
+					<controls:DescriptiveButton x:Uid="PlaygroundsButton" Click="Playgrounds_Click">
+						<controls:DescriptiveButton.Visuals>
+							<FontIcon Glyph="&#xEB3C;" />
+						</controls:DescriptiveButton.Visuals>
+					</controls:DescriptiveButton>
 				</GridView>
 			</DataTemplate>
-		</controls:HubSection>
-		<controls:HubSection
-			x:Uid="ControlsSection"
-			ContentTemplate="{StaticResource ApiInfoTemplate}"
-			DataContext="{x:Bind local:ApiReference.XamlControls}" />
-		<controls:HubSection
-			x:Uid="ConvertersSection"
-			ContentTemplate="{StaticResource ApiInfoTemplate}"
-			DataContext="{x:Bind local:ApiReference.XamlConverters}" />
-		<controls:HubSection x:Uid="ReferenceSection" DataContext="{x:Bind local:ApiReference.FoundNamespaces}">
+		</controls:HubPanelSection>
+		<controls:HubPanelSection x:Uid="ControlsSection">
 			<DataTemplate>
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="8" />
-						<RowDefinition Height="*" />
-					</Grid.RowDefinitions>
-					<muxc:RadioButtons
-						Grid.Row="0"
-						MaxColumns="2"
-						SelectedIndex="1">
-						<RadioButton Content="{Binding Source={StaticResource MacrosTextId}, Converter={StaticResource ResourceLocalizationConverter}}" />
-						<RadioButton Content="{Binding Source={StaticResource NamespacesTextId}, Converter={StaticResource ResourceLocalizationConverter}}" />
-					</muxc:RadioButtons>
-					<GridView
-						Grid.Row="2"
-						ItemsSource="{Binding}"
-						Style="{StaticResource ButtonsGridViewStyle}">
-						<GridView.ItemTemplate>
-							<DataTemplate>
-								<Button
-									HorizontalAlignment="Stretch"
-									HorizontalContentAlignment="Stretch"
-									Click="ReferenceGridItem_Click"
-									Content="{Binding Name}" />
-							</DataTemplate>
-						</GridView.ItemTemplate>
-					</GridView>
-				</Grid>
+				<GridView
+					ItemTemplate="{StaticResource TypeInfoTemplate}"
+					ItemsSource="{x:Bind local:ApiReference.XamlControls}"
+					Style="{StaticResource ButtonsGridViewStyle}" />
 			</DataTemplate>
-		</controls:HubSection>
-	</controls:Hub>
+		</controls:HubPanelSection>
+		<controls:HubPanelSection x:Uid="ConvertersSection">
+			<DataTemplate>
+				<GridView
+					ItemTemplate="{StaticResource TypeInfoTemplate}"
+					ItemsSource="{x:Bind local:ApiReference.XamlConverters}"
+					Style="{StaticResource ButtonsGridViewStyle}" />
+			</DataTemplate>
+		</controls:HubPanelSection>
+		<controls:HubPanelSection x:Uid="ReferenceSection" DataContext="{x:Bind local:ApiReference.FoundNamespaces}">
+			<DataTemplate>
+				<GridView
+					VerticalAlignment="Stretch"
+					HorizontalContentAlignment="Stretch"
+					VerticalContentAlignment="Stretch"
+					ItemsSource="{Binding}"
+					SelectionMode="None">
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate />
+					</GridView.ItemsPanel>
+					<GridView.ItemTemplate>
+						<DataTemplate x:DataType="docsCore:TypeGroup">
+							<muxc:Expander HorizontalAlignment="Stretch" Header="{x:Bind GetName(viewModels:SettingsViewModel.Instance.SelectedCodeLanguage), Mode=OneWay}" />
+						</DataTemplate>
+					</GridView.ItemTemplate>
+				</GridView>
+			</DataTemplate>
+		</controls:HubPanelSection>
+		<controls:HubPanelSection x:Uid="SettingsSection" DataContext="{x:Bind viewModels:SettingsViewModel.Instance}">
+			<DataTemplate x:DataType="viewModels:SettingsViewModel">
+				<muxc:Expander x:Uid="AboutExpander">
+					<StackPanel>
+						<StackPanel.Resources>
+							<Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="HyperlinkButton">
+								<Setter Property="Margin" Value="-11,0,-11,0" />
+								<Setter Property="VerticalAlignment" Value="Stretch" />
+								<Setter Property="HorizontalAlignment" Value="Stretch" />
+								<Setter Property="HorizontalContentAlignment" Value="Left" />
+								<Setter Property="ContentTemplate">
+									<Setter.Value>
+										<DataTemplate>
+											<TextBlock Text="{Binding}" />
+										</DataTemplate>
+									</Setter.Value>
+								</Setter>
+							</Style>
+						</StackPanel.Resources>
+						<TextBlock
+							AutomationProperties.Name="{x:Bind AboutAutomationText}"
+							IsTextSelectionEnabled="True"
+							Text="{x:Bind AboutDisplayText}" />
+						<HyperlinkButton x:Uid="TermsOfUseLink" NavigateUri="https://sway.office.com/s/5JnZ4XUEqVN7bAsB/embed" />
+						<HyperlinkButton x:Uid="ContributeLink" />
+					</StackPanel>
+				</muxc:Expander>
+			</DataTemplate>
+		</controls:HubPanelSection>
+	</controls:HubPanel>
 </Page>

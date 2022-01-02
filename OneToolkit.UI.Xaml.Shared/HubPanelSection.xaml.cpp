@@ -4,13 +4,13 @@
 //
 
 #include "pch.h"
-#include "HubSection.xaml.h"
+#include "HubPanelSection.xaml.h"
 
 using namespace OneToolkit::UI::Xaml::Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-HubSection::HubSection()
+HubPanelSection::HubPanelSection()
 {
 	InitializeComponent();
 }

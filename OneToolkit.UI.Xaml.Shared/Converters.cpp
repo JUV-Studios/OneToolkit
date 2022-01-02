@@ -3,26 +3,14 @@
 
 using namespace juv;
 using namespace Platform;
-using namespace Framework;
-using namespace Windows::ApplicationModel;
-using namespace Windows::ApplicationModel::Resources;
+using namespace AppFramework;
 using namespace Windows::UI::Xaml::Interop;
-using namespace OneToolkit::System;
+using namespace OneToolkit::Data::Text;
 using namespace OneToolkit::UI::Xaml::Converters;
 
-define_dependency_property(ResourceLoader^, StringLocalizationConverter, Context, ResourceLoader::GetForViewIndependentUse());
+define_dependency_property(ResourceLoader^, StringLocalizationConverter, Context, GetDefaultContext());
 
-Object^ BoolReverseConverter::ConvertValue(Object^ value, TypeName targetType, Object^ parameter, String^ language)
-{
-	if (auto flag = dynamic_cast<IBox<bool>^>(value)) return flag->Value;
-	return !value;
-}
-
-Object^ StringVersionConverter::ConvertValue(Object^ value, TypeName targetType, Object^ parameter, String^ language)
-{
-	if (auto packageVersion = dynamic_cast<IBox<PackageVersion>^>(value)) return PackageVersionHelper::Stringify(packageVersion->Value);
-	else return PackageVersionHelper::Parse(value->ToString());
-}
+define_dependency_property(Visibility, NullToVisibilityConverter, ValueForNull, Visibility::Collapsed);
 
 Object^ StringLocalizationConverter::Convert(Object^ value, TypeName targetType, Object^ parameter, String^ language)
 {
@@ -34,9 +22,28 @@ Object^ StringLocalizationConverter::ConvertBack(Object^ value, TypeName targetT
 	throw ref new NotImplementedException();
 }
 
+ResourceLoader^ StringLocalizationConverter::GetDefaultContext()
+{
+#ifdef framework_winui3
+	return ref new ResourceLoader();
+#else
+	return ResourceLoader::GetForViewIndependentUse();
+#endif
+}
+
+Object^ NullToVisibilityConverter::Convert(Object^ value, TypeName targetType, Object^ parameter, String^ language)
+{
+	return !value ? ValueForNull : (ValueForNull == Visibility::Collapsed ? Visibility::Visible : Visibility::Collapsed);
+}
+
+Object^ NullToVisibilityConverter::ConvertBack(Object^ value, TypeName targetType, Object^ parameter, String^ language)
+{
+	throw ref new NotImplementedException();
+}
+
 Object^ StringToVisibilityConverter::Convert(Object^ value, TypeName targetType, Object^ parameter, String^ language)
 {
-	return has_only_whitespaces(value->ToString()) ? Visibility::Collapsed : Visibility::Visible;
+	return StringExtensions::HasOnlyWhitespaces(value->ToString()) ? Visibility::Collapsed : Visibility::Visible;
 }
 
 Object^ StringToVisibilityConverter::ConvertBack(Object^ value, TypeName targetType, Object^ parameter, String^ language)

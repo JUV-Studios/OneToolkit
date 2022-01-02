@@ -6,15 +6,15 @@
 	public static unsafe class StringExtensions
 	{
 		/// <summary>
-		/// Copies a string into a new instance.
+		/// Creates a copy of a string and returns an handle to it.
 		/// </summary>
-		public static string Clone(this string text)
+		public static string Copy(this string text)
 		{
 			fixed (char* buffer = text) return new string(buffer);
 		}
 
 		/// <summary>
-		/// Replaces a single character in a string without allocating a new one.
+		/// Replaces all occurrences of a specific character in a string without allocating a new one.
 		/// </summary>
 		public static void ReplaceCharacter(this string text, char replaced, char replacedWith)
 		{

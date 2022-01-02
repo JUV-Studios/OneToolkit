@@ -20,12 +20,14 @@ namespace OneToolkit::UI::Xaml::Controls
 
 		declare_dependency_property(Platform::String^, Caption);
 
-		declare_dependency_property(Framework::UIElement^, Visuals);
-		
+		declare_dependency_property(AppFramework::UIElement^, Visuals);
+
 		declare_dependency_property(Windows::Foundation::Uri^, NavigateUri);
+
+		declare_dependency_property(AppFramework::Controls::Orientation, Orientation);
 	private:
 		Windows::Foundation::EventRegistrationToken m_ClickHandlerToken;
-		void Button_Click(Object^ sender, Framework::RoutedEventArgs^ e);
-		static void DependencyPropertyChanged(Framework::DependencyObject^ sender, Framework::DependencyPropertyChangedEventArgs^ e);
+		void Button_Click(Object^ sender, AppFramework::RoutedEventArgs^ e);
+		static void DependencyPropertyChanged(AppFramework::DependencyObject^ sender, AppFramework::DependencyPropertyChangedEventArgs^ e);
 	};
 }

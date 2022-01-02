@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Navigation;
 using OneToolkit.DocsCore;
 using OneToolkit.Lifecycle;
 using OneToolkit.UI;
+using OneToolkit.UI.Xaml.Controls;
 using OneToolkit.Showcase.ViewModels;
 
 namespace OneToolkit.Showcase.Views
@@ -18,7 +19,7 @@ namespace OneToolkit.Showcase.Views
 
 		public static readonly Assembly[] ToolkitAssemblies = new[]
 		{
-			typeof(IAsyncClosable).Assembly, typeof(UI.Xaml.Controls.Hub).Assembly, typeof(ColorUtility).Assembly
+			typeof(IAsyncClosable).Assembly, typeof(HubPanel).Assembly, typeof(ColorUtility).Assembly
 		};
 
 		public static readonly IEnumerable<TypeGroup> FoundNamespaces = from assembly in ToolkitAssemblies
@@ -29,7 +30,7 @@ namespace OneToolkit.Showcase.Views
 																		select new TypeGroup(types.Key, types);
 
 		public static IEnumerable<DocsCore.TypeInfo> XamlControls => from nameSpace in FoundNamespaces
-																	 where nameSpace.Name == "OneToolkit.UI.Xaml.Controls"
+																	 where nameSpace.GetName(null) == "OneToolkit.UI.Xaml.Controls"
 																	 select nameSpace.Children as IEnumerable<DocsCore.TypeInfo> into types
 																	 from type in types
 																	 where type.Type.IsSubclassOf(typeof(UIElement))
@@ -37,7 +38,7 @@ namespace OneToolkit.Showcase.Views
 
 
 		public static IEnumerable<DocsCore.TypeInfo> XamlConverters => from nameSpace in FoundNamespaces
-																	   where nameSpace.Name == "OneToolkit.UI.Xaml.Converters"
+																	   where nameSpace.GetName(null) == "OneToolkit.UI.Xaml.Converters"
 																	   select nameSpace.Children as IEnumerable<DocsCore.TypeInfo> into types
 																	   from type in types
 																	   select type;
@@ -68,8 +69,8 @@ namespace OneToolkit.Showcase.Views
 
 		public static string GetDisplayName(IContentInfo contentInfo)
 		{
-			if (contentInfo is TypeGroup typeGroup) return $"{typeGroup.Name} {SettingsViewModel.Resources.GetString("NamespaceText")}";
-			else return contentInfo.Name;
+			if (contentInfo is TypeGroup typeGroup) return $"{typeGroup.GetName(SettingsViewModel.Instance.SelectedCodeLanguage)} {SettingsViewModel.Resources.GetString("NamespaceText")}";
+			else return contentInfo.GetName(null);
 		}
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -78,12 +79,12 @@ namespace OneToolkit.Showcase.Views
 			{
 				foreach (var group in typeGroup.GroupedChildren)
 				{
-					UI.Xaml.Controls.HubSection section = new()
+					HubPanelSection section = new()
 					{
 						Header = GetGroupName(group.Key)
 					};
 
-					(Content as UI.Xaml.Controls.Hub).Sections.Add(section);
+					(Content as HubPanel).Sections.Add(section);
 				}
 			}
 		}

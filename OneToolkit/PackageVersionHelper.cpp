@@ -1,6 +1,7 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "PackageVersionHelper.h"
 #include "System.PackageVersionHelper.g.cpp"
+#include <format>
 
 using namespace juv;
 using namespace winrt;
@@ -32,7 +33,7 @@ namespace winrt::OneToolkit::System::implementation
 			token = wcstok_s(nullptr, L".", &state);
 			++index;
 		}
-
+		 
 		setVersionField(tokens[0], result.Major);
 		setVersionField(tokens[1], result.Minor);
 		setVersionField(tokens[2], result.Build);

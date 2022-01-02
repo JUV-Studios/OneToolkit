@@ -1,16 +1,24 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "ViewService.h"
+#include <CorError.h>
+#include <winrt/Windows.System.h>
+#include <winrt/Windows.UI.Core.h>
+#include <winrt/Windows.UI.Xaml.h>
+#include <winrt/Windows.UI.ViewManagement.h>
+#include <winrt/Windows.ApplicationModel.Core.h>
+#include <winrt/Windows.Foundation.Collections.h>
 
 using namespace juv;
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::ApplicationModel::Core;
 using namespace Windows::System;
+using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::ViewManagement;
-using namespace Windows::ApplicationModel::Core;
 using namespace OneToolkit::System;
 using namespace OneToolkit::Runtime;
 using namespace OneToolkit::Data::Mvvm;
@@ -32,6 +40,8 @@ namespace winrt::OneToolkit::UI
 
 	using GetWindowLongW = int(__stdcall*)(HWND, int);
 
+	using ShowWindow = int(__stdcall*)(HWND, int);
+
 	using DestroyWindow = int(__stdcall*)(HWND);
 
 	using GetWindowRect = int(__stdcall*)(HWND, LPRECT);
@@ -50,11 +60,11 @@ namespace winrt::OneToolkit::UI
 	struct ViewServiceBase : implementation::ViewServiceT<Derived, non_agile>, ObservableBase<Derived>
 	{
 	public:
-		ViewServiceBase(WindowHandle windowHandle): m_Handle(as_pointer<HWND>(windowHandle.Value))
+		ViewServiceBase(WindowId windowId): m_Handle(as_pointer<HWND>(windowId.Value))
 		{
 		}
 
-		WindowHandle Handle() const noexcept
+		WindowId Id() const noexcept
 		{
 			return { as_value<uint64>(m_Handle) };
 		}
@@ -157,12 +167,23 @@ namespace winrt::OneToolkit::UI
 		{
 			return AppView().TryConsolidateAsync();
 		}
+
+		IAsyncOperation<bool> TryMinimizeAsync() const
+		{
+			if (CoreApplication::Views().Size() == 1)
+			{
+				co_await (co_await AppDiagnosticInfo::RequestInfoForAppAsync()).GetAt(0).GetResourceGroups().GetAt(0).StartSuspendAsync();
+				co_return true;
+			}
+			
+			co_return false;
+		}
 	};
 
 	struct ViewServiceDesktop : ViewServiceBase<ViewServiceDesktop>
 	{
 	public:
-		ViewServiceDesktop(WindowHandle windowHandle) : ViewServiceBase<ViewServiceDesktop>(windowHandle) {}
+		ViewServiceDesktop(WindowId windowId) : ViewServiceBase<ViewServiceDesktop>(windowId) {}
 
 		hstring Title() const
 		{
@@ -192,7 +213,6 @@ namespace winrt::OneToolkit::UI
 				}
 				else
 				{
-
 				}
 			}
 
@@ -243,6 +263,11 @@ namespace winrt::OneToolkit::UI
 		{
 			co_return user32.GetProcAddress<DestroyWindow>("DestroyWindow")(m_Handle) != false;
 		}
+
+		IAsyncOperation<bool> TryMinimizeAsync() const
+		{
+			co_return user32.GetProcAddress<ShowWindow>("ShowWindow")(m_Handle, SW_MINIMIZE);
+		}
 	private:
 		DynamicLibrary user32{ L"User32.dll" };
 	};
@@ -257,7 +282,7 @@ namespace winrt::OneToolkit::UI
 				uint32 result = 0;
 				uint32 size = sizeof(result);
 				DynamicLibrary advapi32{ L"Advapi32.dll" };
-				check_win32(advapi32.GetProcAddress<RegGetValueW>("RegGetValueW")(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell", L"TabletMode",
+				check_win32(advapi32.GetProcAddress<RegGetValueW>("RegGetValueW")(HKEY_CURRENT_USER, L"Software\\MonitorInfocrosoft\\Windows\\CurrentVersion\\ImmersiveShell", L"TabletMode",
 					RRF_RT_REG_DWORD, nullptr, &result, reinterpret_cast<DWORD*>(&size)));
 				return static_cast<UserInteractionMode>(result);
 			}
@@ -268,15 +293,15 @@ namespace winrt::OneToolkit::UI
 			return make<ViewServiceUniversal>();
 		}
 
-		OneToolkit::UI::ViewService ViewService::GetFromWindowHandle(WindowHandle windowHandle)
+		OneToolkit::UI::ViewService ViewService::GetForWindowId(WindowId windowId)
 		{	
-			if (CoreApplication::Views().Size()) throw hresult_error(COR_E_PLATFORMNOTSUPPORTED, L"This method is for desktop apps only. In a universal app, call ViewService.GetForCurrentView on an UI thread associated with a CoreWindow instance.");
-			return make<ViewServiceDesktop>(windowHandle);
+			if (CoreApplication::Views().Size()) throw hresult_error(COR_E_PLATFORMNOTSUPPORTED, L"This method is for desktop apps only. In a UWP app, call ViewService.GetForCurrentView on an UI thread associated with a CoreWindow instance.");
+			return make<ViewServiceDesktop>(windowId);
 		}
 
-		WindowHandle ViewService::GetHandleFromCoreWindow(CoreWindow const& coreWindow)
+		WindowId ViewService::GetIdForCoreWindow(CoreWindow const& coreWindow)
 		{
-			WindowHandle result;
+			WindowId result;
 			check_hresult(coreWindow.as<ICoreWindowInterop>()->get_WindowHandle(reinterpret_cast<HWND*>(&result.Value)));
 			return result;
 		}

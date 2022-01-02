@@ -11,7 +11,7 @@
 	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 
-	<controls:Hub Header="{x:Bind local:ApiReference.GetDisplayName(ContentInfo)}">
-		<controls:HubSection x:Uid="OverviewSection" />
-	</controls:Hub>
+	<controls:HubPanel Header="{x:Bind local:ApiReference.GetDisplayName(ContentInfo)}">
+		<controls:HubPanelSection x:Uid="OverviewSection" />
+	</controls:HubPanel>
 </Page>

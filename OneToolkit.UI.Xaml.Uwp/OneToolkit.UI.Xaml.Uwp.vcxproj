@@ -42,7 +42,7 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <ProjectName>OneToolkit.UI.Xaml.Uwp</ProjectName>
@@ -63,7 +63,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <DesktopCompatible>true</DesktopCompatible>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
@@ -88,7 +88,7 @@
     <DesktopCompatible>true</DesktopCompatible>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <DesktopCompatible>true</DesktopCompatible>
   </PropertyGroup>
@@ -130,39 +130,47 @@
     <GenerateManifest>false</GenerateManifest>
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <GenerateManifest>false</GenerateManifest>
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <GenerateManifest>false</GenerateManifest>
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <TargetName>$(RootNamespace)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
@@ -176,8 +184,8 @@
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>OneToolkit.UI.Xaml.Shared.h;OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;$(SolutionDir)OneToolkit;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
@@ -199,8 +207,8 @@
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>OneToolkit.UI.Xaml.Shared.h;OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;$(SolutionDir)OneToolkit;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
@@ -220,8 +228,8 @@
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>OneToolkit.UI.Xaml.Shared.h;OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;$(SolutionDir)OneToolkit;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
@@ -241,8 +249,8 @@
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>OneToolkit.UI.Xaml.Shared.h;OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;$(SolutionDir)OneToolkit;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
@@ -262,8 +270,8 @@
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>OneToolkit.UI.Xaml.Shared.h;OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;$(SolutionDir)OneToolkit;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
@@ -283,8 +291,8 @@
       <StringPooling>true</StringPooling>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>OneToolkit.UI.Xaml.Shared.h;OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;$(SolutionDir)OneToolkit;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
@@ -300,10 +308,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;$(SolutionDir)OneToolkit;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
       <AdditionalOptions>/await</AdditionalOptions>
-      <ForcedIncludeFiles>OneToolkit.UI.Xaml.Shared.h;OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles>OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -314,34 +323,34 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)juv;$(SolutionDir)OneToolkit;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
       <AdditionalOptions>/await</AdditionalOptions>
-      <ForcedIncludeFiles>OneToolkit.UI.Xaml.Shared.h;OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles>OneToolkit.UI.Xaml.h</ForcedIncludeFiles>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\OneToolkit.UI.Xaml.Shared\DescriptiveButton.xaml.h">
       <DependentUpon>..\OneToolkit.UI.Xaml.Shared\DescriptiveButton.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="..\OneToolkit.UI.Xaml.Shared\Hub.xaml.h">
-      <DependentUpon>..\OneToolkit.UI.Xaml.Shared\Hub.xaml</DependentUpon>
+    <ClInclude Include="..\OneToolkit.UI.Xaml.Shared\HubPanel.xaml.h">
+      <DependentUpon>..\OneToolkit.UI.Xaml.Shared\HubPanel.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="..\OneToolkit.UI.Xaml.Shared\HubSection.xaml.h">
-      <DependentUpon>..\OneToolkit.UI.Xaml.Shared\HubSection.xaml</DependentUpon>
+    <ClInclude Include="..\OneToolkit.UI.Xaml.Shared\HubPanelSection.xaml.h">
+      <DependentUpon>..\OneToolkit.UI.Xaml.Shared\HubPanelSection.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="OneToolkit.UI.Xaml.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\OneToolkit.UI.Xaml.Shared\DescriptiveButton.xaml.cpp">
       <DependentUpon>..\OneToolkit.UI.Xaml.Shared\DescriptiveButton.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="..\OneToolkit.UI.Xaml.Shared\Hub.xaml.cpp">
-      <DependentUpon>..\OneToolkit.UI.Xaml.Shared\Hub.xaml</DependentUpon>
+    <ClCompile Include="..\OneToolkit.UI.Xaml.Shared\HubPanel.xaml.cpp">
+      <DependentUpon>..\OneToolkit.UI.Xaml.Shared\HubPanel.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="..\OneToolkit.UI.Xaml.Shared\HubSection.xaml.cpp">
-      <DependentUpon>..\OneToolkit.UI.Xaml.Shared\HubSection.xaml</DependentUpon>
+    <ClCompile Include="..\OneToolkit.UI.Xaml.Shared\HubPanelSection.xaml.cpp">
+      <DependentUpon>..\OneToolkit.UI.Xaml.Shared\HubPanelSection.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <DependentUpon>pch.h</DependentUpon>
@@ -349,9 +358,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="OneToolkit.UI.Xaml.targets">
-      <FileType>XML</FileType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -362,8 +368,8 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\OneToolkit.UI.Xaml.Shared\DescriptiveButton.xaml" />
-    <Page Include="..\OneToolkit.UI.Xaml.Shared\Hub.xaml" />
-    <Page Include="..\OneToolkit.UI.Xaml.Shared\HubSection.xaml" />
+    <Page Include="..\OneToolkit.UI.Xaml.Shared\HubPanel.xaml" />
+    <Page Include="..\OneToolkit.UI.Xaml.Shared\HubPanelSection.xaml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

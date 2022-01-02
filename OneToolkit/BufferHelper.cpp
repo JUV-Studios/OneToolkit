@@ -1,6 +1,7 @@
-﻿#include "pch.h"
+﻿#include "OneToolkit.h"
 #include "BufferHelper.h"
 #include "Storage.BufferHelper.g.cpp"
+#include <winrt/Windows.Security.Cryptography.h>
 
 using namespace juv;
 using namespace winrt;
