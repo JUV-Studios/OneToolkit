@@ -24,6 +24,9 @@
 		<RepositoryUrl>https://dev.azure.com/JUV-Studios/OneToolkit</RepositoryUrl>
 		<PackageProjectUrl>https://dev.azure.com/JUV-Studios/OneToolkit</PackageProjectUrl>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<SignAssembly>True</SignAssembly>
+		<DelaySign>False</DelaySign>
+		<AssemblyOriginatorKeyFile>C:\Users\jaiga\Desktop\Source\OneToolkit\Certificate.pfx</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>OneToolkit.Dotnet.xml</DocumentationFile>

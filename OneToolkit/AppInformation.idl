@@ -1,0 +1,12 @@
+namespace OneToolkit.System
+{
+    [default_interface]
+    runtimeclass AppInformation
+    {
+        String DisplayName { get; };
+        String Description { get; };
+        static AppInformation Current { get; };
+        [noexcept] static Boolean IsXamlApplication { get; };
+        Windows.Foundation.IAsyncOperation<Windows.Storage.StorageFile> GetExecutableFileAsync();
+    }
+}

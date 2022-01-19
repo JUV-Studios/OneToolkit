@@ -5,7 +5,7 @@ namespace OneToolkit.UI
     interface ICustomTheme requires Windows.Foundation.IStringable
     {
         void Apply();
-    };
+    }
 
     [default_interface]
     static runtimeclass ThemeService

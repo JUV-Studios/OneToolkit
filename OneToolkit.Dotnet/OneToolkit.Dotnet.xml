@@ -9,6 +9,29 @@
             Represents the order of bytes.
             </summary>
         </member>
+        <member name="M:OneToolkit.Data.HighPerformance.UnsafeReplace(System.String,System.Char,System.Char)">
+            <summary>
+            Replaces all occurences of a specific character with another in a string without creating a new one.
+            </summary>
+            <remarks>The specified string must be yours. Modifing existing strings can cause issues later on.</remarks>
+        </member>
+        <member name="T:OneToolkit.Data.Text.GreetingType">
+            <summary>
+            Represents the type of a timely greeting.
+            </summary>
+        </member>
+        <member name="T:OneToolkit.Data.Text.GreetingHelper">
+            <summary>
+            Provides static helper methods to deal with timely greetings.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Data.Text.GreetingHelper.GetTimelyGreeting(System.DateTime)">
+            <summary>
+            Gets a suitable greeting message type based on the specified date and time.
+            </summary>
+            <param name="dateTime">The specified date and time.</param>
+            <returns>An value from the GreetingType enumeration that represents the most accurate greeting for the specified date and time.</returns>
+        </member>
         <member name="T:OneToolkit.Data.Text.LineEnding">
             <summary>
             Represents a line ending scheme.
@@ -34,21 +57,6 @@
             Normalizes a string to use a single line ending for every new line.
             </summary>
         </member>
-        <member name="T:OneToolkit.Data.Text.StringExtensions">
-            <summary>
-            Provides high performance extension methods for strings.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.StringExtensions.Copy(System.String)">
-            <summary>
-            Creates a copy of a string and returns an handle to it.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.StringExtensions.ReplaceCharacter(System.String,System.Char,System.Char)">
-            <summary>
-            Replaces all occurrences of a specific character in a string without allocating a new one.
-            </summary>
-        </member>
         <member name="T:OneToolkit.Data.Text.TextEncodingHelper">
             <summary>
             Provides the ability to find out and detect the encoding of a text buffer.
@@ -69,9 +77,14 @@
             Gets whether the buffer contains UTF16 encoded text or not.
             </summary>
         </member>
-        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.Detect(System.ReadOnlySpan{System.Byte})">
+        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.TryDetect(System.ReadOnlySpan{System.Byte})">
             <summary>
             Determines the encoding of a text buffer using various methods.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.Convert(System.Text.Encoding,System.Text.Encoding,System.ReadOnlySpan{System.Byte})">
+            <summary>
+            Converts a text buffer to another encoding.
             </summary>
         </member>
         <member name="T:OneToolkit.Storage.FileSizeHelper">
@@ -81,7 +94,12 @@
         </member>
         <member name="M:OneToolkit.Storage.FileSizeHelper.Stringify(System.UInt64,System.Boolean)">
             <summary>
-            Formats file size to a human readable string. 
+            Formats file size to a human readable string.
+            </summary>
+        </member>
+        <member name="M:OneToolkit.Storage.FileSizeHelper.Parse(System.String)">
+            <summary>
+            Tries to convert a human readable file size string to an integer representing the size in bytes.
             </summary>
         </member>
         <member name="T:OneToolkit.UI.ColorUtility">

@@ -1,7 +1,0 @@
-namespace OneToolkit.UI.Navigation
-{
-	enum NavigationKind
-	{
-		None, Back, Forward
-	};
-}

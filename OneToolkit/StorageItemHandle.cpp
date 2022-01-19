@@ -1,9 +1,10 @@
-﻿#include "OneToolkit.h"
+﻿import OneToolkit;
+
 #include "StorageItemHandle.h"
 #include "Storage.FileHandle.g.cpp"
 #include "Storage.FolderHandle.g.cpp"
+#include <Unknwn.h>
 #include <filesystem>
-#include <winrt/Windows.Foundation.h>
 
 using namespace juv;
 using namespace winrt;
@@ -34,8 +35,6 @@ namespace winrt::OneToolkit::Storage::implementation
 		HAO_DELETE = 0x10000
 	};
 
-	DEFINE_ENUM_FLAG_OPERATORS(HandleAccessOptions);
-
 	enum class HandleCreationOptions
 	{
 		HCO_CREATE_NEW = 0x1,
@@ -45,6 +44,11 @@ namespace winrt::OneToolkit::Storage::implementation
 		HCO_TRUNCATE_EXISTING = 0x5
 	};
 
+	inline HandleAccessOptions operator|(HandleAccessOptions left, HandleAccessOptions right)
+	{
+		return static_cast<HandleAccessOptions>(static_cast<int>(left) | static_cast<int>(right));
+	}
+
 	__interface __declspec(uuid("5CA296B2-2C25-4D22-B785-B885C8201E6A")) IStorageItemHandleAccess : ::IUnknown
 	{
 		int __stdcall Create(HandleAccessOptions accessOptions, FileSharingMode sharingOptions, HandleOptions options, void* oplockBreakingHandler, HANDLE* interopHandle) noexcept;
@@ -52,7 +56,7 @@ namespace winrt::OneToolkit::Storage::implementation
 
 	__interface __declspec(uuid("DF19938F-5462-48A0-BE65-D2A3271A08D6")) IStorageFolderHandleAccess : ::IUnknown
 	{
-		int __stdcall Create(wchar const* fileName, HandleCreationOptions creationOptions, HandleAccessOptions accessOptions, FileSharingMode sharingOptions, HandleOptions options, void* oplockBreakingHandler, HANDLE* interopHandle) noexcept;
+		int __stdcall Create(wchar_t const* fileName, HandleCreationOptions creationOptions, HandleAccessOptions accessOptions, FileSharingMode sharingOptions, HandleOptions options, void* oplockBreakingHandler, HANDLE* interopHandle) noexcept;
 	};
 
 	auto AsAccessOption(FileAccessMode accessMode) noexcept
@@ -61,6 +65,11 @@ namespace winrt::OneToolkit::Storage::implementation
 	}
 
 	StorageItemHandle::StorageItemHandle(IStorageItem const& storageItem, FileAccessMode accessMode, FileSharingMode sharingMode) : m_StorageItem(storageItem), AccessMode(accessMode), SharingMode(sharingMode) {}
+
+	void StorageItemHandle::Dispose() noexcept
+	{
+		m_ItemHandle.close();
+	}
 
 	FileHandle::FileHandle(StorageFile const& file, FileAccessMode accessMode, FileSharingMode sharingMode) : StorageItemHandle(file, accessMode, sharingMode), ItemName(file.Name())
 	{
@@ -86,7 +95,7 @@ namespace winrt::OneToolkit::Storage::implementation
 	hstring FileHandle::DisplayName() const
 	{
 		if (auto file = m_StorageItem.try_as<StorageFile>()) return file.DisplayName();
-		else return std::filesystem::path(file.DisplayName().data()).replace_extension(L"").c_str();
+		else return std::filesystem::path(file.DisplayName().data()).filename().replace_extension(L"").c_str();
 	}
 
 	hstring FolderHandle::ItemName() const
@@ -115,7 +124,7 @@ namespace winrt::OneToolkit::Storage::implementation
 	IAsyncOperation<StorageFile> FileHandle::GetStorageFileAsync() const
 	{
 		if (auto folder = m_StorageItem.try_as<StorageFolder>()) return folder.GetFileAsync(ItemName());
-		else return make<AsyncOperationWithResult<StorageFile>>(m_StorageItem.as<StorageFile>());
+		else return AsyncOperationFromResult(m_StorageItem.as<StorageFile>());
 	}
 
 	IAsyncOperation<StorageFolder> FolderHandle::GetStorageFolderAsync() const

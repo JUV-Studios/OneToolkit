@@ -6,6 +6,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	xmlns:textEditor="using:OneToolkit.UI.Xaml.Controls.TextEditor"
 	xmlns:ui="using:OneToolkit.UI"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
 	mc:Ignorable="d">
@@ -15,55 +16,76 @@
 		Pane2Length="2*"
 		PanePriority="Pane2">
 		<muxc:TwoPaneView.Pane1>
-			<RichEditBox
-				x:Name="Editor"
+			<muxc:NavigationView
+				x:Name="PaneNavView"
 				Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-				BorderBrush="Transparent"
-				BorderThickness="0"
-				CornerRadius="0"
-				TextChanged="Editor_TextChanged" />
+				IsBackButtonVisible="Collapsed"
+				IsSettingsVisible="False"
+				ItemInvoked="PaneNavView_ItemInvoked"
+				PaneDisplayMode="Top">
+				<muxc:NavigationView.MenuItems>
+					<muxc:NavigationViewItem x:Uid="PlaygroundsMarkupNavItem">
+						<muxc:NavigationViewItem.Icon>
+							<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE97C;" />
+						</muxc:NavigationViewItem.Icon>
+					</muxc:NavigationViewItem>
+					<muxc:NavigationViewItem x:Uid="PlaygroundsCodeBehindNavItem">
+						<muxc:NavigationViewItem.Icon>
+							<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE943;" />
+						</muxc:NavigationViewItem.Icon>
+					</muxc:NavigationViewItem>
+				</muxc:NavigationView.MenuItems>
+				<muxc:NavigationView.FooterMenuItems>
+					<muxc:NavigationViewItem
+						x:Uid="PlaygroundsOpenNavItem"
+						Icon="OpenFile"
+						SelectsOnInvoked="False"
+						Tag="Open" />
+					<muxc:NavigationViewItem
+						x:Uid="PlaygroundsSaveNavItem"
+						SelectsOnInvoked="False"
+						Tag="Save">
+						<muxc:NavigationViewItem.Icon>
+							<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE792;" />
+						</muxc:NavigationViewItem.Icon>
+					</muxc:NavigationViewItem>
+					<muxc:NavigationViewItem
+						x:Uid="PlaygroundsShareNavItem"
+						Icon="Share"
+						SelectsOnInvoked="False"
+						Tag="Share" />
+				</muxc:NavigationView.FooterMenuItems>
+				<FlipView>
+					<textEditor:SyntaxEditor
+						x:Name="MarkupEditor"
+						EditorMode="SourceCode"
+						TextChanged="Editor_TextChanged" />
+					<AppBar />
+					<SemanticZoom>
+						<SemanticZoom.ZoomedInView>
+							<ListView ItemsSource="{x:Bind ToolboxItems.Keys}" SelectionMode="None">
+								<ListView.ItemTemplate>
+									<DataTemplate x:DataType="x:String">
+										<TextBlock Text="{x:Bind}" />
+									</DataTemplate>
+								</ListView.ItemTemplate>
+							</ListView>
+						</SemanticZoom.ZoomedInView>
+						<SemanticZoom.ZoomedOutView>
+							<ListView ItemsSource="{x:Bind ToolboxItems}" SelectionMode="None">
+								<ListView.ItemTemplate>
+									<DataTemplate>
+										<TextBlock Text="{Binding Value.Name}" />
+									</DataTemplate>
+								</ListView.ItemTemplate>
+							</ListView>
+						</SemanticZoom.ZoomedOutView>
+					</SemanticZoom>
+				</FlipView>
+			</muxc:NavigationView>
 		</muxc:TwoPaneView.Pane1>
 		<muxc:TwoPaneView.Pane2>
 			<controls:HubPanel x:Uid="PlaygroundsHub">
-				<controls:HubPanelSection x:Uid="OptionsSection">
-					<DataTemplate>
-						<GridView Style="{StaticResource ButtonsGridViewStyle}">
-							<controls:DescriptiveButton x:Uid="OpenFromFileButton" Click="OpenFromFile_Click">
-								<controls:DescriptiveButton.Visuals>
-									<FontIcon
-										FontFamily="{x:Bind ui:Fonts.DefaultIconFontFamily}"
-										FontSize="32"
-										Glyph="&#xE1A5;" />
-								</controls:DescriptiveButton.Visuals>
-								<controls:DescriptiveButton.KeyboardAccelerators>
-									<KeyboardAccelerator Key="O" Modifiers="Control" />
-								</controls:DescriptiveButton.KeyboardAccelerators>
-							</controls:DescriptiveButton>
-							<controls:DescriptiveButton x:Uid="SaveToFileButton" Click="SaveToFile_Click">
-								<controls:DescriptiveButton.Visuals>
-									<FontIcon
-										FontFamily="{x:Bind ui:Fonts.DefaultIconFontFamily}"
-										FontSize="32"
-										Glyph="&#xE792;" />
-								</controls:DescriptiveButton.Visuals>
-								<controls:DescriptiveButton.KeyboardAccelerators>
-									<KeyboardAccelerator Key="S" Modifiers="Control" />
-								</controls:DescriptiveButton.KeyboardAccelerators>
-							</controls:DescriptiveButton>
-							<controls:DescriptiveButton x:Uid="ShareButton" Click="Share_Click">
-								<controls:DescriptiveButton.Visuals>
-									<FontIcon
-										FontFamily="{x:Bind ui:Fonts.DefaultIconFontFamily}"
-										FontSize="32"
-										Glyph="&#xE72D;" />
-								</controls:DescriptiveButton.Visuals>
-								<controls:DescriptiveButton.KeyboardAccelerators>
-									<KeyboardAccelerator Key="H" Modifiers="Control" />
-								</controls:DescriptiveButton.KeyboardAccelerators>
-							</controls:DescriptiveButton>
-						</GridView>
-					</DataTemplate>
-				</controls:HubPanelSection>
 				<controls:HubPanelSection x:Uid="PreviewSection">
 					<DataTemplate>
 						<StackPanel Spacing="8">

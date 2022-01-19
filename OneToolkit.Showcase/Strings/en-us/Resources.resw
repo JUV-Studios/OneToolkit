@@ -126,14 +126,8 @@
   <data name="AppMenuCloseItem.Text" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="AppMenuFeedbackItem.Text" xml:space="preserve">
-    <value>Feedback</value>
-  </data>
   <data name="AppMenuForwardItem.Text" xml:space="preserve">
     <value>Forward</value>
-  </data>
-  <data name="AppMenuHelpItem.Text" xml:space="preserve">
-    <value>Help</value>
   </data>
   <data name="AppMenuHomeItem.Text" xml:space="preserve">
     <value>Home</value>
@@ -141,14 +135,23 @@
   <data name="AppMenuMinimizeItem.Text" xml:space="preserve">
     <value>Minimize</value>
   </data>
+  <data name="AppMenuSearchItem.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="AppTeachingTip.ActionButtonContent" xml:space="preserve">
+    <value>Get help</value>
+  </data>
   <data name="AppTeachingTip.CloseButtonContent" xml:space="preserve">
     <value>Got it</value>
   </data>
   <data name="AppTeachingTip.Subtitle" xml:space="preserve">
-    <value>Click or tap on this icon to access various options</value>
+    <value>Click or tap on this icon to access various options.</value>
   </data>
   <data name="AppTeachingTip.Title" xml:space="preserve">
     <value>Welcome to OneToolkit Showcase</value>
+  </data>
+  <data name="AppThemeExpander.Header" xml:space="preserve">
+    <value>App theme</value>
   </data>
   <data name="CancelText" xml:space="preserve">
     <value>Cancel</value>
@@ -162,14 +165,35 @@
   <data name="ContributeLink.Content" xml:space="preserve">
     <value>Contribute to OneToolkit</value>
   </data>
+  <data name="ControlsSection.Header" xml:space="preserve">
+    <value>Controls</value>
+  </data>
+  <data name="ControlsText" xml:space="preserve">
+    <value>controls</value>
+  </data>
   <data name="ConvertersSection.Header" xml:space="preserve">
     <value>Converters</value>
   </data>
   <data name="CopyrightText" xml:space="preserve">
     <value>© 2021 JUV Studios. All rights reserved.</value>
   </data>
+  <data name="DarkThemeRadio.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="DefaultThemeRadio.Content" xml:space="preserve">
+    <value>Windows default</value>
+  </data>
   <data name="DelegatesText" xml:space="preserve">
     <value>Delegates</value>
+  </data>
+  <data name="DelegateText" xml:space="preserve">
+    <value>delegate</value>
+  </data>
+  <data name="DocumentationButton.Caption" xml:space="preserve">
+    <value>Get to know OneToolkit to leverage its functionality in your apps</value>
+  </data>
+  <data name="DocumentationButton.Title" xml:space="preserve">
+    <value>Documentation</value>
   </data>
   <data name="EnumerationsText" xml:space="preserve">
     <value>Enumerations</value>
@@ -177,8 +201,26 @@
   <data name="EnumerationText" xml:space="preserve">
     <value>enumeration</value>
   </data>
+  <data name="EraseSettingsButton.Content" xml:space="preserve">
+    <value>Erase app settings</value>
+  </data>
+  <data name="EraseSettingsDialog.Content" xml:space="preserve">
+    <value>Are you sure that you want to erase app settings? This will apply to OneToolkit Showcase on all devices signed in with your Microsoft account. We'll restart the app to complete this process.</value>
+  </data>
+  <data name="EraseSettingsDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Erase</value>
+  </data>
+  <data name="EraseSettingsDialog.Title" xml:space="preserve">
+    <value>Erase app settings?</value>
+  </data>
   <data name="ExitFullScreenText" xml:space="preserve">
     <value>Exit full screen</value>
+  </data>
+  <data name="FeedbackButton.Caption" xml:space="preserve">
+    <value>Send us feedback to help shape the future of OneToolkit</value>
+  </data>
+  <data name="FeedbackButton.Title" xml:space="preserve">
+    <value>Feedback</value>
   </data>
   <data name="FullScreenText" xml:space="preserve">
     <value>Full screen</value>
@@ -186,17 +228,32 @@
   <data name="GetStartedSection.Header" xml:space="preserve">
     <value>Get started</value>
   </data>
-  <data name="HomeHub.Header" xml:space="preserve">
-    <value>Welcome</value>
+  <data name="GoodAfternoonText" xml:space="preserve">
+    <value>Good afternoon</value>
+  </data>
+  <data name="GoodEveningText" xml:space="preserve">
+    <value>Good evening</value>
+  </data>
+  <data name="GoodMorningText" xml:space="preserve">
+    <value>Good morning</value>
+  </data>
+  <data name="GoodNightText" xml:space="preserve">
+    <value>Good night</value>
+  </data>
+  <data name="HeadersSection.Header" xml:space="preserve">
+    <value>APIs by header</value>
+  </data>
+  <data name="HeaderText" xml:space="preserve">
+    <value>header</value>
+  </data>
+  <data name="HelpButton.Caption" xml:space="preserve">
+    <value>Get help from experts on Developer Sanctuary</value>
+  </data>
+  <data name="HelpButton.Title" xml:space="preserve">
+    <value>Help</value>
   </data>
   <data name="ImportButton.Label" xml:space="preserve">
     <value>Import</value>
-  </data>
-  <data name="InstallPackagesButton.Caption" xml:space="preserve">
-    <value>Install the applicable NuGet packages that OneToolkit provides</value>
-  </data>
-  <data name="InstallPackagesButton.Title" xml:space="preserve">
-    <value>Install NuGet packages</value>
   </data>
   <data name="InterfacesText" xml:space="preserve">
     <value>Interfaces</value>
@@ -204,32 +261,41 @@
   <data name="InterfaceText" xml:space="preserve">
     <value>interface</value>
   </data>
+  <data name="LightThemeRadio.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="NamespacesSection.Header" xml:space="preserve">
+    <value>APIs by namespace</value>
+  </data>
   <data name="NamespaceText" xml:space="preserve">
     <value>namespace</value>
-  </data>
-  <data name="OpenFromFileButton.Caption" xml:space="preserve">
-    <value>Import to playground from a file</value>
-  </data>
-  <data name="OpenFromFileButton.Title" xml:space="preserve">
-    <value>Open from file</value>
-  </data>
-  <data name="OpenText" xml:space="preserve">
-    <value>Open</value>
-  </data>
-  <data name="OptionsSection.Header" xml:space="preserve">
-    <value>Options</value>
   </data>
   <data name="OverviewSection.Header" xml:space="preserve">
     <value>Overview</value>
   </data>
   <data name="PlaygroundsButton.Caption" xml:space="preserve">
-    <value>Quickly prototype your UI with XAML</value>
+    <value>Prototype your UI quickly with XAML</value>
   </data>
   <data name="PlaygroundsButton.Title" xml:space="preserve">
     <value>Playgrounds</value>
   </data>
+  <data name="PlaygroundsCodeBehindNavItem.Content" xml:space="preserve">
+    <value>Code behind</value>
+  </data>
   <data name="PlaygroundsHub.Header" xml:space="preserve">
     <value>Playgrounds</value>
+  </data>
+  <data name="PlaygroundsMarkupNavItem.Content" xml:space="preserve">
+    <value>Markup</value>
+  </data>
+  <data name="PlaygroundsOpenNavItem.Content" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="PlaygroundsSaveNavItem.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="PlaygroundsShareNavItem.Content" xml:space="preserve">
+    <value>Share</value>
   </data>
   <data name="PreviewAutoRefreshToggle.Header" xml:space="preserve">
     <value>Auto-refresh</value>
@@ -237,32 +303,20 @@
   <data name="PreviewSection.Header" xml:space="preserve">
     <value>Preview</value>
   </data>
-  <data name="ReadDocsButton.Caption" xml:space="preserve">
-    <value>Learn how to leverage OneToolkit to build great apps with best practices</value>
+  <data name="ProtocolShareDialog.Title" xml:space="preserve">
+    <value>Share</value>
   </data>
-  <data name="ReadDocsButton.Title" xml:space="preserve">
-    <value>Read the docs</value>
-  </data>
-  <data name="ReferenceSection.Header" xml:space="preserve">
-    <value>APIs by namespace</value>
-  </data>
-  <data name="SaveText" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="SaveToFileButton.Caption" xml:space="preserve">
-    <value>Export to a file from playground</value>
-  </data>
-  <data name="SaveToFileButton.Title" xml:space="preserve">
-    <value>Save to file</value>
+  <data name="SearchCharmPlaceholderText" xml:space="preserve">
+    <value>What are you looking for?</value>
   </data>
   <data name="SettingsSection.Header" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="ShareButton.Caption" xml:space="preserve">
-    <value>Share your playground with the world</value>
+  <data name="ShareLocalLinkButton.Content" xml:space="preserve">
+    <value>Share local link</value>
   </data>
-  <data name="ShareButton.Title" xml:space="preserve">
-    <value>Share</value>
+  <data name="ShareWebLinkButton.Content" xml:space="preserve">
+    <value>Share web link</value>
   </data>
   <data name="StructuresText" xml:space="preserve">
     <value>Structures</value>
@@ -270,8 +324,14 @@
   <data name="StructureText" xml:space="preserve">
     <value>structure</value>
   </data>
+  <data name="SystemColorSettingsLink.Content" xml:space="preserve">
+    <value>Windows color settings</value>
+  </data>
   <data name="TermsOfUseLink.Content" xml:space="preserve">
     <value>JUV Studios Terms of Use</value>
+  </data>
+  <data name="ThemeRadioButtons.Header" xml:space="preserve">
+    <value>Pick a theme</value>
   </data>
   <data name="VersionText" xml:space="preserve">
     <value>Version {0}</value>

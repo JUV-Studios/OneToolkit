@@ -6,7 +6,7 @@ namespace winrt::OneToolkit::Storage
 {
     namespace implementation
     {
-        struct StorageItemHandle
+        struct StorageItemHandle : Lifecycle::Disposable<StorageItemHandle>
         {
         public:
             StorageItemHandle(Windows::Storage::IStorageItem const& storageItem, Windows::Storage::FileAccessMode accessMode, FileSharingMode sharingMode);
@@ -14,9 +14,10 @@ namespace winrt::OneToolkit::Storage
             juv::auto_property<Windows::Storage::FileAccessMode> const AccessMode;
             StorageItemId Id() const noexcept;
             void Delete();
+            void Dispose() noexcept;
         protected:
             file_handle m_ItemHandle;
-            Windows::Storage::IStorageItem m_StorageItem;
+            Windows::Storage::IStorageItem const m_StorageItem;
         };
 
         struct FileHandle : FileHandleT<FileHandle>, StorageItemHandle

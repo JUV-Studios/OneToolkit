@@ -1,21 +1,16 @@
 namespace OneToolkit.Storage
 {
+    runtimeclass NullBuffer : [default] Windows.Storage.Streams.IBuffer, Windows.Foundation.IMemoryBuffer {}
+
     [default_interface]
     static runtimeclass BufferHelper
     {
-        [default_overload]
-        static UInt8 GetAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
+        [noexcept] static NullBuffer EmptyBuffer { get; };
         static UInt8 GetAt(Windows.Foundation.IMemoryBufferReference reference, UInt32 index);
-
-        [default_overload]
-        static void SetAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index, UInt8 value);
         static void SetAt(Windows.Foundation.IMemoryBufferReference reference, UInt32 index, UInt8 value);
-
-        [default_overload]
-        static Boolean IsIndexValid(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
         static Boolean IsIndexValid(Windows.Foundation.IMemoryBufferReference reference, UInt32 index);
-
-        static Windows.Storage.Streams.IBuffer EmptyBuffer { get; };
-        static Windows.Foundation.IMemoryBuffer EmptyMemoryBuffer { get; };
+        [default_overload] static UInt8 GetAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
+        [default_overload] static void SetAt(Windows.Storage.Streams.IBuffer buffer, UInt32 index, UInt8 value);
+        [default_overload] static Boolean IsIndexValid(Windows.Storage.Streams.IBuffer buffer, UInt32 index);
     }
 }

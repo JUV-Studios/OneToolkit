@@ -1,15 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
+using Windows.System;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.Foundation.Metadata;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.Search;
 using Windows.ApplicationModel.Resources;
 using Windows.ApplicationModel.DataTransfer;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using OneToolkit.UI;
 using OneToolkit.System;
-using OneToolkit.Storage;
 
 namespace OneToolkit.Showcase.ViewModels
 {
@@ -20,7 +23,17 @@ namespace OneToolkit.Showcase.ViewModels
 			ElementSoundPlayer.State = DisableSoundEffects ? ElementSoundPlayerState.Off : ElementSoundPlayerState.On;
 		}
 
-		private readonly SettingsService AppSettings = new(ApplicationData.Current.RoamingSettings);
+		private static bool LaunchingLink = false;
+
+#pragma warning disable CS0618
+		public static bool IsSearchCharmSupported => ApiInformation.IsTypePresent("Windows.ApplicationModel.Search.SearchPane");
+#pragma warning restore CS0618
+
+		private readonly ApplicationDataContainer SettingsContainer = ApplicationData.Current.RoamingSettings;
+
+#pragma warning disable CS0618
+		public static readonly SearchPane SearchCharm = SearchPane.GetForCurrentView();
+#pragma warning restore CS0618
 
 		public static readonly SystemNavigationManager NavigationManager = SystemNavigationManager.GetForCurrentView();
 
@@ -38,7 +51,7 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public bool ShowTeachingTip
 		{
-			get => Convert.ToBoolean(AppSettings.GetValue(nameof(ShowTeachingTip), true));
+			get => GetAppSetting(nameof(ShowTeachingTip), true);
 			set
 			{
 				if (ShowTeachingTip != value) SetAppSetting(nameof(ShowTeachingTip), value);
@@ -47,7 +60,7 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public bool DisableSoundEffects
 		{
-			get => Convert.ToBoolean(AppSettings.GetValue(nameof(DisableSoundEffects), false));
+			get => GetAppSetting(nameof(DisableSoundEffects), false);
 			set	
 			{
 				if (DisableSoundEffects != value)
@@ -60,7 +73,7 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public bool PreviewAutoRefresh
 		{
-			get => Convert.ToBoolean(AppSettings.GetValue(nameof(PreviewAutoRefresh), true));
+			get => GetAppSetting(nameof(PreviewAutoRefresh), true);
 			set
 			{
 				if (PreviewAutoRefresh != value) SetAppSetting(nameof(PreviewAutoRefresh), value);
@@ -69,20 +82,64 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public string SelectedCodeLanguage
 		{
-			get => AppSettings.GetValue(nameof(SelectedCodeLanguage), "C#").ToString();
+			get => GetAppSetting(nameof(SelectedCodeLanguage), "C#");
 			set
 			{
 				if (SelectedCodeLanguage != value) SetAppSetting(nameof(SelectedCodeLanguage), value);
 			}
 		}
+		public static void RevealShareCharm() => DataTransferManager.ShowShareUI();
+
+#pragma warning disable CS0618
+		public static void RevealSearchCharm()
+		{
+			if (IsSearchCharmSupported) SearchCharm.Show();
+		}
+#pragma warning restore CS0618
 
 		public static async void Close() => await ViewServiceProvider.TryCloseAsync();
 
 		public static async void Suspend() => await ViewServiceProvider.TryMinimizeAsync();
 
+		public static async void OpenHelpPage() => await LaunchLinkAsync(new("http://discord.com/invite/CZpBpPQjq8"));
+
+		public static async void OpenFeedbackPage() => await LaunchLinkAsync(new($"https://www.nuget.org/packages/OneToolkit/{PackageVersionHelper.Stringify(Package.Current.Id.Version)}/ContactOwners"));
+
+		public static async Task<bool> LaunchLinkAsync(Uri link)
+		{
+			if (!LaunchingLink)
+			{
+				LaunchingLink = true;
+				var result = await Launcher.LaunchUriAsync(link);
+				LaunchingLink = false;
+				return result;
+			}
+
+			return false;
+		}
+
+		public async void EraseSettings()
+		{
+			SettingsContainer.Values.Clear();
+			await CoreApplication.RequestRestartAsync(string.Empty);
+		}
+
+		private T GetAppSetting<T>(string key, T fallback)
+		{
+			if (SettingsContainer.Values.TryGetValue(key, out object value))
+			{
+				return (T)value;
+			}
+			else
+			{
+				SetAppSetting(key, fallback);
+				return fallback;
+			}
+		}
+
 		private void SetAppSetting(string key, object newValue)
 		{
-			AppSettings.SetValue(key, newValue);
+			SettingsContainer.Values[key] = newValue;
 			OnPropertyChanged(key);
 		}
 	}

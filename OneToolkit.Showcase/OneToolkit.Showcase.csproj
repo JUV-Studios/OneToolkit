@@ -6,6 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{07E880F8-3550-49C3-86DB-B8F0F3513398}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
+    <OutputPath>..\Artifacts\OneToolkit.Showcase\$(Configuration)</OutputPath>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OneToolkit.Showcase</RootNamespace>
     <AssemblyName>OneToolkit.Showcase</AssemblyName>
@@ -13,7 +14,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <OutputPath>..\Artifacts\OneToolkit.Showcase\$(Configuration)</OutputPath>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -135,6 +136,12 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\EraseSettingsDialog.xaml.cs">
+      <DependentUpon>EraseSettingsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ProtocolShareDialog.xaml.cs">
+      <DependentUpon>ProtocolShareDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ApiReference.xaml.cs">
       <DependentUpon>ApiReference.xaml</DependentUpon>
     </Compile>
@@ -154,6 +161,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Reference\Headers\juv" />
+    <Content Include="Assets\Reference\Types\auto_property" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -168,6 +177,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Dialogs\EraseSettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ProtocolShareDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ApiReference.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -186,6 +203,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ColorCode.UWP">
+      <Version>2.0.12</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
       <Version>4.4.0</Version>
     </PackageReference>
@@ -214,9 +234,13 @@
       <Project>{ef690ebe-5bfe-428e-9e39-d0ef06b1fd1c}</Project>
       <Name>OneToolkit.Dotnet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OneToolkit.UI.Xaml.Uwp\OneToolkit.UI.Xaml.Uwp.vcxproj">
-      <Project>{95b918e4-ad86-45a6-be1a-77399535bad2}</Project>
-      <Name>OneToolkit.UI.Xaml.Uwp</Name>
+    <ProjectReference Include="..\OneToolkit.UI.Xaml\TextEditor.Uwp\OneToolkit.TextEditor.Uwp.csproj">
+      <Project>{2c931298-eef0-4dce-8b23-09735edff721}</Project>
+      <Name>OneToolkit.TextEditor.Uwp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OneToolkit.UI.Xaml\XamlConverters.Uwp\OneToolkit.XamlConverters.Uwp.csproj">
+      <Project>{4fd28559-2721-4935-985e-37ea9ead9474}</Project>
+      <Name>OneToolkit.XamlConverters.Uwp</Name>
     </ProjectReference>
     <ProjectReference Include="..\OneToolkit\OneToolkit.vcxproj">
       <Project>{0dd5edd3-19b8-4924-8df1-add70803e693}</Project>
@@ -234,8 +258,19 @@
   <ItemGroup>
     <None Include="Certificate.pfx" />
   </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
+      <Name>Windows Desktop Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Certificate.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>

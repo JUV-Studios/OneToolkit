@@ -7,10 +7,10 @@
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-	xmlns:triggers="using:OneToolkit.UI.Xaml.Triggers"
+	xmlns:system="using:OneToolkit.System"
 	xmlns:viewModels="using:OneToolkit.Showcase.ViewModels"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-	Loaded="Page_Loaded"
+	SizeChanged="Page_SizeChanged"
 	mc:Ignorable="d">
 	<Page.Resources>
 		<MenuFlyout x:Name="AppMenu">
@@ -49,22 +49,17 @@
 			</MenuFlyoutItem>
 			<MenuFlyoutSeparator />
 			<MenuFlyoutItem
-				x:Uid="AppMenuHelpItem"
-				Click="HelpItem_Click"
-				Icon="Help">
-				<MenuFlyoutItem.KeyboardAccelerators>
-					<KeyboardAccelerator Key="F1" />
-				</MenuFlyoutItem.KeyboardAccelerators>
-			</MenuFlyoutItem>
-			<MenuFlyoutItem x:Uid="AppMenuFeedbackItem" Click="FeedbackItem_Click">
+				x:Uid="AppMenuSearchItem"
+				AutomationProperties.AcceleratorKey="Ctrl+F"
+				Click="{x:Bind viewModels:SettingsViewModel.RevealSearchCharm}">
 				<MenuFlyoutItem.Icon>
-					<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xED15;" />
+					<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
 				</MenuFlyoutItem.Icon>
 				<MenuFlyoutItem.KeyboardAccelerators>
-					<KeyboardAccelerator Key="F1" Modifiers="Shift" />
+					<KeyboardAccelerator Key="F3" />
+					<KeyboardAccelerator Key="F" Modifiers="Control" />
 				</MenuFlyoutItem.KeyboardAccelerators>
 			</MenuFlyoutItem>
-			<MenuFlyoutSeparator />
 			<MenuFlyoutItem
 				x:Uid="AppMenuMinimizeItem"
 				Click="{x:Bind viewModels:SettingsViewModel.Suspend}"
@@ -81,6 +76,14 @@
 				KeyboardAcceleratorTextOverride="Alt+F4" />
 		</MenuFlyout>
 	</Page.Resources>
+	<Page.KeyboardAccelerators>
+		<KeyboardAccelerator
+			Key="F"
+			Invoked="{x:Bind ShowAppMenu}"
+			Modifiers="Menu" />
+		<KeyboardAccelerator Key="F1" Invoked="{x:Bind viewModels:SettingsViewModel.OpenHelpPage}" />
+		<KeyboardAccelerator Key="F2" Invoked="{x:Bind viewModels:SettingsViewModel.OpenFeedbackPage}" />
+	</Page.KeyboardAccelerators>
 
 	<Grid>
 		<Grid.RowDefinitions>
@@ -113,6 +116,7 @@
 					VerticalAlignment="Stretch"
 					Click="{x:Bind ShowAppMenu}"
 					CornerRadius="0"
+					DoubleTapped="{x:Bind viewModels:SettingsViewModel.Close}"
 					IsTabStop="False"
 					RightTapped="{x:Bind ShowAppMenu}"
 					Style="{StaticResource AppIconButtonStyle}">
@@ -125,11 +129,11 @@
 					VerticalAlignment="Center"
 					IsHitTestVisible="False"
 					Style="{ThemeResource CaptionTextBlockStyle}"
-					Text="OneToolkit Showcase" />
+					Text="{x:Bind system:AppInformation.Current.DisplayName}" />
 			</StackPanel>
 			<StackPanel
 				Grid.Column="1"
-				HorizontalAlignment="Center"
+				HorizontalAlignment="Right"
 				VerticalAlignment="Center"
 				Orientation="Horizontal"
 				Spacing="4">
@@ -149,13 +153,15 @@
 		<Frame
 			x:Name="Presenter"
 			Grid.Row="1"
+			x:FieldModifier="Public"
 			Background="{ThemeResource LayerFillColorDefaultBrush}"
 			Navigated="Presenter_Navigated" />
 		<muxc:TeachingTip
 			x:Name="AppTeachingTip"
 			x:Uid="AppTeachingTip"
 			Grid.Row="1"
-			IsOpen="{x:Bind viewModels:SettingsViewModel.Instance.ShowTeachingTip, Mode=OneTime}"
+			x:Load="{x:Bind viewModels:SettingsViewModel.Instance.ShowTeachingTip, Mode=OneTime}"
+			ActionButtonStyle="{ThemeResource AccentButtonStyle}"
 			Target="{x:Bind AppIconButton}">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="Closed" SourceObject="{x:Bind AppTeachingTip}">
@@ -166,27 +172,5 @@
 				</core:EventTriggerBehavior>
 			</interactivity:Interaction.Behaviors>
 		</muxc:TeachingTip>
-		<VisualStateManager.VisualStateGroups>
-			<VisualStateGroup>
-				<VisualState>
-					<VisualState.StateTriggers>
-						<triggers:FullScreenStateTrigger IsFullScreen="False" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="FullScreenMenuItem.Icon" Value="FullScreen" />
-						<Setter Target="FullScreenMenuItem.Text" Value="{Binding Source='FullScreenText', Converter={StaticResource ResourceLocalizationConverter}}" />
-					</VisualState.Setters>
-				</VisualState>
-				<VisualState>
-					<VisualState.StateTriggers>
-						<triggers:FullScreenStateTrigger IsFullScreen="True" />
-					</VisualState.StateTriggers>
-					<VisualState.Setters>
-						<Setter Target="FullScreenMenuItem.Icon" Value="BackToWindow" />
-						<Setter Target="FullScreenMenuItem.Text" Value="{Binding Source='ExitFullScreenText', Converter={StaticResource ResourceLocalizationConverter}}" />
-					</VisualState.Setters>
-				</VisualState>
-			</VisualStateGroup>
-		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </Page>

@@ -1,43 +1,57 @@
-﻿#include "OneToolkit.h"
-#include "PackageVersionHelper.h"
-#include "System.PackageVersionHelper.g.cpp"
-#include <format>
+﻿#include "System.PackageVersionHelper.g.h"
+
+import juv;
 
 using namespace juv;
 using namespace winrt;
 using namespace Windows::ApplicationModel;
 
-namespace winrt::OneToolkit::System::implementation
+namespace winrt::OneToolkit::System
 {
-	hstring PackageVersionHelper::Stringify(PackageVersion packageVersion)
+	namespace implementation
 	{
-		return hstring(std::format(L"{0}.{1}.{2}.{3}", packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision));
+		struct PackageVersionHelper : static_t, PackageVersionHelperT<PackageVersionHelper>
+		{
+			static hstring Stringify(PackageVersion packageVersion)
+			{
+				return std::format(L"{0}.{1}.{2}.{3}", packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision).data();
+			}
+
+			static PackageVersion Parse(hstring const& formattedString)
+			{
+				auto setVersionField = [](std::wstring& token, uint16& field)
+				{
+					if (!token.empty()) field = static_cast<uint16>(std::stoul(token));
+				};
+
+				PackageVersion result;
+				uint8 index = 0;
+				wchar_t* state = nullptr;
+				std::array<std::wstring, 4> tokens;
+				std::wstring stringCopy{ formattedString };
+				auto token = wcstok_s(stringCopy.data(), L".", &state);
+				while (index < tokens.size() && token)
+				{
+					tokens[index] = token;
+					token = wcstok_s(nullptr, L".", &state);
+					++index;
+				}
+
+				setVersionField(tokens[0], result.Major);
+				setVersionField(tokens[1], result.Minor);
+				setVersionField(tokens[2], result.Build);
+				setVersionField(tokens[3], result.Revision);
+				return result;
+			}
+		};
 	}
 
-	PackageVersion PackageVersionHelper::Parse(hstring const& formattedString)
+	namespace factory_implementation
 	{
-		auto setVersionField = [](std::wstring& token, uint16& field)
+		struct PackageVersionHelper : PackageVersionHelperT<PackageVersionHelper, implementation::PackageVersionHelper>
 		{
-			if (!token.empty()) field = static_cast<uint16>(std::stoul(token));
 		};
-
-		PackageVersion result;
-		uint8 index = 0;
-		wchar* state = nullptr;
-		std::array<std::wstring, 4> tokens;
-		std::wstring stringCopy{ formattedString };
-		auto token = wcstok_s(stringCopy.data(), L".", &state);
-		while (token != nullptr && index < tokens.size())
-		{
-			tokens[index] = token;
-			token = wcstok_s(nullptr, L".", &state);
-			++index;
-		}
-		 
-		setVersionField(tokens[0], result.Major);
-		setVersionField(tokens[1], result.Minor);
-		setVersionField(tokens[2], result.Build);
-		setVersionField(tokens[3], result.Revision);
-		return result;	
 	}
 }
+
+#include "System.PackageVersionHelper.g.cpp"

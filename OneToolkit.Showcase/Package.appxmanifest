@@ -45,6 +45,7 @@
 						<uap:DisplayName>OneToolkit Showcase</uap:DisplayName>
 					</uap:Protocol>
 				</uap:Extension>
+				<uap:Extension Category="windows.search"/>
 			</Extensions>
 		</Application>
 	</Applications>

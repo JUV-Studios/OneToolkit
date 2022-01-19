@@ -19,8 +19,8 @@
     <Filter Include="Media">
       <UniqueIdentifier>{0ad71127-7f6a-42a9-96ae-d597154e2978}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Runtime">
-      <UniqueIdentifier>{ee0a8823-8163-4fa6-8aa8-4589d4f133f6}</UniqueIdentifier>
+    <Filter Include="Numerics">
+      <UniqueIdentifier>{0e3201c8-0b38-4ac0-b9ff-c35f4e568280}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -28,15 +28,9 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="MachineInformation.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ViewService.cpp" />
     <ClCompile Include="StorageItemHandle.cpp">
       <Filter>Storage</Filter>
-    </ClCompile>
-    <ClCompile Include="Assembly.cpp">
-      <Filter>Runtime</Filter>
     </ClCompile>
     <ClCompile Include="OneToolkit.ixx" />
     <ClCompile Include="..\juv\juv.ixx" />
@@ -50,21 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OneToolkit.h" />
-    <ClInclude Include="MachineInformation.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewService.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="StorageItemHandle.h">
       <Filter>Storage</Filter>
     </ClInclude>
-    <ClInclude Include="Assembly.h">
-      <Filter>Runtime</Filter>
-    </ClInclude>
-    <ClInclude Include="ThemeService.h">
-      <Filter>UI</Filter>
-    </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Fonts.idl">
@@ -76,16 +59,13 @@
     <Midl Include="ViewService.idl">
       <Filter>UI</Filter>
     </Midl>
-    <Midl Include="SettingsService.idl">
-      <Filter>Storage</Filter>
-    </Midl>
     <Midl Include="SharedFile.idl">
       <Filter>Storage</Filter>
     </Midl>
     <Midl Include="KeyStateHelper.idl">
       <Filter>UI\Input</Filter>
     </Midl>
-    <Midl Include="MachineInformation.idl">
+    <Midl Include="SystemInformation.idl">
       <Filter>System</Filter>
     </Midl>
     <Midl Include="ThemeService.idl">
@@ -93,15 +73,6 @@
     </Midl>
     <Midl Include="PackageVersionHelper.idl">
       <Filter>System</Filter>
-    </Midl>
-    <Midl Include="Navigation.idl">
-      <Filter>UI</Filter>
-    </Midl>
-    <Midl Include="TypeNameHelper.idl">
-      <Filter>Runtime</Filter>
-    </Midl>
-    <Midl Include="FileOperations.idl">
-      <Filter>Storage</Filter>
     </Midl>
     <Midl Include="Imaging.idl">
       <Filter>Media</Filter>
@@ -111,11 +82,20 @@
     </Midl>
     <Midl Include="Metadata.idl" />
     <Midl Include="Lifecycle.idl" />
-    <Midl Include="Assembly.idl">
-      <Filter>Runtime</Filter>
+    <Midl Include="AppInformation.idl">
+      <Filter>System</Filter>
+    </Midl>
+    <Midl Include="ThreadHelper.idl">
+      <Filter>System</Filter>
+    </Midl>
+    <Midl Include="RationalHelper.idl">
+      <Filter>Numerics</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="OneToolkit.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
 </Project>

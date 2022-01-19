@@ -8,5 +8,5 @@ namespace OneToolkit.Storage
         SharedFile(Windows.Storage.StorageFile file);
         [noexcept] String Token { get; };
         Windows.Foundation.IAsyncOperation<Windows.Storage.StorageFile> GetFileAsync();
-    };
+    }
 }

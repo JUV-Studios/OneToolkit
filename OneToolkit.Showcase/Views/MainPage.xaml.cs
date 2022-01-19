@@ -1,13 +1,11 @@
-﻿using System;
-using Windows.System;
-using Windows.ApplicationModel;
-using Windows.UI;
+﻿using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Windows.ApplicationModel.Search;
+using Microsoft.UI.Xaml.Controls;
 using OneToolkit.UI;
-using OneToolkit.System;
 using OneToolkit.Showcase.ViewModels;
 
 namespace OneToolkit.Showcase.Views
@@ -17,19 +15,24 @@ namespace OneToolkit.Showcase.Views
 		public MainPage()
 		{
 			InitializeComponent();
-			SettingsViewModel.ViewServiceProvider.AppView.SetPreferredMinSize(new(500, 500));
+			Presenter.Navigate(typeof(HomePage));
+			Window.Current.SetTitleBar(DragRegion);
+			ThemeService.AppThemeChanged += ThemeService_AppThemeChanged;
+			BackdropMaterial.SetApplyToRootOrPageBackground(this, true);
+			SettingsViewModel.ViewServiceProvider.TrySetMinimumSize(new(500, 500));
 			SettingsViewModel.ViewServiceProvider.CoreAppView.TitleBar.ExtendViewIntoTitleBar = true;
 			SettingsViewModel.ViewServiceProvider.NavigationManager.BackRequested += NavigationManager_BackRequested;
-			var titleBar = SettingsViewModel.ViewServiceProvider.AppView.TitleBar;
-			titleBar.BackgroundColor = Colors.Transparent;
-			titleBar.ButtonBackgroundColor = Colors.Transparent;
-			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-			ThemeService_AppThemeChanged(ThemeService.SystemAppsTheme);
-			ThemeService.AppThemeChanged += ThemeService_AppThemeChanged;
-			Microsoft.UI.Xaml.Controls.BackdropMaterial.SetApplyToRootOrPageBackground(this, true);
+#pragma warning disable CS0618
+			if (SettingsViewModel.IsSearchCharmSupported)
+			{
+				SettingsViewModel.SearchCharm.SearchHistoryEnabled = false;
+				SettingsViewModel.SearchCharm.PlaceholderText = SettingsViewModel.Resources.GetString("SearchCharmPlaceholderText");
+				SettingsViewModel.SearchCharm.VisibilityChanged += SearchCharm_VisibilityChanged;
+			}
+#pragma warning restore CS0618
 		}
 
-		private void ShowAppMenu() => AppMenu.ShowAt(AppIconButton, new(4, AppIconButton.ActualHeight + 4));
+		private void ShowAppMenu() => AppMenu.ShowAt(AppIconButton, new(4, SettingsViewModel.ViewServiceProvider.IsInFullScreen ? 4 : AppIconButton.ActualHeight + 4));
 
 		private void NavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
 		{
@@ -42,15 +45,46 @@ namespace OneToolkit.Showcase.Views
 
 		private void ThemeService_AppThemeChanged(ApplicationTheme newTheme)
 		{
+			Color baseLowColor, baseHighColor;
+			if (newTheme == ApplicationTheme.Light)
+			{
+				baseLowColor = Color.FromArgb(51, 0, 0, 0);
+				baseHighColor = Colors.Black;
+			}
+			else
+			{
+				baseLowColor = Color.FromArgb(51, 255, 255, 255);
+				baseHighColor = Colors.White;
+			}
+
 			var titleBar = SettingsViewModel.ViewServiceProvider.AppView.TitleBar;
-			titleBar.ButtonHoverBackgroundColor = App.Current.Resources["SystemBaseLowColor"] as Color?;
-			titleBar.ButtonHoverForegroundColor = App.Current.Resources["SystemBaseHighColor"] as Color?;
+			titleBar.BackgroundColor = Colors.Transparent;
+			titleBar.ButtonBackgroundColor = Colors.Transparent;
+			titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+			titleBar.ButtonForegroundColor = baseHighColor;
+			titleBar.ButtonHoverBackgroundColor = baseLowColor;
+			titleBar.ButtonHoverForegroundColor = baseHighColor;
 		}
 
-		private void Page_Loaded(object sender, RoutedEventArgs e)
+#pragma warning disable CS0618
+		private void SearchCharm_VisibilityChanged(SearchPane sender, SearchPaneVisibilityChangedEventArgs args)
 		{
-			Window.Current.SetTitleBar(DragRegion);
-			Presenter.Navigate(typeof(HomePage));
+			// if (!args.Visible) sender.TrySetQueryText(string.Empty);
+		}
+#pragma warning restore CS0618
+
+		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			if (SettingsViewModel.ViewServiceProvider.IsInFullScreen)
+			{
+				FullScreenMenuItem.Icon = new SymbolIcon(Symbol.BackToWindow);
+				FullScreenMenuItem.Text = SettingsViewModel.Resources.GetString("ExitFullScreenText");
+			}
+			else
+			{
+				FullScreenMenuItem.Icon = new SymbolIcon(Symbol.FullScreen);
+				FullScreenMenuItem.Text = SettingsViewModel.Resources.GetString("FullScreenText");
+			}
 		}
 
 		private void Presenter_Navigated(object sender, NavigationEventArgs e)
@@ -61,14 +95,12 @@ namespace OneToolkit.Showcase.Views
 
 		private void HomeItem_Click(object sender, RoutedEventArgs e)
 		{
+			Presenter.Navigated -= Presenter_Navigated;
 			Presenter.Navigate(typeof(HomePage), null, App.PageTransition);
-			SettingsViewModel.ViewServiceProvider.NavigationManager.AppViewBackButtonVisibility = Presenter.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
 			Presenter.BackStack.Clear();
 			Presenter.ForwardStack.Clear();
+			Presenter_Navigated(null, null);
+			Presenter.Navigated += Presenter_Navigated;
 		}
-
-		private async void HelpItem_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new("http://discord.com/invite/CZpBpPQjq8"));
-
-		private async void FeedbackItem_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new($"https://www.nuget.org/packages/OneToolkit/{PackageVersionHelper.Stringify(Package.Current.Id.Version)}/ContactOwners"));
 	}
 }

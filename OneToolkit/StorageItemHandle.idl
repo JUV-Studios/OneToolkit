@@ -14,7 +14,7 @@ namespace OneToolkit.Storage
 		UInt64 Value;
 	};
 
-	interface IStorageItemHandle
+	interface IStorageItemHandle requires Windows.Foundation.IClosable
 	{
 		String ItemName { get; };
 		String DisplayName { get; };
@@ -22,7 +22,7 @@ namespace OneToolkit.Storage
 		[noexcept] FileSharingMode SharingMode { get; };
 		[noexcept] Windows.Storage.FileAccessMode AccessMode { get; };
 		void Delete();
-	};
+	}
 
     [default_interface]
     runtimeclass FileHandle : IStorageItemHandle

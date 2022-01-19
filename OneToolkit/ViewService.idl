@@ -1,26 +1,37 @@
 import "Metadata.idl";
+import "Lifecycle.idl";
 
 namespace OneToolkit.UI
 {
     [default_interface]
-    runtimeclass ViewService : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    runtimeclass ViewService : OneToolkit.Lifecycle.IEquatable, Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         String Title;
-        Boolean IsFullScreen;
+        Boolean IsInFullScreen;
+        Boolean IsInCompactOverlay;
+        String ActualTitle { get; };
         Windows.UI.WindowId Id { get; };
         Windows.Foundation.Rect Bounds { get; };
+        Windows.UI.Xaml.Visibility Visibility { get; };
         Double TitleBarHeight { get; };
         Windows.UI.Xaml.Thickness TitleBarInset { get; };
         Windows.UI.Xaml.Visibility TitleBarVisibility { get; };
+        [noexcept] Object AppWindowReference { get; };
         [noexcept] Windows.UI.ViewManagement.ApplicationView AppView { get; };
         [noexcept] Windows.ApplicationModel.Core.CoreApplicationView CoreAppView { get; };
         [noexcept] Windows.UI.Core.SystemNavigationManager NavigationManager { get; };
+        Boolean TrySetMinimumSize(Windows.Foundation.Size minSize);
         void ToggleFullScreen();
+        void ToggleCompactOverlay();
         Windows.Foundation.IAsyncOperation<Boolean> TryCloseAsync();
         Windows.Foundation.IAsyncOperation<Boolean> TryMinimizeAsync();
         static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
         static ViewService GetForCurrentView();
-        [OneToolkit.Metadata.DesktopOnly] static ViewService GetForWindowId(Windows.UI.WindowId windowId);
-        static Windows.UI.WindowId GetIdForCoreWindow(Windows.UI.Core.CoreWindow coreWindow);
+        static ViewService GetFromAppWindow(Object appWindow);
+        static Windows.Foundation.IAsyncOperation<ViewService> GetFromXamlWindowAsync(Object xamlWindow);
+        static Windows.Foundation.IAsyncOperation<ViewService> FindAsync(String windowTitle);
+        static Windows.Foundation.IAsyncOperation<IVectorView<ViewService> > EnumerateAsync();
+        [OneToolkit.Metadata.DesktopOnly] static ViewService GetFromWindowId(Windows.UI.WindowId windowId);
+        [OneToolkit.Metadata.DesktopOnly] static Windows.Foundation.IAsyncOperation<ViewService> FindAsync(String windowTitle, String windowClassName);
     }
 }

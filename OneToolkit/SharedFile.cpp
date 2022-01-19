@@ -1,32 +1,45 @@
-﻿#include "OneToolkit.h"
-#include "SharedFile.h"
-#include "Storage.SharedFile.g.cpp"
+﻿#include "Storage.SharedFile.g.h"
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 
+import OneToolkit;
+
+using namespace juv;
 using namespace winrt;
 using namespace Windows::Storage;
 using namespace Windows::Foundation;
 using namespace Windows::ApplicationModel::DataTransfer;
 
-namespace winrt::OneToolkit::Storage::implementation
+namespace winrt::OneToolkit::Storage
 {
-	SharedFile::SharedFile(StorageFile const& file)
+	namespace implementation
 	{
-		m_Token = SharedStorageAccessManager::AddFile(file);
+		struct SharedFile : SharedFileT<SharedFile>, Lifecycle::Disposable<SharedFile>
+		{
+			SharedFile(StorageFile const& file)
+			{
+				Token(SharedStorageAccessManager::AddFile(file));
+			}
+
+			auto_property<hstring> Token;
+
+			IAsyncOperation<StorageFile> GetFileAsync() const
+			{
+				return SharedStorageAccessManager::RedeemTokenForFileAsync(Token());
+			}
+
+			void Dispose() const noexcept
+			{
+				SharedStorageAccessManager::RemoveFile(Token());
+			}
+		};
 	}
 
-	hstring SharedFile::Token() const noexcept
+	namespace factory_implementation
 	{
-		return m_Token;
-	}
-
-	IAsyncOperation<StorageFile> SharedFile::GetFileAsync() const
-	{
-		return SharedStorageAccessManager::RedeemTokenForFileAsync(m_Token);
-	}
-
-	void SharedFile::Dispose() const
-	{
-		SharedStorageAccessManager::RemoveFile(m_Token);
+		struct SharedFile : SharedFileT<SharedFile, implementation::SharedFile>
+		{
+		};
 	}
 }
+
+#include "Storage.SharedFile.g.cpp"

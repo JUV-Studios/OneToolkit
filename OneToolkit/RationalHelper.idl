@@ -1,0 +1,8 @@
+namespace OneToolkit.Numerics
+{
+	[default_interface]
+	static runtimeclass RationalHelper
+	{
+		static Windows.Foundation.Numerics.Rational GetSimplestForm(Windows.Foundation.Numerics.Rational rational);
+    }
+}

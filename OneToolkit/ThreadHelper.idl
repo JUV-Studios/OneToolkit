@@ -1,0 +1,13 @@
+namespace OneToolkit.System
+{
+    struct ThreadId
+    {
+        UInt32 Value;
+    };
+    
+    [default_interface]
+    static runtimeclass ThreadHelper
+    {
+        static Windows.Foundation.IAsyncOperation<IVectorView<ThreadId> > EnumerateAsync();
+    }
+}

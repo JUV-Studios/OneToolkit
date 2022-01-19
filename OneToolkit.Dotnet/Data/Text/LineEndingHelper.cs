@@ -67,12 +67,12 @@
 			if (lineEnding == LineEnding.CR)
 			{
 				text = text.Replace("\r\n", "\r").Replace("\n\r", "\r");
-				text.ReplaceCharacter('\n', '\r');
+				text.UnsafeReplace('\n', '\r');
 			}
 			else if (lineEnding == LineEnding.LF)
 			{
 				text = text.Replace("\r\n", "\n").Replace("\n\r", "\n");
-				text.ReplaceCharacter('\r', '\n');
+				text.UnsafeReplace('\r', '\n');
 			}
 			else if (lineEnding == LineEnding.CRLF)
 			{

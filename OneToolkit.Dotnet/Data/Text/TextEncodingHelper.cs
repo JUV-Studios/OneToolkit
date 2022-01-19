@@ -140,10 +140,10 @@ namespace OneToolkit.Data.Text
 				}
 			}
 
-			double evenNullThreshold = (evenNulls * 2.0) / buffer.Length;
-			double oddNullThreshold = (oddNulls * 2.0) / buffer.Length;
-			double expectedNullThreshold = 70 / 100.0;
-			double unexpectedNullThreshold = 10 / 100.0;
+			const double expectedNullThreshold = 0.7;
+			const double unexpectedNullThreshold = 0.1;
+			double oddNullThreshold = oddNulls * 2.0 / buffer.Length;
+			double evenNullThreshold = evenNulls * 2.0 / buffer.Length;
 			if (evenNullThreshold < unexpectedNullThreshold && oddNullThreshold > expectedNullThreshold) // Lots of odd nulls, low number of even nulls.
 			{
 				endianness = Endianness.Little;
@@ -164,7 +164,7 @@ namespace OneToolkit.Data.Text
 		/// <summary>
 		/// Determines the encoding of a text buffer using various methods.
 		/// </summary>
-		public static Encoding Detect(ReadOnlySpan<byte> buffer)
+		public static Encoding TryDetect(ReadOnlySpan<byte> buffer)
 		{
 			if (buffer.Length >= 2 && buffer[0] == ByteOrderMark.Utf16LE[0] && buffer[1] == ByteOrderMark.Utf16LE[1]) return Encoding.Unicode;
 			else if (buffer.Length >= 2 && buffer[0] == ByteOrderMark.Utf16BE[0] && buffer[1] == ByteOrderMark.Utf16BE[1]) return Encoding.BigEndianUnicode;
@@ -174,6 +174,9 @@ namespace OneToolkit.Data.Text
 			else return null;
 		}
 
+		/// <summary>
+		/// Converts a text buffer to another encoding.
+		/// </summary>
 		public static unsafe byte[] Convert(Encoding from, Encoding to, ReadOnlySpan<byte> buffer)
 		{
 			fixed (byte* bufferPtr = buffer) return to.GetBytes(from.GetString(bufferPtr, buffer.Length));
