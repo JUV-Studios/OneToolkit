@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<RootNamespace>OneToolkit</RootNamespace>
-		<LangVersion>10.0</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<OutputPath>..\Artifacts\OneToolkit.Dotnet\$(Configuration)</OutputPath>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -26,8 +25,9 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<SignAssembly>True</SignAssembly>
 		<DelaySign>False</DelaySign>
-		<AssemblyOriginatorKeyFile>C:\Users\jaiga\Desktop\Source\OneToolkit\Certificate.pfx</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
 	</PropertyGroup>
+	<Import Project="$(SolutionDir)\CSharpDefaults.props" />
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>OneToolkit.Dotnet.xml</DocumentationFile>
 		<WarningLevel>4</WarningLevel>
@@ -36,6 +36,7 @@
 		<DocumentationFile>OneToolkit.Dotnet.xml</DocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="System.Memory" Version="4.5.4" />
 	</ItemGroup>
 </Project>

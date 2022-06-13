@@ -10,17 +10,21 @@
     <Filter Include="Storage">
       <UniqueIdentifier>{e5424560-e0f5-4540-833d-f318f65edc80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\Input">
-      <UniqueIdentifier>{bc0906ea-cd09-4eb6-9e18-09c3cc7d72af}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{d14577f3-68a8-4c5b-8eda-5998d52117b3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Media">
       <UniqueIdentifier>{0ad71127-7f6a-42a9-96ae-d597154e2978}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Numerics">
-      <UniqueIdentifier>{0e3201c8-0b38-4ac0-b9ff-c35f4e568280}</UniqueIdentifier>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{60256d7d-c40d-4d40-8270-f97923e6f4e3}</UniqueIdentifier>
+      <Extensions>ixx</Extensions>
+    </Filter>
+    <Filter Include="UI\Windowing">
+      <UniqueIdentifier>{957359e5-ef93-498e-9632-2067844d87ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\Logging">
+      <UniqueIdentifier>{8cc1292a-5ced-4dd7-aa24-e7aa1a2f7896}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -32,15 +36,30 @@
     <ClCompile Include="StorageItemHandle.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
-    <ClCompile Include="OneToolkit.ixx" />
-    <ClCompile Include="..\juv\juv.ixx" />
+    <ClCompile Include="..\juv\juv.ixx">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="OneToolkit.ixx">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="FileVersionInfo.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewReference.ixx">
+      <Filter>UI\Windowing</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewReferenceTitleBar.ixx">
+      <Filter>UI\Windowing</Filter>
+    </ClCompile>
+    <ClCompile Include="DesktopApis.ixx">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="OneToolkit.def" />
     <None Include="PropertySheet.props" />
     <None Include="packages.config" />
-    <None Include="OneToolkit.targets" />
     <None Include="OneToolkit.nuspec" />
+    <None Include="OneToolkit.targets" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OneToolkit.h" />
@@ -48,22 +67,20 @@
       <Filter>Storage</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="WindowingBase.h">
+      <Filter>UI\Windowing</Filter>
+    </ClInclude>
+    <ClInclude Include="FileVersionInfo.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="FixedFileInfo.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="LRUCache11.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Fonts.idl">
       <Filter>UI</Filter>
-    </Midl>
-    <Midl Include="BufferHelper.idl">
-      <Filter>Storage</Filter>
-    </Midl>
-    <Midl Include="ViewService.idl">
-      <Filter>UI</Filter>
-    </Midl>
-    <Midl Include="SharedFile.idl">
-      <Filter>Storage</Filter>
-    </Midl>
-    <Midl Include="KeyStateHelper.idl">
-      <Filter>UI\Input</Filter>
     </Midl>
     <Midl Include="SystemInformation.idl">
       <Filter>System</Filter>
@@ -80,16 +97,26 @@
     <Midl Include="StorageItemHandle.idl">
       <Filter>Storage</Filter>
     </Midl>
-    <Midl Include="Metadata.idl" />
-    <Midl Include="Lifecycle.idl" />
     <Midl Include="AppInformation.idl">
       <Filter>System</Filter>
     </Midl>
-    <Midl Include="ThreadHelper.idl">
-      <Filter>System</Filter>
+    <Midl Include="ViewReferenceTitleBar.idl">
+      <Filter>UI\Windowing</Filter>
     </Midl>
-    <Midl Include="RationalHelper.idl">
-      <Filter>Numerics</Filter>
+    <Midl Include="ViewReference.idl">
+      <Filter>UI\Windowing</Filter>
+    </Midl>
+    <Midl Include="ViewService.idl">
+      <Filter>UI\Windowing</Filter>
+    </Midl>
+    <Midl Include="ThemeConverter.idl">
+      <Filter>UI</Filter>
+    </Midl>
+    <Midl Include="Logger.idl">
+      <Filter>Storage\Logging</Filter>
+    </Midl>
+    <Midl Include="AppLifecycleHelper.idl">
+      <Filter>System</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>

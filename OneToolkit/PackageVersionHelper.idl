@@ -3,7 +3,6 @@ namespace OneToolkit.System
     [default_interface]
     static runtimeclass PackageVersionHelper
     {
-        static String Stringify(Windows.ApplicationModel.PackageVersion packageVersion);
         static Windows.ApplicationModel.PackageVersion Parse(String formattedString);
     }
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+		<TargetName>$(RootNamespace)</TargetName>
+		<IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Intermediate\</IntDir>
+		<OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
+		<GeneratedFilesDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Generated Files\</GeneratedFilesDir>
+	</PropertyGroup>	
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+		<TargetName>$(RootNamespace)</TargetName>
+		<IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Intermediate\</IntDir>
+		<OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
+		<GeneratedFilesDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Generated Files\</GeneratedFilesDir>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+		<TargetName>$(RootNamespace)</TargetName>
+		<IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Intermediate\</IntDir>
+		<OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
+		<GeneratedFilesDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Generated Files\</GeneratedFilesDir>
+	</PropertyGroup>	
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+		<TargetName>$(RootNamespace)</TargetName>
+		<IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Intermediate\</IntDir>
+		<OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
+		<GeneratedFilesDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Generated Files\</GeneratedFilesDir>
+	</PropertyGroup>	
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<TargetName>$(RootNamespace)</TargetName>
+		<IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Intermediate\</IntDir>
+		<OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
+		<GeneratedFilesDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Generated Files\</GeneratedFilesDir>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<TargetName>$(RootNamespace)</TargetName>
+		<IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Intermediate\</IntDir>
+		<OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
+		<GeneratedFilesDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Generated Files\</GeneratedFilesDir>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<TargetName>$(RootNamespace)</TargetName>
+		<IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Intermediate\</IntDir>
+		<OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
+		<GeneratedFilesDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Generated Files\</GeneratedFilesDir>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<TargetName>$(RootNamespace)</TargetName>
+		<IntDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Intermediate\</IntDir>
+		<OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
+		<GeneratedFilesDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\Generated Files\</GeneratedFilesDir>
+	</PropertyGroup>
+    <ItemDefinitionGroup>
+        <ClCompile>
+			<WarningLevel>Level4</WarningLevel>
+			<StringPooling>true</StringPooling>
+			<CompileAsWinRT>false</CompileAsWinRT>
+			<RuntimeTypeInfo>false</RuntimeTypeInfo>
+			<LanguageStandard_C>stdc17</LanguageStandard_C>
+			<LanguageStandard>stdcpplatest</LanguageStandard>
+		</ClCompile>
+    </ItemDefinitionGroup>
+</Project>

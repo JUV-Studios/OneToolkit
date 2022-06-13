@@ -1,0 +1,8 @@
+namespace OneToolkit.System
+{
+	[default_interface]
+	static runtimeclass AppLifecycleHelper
+	{
+		static Windows.Foundation.IAsyncAction SuspendAsync();
+    }
+}

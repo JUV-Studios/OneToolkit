@@ -1,20 +1,24 @@
+import "ThemeConverter.idl";
+
 namespace OneToolkit.UI
 {
-    delegate void AppThemeChangedEventHandler(Windows.UI.Xaml.ApplicationTheme newTheme);
+	[default_interface]
+	runtimeclass AppThemeChangedEventArgs
+	{
+		AbsoluteTheme OldTheme { get; };
+		AbsoluteTheme NewTheme { get; };
+	}
 
-    interface ICustomTheme requires Windows.Foundation.IStringable
-    {
-        void Apply();
-    }
+    delegate void AppThemeChangedEventHandler(AppThemeChangedEventArgs args);
 
     [default_interface]
     static runtimeclass ThemeService
     {
-        [noexcept] static Windows.UI.Xaml.ElementTheme AppThemeOverride;
-        [noexcept] static IObservableVector<ICustomTheme> CustomThemes { get; };
-        static Windows.UI.Xaml.ApplicationTheme SystemAppsTheme { get; };
-        static Windows.UI.Xaml.ApplicationTheme SystemShellTheme { get; };
+        static RelativeTheme AppThemeOverride;
+        static AbsoluteTheme SystemAppsTheme { get; };
+        static AbsoluteTheme SystemShellTheme { get; };
         static event AppThemeChangedEventHandler AppThemeChanged;
-        static Windows.UI.Xaml.ApplicationTheme ElementToApplicationTheme(Windows.UI.Xaml.ElementTheme elementTheme);
+		static void Initialize();
+		static void Uninitialize();
     }
 }

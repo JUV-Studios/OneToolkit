@@ -1,10 +1,12 @@
 ﻿#include "System.SystemInformation.g.h"
+#include "System.OperatingSystemInfo.g.h"
 #include <Windows.h>
-#include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.System.Profile.h>
 #include <winrt/Windows.Security.ExchangeActiveSyncProvisioning.h>
 
 import juv;
+import OneToolkit;
+import DesktopApis;
 
 using namespace juv;
 using namespace winrt;
@@ -12,16 +14,41 @@ using namespace Windows::System;
 using namespace Windows::System::Profile;
 using namespace Windows::ApplicationModel;
 using namespace Windows::Foundation;
-using namespace Windows::Foundation::Metadata;
 using namespace Windows::Security::ExchangeActiveSyncProvisioning;
 
 namespace winrt::OneToolkit::System
 {
 	namespace implementation
 	{
-		struct SystemInformation : static_t, SystemInformationT<SystemInformation>
+		struct OperatingSystemInfo : OperatingSystemInfoT<OperatingSystemInfo>, WeakSingleton<OperatingSystemInfo>
 		{
 		public:
+			auto_property<hstring> const Name{ GetName() };
+
+			auto_property<PackageVersion> const Version{ GetVersion() };
+		private:
+			static hstring GetName()
+			{
+				return BrandingFormatString(L"%WINDOWS_LONG%");
+			}
+
+			static PackageVersion GetVersion()
+			{
+				auto const versionInfo = std::stoull(AnalyticsInfo::VersionInfo().DeviceFamilyVersion().data());
+				return PackageVersion
+				{
+					.Major = static_cast<uint16>((versionInfo & 0xFFFF000000000000L) >> 48),
+					.Minor = static_cast<uint16>((versionInfo & 0x0000FFFF00000000L) >> 32),
+					.Build = static_cast<uint16>((versionInfo & 0x00000000FFFF0000L) >> 16),
+					.Revision = static_cast<uint16>(versionInfo & 0x000000000000FFFFL)
+				};
+			}
+		};
+
+		struct SystemInformation : SystemInformationT<SystemInformation>
+		{
+			inline static auto_property<EasClientDeviceInformation> const ClientDeviceInformation;
+
 			static hstring DeviceName()
 			{
 				return ClientDeviceInformation().FriendlyName();
@@ -42,7 +69,12 @@ namespace winrt::OneToolkit::System
 				return ClientDeviceInformation().SystemManufacturer();
 			}
 
-			static ProcessorArchitectureInfo ArchitectureInfo()
+			static OneToolkit::System::OperatingSystemInfo OperatingSystem()
+			{
+				return OperatingSystemInfo::Instance();
+			}
+
+			static ProcessorArchitectureInfo ProcessorArchitecture()
 			{
 				ProcessorArchitectureInfo result;
 				uint16 nativeMachine;
@@ -94,33 +126,6 @@ namespace winrt::OneToolkit::System
 
 				return result;
 			}
-
-			static hstring OperatingSystemName()
-			{
-				return ApiInformation::IsPropertyPresent(name_of<AnalyticsVersionInfo>(), L"ProductName") ? AnalyticsInfo::VersionInfo().ProductName() : ClientDeviceInformation().OperatingSystem();
-			}
-
-			static PackageVersion OperatingSystemVersion()
-			{
-				auto versionInfo = std::stoull(AnalyticsInfo::VersionInfo().DeviceFamilyVersion().data());
-				return PackageVersion
-				{
-					.Major = static_cast<uint16>((versionInfo & 0xFFFF000000000000L) >> 48),
-					.Minor = static_cast<uint16>((versionInfo & 0x0000FFFF00000000L) >> 32),
-					.Build = static_cast<uint16>((versionInfo & 0x00000000FFFF0000L) >> 16),
-					.Revision = static_cast<uint16>(versionInfo & 0x000000000000FFFFL)
-				};
-			}
-
-			static 	EasClientDeviceInformation ClientDeviceInformation()
-			{
-				static slim_mutex mutex;
-				slim_lock_guard const mutexLock{ mutex };
-				if (!m_ClientDeviceInformation) m_ClientDeviceInformation = {};
-				return m_ClientDeviceInformation;
-			}
-		private:
-			inline static EasClientDeviceInformation m_ClientDeviceInformation = nullptr;
 		};
 	}
 

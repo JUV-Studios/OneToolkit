@@ -9,11 +9,16 @@
             Represents the order of bytes.
             </summary>
         </member>
+        <member name="M:OneToolkit.Data.EndiannessHelper.GetNativeEndianness">
+            <summary>
+            Gets the native endianness of the local machine.
+            </summary>
+        </member>
         <member name="M:OneToolkit.Data.HighPerformance.UnsafeReplace(System.String,System.Char,System.Char)">
             <summary>
-            Replaces all occurences of a specific character with another in a string without creating a new one.
+            Replaces all occurences of a specific character with another character in a string without creating a new one.
             </summary>
-            <remarks>The specified string must be yours. Modifing existing strings can cause issues later on.</remarks>
+            <remarks>The specified string must be truly yours. Modifing existing strings can cause issues later on.</remarks>
         </member>
         <member name="T:OneToolkit.Data.Text.GreetingType">
             <summary>
@@ -32,99 +37,21 @@
             <param name="dateTime">The specified date and time.</param>
             <returns>An value from the GreetingType enumeration that represents the most accurate greeting for the specified date and time.</returns>
         </member>
-        <member name="T:OneToolkit.Data.Text.LineEnding">
+        <member name="T:OneToolkit.Lifecycle.ValueCache`2">
             <summary>
-            Represents a line ending scheme.
+            Represents a collection that caches object instances.
             </summary>
+            <typeparam name="Key"> </typeparam>
+            <typeparam name="Value"></typeparam>
         </member>
-        <member name="T:OneToolkit.Data.Text.LineEndingHelper">
-            <summary>
-            Provides helper methods for dealing with line endings.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.LineEndingHelper.IsNewLineString(System.String,OneToolkit.Data.Text.LineEnding@)">
-            <summary>
-            Gets whether a string represents a new line.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.LineEndingHelper.GetNewLineString(OneToolkit.Data.Text.LineEnding)">
-            <summary>
-            Gets a string that represents the desired line ending.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.LineEndingHelper.Normalize(System.String,OneToolkit.Data.Text.LineEnding)">
-            <summary>
-            Normalizes a string to use a single line ending for every new line.
-            </summary>
-        </member>
-        <member name="T:OneToolkit.Data.Text.TextEncodingHelper">
-            <summary>
-            Provides the ability to find out and detect the encoding of a text buffer.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.IsAscii(System.ReadOnlySpan{System.Byte})">
-            <summary>
-            Gets whether the buffer contains ASCII encoded text or not.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.IsUtf8(System.ReadOnlySpan{System.Byte})">
-            <summary>
-            Gets whether the buffer contains UTF8 encoded text or not.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.IsUtf16(System.ReadOnlySpan{System.Byte},OneToolkit.Data.Endianness@)">
-            <summary>
-            Gets whether the buffer contains UTF16 encoded text or not.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.TryDetect(System.ReadOnlySpan{System.Byte})">
-            <summary>
-            Determines the encoding of a text buffer using various methods.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Data.Text.TextEncodingHelper.Convert(System.Text.Encoding,System.Text.Encoding,System.ReadOnlySpan{System.Byte})">
-            <summary>
-            Converts a text buffer to another encoding.
-            </summary>
-        </member>
-        <member name="T:OneToolkit.Storage.FileSizeHelper">
-            <summary>
-            Provides static helper methods to convert file size to a human readable string and vice versa.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Storage.FileSizeHelper.Stringify(System.UInt64,System.Boolean)">
-            <summary>
-            Formats file size to a human readable string.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.Storage.FileSizeHelper.Parse(System.String)">
-            <summary>
-            Tries to convert a human readable file size string to an integer representing the size in bytes.
-            </summary>
-        </member>
-        <member name="T:OneToolkit.UI.ColorUtility">
-            <summary>
-            Provides static helper methods for manipulating colors.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.UI.ColorUtility.InvertComponent(System.Byte)">
-            <summary>
-            Finds and returns the inverse of a single component.
-            </summary>
-        </member>
-        <member name="M:OneToolkit.UI.ColorUtility.Invert(System.Drawing.Color)">
-            <summary>
-            Finds and returns the inverse of a color.
-            </summary>
-        </member>
-        <member name="T:OneToolkit.UI.TabSwitchHelper">
+        <member name="T:OneToolkit.UI.TabbingHelper">
             <summary>
             Provides static helper methods for building your own tabbing system.
             </summary>
         </member>
-        <member name="M:OneToolkit.UI.TabSwitchHelper.GetNewSelectionIndex(System.UInt64,System.UInt64,System.Boolean)">
+        <member name="M:OneToolkit.UI.TabbingHelper.GetNewSelectionIndex(System.Object,System.Object,System.Boolean)">
             <summary>
-            Gets the tab index to be selected next.
+            Gets the tab index of the tab to switch next.
             </summary>
         </member>
     </members>

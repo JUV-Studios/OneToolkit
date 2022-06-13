@@ -10,15 +10,15 @@ using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Search;
 using Windows.ApplicationModel.Resources;
 using Windows.ApplicationModel.DataTransfer;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using OneToolkit.UI;
+using OneToolkit.UI.Windowing;
 using OneToolkit.System;
+using OneToolkit.Storage;
 
 namespace OneToolkit.Showcase.ViewModels
 {
-	public sealed class SettingsViewModel : ObservableObject
+	public sealed class SettingsViewModel : AppSettingsBase
 	{
-		private SettingsViewModel()
+		private SettingsViewModel() : base(ApplicationData.Current.RoamingSettings)
 		{
 			ElementSoundPlayer.State = DisableSoundEffects ? ElementSoundPlayerState.Off : ElementSoundPlayerState.On;
 		}
@@ -29,8 +29,6 @@ namespace OneToolkit.Showcase.ViewModels
 		public static bool IsSearchCharmSupported => ApiInformation.IsTypePresent("Windows.ApplicationModel.Search.SearchPane");
 #pragma warning restore CS0618
 
-		private readonly ApplicationDataContainer SettingsContainer = ApplicationData.Current.RoamingSettings;
-
 #pragma warning disable CS0618
 		public static readonly SearchPane SearchCharm = SearchPane.GetForCurrentView();
 #pragma warning restore CS0618
@@ -39,13 +37,13 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public static readonly ResourceLoader Resources = ResourceLoader.GetForViewIndependentUse();
 
-		public static readonly ViewService ViewServiceProvider = ViewService.GetForCurrentView();
+		public static readonly ViewReference ViewServiceProvider = ViewService.CurrentView;
 
 		public static readonly DataTransferManager TransferManager = DataTransferManager.GetForCurrentView();
 
 		public static SettingsViewModel Instance { get; } = new();
 
-		public string AboutDisplayText => $"OneToolkit Showcase\n{string.Format(Resources.GetString("VersionText"), PackageVersionHelper.Stringify(Package.Current.Id.Version))}\n{Resources.GetString("CopyrightText")}";
+		public string AboutDisplayText => $"OneToolkit Showcase\n{string.Format(Resources.GetString("VersionText"), Package.Current.Id.Version.AsVersion())}\n{Resources.GetString("CopyrightText")}";
 
 		public string AboutAutomationText => AboutDisplayText.Replace("\n", "");
 
@@ -54,7 +52,7 @@ namespace OneToolkit.Showcase.ViewModels
 			get => GetAppSetting(nameof(ShowTeachingTip), true);
 			set
 			{
-				if (ShowTeachingTip != value) SetAppSetting(nameof(ShowTeachingTip), value);
+				if (ShowTeachingTip != value) SettingsContainer.Values[nameof(ShowTeachingTip)] = value;
 			}
 		}
 
@@ -66,7 +64,7 @@ namespace OneToolkit.Showcase.ViewModels
 				if (DisableSoundEffects != value)
 				{
 					ElementSoundPlayer.State = value ? ElementSoundPlayerState.Off : ElementSoundPlayerState.On;
-					SetAppSetting(nameof(DisableSoundEffects), value);
+					SettingsContainer.Values[nameof(DisableSoundEffects)] = value;
 				}
 			}
 		}
@@ -76,7 +74,7 @@ namespace OneToolkit.Showcase.ViewModels
 			get => GetAppSetting(nameof(PreviewAutoRefresh), true);
 			set
 			{
-				if (PreviewAutoRefresh != value) SetAppSetting(nameof(PreviewAutoRefresh), value);
+				if (PreviewAutoRefresh != value) SettingsContainer.Values[nameof(PreviewAutoRefresh)] = value;
 			}
 		}
 
@@ -85,7 +83,7 @@ namespace OneToolkit.Showcase.ViewModels
 			get => GetAppSetting(nameof(SelectedCodeLanguage), "C#");
 			set
 			{
-				if (SelectedCodeLanguage != value) SetAppSetting(nameof(SelectedCodeLanguage), value);
+				if (SelectedCodeLanguage != value) SettingsContainer.Values[nameof(SelectedCodeLanguage)] = value;
 			}
 		}
 		public static void RevealShareCharm() => DataTransferManager.ShowShareUI();
@@ -97,13 +95,13 @@ namespace OneToolkit.Showcase.ViewModels
 		}
 #pragma warning restore CS0618
 
-		public static async void Close() => await ViewServiceProvider.TryCloseAsync();
+		public static async void Close() => await ViewServiceProvider.CloseAsync();
 
-		public static async void Suspend() => await ViewServiceProvider.TryMinimizeAsync();
+		public static async void Suspend() => await ViewServiceProvider.MinimizeAsync();
 
 		public static async void OpenHelpPage() => await LaunchLinkAsync(new("http://discord.com/invite/CZpBpPQjq8"));
 
-		public static async void OpenFeedbackPage() => await LaunchLinkAsync(new($"https://www.nuget.org/packages/OneToolkit/{PackageVersionHelper.Stringify(Package.Current.Id.Version)}/ContactOwners"));
+		public static async void OpenFeedbackPage() => await LaunchLinkAsync(new($"https://www.nuget.org/packages/OneToolkit/{Package.Current.Id.Version.AsVersion()}/ContactOwners"));
 
 		public static async Task<bool> LaunchLinkAsync(Uri link)
 		{
@@ -124,6 +122,10 @@ namespace OneToolkit.Showcase.ViewModels
 			await CoreApplication.RequestRestartAsync(string.Empty);
 		}
 
+		public static void SetDefaultSettings()
+		{
+		}
+
 		private T GetAppSetting<T>(string key, T fallback)
 		{
 			if (SettingsContainer.Values.TryGetValue(key, out object value))
@@ -140,7 +142,6 @@ namespace OneToolkit.Showcase.ViewModels
 		private void SetAppSetting(string key, object newValue)
 		{
 			SettingsContainer.Values[key] = newValue;
-			OnPropertyChanged(key);
 		}
 	}
 }

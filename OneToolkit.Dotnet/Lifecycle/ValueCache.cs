@@ -3,16 +3,18 @@ using System.Collections.Concurrent;
 
 namespace OneToolkit.Lifecycle
 {
-	public interface IValueCache<Key, Value>
+	/// <summary>
+	/// Represents a collection that caches object instances.
+	/// </summary>
+	/// <typeparam name="Key"> </typeparam>
+	/// <typeparam name="Value"></typeparam>
+	public abstract class ValueCache<Key, Value>
 	{
-		Value GetInstance(Key key, Func<Value> fallbackProvider);
+		public abstract void SetInstance(Key key, Value value);
 
-		void SetInstance(Key key, Value value);
-	}
+		public abstract Value GetInstance(Key key, Func<Value> fallbackProvider);
 
-	public static class ValueCacheHelper
-	{
-		public static bool TryGetFallback<Value>(Func<Value> fallbackProvider, out Value result)
+		protected static bool TryGetFallbackValue(Func<Value> fallbackProvider, out Value result)
 		{
 			if (fallbackProvider != null)
 			{
@@ -27,44 +29,41 @@ namespace OneToolkit.Lifecycle
 		}
 	}
 
-	public sealed class WeakValueCache<Key, Value> : IValueCache<Key, Value> where Value : class
+	public sealed class WeakValueCache<Key, Value> : ValueCache<Key, Value> where Value : class
 	{
 		private readonly ConcurrentDictionary<Key, WeakReference<Value>> Instances = new();
-
-		public Value GetInstance(Key key, Func<Value> fallbackProvider)
+		
+		public override Value GetInstance(Key key, Func<Value> fallbackProvider)
 		{
 			if (Instances.TryGetValue(key, out var value))
 			{
 				if (value.TryGetTarget(out var result)) return result;
 			}
 
-			if (ValueCacheHelper.TryGetFallback(fallbackProvider, out var fallback)) SetInstance(key, fallback);
+			if (TryGetFallbackValue(fallbackProvider, out var fallback)) SetInstance(key, fallback);
 			return fallback;
 		}
 
-		public void SetInstance(Key key, Value value)
+		public override void SetInstance(Key key, Value value)
 		{
 			Instances[key] = new(value);
 		}
 	}
 
-	public sealed class StrongValueCache<Key, Value> : IValueCache<Key, Value>
+	public sealed class StrongValueCache<Key, Value> : ValueCache<Key, Value>
 	{
 		private readonly ConcurrentDictionary<Key, Value> Instances = new();
-		public Value GetInstance(Key key, Func<Value> fallbackProvider)
-		{
-			if (Instances.TryGetValue(key, out var value))
-			{
-				if (value != null) return value;
-			}
 
-			if (ValueCacheHelper.TryGetFallback(fallbackProvider, out var fallback)) SetInstance(key, fallback);
-			return fallback;
-		}
-
-		public void SetInstance(Key key, Value value)
+		public override void SetInstance(Key key, Value value)
 		{
 			Instances[key] = value;
+		}
+
+		public override Value GetInstance(Key key, Func<Value> fallbackProvider)
+		{
+			if (Instances.TryGetValue(key, out var value)) return value;
+			if (TryGetFallbackValue(fallbackProvider, out var fallback)) SetInstance(key, fallback);
+			return fallback;
 		}
 	}
 }

@@ -1,16 +1,16 @@
 ﻿#include "UI.Fonts.g.h"
 #include <dwrite.h>
-#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.System.UserProfile.h>
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/OneToolkit.System.h>
 
+import juv;
 import OneToolkit;
 
 using namespace juv;
 using namespace winrt;
 using namespace winrt::impl;
 using namespace Windows::System::UserProfile;
-using namespace Windows::UI::Xaml::Media;
-using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::Foundation::Collections;
 using namespace OneToolkit::System;
 
@@ -18,24 +18,18 @@ namespace winrt::OneToolkit::UI
 {
 	namespace implementation
 	{
-		using RtlGetVersion = int(_stdcall*)(PRTL_OSVERSIONINFOW);
-
-		struct Fonts : static_t, FontsT<Fonts>
+		struct Fonts : FontsT<Fonts>
 		{
+			Fonts() = delete;
+
 			static hstring DefaultTextFontFamily()
 			{
-				RTL_OSVERSIONINFOW versionInfo{ .dwOSVersionInfoSize = sizeof(RTL_OSVERSIONINFOW) };
-				DynamicLibrary ntdll{ L"ntdll.dll" };
-				ntdll.GetProcAddress<RtlGetVersion>("RtlGetVersion")(&versionInfo);
-				return versionInfo.dwBuildNumber >= 21376 ? L"Segoe UI Variable" : L"Segoe UI";
+				return SystemInformation::OperatingSystem().Version().Build >= 21376 ? L"Segoe UI Variable" : L"Segoe UI";
 			}
 
 			static hstring DefaultIconFontFamily()
 			{
-				RTL_OSVERSIONINFOW versionInfo{ .dwOSVersionInfoSize = sizeof(RTL_OSVERSIONINFOW) };
-				DynamicLibrary ntdll{ L"ntdll.dll" };
-				ntdll.GetProcAddress<RtlGetVersion>("RtlGetVersion")(&versionInfo);
-				return versionInfo.dwBuildNumber >= 21327 ? L"Segoe Fluent Icons" : L"Segoe MDL2 Assets";
+				return SystemInformation::OperatingSystem().Version().Build >= 21327 ? L"Segoe Fluent Icons" : L"Segoe MDL2 Assets";
 			}
 
 			static IVectorView<hstring> InstalledFontFamilies()
@@ -65,7 +59,7 @@ namespace winrt::OneToolkit::UI
 
 					uint32 length = 0;
 					check_hresult(familyNames->GetStringLength(localeIndex, &length));
-					length++;
+					++length;
 					hstring_builder stringBuilder{ length };
 					check_hresult(familyNames->GetString(localeIndex, stringBuilder.data(), length));
 					fontFamilies.emplace_back(stringBuilder.to_hstring());

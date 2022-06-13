@@ -10,7 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OneToolkit.Showcase</RootNamespace>
     <AssemblyName>OneToolkit.Showcase</AssemblyName>
-    <LangVersion>10.0</LangVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
     <OutputPath>..\Artifacts\OneToolkit.Showcase\$(Configuration)</OutputPath>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
@@ -31,6 +30,7 @@
     <AppxBundle>Always</AppxBundle>
     <PackageCertificateKeyFile>Certificate.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\CSharpDefaults.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
@@ -224,23 +224,22 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>
     </PackageReference>
+    <PackageReference Include="OwlCore">
+      <Version>0.0.65</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OneToolkit.DocsCore\OneToolkit.DocsCore.csproj">
       <Project>{f1747d4a-9da9-4e3e-89c1-417de90bc35d}</Project>
       <Name>OneToolkit.DocsCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OneToolkit.Dotnet.Native\OneToolkit.Dotnet.Native.csproj">
+      <Project>{20dbfef5-b3cc-47d0-af29-f1130f8eea9a}</Project>
+      <Name>OneToolkit.Dotnet.Native</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OneToolkit.Dotnet\OneToolkit.Dotnet.csproj">
       <Project>{ef690ebe-5bfe-428e-9e39-d0ef06b1fd1c}</Project>
       <Name>OneToolkit.Dotnet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OneToolkit.UI.Xaml\TextEditor.Uwp\OneToolkit.TextEditor.Uwp.csproj">
-      <Project>{2c931298-eef0-4dce-8b23-09735edff721}</Project>
-      <Name>OneToolkit.TextEditor.Uwp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OneToolkit.UI.Xaml\XamlConverters.Uwp\OneToolkit.XamlConverters.Uwp.csproj">
-      <Project>{4fd28559-2721-4935-985e-37ea9ead9474}</Project>
-      <Name>OneToolkit.XamlConverters.Uwp</Name>
     </ProjectReference>
     <ProjectReference Include="..\OneToolkit\OneToolkit.vcxproj">
       <Project>{0dd5edd3-19b8-4924-8df1-add70803e693}</Project>
@@ -256,6 +255,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\DefaultSettings.yaml" />
     <None Include="Certificate.pfx" />
   </ItemGroup>
   <ItemGroup>

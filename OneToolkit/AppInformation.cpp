@@ -1,81 +1,156 @@
 ﻿#include "System.AppInformation.g.h"
+#include "FixedFileInfo.h"
+#include "FileVersionInfo.h"
 #include <filesystem>
-#include <Windows.h>
-#include <winrt/Windows.Storage.h>
-#include <winrt/Windows.UI.Xaml.h>
-#include <winrt/Microsoft.UI.Xaml.h>
+#include <functional>
+#include <appmodel.h>
+#include <wil/stl.h>
+#include <wil/win32_helpers.h>
+#include <winrt/Windows.ApplicationModel.h>
+#include <winrt/Windows.ApplicationModel.Core.h>
+#include <winrt/Windows.Foundation.Metadata.h>
+#include <winrt/Windows.Foundation.Collections.h>
 
-import OneToolkit;
+import juv;
 
 using namespace juv;
+using namespace FileVersion;
 using namespace winrt;
-using namespace winrt::impl;
-using namespace Windows::Foundation;
 using namespace Windows::Storage;
-using namespace OneToolkit::Storage;
+using namespace Windows::ApplicationModel;
+using namespace Windows::Foundation;
+using namespace Windows::Foundation::Metadata;
 
 namespace winrt::OneToolkit::System
 {
 	namespace implementation
 	{
-		struct AppInformation : AppInformationT<AppInformation>
+		namespace Packaged
 		{
-		public:
-			AppInformation(std::filesystem::path const& executableFilePath) : m_ExecutableFilePath(executableFilePath.c_str())
+			struct AppInformation : AppInformationT<AppInformation>
 			{
-				FileVersionInfo versionInfo{ executableFilePath };
-				auto const languageInfo = versionInfo.Translations()[0];
-				if (auto const displayName = versionInfo.GetStringResource(L"FileDescription", languageInfo); !displayName.empty()) DisplayName(displayName.data());
-				else DisplayName(executableFilePath.filename().replace_extension(L"").c_str());
-				if (auto const description = versionInfo.GetStringResource(L"Comments", languageInfo); !description.empty()) Description(description.data());
-				else Description(DisplayName());
-			}
+				AppInformation(AppInfo const& appInfo) : BackingObject(appInfo) {}
 
-			auto_property<hstring> DisplayName;
+				auto_property<AppInfo> const BackingObject;
 
-			auto_property<hstring> Description;
-
-			IAsyncOperation<StorageFile> GetExecutableFileAsync() const
-			{
-				return StorageFile::GetFileFromPathAsync(m_ExecutableFilePath);
-			}
-
-			static bool IsXamlApplication() noexcept
-			{
-				try
+				hstring Id() const
 				{
-					if (Windows::UI::Xaml::Application::Current()) return true;
-					else if (Microsoft::UI::Xaml::Application::Current()) return true;
-				}
-				catch (...) {}
-				return false;
-			}
-
-			static OneToolkit::System::AppInformation Current()
-			{
-				static OneToolkit::System::AppInformation currentInstance = nullptr;
-				static slim_mutex accessLock;
-				slim_lock_guard const lockGuard{ accessLock };
-				if (!currentInstance)
-				{
-					std::array<wchar_t, MAX_PATH> filePath;
-					check_bool(GetModuleFileName(nullptr, filePath.data(), static_cast<uint32>(filePath.size())));
-					currentInstance = make<AppInformation>(filePath.data());
+					return BackingObject().Id();
 				}
 
-				return currentInstance;
+				hstring AppUserModelId() const
+				{
+					return BackingObject().AppUserModelId();
+				}
+
+				hstring Name() const
+				{
+					return BackingObject().DisplayInfo().DisplayName();
+				}
+
+				hstring Description() const
+				{
+					return BackingObject().DisplayInfo().Description();
+				}
+
+				hstring Publisher() const
+				{
+					return BackingObject().Package().PublisherDisplayName();
+				}
+
+				PackageVersion Version() const
+				{
+					return BackingObject().Package().Id().Version();
+				}
+			};
+		}
+
+		namespace Unpackaged
+		{
+			auto GetInfoStringOrDefault(FileVersionInfo const& fileVersionInfo, StringInfoField type, std::function<hstring()> const& fallbackProvider)
+			{
+				if (auto const& text = fileVersionInfo.GetInfoString(type); !text.empty()) return hstring(text);
+				else return fallbackProvider();
 			}
-		private:
-			hstring const m_ExecutableFilePath;
-		};
+
+			struct AppInformation : AppInformationT<AppInformation>
+			{
+				AppInformation(std::filesystem::path const& executableFilePath, hstring const& appUserModelId) : AppUserModelId(appUserModelId)
+				{
+					FileVersionInfo fileVersionInfo;
+					check_bool(fileVersionInfo.Init(executableFilePath.c_str()));
+					Name(GetInfoStringOrDefault(fileVersionInfo, StringInfoField::FileDescription, [executableFilePath]()
+						{
+							return hstring(executableFilePath.filename().replace_extension(L"").c_str());
+						}));
+
+					Description(GetInfoStringOrDefault(fileVersionInfo, StringInfoField::Comments, [this]()
+						{
+							return Name();
+						}));
+
+					auto& productVersion = fileVersionInfo.GetProductVersion();
+					Version({productVersion.major, productVersion.minor, productVersion.build, productVersion.revision});
+				}
+
+				auto_property<hstring> const AppUserModelId;
+
+				auto_property<hstring> Name;
+
+				auto_property<hstring> Description;
+
+				auto_property<hstring> Publisher;
+
+				auto_property<PackageVersion> Version;
+
+				hstring Id() const noexcept
+				{
+					return AppUserModelId();
+				}
+
+				IInspectable BackingObject() const noexcept
+				{
+					return nullptr;
+				}
+			};
+		}
 	}
 
 	namespace factory_implementation
 	{
-		struct AppInformation : AppInformationT<AppInformation, implementation::AppInformation>
+		struct AppInformation : AppInformationT<AppInformation, AppInformation>
 		{
+		public:
+			static OneToolkit::System::AppInformation Current()
+			{
+				if (ApiInformation::IsPropertyPresent(name_of<AppInfo>(), L"Current"))
+				{
+					if (auto const appInfo = AppInfo::Current())
+					{
+						return make<implementation::Packaged::AppInformation>(appInfo);
+					}
+				}
+
+				return make<implementation::Unpackaged::AppInformation>(wil::GetModuleFileNameW<std::wstring>(), GetCurrentAppUserModelId());
+			}
+		private:
+			static hstring GetCurrentAppUserModelId()
+			{
+				wchar_t buffer[APPLICATION_USER_MODEL_ID_MAX_LENGTH];
+				uint32 bufferLength = APPLICATION_USER_MODEL_ID_MAX_LENGTH;
+				if (!GetApplicationUserModelId(GetCurrentProcess(), &bufferLength, buffer)) return { buffer, bufferLength };
+				else return {};
+			}
 		};
+	}
+
+	AppInformation AppInformation::Current()
+	{
+		return factory_implementation::AppInformation::Current();
 	}
 }
 
-#include "System.AppInformation.g.cpp"
+void* winrt_make_OneToolkit_System_AppInformation()
+{
+	return detach_abi(make<OneToolkit::System::factory_implementation::AppInformation>());
+}

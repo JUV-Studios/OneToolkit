@@ -10,12 +10,9 @@ namespace winrt::OneToolkit::System
 {
 	namespace implementation
 	{
-		struct PackageVersionHelper : static_t, PackageVersionHelperT<PackageVersionHelper>
+		struct PackageVersionHelper : PackageVersionHelperT<PackageVersionHelper>
 		{
-			static hstring Stringify(PackageVersion packageVersion)
-			{
-				return std::format(L"{0}.{1}.{2}.{3}", packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision).data();
-			}
+			PackageVersionHelper() = delete;
 
 			static PackageVersion Parse(hstring const& formattedString)
 			{

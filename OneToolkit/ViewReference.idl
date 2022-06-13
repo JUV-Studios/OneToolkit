@@ -1,0 +1,19 @@
+import "ViewReferenceTitleBar.idl";
+
+namespace OneToolkit.UI.Windowing
+{
+	[default_interface]
+	runtimeclass ViewReference
+	{
+		String Title;
+		Boolean IsVisible { get; };
+		Windows.UI.WindowId Id { get; };
+		Windows.Foundation.Rect Bounds { get; };
+		ViewReferenceTitleBar TitleBar { get; };
+		Object[] BackingObjects { get; };
+		void Resize(Windows.Foundation.Size newSize);
+		void SetMinimumSize(Windows.Foundation.Size minSize);
+		Windows.Foundation.IAsyncAction CloseAsync();
+		Windows.Foundation.IAsyncAction MinimizeAsync();
+	}
+}

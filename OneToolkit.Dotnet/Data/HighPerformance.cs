@@ -3,9 +3,9 @@
 	public static unsafe class HighPerformance
 	{
 		/// <summary>
-		/// Replaces all occurences of a specific character with another in a string without creating a new one.
+		/// Replaces all occurences of a specific character with another character in a string without creating a new one.
 		/// </summary>
-		/// <remarks>The specified string must be yours. Modifing existing strings can cause issues later on.</remarks>
+		/// <remarks>The specified string must be truly yours. Modifing existing strings can cause issues later on.</remarks>
 		public static void UnsafeReplace(this string text, char oldChar, char newChar)
 		{
 			fixed (char* textPtr = text)

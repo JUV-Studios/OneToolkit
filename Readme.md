@@ -1,4 +1,4 @@
-OneToolkit provides a set of controls, converters, services and helpers that help you build modern Windows apps and cross-platform .NET apps. We work with any officially supported programming language or UI framework and enable you to write the best apps with great performance.
+OneToolkit provides a set of controls, converters, services and helpers that help you build modern Windows apps and cross-platform .NET apps. We work with all officially supported programming language or UI framework and enable you to write the best apps the best possible performance.
 
 [![Build Status](https://dev.azure.com/JUV-Studios/OneToolkit/_apis/build/status/OneToolkit?branchName=master)](https://dev.azure.com/JUV-Studios/OneToolkit/_build/latest?definitionId=3&branchName=master)
 
