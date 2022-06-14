@@ -1,6 +1,6 @@
-﻿#include "UI.ThemeConverter.g.h"
+﻿#include "UI.Theming.ThemeConverter.g.h"
 
-namespace winrt::OneToolkit::UI
+namespace winrt::OneToolkit::UI::Theming
 {
 	namespace implementation
 	{
@@ -23,4 +23,4 @@ namespace winrt::OneToolkit::UI
 	}
 }
 
-#include "UI.ThemeConverter.g.cpp"
+#include "UI.Theming.ThemeConverter.g.cpp"

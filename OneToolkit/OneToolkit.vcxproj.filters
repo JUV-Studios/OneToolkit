@@ -26,6 +26,9 @@
     <Filter Include="Storage\Logging">
       <UniqueIdentifier>{8cc1292a-5ced-4dd7-aa24-e7aa1a2f7896}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\Theming">
+      <UniqueIdentifier>{82f00acd-fdc0-45dd-bca2-86ce2b971322}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ViewService.cpp">
@@ -85,9 +88,6 @@
     <Midl Include="SystemInformation.idl">
       <Filter>System</Filter>
     </Midl>
-    <Midl Include="ThemeService.idl">
-      <Filter>UI</Filter>
-    </Midl>
     <Midl Include="PackageVersionHelper.idl">
       <Filter>System</Filter>
     </Midl>
@@ -109,14 +109,17 @@
     <Midl Include="ViewService.idl">
       <Filter>UI\Windowing</Filter>
     </Midl>
-    <Midl Include="ThemeConverter.idl">
-      <Filter>UI</Filter>
-    </Midl>
     <Midl Include="Logger.idl">
       <Filter>Storage\Logging</Filter>
     </Midl>
     <Midl Include="AppLifecycleHelper.idl">
       <Filter>System</Filter>
+    </Midl>
+    <Midl Include="ThemeConverter.idl">
+      <Filter>UI\Theming</Filter>
+    </Midl>
+    <Midl Include="ThemeService.idl">
+      <Filter>UI\Theming</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>

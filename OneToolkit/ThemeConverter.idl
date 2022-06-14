@@ -1,4 +1,4 @@
-namespace OneToolkit.UI
+namespace OneToolkit.UI.Theming
 {
 	enum AbsoluteTheme
 	{

@@ -1,5 +1,5 @@
-﻿#include "UI.ThemeService.g.h"
-#include "UI.AppThemeChangedEventArgs.g.h"
+﻿#include "UI.Theming.ThemeService.g.h"
+#include "UI.Theming.AppThemeChangedEventArgs.g.h"
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Microsoft.UI.Xaml.h>
@@ -18,7 +18,7 @@ using namespace Windows::ApplicationModel::Core;
 using namespace Windows::UI;
 using namespace Windows::UI::ViewManagement;
 
-namespace winrt::OneToolkit::UI
+namespace winrt::OneToolkit::UI::Theming
 {
 	namespace implementation
 	{
@@ -173,5 +173,5 @@ namespace winrt::OneToolkit::UI
 	}
 }
 
-#include "UI.ThemeService.g.cpp"
-#include "UI.AppThemeChangedEventArgs.g.cpp"
+#include "UI.Theming.ThemeService.g.cpp"
+#include "UI.Theming.AppThemeChangedEventArgs.g.cpp"

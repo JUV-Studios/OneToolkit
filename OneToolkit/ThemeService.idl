@@ -1,6 +1,6 @@
 import "ThemeConverter.idl";
 
-namespace OneToolkit.UI
+namespace OneToolkit.UI.Theming
 {
 	[default_interface]
 	runtimeclass AppThemeChangedEventArgs

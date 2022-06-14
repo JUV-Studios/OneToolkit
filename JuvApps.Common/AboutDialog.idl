@@ -1,8 +1,0 @@
-namespace JuvApps.Common
-{
-    [default_interface]
-    runtimeclass AboutDialog : Windows.UI.Xaml.Controls.ContentDialog
-    {
-        AboutDialog();
-    }
-}
