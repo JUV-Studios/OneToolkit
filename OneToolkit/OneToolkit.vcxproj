@@ -241,6 +241,10 @@
       <DependentUpon>AppLifecycleHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="Converters.cpp">
+      <DependentUpon>Converters.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="DesktopApis.ixx" />
     <ClCompile Include="ViewReference.ixx">
       <DependentUpon>ViewReference.idl</DependentUpon>
@@ -327,6 +331,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="AppLifecycleHelper.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="Converters.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="Imaging.idl">

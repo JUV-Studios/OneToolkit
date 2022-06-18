@@ -33,7 +33,7 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 		uint32 Size() const noexcept
 		{
 			auto const guard = acquire_shared();
-			return m_Vector.size();
+			return static_cast<uint32>(m_Vector.size());
 		}
 
 		bool HasKey(Windows::UI::WindowId key) const

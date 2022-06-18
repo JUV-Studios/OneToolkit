@@ -25,6 +25,7 @@ MainPage::MainPage()
 {
 	InitializeComponent();
 	auto const view = OneToolkit::UI::Windowing::ViewService::CurrentView;
+	view->Title = L"Test";
 	view->TitleBar->ExtendsContentIntoTitleBar = true;
 	view->TitleBar->ButtonBackgroundColor = Windows::UI::Colors::Transparent;
 	view->TitleBar->BackgroundColor = Windows::UI::Colors::Transparent;
@@ -39,5 +40,5 @@ void App1::MainPage::Button_Click(Platform::Object^ sender, Windows::UI::Xaml::R
 
 void App1::MainPage::About_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	JuvApps::Common::AboutDialog().ShowAsync();
+	//JuvApps::Common::AboutDialog().ShowAsync();
 }

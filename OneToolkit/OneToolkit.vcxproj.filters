@@ -121,6 +121,9 @@
     <Midl Include="ThemeService.idl">
       <Filter>UI\Theming</Filter>
     </Midl>
+    <Midl Include="Converters.idl">
+      <Filter>UI</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="OneToolkit.xml" />
