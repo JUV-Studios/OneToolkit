@@ -7,7 +7,6 @@ namespace OneToolkit.System
 		String AppUserModelId { get; };
         String Name { get; };
         String Description { get; };
-		[noexcept] Object BackingObject { get; };
 		Windows.ApplicationModel.PackageVersion Version { get; };
 		static AppInformation Current { get; };
 	}

@@ -5,6 +5,6 @@ namespace OneToolkit.UI
     {
         static String DefaultTextFontFamily { get; };
         static String DefaultIconFontFamily { get; };
-        static IVectorView<String> InstalledFontFamilies { get; };
+        static IVectorView<String> SystemFontFamilies { get; };
     }
 }

@@ -13,7 +13,6 @@ import ViewReferenceTitleBar;
 
 using namespace juv;
 using namespace winrt;
-using namespace Windows::UI;
 using namespace Windows::System;
 using namespace OneToolkit::System;
 using namespace Windows::Foundation;
@@ -21,10 +20,10 @@ using namespace Windows::Foundation::Collections;
 
 export namespace winrt::OneToolkit::UI::Windowing::implementation
 {
-	struct ViewReferenceCache : implements<ViewReferenceCache, IMapView<WindowId, ViewReference>>, impl::multi_threaded_collection_base
+	struct ViewReferenceCache : implements<ViewReferenceCache, IMapView<uint64, ViewReference>>, impl::multi_threaded_collection_base
 	{
 	public:
-		IIterator<IKeyValuePair<WindowId, ViewReference>> First() const
+		IIterator<IKeyValuePair<uint64, ViewReference>> First() const
 		{
 			auto const guard = acquire_shared();
 			return make<Iterator>(m_Vector);
@@ -36,12 +35,12 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 			return static_cast<uint32>(m_Vector.size());
 		}
 
-		bool HasKey(Windows::UI::WindowId key) const
+		bool HasKey(uint64 key) const
 		{
 			return Lookup(key) != nullptr;
 		}
 
-		ViewReference Lookup(WindowId key) const
+		ViewReference Lookup(uint64 key) const
 		{
 			auto const guard = acquire_shared();
 			for (auto const& weakView : m_Vector)
@@ -61,7 +60,7 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 			m_Vector.emplace_back(value);
 		}
 
-		void Split(IMapView<WindowId, ViewReference>& first, IMapView<WindowId, ViewReference>& second) const noexcept
+		void Split(IMapView<uint64, ViewReference>& first, IMapView<uint64, ViewReference>& second) const noexcept
 		{
 			first = nullptr;
 			second = nullptr;
@@ -80,7 +79,7 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 	private:
 		std::vector<weak_ref<ViewReference>> m_Vector;
 
-		struct Iterator : implements<Iterator, IIterator<IKeyValuePair<WindowId, ViewReference>>>
+		struct Iterator : implements<Iterator, IIterator<IKeyValuePair<uint64, ViewReference>>>
 		{
 		public:
 			Iterator(std::vector<weak_ref<ViewReference>> const& vector) : m_Vector(vector), m_Iterator(vector.begin())
@@ -88,7 +87,7 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 				MoveNext();
 			}
 
-			auto_property<IKeyValuePair<WindowId, ViewReference>> Current;
+			auto_property<IKeyValuePair<uint64, ViewReference>> Current;
 
 			bool HasCurrent() const noexcept
 			{
@@ -115,7 +114,7 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 				}
 			}
 
-			uint32 GetMany(winrt::array_view<IKeyValuePair<WindowId, ViewReference>> items)
+			uint32 GetMany(winrt::array_view<IKeyValuePair<uint64, ViewReference>> items)
 			{
 				for (uint32 index = 0; index < items.size(); ++index)
 				{
@@ -129,16 +128,16 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 
 			std::vector<weak_ref<ViewReference>>::const_iterator m_Iterator;
 
-			static IKeyValuePair<WindowId, ViewReference> MakeItemPair(weak_ref<ViewReference> const& weakView)
+			static IKeyValuePair<uint64, ViewReference> MakeItemPair(weak_ref<ViewReference> const& weakView)
 			{
 				auto const strongView = weakView.get();
-				return make<impl::key_value_pair<IKeyValuePair<WindowId, ViewReference>>>(strongView.Id(), strongView);
+				return make<impl::key_value_pair<IKeyValuePair<uint64, ViewReference>>>(strongView.Id(), strongView);
 			}
 		};
 	};
 
 	template <typename Derived>
-	struct ViewReferenceBase : ViewReferenceT<Derived, IViewReferenceInterop>
+	struct ViewReferenceBase : ViewReferenceT<Derived>
 	{
 	public:
 		auto TitleBar()
@@ -183,9 +182,22 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 				return m_CoreAppView.CoreWindow().Visible();
 			}
 
-			WindowId Id() const
+			uint64 Id() const
 			{
-				return { static_cast<uint64>(m_AppView.Id()) };
+				return static_cast<uint64>(m_AppView.Id());
+			}
+
+			uint64 Handle() const
+			{
+				MIDL_INTERFACE("45D64A29-A63E-4CB6-B498-5781D298CB4F") ICoreWindowInterop : ::IUnknown
+				{
+					STDMETHOD(get_WindowHandle)(HWND * hwnd) = 0;
+					STDMETHOD(put_MessageHandled)(bool value) = 0;
+				};
+
+				HWND result;
+				check_hresult(m_CoreAppView.CoreWindow().as<ICoreWindowInterop>()->get_WindowHandle(&result));
+				return as_value<uint64>(result);
 			}
 
 			Rect Bounds() const
@@ -226,17 +238,6 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 				return make<ViewReferenceTitleBar>(m_AppView.TitleBar(), m_CoreAppView.TitleBar());
 			}
 
-			STDMETHOD(get_WindowHandle)(HWND* windowHandle)
-			{
-				MIDL_INTERFACE("45D64A29-A63E-4CB6-B498-5781D298CB4F") ICoreWindowInterop : ::IUnknown
-				{
-					STDMETHOD(get_WindowHandle)(HWND* hwnd) = 0;
-					STDMETHOD(put_MessageHandled)(bool value) = 0;
-				};
-
-				return m_CoreAppView.CoreWindow().as<ICoreWindowInterop>()->get_WindowHandle(windowHandle);
-			}
-
 			~ViewReference()
 			{
 				auto const coreWindow = m_CoreAppView.CoreWindow();
@@ -275,9 +276,21 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 				return m_AppWindow.IsVisible();
 			}
 			
-			WindowId Id() const
+			uint64 Id() const
 			{
-				return { static_cast<uint64>(CoreAppWindowPreview::GetIdFromWindow(m_AppWindow)) };
+				return static_cast<uint64>(CoreAppWindowPreview::GetIdFromWindow(m_AppWindow));
+			}
+
+			uint64 Handle() const
+			{
+				MIDL_INTERFACE("B74EA3BC-43C1-521F-9C75-E5C15054D78C") IApplicationWindow_HwndInterop : ::IInspectable
+				{
+					STDMETHOD(get_WindowHandle)(uint64* windowHandle) = 0;
+				};
+
+				uint64 result;
+				check_hresult(m_AppWindow.as<IApplicationWindow_HwndInterop>()->get_WindowHandle(&result));
+				return result;
 			}
 
 			Rect Bounds() const
@@ -315,19 +328,6 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 			{
 				return make<ViewReferenceTitleBar>(m_AppWindow.TitleBar());
 			}
-
-			STDMETHOD(get_WindowHandle)(HWND* windowHandle)
-			{
-				MIDL_INTERFACE("B74EA3BC-43C1-521F-9C75-E5C15054D78C") IApplicationWindow_HwndInterop : ::IInspectable
-				{
-					STDMETHOD(get_WindowHandle)(uint64* windowHandle) = 0;
-				};
-
-				uint64 result;
-				auto hr = m_AppWindow.as<IApplicationWindow_HwndInterop>()->get_WindowHandle(&result);
-				if (SUCCEEDED(hr)) *windowHandle = reinterpret_cast<HWND>(result);
-				return hr;
-			}
 		private:
 			AppWindow const m_AppWindow;
 		};
@@ -355,9 +355,15 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 				return m_AppWindow.IsVisible();
 			}
 
-			WindowId Id() const
+			uint64 Id() const
 			{
-				return { m_AppWindow.Id().Value };
+				return m_AppWindow.Id().Value;
+			}
+
+			uint64 Handle() const
+			{
+				// TODO
+				throw hresult_not_implemented();
 			}
 
 			Rect Bounds() const
@@ -397,11 +403,6 @@ export namespace winrt::OneToolkit::UI::Windowing::implementation
 			OneToolkit::UI::Windowing::ViewReferenceTitleBar MakeTitleBarWrapper()
 			{
 				return make<ViewReferenceTitleBar>(m_AppWindow);
-			}
-
-			STDMETHOD(get_WindowHandle)(HWND* windowHandle)
-			{
-				return E_NOTIMPL;
 			}
 		private:
 			AppWindow const m_AppWindow;

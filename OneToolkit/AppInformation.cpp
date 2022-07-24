@@ -29,39 +29,40 @@ namespace winrt::OneToolkit::System
 		{
 			struct AppInformation : AppInformationT<AppInformation>
 			{
-				AppInformation(AppInfo const& appInfo) : BackingObject(appInfo) {}
-
-				auto_property<AppInfo> const BackingObject;
+			public:
+				AppInformation(AppInfo const& appInfo) : m_AppInfo(appInfo) {}
 
 				hstring Id() const
 				{
-					return BackingObject().Id();
+					return m_AppInfo.Id();
 				}
 
 				hstring AppUserModelId() const
 				{
-					return BackingObject().AppUserModelId();
+					return m_AppInfo.AppUserModelId();
 				}
 
 				hstring Name() const
 				{
-					return BackingObject().DisplayInfo().DisplayName();
+					return m_AppInfo.DisplayInfo().DisplayName();
 				}
 
 				hstring Description() const
 				{
-					return BackingObject().DisplayInfo().Description();
+					return m_AppInfo.DisplayInfo().Description();
 				}
 
 				hstring Publisher() const
 				{
-					return BackingObject().Package().PublisherDisplayName();
+					return m_AppInfo.Package().PublisherDisplayName();
 				}
 
 				PackageVersion Version() const
 				{
-					return BackingObject().Package().Id().Version();
+					return m_AppInfo.Package().Id().Version();
 				}
+			private:
+				AppInfo const m_AppInfo;
 			};
 		}
 
@@ -89,8 +90,10 @@ namespace winrt::OneToolkit::System
 							return Name();
 						}));
 
+					auto_property<hstring> property;
+
 					auto& productVersion = fileVersionInfo.GetProductVersion();
-					Version({productVersion.major, productVersion.minor, productVersion.build, productVersion.revision});
+					Version({ productVersion.major, productVersion.minor, productVersion.build, productVersion.revision });
 				}
 
 				auto_property<hstring> const AppUserModelId;
@@ -106,11 +109,6 @@ namespace winrt::OneToolkit::System
 				hstring Id() const noexcept
 				{
 					return AppUserModelId();
-				}
-
-				IInspectable BackingObject() const noexcept
-				{
-					return nullptr;
 				}
 			};
 		}

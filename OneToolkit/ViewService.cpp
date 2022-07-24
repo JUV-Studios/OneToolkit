@@ -653,23 +653,28 @@
 //#include "UI.ViewService.g.cpp"
 
 #include <inspectable.h>
+#include <wil/resource.h>
 #include "WindowingBase.h"
-#include "LRUCache11.hpp"
 #include "UI.Windowing.ViewService.g.h"
 #include "UI.Windowing.ViewReferenceTitleBar.g.h"
 #include <winrt/Windows.Foundation.Collections.h>
 
 import juv;
 import OneToolkit;
-import DesktopApis;
 import ViewReference;
 
 using namespace juv;
 using namespace winrt;
-using namespace Windows::UI;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace OneToolkit::System;
+
+int GetSystemMetrics(int nIndex) noexcept
+{
+	wil::unique_hmodule const module{ LoadLibrary(L"ext-ms-win-ntuser-sysparams-ext-l1-1-0.dll") };
+	auto const getSystemMetrics = reinterpret_cast<int(__stdcall*)(int)>(GetProcAddress(module.get(), "GetSystemMetrics"));
+	return getSystemMetrics(nIndex);
+}
 
 namespace winrt::OneToolkit::UI::Windowing
 {
@@ -679,7 +684,7 @@ namespace winrt::OneToolkit::UI::Windowing
 		{
 			ViewService() = delete;
 
-			static IMapView<WindowId, ViewReference> CachedViews()
+			static IMapView<uint64, ViewReference> CachedViews()
 			{
 				return *ViewReferenceCache::s_Instance;
 			}
@@ -699,7 +704,7 @@ namespace winrt::OneToolkit::UI::Windowing
 			static ViewReference CurrentView()
 			{
 				auto const appView = Universal::Core::ApplicationView::GetForCurrentView();
-				auto view = ViewReferenceCache::s_Instance->Lookup(static_cast<WindowId>(appView.Id()));
+				auto view = ViewReferenceCache::s_Instance->Lookup(static_cast<uint64>(appView.Id()));
 				if (!view)
 				{
 					auto const coreAppView = Universal::Core::CoreApplication::GetCurrentView();
@@ -734,7 +739,7 @@ namespace winrt::OneToolkit::UI::Windowing
 				co_return single_threaded_vector(std::move(views)).GetView();
 			}
 
-			static IAsyncOperation<ViewReference> GetViewAsync(WindowId windowId)
+			static IAsyncOperation<ViewReference> GetViewAsync(uint64 windowId)
 			{
 				auto result = ViewReferenceCache::s_Instance->Lookup(windowId);
 				if (!result)
@@ -746,7 +751,7 @@ namespace winrt::OneToolkit::UI::Windowing
 						{
 							co_await coreAppView.Dispatcher();
 							auto const appView = Universal::Core::ApplicationView::GetForCurrentView();
-							if (appView.Id() == windowId.Value)
+							if (appView.Id() == windowId)
 							{
 								auto const navigationManager = Universal::Core::SystemNavigationManager::GetForCurrentView();
 								auto const navigationManagerPreview = Universal::Core::SystemNavigationManagerPreview::GetForCurrentView();
@@ -758,8 +763,9 @@ namespace winrt::OneToolkit::UI::Windowing
 					}
 					else
 					{
-
-						// TODO implement WASDK backend for ViewService.
+						auto const view = make<Desktop::ViewReference>(Desktop::AppWindow::GetFromWindowId({ windowId }));
+						ViewReferenceCache::s_Instance->Append(view);
+						co_return view;
 					}
 				}
 

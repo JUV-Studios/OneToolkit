@@ -5,10 +5,10 @@ namespace OneToolkit.UI.Windowing
 	[default_interface]
 	static runtimeclass ViewService
 	{
-		static IMapView<Windows.UI.WindowId, ViewReference> CachedViews { get; };
+		static IMapView<UInt64, ViewReference> CachedViews { get; };
 		static Windows.UI.ViewManagement.UserInteractionMode InteractionMode { get; };
 		static ViewReference CurrentView { get; };
 		static Windows.Foundation.IAsyncOperation<IVectorView<ViewReference> > GetViewsAsync();
-		static Windows.Foundation.IAsyncOperation<ViewReference> GetViewAsync(Windows.UI.WindowId windowId);
+		static Windows.Foundation.IAsyncOperation<ViewReference> GetViewAsync(UInt64 windowId);
 	}
 }

@@ -223,7 +223,6 @@
   <ItemGroup>
     <ClInclude Include="FileVersionInfo.h" />
     <ClInclude Include="FixedFileInfo.h" />
-    <ClInclude Include="LRUCache11.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StorageItemHandle.h">
       <DependentUpon>StorageItemHandle.idl</DependentUpon>
@@ -233,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\juv\juv.ixx" />
+    <ClCompile Include="..\OneToolkit.Mvvm\OneToolkit.Mvvm.ixx" />
     <ClCompile Include="AppInformation.cpp">
       <DependentUpon>AppInformation.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -241,11 +241,6 @@
       <DependentUpon>AppLifecycleHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="Converters.cpp">
-      <DependentUpon>Converters.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="DesktopApis.ixx" />
     <ClCompile Include="ViewReference.ixx">
       <DependentUpon>ViewReference.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -312,10 +307,6 @@
     <ClInclude Include="OneToolkit.h">
       <FileType>CppHeader</FileType>
     </ClInclude>
-    <ClCompile Include="PackageVersionHelper.cpp">
-      <DependentUpon>PackageVersionHelper.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -333,9 +324,6 @@
     <Midl Include="AppLifecycleHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="Converters.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="Imaging.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -344,9 +332,6 @@
     </Midl>
     <Midl Include="SystemInformation.idl" />
     <Midl Include="Fonts.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="PackageVersionHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="StorageItemHandle.idl" />

@@ -2,23 +2,12 @@ import "ThemeConverter.idl";
 
 namespace OneToolkit.UI.Theming
 {
-	[default_interface]
-	runtimeclass AppThemeChangedEventArgs
-	{
-		AbsoluteTheme OldTheme { get; };
-		AbsoluteTheme NewTheme { get; };
-	}
-
-    delegate void AppThemeChangedEventHandler(AppThemeChangedEventArgs args);
-
     [default_interface]
-    static runtimeclass ThemeService
+    runtimeclass ThemeService
     {
-        static RelativeTheme AppThemeOverride;
-        static AbsoluteTheme SystemAppsTheme { get; };
-        static AbsoluteTheme SystemShellTheme { get; };
-        static event AppThemeChangedEventHandler AppThemeChanged;
-		static void Initialize();
-		static void Uninitialize();
+        RelativeTheme AppThemeOverride;
+        AbsoluteTheme SystemAppsTheme { get; };
+        AbsoluteTheme SystemShellTheme { get; };
+		static ThemeService Current { get; };
     }
 }

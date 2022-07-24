@@ -54,7 +54,7 @@
     <ClCompile Include="ViewReferenceTitleBar.ixx">
       <Filter>UI\Windowing</Filter>
     </ClCompile>
-    <ClCompile Include="DesktopApis.ixx">
+    <ClCompile Include="..\OneToolkit.Mvvm\OneToolkit.Mvvm.ixx">
       <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -79,16 +79,12 @@
     <ClInclude Include="FixedFileInfo.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="LRUCache11.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Fonts.idl">
       <Filter>UI</Filter>
     </Midl>
     <Midl Include="SystemInformation.idl">
-      <Filter>System</Filter>
-    </Midl>
-    <Midl Include="PackageVersionHelper.idl">
       <Filter>System</Filter>
     </Midl>
     <Midl Include="Imaging.idl">
@@ -120,9 +116,6 @@
     </Midl>
     <Midl Include="ThemeService.idl">
       <Filter>UI\Theming</Filter>
-    </Midl>
-    <Midl Include="Converters.idl">
-      <Filter>UI</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>

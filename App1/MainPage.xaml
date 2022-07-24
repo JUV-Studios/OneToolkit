@@ -2,28 +2,13 @@
     x:Class="App1.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="using:OneToolkit.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:App1"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:windowing="using:OneToolkit.UI.Windowing"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
-    <Page.Resources>
-        <converters:StringLocalizationConverter x:Name="Converter" />
-    </Page.Resources>
 
-    <StackPanel
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Spacing="8">
-        <StackPanel.Resources>
-            <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-            </Style>
-        </StackPanel.Resources>
-        <Button Click="Button_Click">Minimize</Button>
-        <Button Click="About_Click">About</Button>
-        <TextBlock Text="{x:Bind windowing:ViewService.CurrentView.Title, Converter={StaticResource Converter}}" />
-    </StackPanel>
+    <Grid>
+        <TextBlock Loaded="TextBlock_Loaded" />
+    </Grid>
 </Page>

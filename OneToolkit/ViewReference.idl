@@ -7,7 +7,8 @@ namespace OneToolkit.UI.Windowing
 	{
 		String Title;
 		Boolean IsVisible { get; };
-		Windows.UI.WindowId Id { get; };
+		UInt64 Id { get; };
+		UInt64 Handle { get; };
 		Windows.Foundation.Rect Bounds { get; };
 		ViewReferenceTitleBar TitleBar { get; };
 		Object[] BackingObjects { get; };

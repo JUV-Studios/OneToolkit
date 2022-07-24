@@ -32,7 +32,7 @@ namespace winrt::OneToolkit::UI
 				return SystemInformation::OperatingSystem().Version().Build >= 21327 ? L"Segoe Fluent Icons" : L"Segoe MDL2 Assets";
 			}
 
-			static IVectorView<hstring> InstalledFontFamilies()
+			static IVectorView<hstring> SystemFontFamilies()
 			{
 				std::vector<hstring> fontFamilies;
 				com_ptr<IDWriteFactory> factory;

@@ -2,20 +2,31 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="..\..\juv\juv.ixx">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\OneToolkit\OneToolkit.ixx">
-      <Filter>Modules</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OneToolkit.UI.Xaml.def" />
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Modules">
-      <UniqueIdentifier>{31b57c4d-f321-4f4f-82f4-f28c163788e3}</UniqueIdentifier>
+    <Page Include="..\Shared\DescriptiveButton.xaml">
+      <Filter>Controls</Filter>
+    </Page>
+    <Page Include="..\Shared\PivotView.xaml">
+      <Filter>Controls</Filter>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Controls">
+      <UniqueIdentifier>{e71beb80-fb0c-4ca2-8804-6aa9f8c0d848}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="..\Shared\PivotViewItem.idl">
+      <Filter>Controls</Filter>
+    </Midl>
   </ItemGroup>
 </Project>

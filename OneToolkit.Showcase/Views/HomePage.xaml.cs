@@ -11,10 +11,11 @@ using OneToolkit.Data.Text;
 using OneToolkit.Lifecycle;
 using OneToolkit.Showcase.Dialogs;
 using OneToolkit.Showcase.ViewModels;
+using OneToolkit.UI.Theming;
 
 namespace OneToolkit.Showcase.Views
 {
-	public sealed partial class HomePage : Page, ISuspendable
+	public sealed partial class HomePage : Page
 	{
 		public HomePage() => InitializeComponent();
 
@@ -25,8 +26,6 @@ namespace OneToolkit.Showcase.Views
 		private TimerElapsedHandler TimerElapsedHandler;
 
 		public bool IsSuspended => TimerElapsedHandler == null;
-
-		public event TypedEventHandler<ISuspendable, SuspendableEventType> StateChanged;
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
@@ -49,7 +48,7 @@ namespace OneToolkit.Showcase.Views
 		{
 			TimerElapsedHandler = new(GreetingUpdateTimer_Tick);
 			GreetingUpdateTimer = ThreadPoolTimer.CreatePeriodicTimer(TimerElapsedHandler, TimeSpan.FromMilliseconds(130));
-			StateChanged?.Invoke(this, SuspendableEventType.Resumed);
+			//StateChanged?.Invoke(this, SuspendableEventType.Resumed);
 			return true;
 		}
 
@@ -58,7 +57,7 @@ namespace OneToolkit.Showcase.Views
 			GreetingUpdateTimer.Cancel();
 			GreetingUpdateTimer = null;
 			TimerElapsedHandler = null;
-			StateChanged?.Invoke(this, SuspendableEventType.Suspended);
+			//StateChanged?.Invoke(this, SuspendableEventType.Suspended);
 			return true;
 		}
 
@@ -81,11 +80,11 @@ namespace OneToolkit.Showcase.Views
 
 		private void ThemeRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			ThemeService.AppThemeOverride = (sender as RadioButtons).SelectedIndex switch
+			ThemeService.Current.AppThemeOverride = (sender as RadioButtons).SelectedIndex switch
 			{
-				0 => ElementTheme.Light,
-				1 => ElementTheme.Dark,
-				_ => ElementTheme.Default,
+				0 => RelativeTheme.Light,
+				1 => RelativeTheme.Dark,
+				_ => RelativeTheme.Default,
 			};
 		}
 	}

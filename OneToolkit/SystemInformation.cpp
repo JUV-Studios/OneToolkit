@@ -1,12 +1,14 @@
-﻿#include "System.SystemInformation.g.h"
+﻿// Code adapted from https://github.com/CommunityToolkit/WindowsCommunityToolkit/blob/main/Microsoft.Toolkit.Uwp/Helpers/SystemInformation.cs.
+
+#include "System.SystemInformation.g.h"
 #include "System.OperatingSystemInfo.g.h"
 #include <Windows.h>
+#include <wil/resource.h>
 #include <winrt/Windows.System.Profile.h>
 #include <winrt/Windows.Security.ExchangeActiveSyncProvisioning.h>
 
 import juv;
 import OneToolkit;
-import DesktopApis;
 
 using namespace juv;
 using namespace winrt;
@@ -15,6 +17,13 @@ using namespace Windows::System::Profile;
 using namespace Windows::ApplicationModel;
 using namespace Windows::Foundation;
 using namespace Windows::Security::ExchangeActiveSyncProvisioning;
+
+wchar_t const* BrandingFormatString(wchar_t const* format) noexcept
+{
+	wil::unique_hmodule const winBrand{ LoadLibrary(L"WinBrand.dll") };
+	auto const brandingFormatString = reinterpret_cast<wchar_t const* (__stdcall*)(wchar_t const*)>(GetProcAddress(winBrand.get(), "BrandingFormatString"));
+	return brandingFormatString(format);
+}
 
 namespace winrt::OneToolkit::System
 {
@@ -69,62 +78,9 @@ namespace winrt::OneToolkit::System
 				return ClientDeviceInformation().SystemManufacturer();
 			}
 
-			static OneToolkit::System::OperatingSystemInfo OperatingSystem()
+			static auto OperatingSystem()
 			{
 				return OperatingSystemInfo::Instance();
-			}
-
-			static ProcessorArchitectureInfo ProcessorArchitecture()
-			{
-				ProcessorArchitectureInfo result;
-				uint16 nativeMachine;
-				uint16 processMachine;
-				check_bool(IsWow64Process2(GetCurrentProcess(), &processMachine, &nativeMachine));
-				switch (nativeMachine)
-				{
-				case IMAGE_FILE_MACHINE_I386:
-					result.SystemArchitecture = ProcessorArchitecture::X86;
-					break;
-				case IMAGE_FILE_MACHINE_AMD64:
-					result.SystemArchitecture = ProcessorArchitecture::X64;
-					break;
-				case IMAGE_FILE_MACHINE_ARM:
-					result.SystemArchitecture = ProcessorArchitecture::Arm;
-					break;
-				case IMAGE_FILE_MACHINE_ARMNT:
-					result.SystemArchitecture = ProcessorArchitecture::Arm;
-					break;
-				case IMAGE_FILE_MACHINE_ARM64:
-					result.SystemArchitecture = ProcessorArchitecture::Arm64;
-					break;
-				default:
-					result.SystemArchitecture = ProcessorArchitecture::Unknown;
-					break;
-				}
-
-				switch (processMachine)
-				{
-				case IMAGE_FILE_MACHINE_I386:
-					result.SystemArchitecture == ProcessorArchitecture::Arm64 ? ProcessorArchitecture::X86OnArm64 : ProcessorArchitecture::X86;
-					break;
-				case IMAGE_FILE_MACHINE_AMD64:
-					result.SystemArchitecture = ProcessorArchitecture::X64;
-					break;
-				case IMAGE_FILE_MACHINE_ARM:
-					result.SystemArchitecture = ProcessorArchitecture::Arm;
-					break;
-				case IMAGE_FILE_MACHINE_ARMNT:
-					result.SystemArchitecture = ProcessorArchitecture::Arm;
-					break;
-				case IMAGE_FILE_MACHINE_ARM64:
-					result.SystemArchitecture = ProcessorArchitecture::Arm64;
-					break;
-				default:
-					result.SystemArchitecture = ProcessorArchitecture::Neutral;
-					break;
-				}
-
-				return result;
 			}
 		};
 	}

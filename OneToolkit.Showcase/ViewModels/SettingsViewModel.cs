@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.System;
-using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.Foundation.Metadata;
@@ -10,15 +9,17 @@ using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Search;
 using Windows.ApplicationModel.Resources;
 using Windows.ApplicationModel.DataTransfer;
-using OneToolkit.UI.Windowing;
 using OneToolkit.System;
-using OneToolkit.Storage;
+using OneToolkit.UI.Windowing;
+using OwlCore.Services;
+using OwlCore.AbstractStorage;
+using OneToolkit.Showcase.AbstractStorage;
 
 namespace OneToolkit.Showcase.ViewModels
 {
-	public sealed class SettingsViewModel : AppSettingsBase
+	public sealed class SettingsViewModel : SettingsBase
 	{
-		private SettingsViewModel() : base(ApplicationData.Current.RoamingSettings)
+		private SettingsViewModel(IFolderData folder) : base(folder, NewtonsoftStreamSerializer.Singleton)
 		{
 			ElementSoundPlayer.State = DisableSoundEffects ? ElementSoundPlayerState.Off : ElementSoundPlayerState.On;
 		}
@@ -41,51 +42,34 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public static readonly DataTransferManager TransferManager = DataTransferManager.GetForCurrentView();
 
-		public static SettingsViewModel Instance { get; } = new();
-
-		public string AboutDisplayText => $"OneToolkit Showcase\n{string.Format(Resources.GetString("VersionText"), Package.Current.Id.Version.AsVersion())}\n{Resources.GetString("CopyrightText")}";
+		public string AboutDisplayText => $"OneToolkit Showcase\n{string.Format(Resources.GetString("VersionText"), Package.Current.Id.Version)}\n{Resources.GetString("CopyrightText")}";
 
 		public string AboutAutomationText => AboutDisplayText.Replace("\n", "");
 
 		public bool ShowTeachingTip
 		{
-			get => GetAppSetting(nameof(ShowTeachingTip), true);
-			set
-			{
-				if (ShowTeachingTip != value) SettingsContainer.Values[nameof(ShowTeachingTip)] = value;
-			}
+			get => GetSetting(() => true);
+			set => SetSetting(value);
 		}
 
 		public bool DisableSoundEffects
 		{
-			get => GetAppSetting(nameof(DisableSoundEffects), false);
-			set	
-			{
-				if (DisableSoundEffects != value)
-				{
-					ElementSoundPlayer.State = value ? ElementSoundPlayerState.Off : ElementSoundPlayerState.On;
-					SettingsContainer.Values[nameof(DisableSoundEffects)] = value;
-				}
-			}
+			get => GetSetting(() => false);
+			set => SetSetting(value);
 		}
 
 		public bool PreviewAutoRefresh
 		{
-			get => GetAppSetting(nameof(PreviewAutoRefresh), true);
-			set
-			{
-				if (PreviewAutoRefresh != value) SettingsContainer.Values[nameof(PreviewAutoRefresh)] = value;
-			}
+			get => GetSetting(() => true);
+			set => SetSetting(value);
 		}
 
 		public string SelectedCodeLanguage
 		{
-			get => GetAppSetting(nameof(SelectedCodeLanguage), "C#");
-			set
-			{
-				if (SelectedCodeLanguage != value) SettingsContainer.Values[nameof(SelectedCodeLanguage)] = value;
-			}
+			get => GetSetting(() => "C#");
+			set => SetSetting(value);
 		}
+
 		public static void RevealShareCharm() => DataTransferManager.ShowShareUI();
 
 #pragma warning disable CS0618
@@ -101,7 +85,7 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public static async void OpenHelpPage() => await LaunchLinkAsync(new("http://discord.com/invite/CZpBpPQjq8"));
 
-		public static async void OpenFeedbackPage() => await LaunchLinkAsync(new($"https://www.nuget.org/packages/OneToolkit/{Package.Current.Id.Version.AsVersion()}/ContactOwners"));
+		public static async void OpenFeedbackPage() => await LaunchLinkAsync(new($"https://www.nuget.org/packages/OneToolkit/{Package.Current.Id.Version}/ContactOwners"));
 
 		public static async Task<bool> LaunchLinkAsync(Uri link)
 		{
@@ -114,34 +98,6 @@ namespace OneToolkit.Showcase.ViewModels
 			}
 
 			return false;
-		}
-
-		public async void EraseSettings()
-		{
-			SettingsContainer.Values.Clear();
-			await CoreApplication.RequestRestartAsync(string.Empty);
-		}
-
-		public static void SetDefaultSettings()
-		{
-		}
-
-		private T GetAppSetting<T>(string key, T fallback)
-		{
-			if (SettingsContainer.Values.TryGetValue(key, out object value))
-			{
-				return (T)value;
-			}
-			else
-			{
-				SetAppSetting(key, fallback);
-				return fallback;
-			}
-		}
-
-		private void SetAppSetting(string key, object newValue)
-		{
-			SettingsContainer.Values[key] = newValue;
 		}
 	}
 }

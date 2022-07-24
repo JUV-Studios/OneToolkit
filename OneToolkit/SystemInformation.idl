@@ -1,10 +1,5 @@
 namespace OneToolkit.System
 {
-	struct ProcessorArchitectureInfo
-    {
-        Windows.System.ProcessorArchitecture SystemArchitecture;
-        Windows.System.ProcessorArchitecture ProcessArchitecture;
-    };
 
 	[default_interface]
 	runtimeclass OperatingSystemInfo
@@ -21,7 +16,5 @@ namespace OneToolkit.System
         static String DeviceFamily { get; };
         static String DeviceManufacturer { get; };
 		static OperatingSystemInfo OperatingSystem { get; };
-        static ProcessorArchitectureInfo ProcessorArchitecture { get; };
-        static Windows.Security.ExchangeActiveSyncProvisioning.EasClientDeviceInformation ClientDeviceInformation { get; };
     }
 }

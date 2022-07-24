@@ -136,12 +136,16 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AbstractStorage\FileDataProperties.cs" />
+    <Compile Include="AbstractStorage\NewtonsoftStreamSerializer.cs" />
     <Compile Include="Dialogs\EraseSettingsDialog.xaml.cs">
       <DependentUpon>EraseSettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ProtocolShareDialog.xaml.cs">
       <DependentUpon>ProtocolShareDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AbstractStorage\FileData.cs" />
+    <Compile Include="AbstractStorage\FolderData.cs" />
     <Compile Include="Views\ApiReference.xaml.cs">
       <DependentUpon>ApiReference.xaml</DependentUpon>
     </Compile>
@@ -156,9 +160,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Views\Playgrounds.xaml.cs">
-      <DependentUpon>Playgrounds.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Reference\Headers\juv" />
@@ -197,10 +198,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Playgrounds.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ColorCode.UWP">
@@ -212,9 +209,6 @@
     <PackageReference Include="Microsoft.AppCenter.Crashes">
       <Version>4.4.0</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Mvvm">
-      <Version>7.1.2</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>7.1.2</Version>
     </PackageReference>
@@ -225,7 +219,7 @@
       <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="OwlCore">
-      <Version>0.0.65</Version>
+      <Version>0.0.71</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -233,13 +227,13 @@
       <Project>{f1747d4a-9da9-4e3e-89c1-417de90bc35d}</Project>
       <Name>OneToolkit.DocsCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OneToolkit.Dotnet.Native\OneToolkit.Dotnet.Native.csproj">
-      <Project>{20dbfef5-b3cc-47d0-af29-f1130f8eea9a}</Project>
-      <Name>OneToolkit.Dotnet.Native</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OneToolkit.Dotnet\OneToolkit.Dotnet.csproj">
       <Project>{ef690ebe-5bfe-428e-9e39-d0ef06b1fd1c}</Project>
       <Name>OneToolkit.Dotnet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OneToolkit.UI.Xaml\Uwp\OneToolkit.UI.Xaml.Uwp.vcxproj">
+      <Project>{1b37dc7e-74ad-4928-8c4d-e79bed7cf4a3}</Project>
+      <Name>OneToolkit.UI.Xaml.Uwp</Name>
     </ProjectReference>
     <ProjectReference Include="..\OneToolkit\OneToolkit.vcxproj">
       <Project>{0dd5edd3-19b8-4924-8df1-add70803e693}</Project>
@@ -255,7 +249,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\DefaultSettings.yaml" />
     <None Include="Certificate.pfx" />
   </ItemGroup>
   <ItemGroup>

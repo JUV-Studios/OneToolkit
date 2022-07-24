@@ -7,18 +7,11 @@ module;
 #include <cstddef>
 #include <concepts>
 #include <filesystem>
-#include <Unknwn.h>
 #include <Windows.h>
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/OneToolkit.System.h>
 #include <winrt/OneToolkit.UI.Windowing.h>
 #include <winrt/OneToolkit.Storage.Logging.h>
-#if __has_include(<winrt/Microsoft.UI.Xaml.Data.h>) && !force_platform_xaml
-#include <winrt/Microsoft.UI.Xaml.Data.h>
-#include <winrt/Microsoft.UI.Xaml.Input.h>
-#else
-#include <winrt/Windows.UI.Xaml.Data.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-#endif
 
 export module OneToolkit;
 
@@ -32,104 +25,8 @@ using namespace OneToolkit::System;
 
 export namespace winrt::OneToolkit
 {
-	namespace Data
-	{
-#if __has_include(<winrt/Microsoft.UI.Xaml.Data.h>) && !force_platform_xaml
-		using PropertyChangedEventArgs = Microsoft::UI::Xaml::Data::PropertyChangedEventArgs;
-		using PropertyChangedEventHandler = Microsoft::UI::Xaml::Data::PropertyChangedEventHandler;
-#else 
-		using PropertyChangedEventArgs = Windows::UI::Xaml::Data::PropertyChangedEventArgs;
-		using PropertyChangedEventHandler = Windows::UI::Xaml::Data::PropertyChangedEventHandler;
-#endif
-
-		/// @brief Provides a base class for view models and observable objects.
-		template <typename Derived>
-		struct Observable
-		{
-		public:
-			event_token PropertyChanged(PropertyChangedEventHandler const& delegate)
-			{
-				return m_PropertyChanged.add(delegate);
-			}
-
-			void PropertyChanged(event_token token) noexcept
-			{
-				m_PropertyChanged.remove(token);
-			}
-		protected:
-			Observable() = default;
-
-			/// @brief Raises the property changed event for a specified property name.
-			/// @param propertyNameThe name of the property. Shouldn't be empty or only full of whitespaces.
-			void RaisePropertyChanged(hstring const& propertyName)
-			{
-				if (!has_only_whitespaces(propertyName))
-				{
-					PropertyChangedEventArgs args{ propertyName };
-					m_PropertyChanged(*static_cast<Derived*>(this), args);
-				}
-			}
-
-			/// @brief Compares the current and new values for a given property. If the value has changed, updates the property with the new value and raises the PropertyChanged event.
-			/// @param field The field storing the property's value.
-			/// @param newValue The field storing the property's value.
-			/// @param propertyName The name of the property that changed.
-			/// @return true if the property was changed, false otherwise.
-			template <windows_runtime_type T>
-			bool SetProperty(T& field, T newValue, hstring const& propertyName)
-			{
-				if (field != newValue)
-				{
-					field = newValue;
-					RaisePropertyChanged(propertyName);
-					return true;
-				}
-
-				return false;
-			}
-		private:
-			event<PropertyChangedEventHandler> m_PropertyChanged;
-		};
-	}
-
-	namespace UI
-	{
-		namespace Windowing
-		{
-			MIDL_INTERFACE("EF63725E-9950-4721-B57D-5E56E735B61A") IViewReferenceInterop : ::IUnknown
-			{
-				STDMETHOD(get_WindowHandle)(HWND* windowHandle) = 0;
-			};
-
-			struct ViewReferenceInterop
-			{
-				ViewReferenceInterop() = delete;
-
-				static HWND GetWindowHandle(ViewReference const& viewReference)
-				{
-					HWND windowHandle;
-					check_hresult(viewReference.as<IViewReferenceInterop>()->get_WindowHandle(&windowHandle));
-					return windowHandle;
-				}
-			};
-		}
-	}
-
 	namespace System
 	{
-		template <typename Derived>
-		struct StrongSingleton
-		{
-		public:
-			static auto Instance()
-			{
-				static auto instance = make<Derived>();
-				return instance;
-			}
-		protected:
-			StrongSingleton() = default;
-		};
-
 		template <typename Derived>
 		struct WeakSingleton
 		{

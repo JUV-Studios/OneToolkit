@@ -8,13 +8,16 @@ using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using ColorCode;
 using OneToolkit.DocsCore;
 using OneToolkit.Lifecycle;
 using OneToolkit.UI;
 using OneToolkit.UI.Xaml.Controls;
 using OneToolkit.Showcase.ViewModels;
+using OneToolkit.System;
+using OneToolkit.UI.Xaml;
+using OneToolkit.Data;
 
 namespace OneToolkit.Showcase.Views
 {
@@ -25,7 +28,7 @@ namespace OneToolkit.Showcase.Views
 
 		public static readonly Assembly[] ToolkitAssemblies = new[]
 		{
-			typeof(IAsyncClosable).Assembly, typeof(HubPanel).Assembly, typeof(ColorUtility).Assembly
+			typeof(SystemInformation).Assembly, typeof(TreeViewHelper).Assembly, typeof(Endianness).Assembly
 		};
 
 		public static readonly IEnumerable<TypeGroup> FoundNamespaces = from assembly in ToolkitAssemblies

@@ -1,0 +1,17 @@
+#include "XamlFramework/Base.idl"
+#include "XamlFramework/Base.idl"
+
+namespace OneToolkit.UI.Xaml.Converters
+{
+	[default_interface]
+	runtimeclass BoolReverseConverter : XamlFramework.Data.IValueConverter
+	{
+		BoolReverseConverter();
+	}
+
+	[default_interface]
+	runtimeclass StringLocalizationConverter : XamlFramework.Data.IValueConverter
+	{
+		StringLocalizationConverter();
+	}
+}

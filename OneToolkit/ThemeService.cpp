@@ -1,5 +1,5 @@
 ﻿#include "UI.Theming.ThemeService.g.h"
-#include "UI.Theming.AppThemeChangedEventArgs.g.h"
+#include <Windows.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Microsoft.UI.Xaml.h>
@@ -22,13 +22,6 @@ namespace winrt::OneToolkit::UI::Theming
 {
 	namespace implementation
 	{
-		struct AppThemeChangedEventArgs : AppThemeChangedEventArgsT<AppThemeChangedEventArgs>
-		{
-			AppThemeChangedEventArgs(AbsoluteTheme oldTheme, AbsoluteTheme newTheme) : OldTheme(oldTheme), NewTheme(newTheme) {}
-			auto_property<AbsoluteTheme> const OldTheme;
-			auto_property<AbsoluteTheme> const NewTheme;
-		};
-
 		struct ThemeService : ThemeServiceT<ThemeService>
 		{
 		public:
@@ -49,66 +42,53 @@ namespace winrt::OneToolkit::UI::Theming
 				if (previousSystemAppsTheme != currentSystemTheme)
 				{
 					PreviousSystemAppsTheme(currentSystemTheme);
-					if (ThemeService::AppThemeOverride() == RelativeTheme::Default) m_AppThemeChanged(make<AppThemeChangedEventArgs>(previousSystemAppsTheme, currentSystemTheme));
+					if (ThemeService::AppThemeOverride() == RelativeTheme::Default) {} //m_AppThemeChanged(make<AppThemeChangedEventArgs>(previousSystemAppsTheme, currentSystemTheme));
 					else SetControlsThemeAsync(AppThemeOverride());
 				}
 			}
 
-			static RelativeTheme AppThemeOverride() noexcept
+			RelativeTheme AppThemeOverride() noexcept
 			{
-				return Globals().m_AppThemeOverride;
+				return m_AppThemeOverride;
 			}
 
-			static void AppThemeOverride(RelativeTheme value)
+			void AppThemeOverride(RelativeTheme value)
 			{
-				auto const appThemeOverride = Globals().m_AppThemeOverride.load();
+				auto const appThemeOverride = m_AppThemeOverride.load();
 				if (appThemeOverride != value)
 				{
 					auto newAppTheme = ThemeConverter::ToAbsoluteTheme(value, SystemAppsTheme());
 					auto currentAppTheme = ThemeConverter::ToAbsoluteTheme(appThemeOverride, SystemAppsTheme());
-					Globals().m_AppThemeOverride = value;
+					m_AppThemeOverride = value;
 					if (currentAppTheme != newAppTheme)
 					{
-						SetControlsThemeAsync(value).Completed([currentAppTheme, newAppTheme](IAsyncAction const&, AsyncStatus)
+						SetControlsThemeAsync(value).Completed([=](IAsyncAction const&, AsyncStatus)
 							{
-								Globals().m_AppThemeChanged(make<AppThemeChangedEventArgs>(currentAppTheme, newAppTheme));
+								//m_AppThemeChanged(make<AppThemeChangedEventArgs>(currentAppTheme, newAppTheme));
 							});
 					}
 				}
 			}
 
-			static AbsoluteTheme SystemAppsTheme()
+			AbsoluteTheme SystemAppsTheme()
 			{
-				return Globals().m_UserInterfaceSettings.GetColorValue(UIColorType::Background) == Colors::Black() ? AbsoluteTheme::Dark : AbsoluteTheme::Light;
+				return m_UserInterfaceSettings.GetColorValue(UIColorType::Background) == Colors::Black() ? AbsoluteTheme::Dark : AbsoluteTheme::Light;
 			}
 
-			static AbsoluteTheme SystemShellTheme()
+			AbsoluteTheme SystemShellTheme()
 			{
-				throw hresult_not_implemented();
+				uint32 result;
+				uint32 resultSize;
+				check_win32(RegGetValue(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", L"SystemUsesLightTheme", RRF_RT_REG_DWORD, nullptr, &result, reinterpret_cast<DWORD*>(&resultSize)));
+				return static_cast<AbsoluteTheme>(!result);
 			}
 
-			static event_token AppThemeChanged(AppThemeChangedEventHandler const& handler)
+			static OneToolkit::UI::Theming::ThemeService Current()
 			{
-				return Globals().m_AppThemeChanged.add(handler);
-			}
-
-			static void AppThemeChanged(event_token token) noexcept
-			{
-				Globals().m_AppThemeChanged.remove(token);
-			}
-
-			static void Initialize()
-			{
-				if (!s_Globals) s_Globals = make_self<ThemeService>();
-			}
-
-			static void Uninitialize()
-			{
-				s_Globals = nullptr;
+				static auto const instance = make<ThemeService>();
+				return instance;
 			}
 		private:
-			inline static com_ptr<ThemeService> s_Globals;
-
 			event_token m_ColorValuesChangedToken;
 
 			UISettings const m_UserInterfaceSettings;
@@ -117,7 +97,7 @@ namespace winrt::OneToolkit::UI::Theming
 
 			std::atomic<RelativeTheme> m_AppThemeOverride = RelativeTheme::Default;
 
-			event<AppThemeChangedEventHandler> m_AppThemeChanged;
+			//event<AppThemeChangedEventHandler> m_AppThemeChanged;
 
 			AbsoluteTheme PreviousSystemAppsTheme()
 			{
@@ -132,15 +112,9 @@ namespace winrt::OneToolkit::UI::Theming
 				return *value;
 			}
 
-			static ThemeService& Globals()
+			void PreviousSystemAppsTheme(AbsoluteTheme newValue) noexcept
 			{
-				if (!s_Globals) throw hresult_invalid_state(L"ThemeService hasn't been initialized yet.");
-				return *s_Globals;
-			}
-
-			static void PreviousSystemAppsTheme(AbsoluteTheme newValue) noexcept
-			{
-				Globals().m_PreviousSystemAppsTheme = newValue;
+				m_PreviousSystemAppsTheme = newValue;
 			}
 
 			static IAsyncAction SetControlsThemeAsync(RelativeTheme elementTheme)
