@@ -78,7 +78,7 @@ export namespace juv
 		{
 			return m_BackingField;
 		}
-		
+
 		template <typename TValue = Value>
 		void operator()(TValue&& newValue)
 		{
@@ -150,21 +150,6 @@ export namespace juv
 }
 
 #ifdef _WIN32
-export namespace winrt
-{
-	namespace impl
-	{
-		constexpr hresult error_object_closed{ static_cast<hresult>(0x80000013) }; // RO_E_CLOSED
-	}
-
-	struct hresult_object_closed : hresult_error
-	{
-		hresult_object_closed() noexcept : hresult_error(impl::error_object_closed) {}
-		hresult_object_closed(param::hstring const& message) noexcept : hresult_error(impl::error_object_closed, message) {}
-		hresult_object_closed(take_ownership_from_abi_t) noexcept : hresult_error(impl::error_object_closed, take_ownership_from_abi) {}
-	};
-}
-
 export namespace winrt::OneToolkit
 #else
 export namespace OneToolkit
@@ -176,10 +161,8 @@ export namespace OneToolkit
 		{
 			ColorUtility() = delete;
 
-			/// <summary>
-			/// Finds the inverse of a single component.
-			/// </summary>
-			static inline juv::uint8 InvertComponent(juv::uint8 component)
+			/// @brief Finds the inverse of a single component.
+			static juv::uint8 InvertComponent(juv::uint8 component)
 			{
 				return 255 - component;
 			}

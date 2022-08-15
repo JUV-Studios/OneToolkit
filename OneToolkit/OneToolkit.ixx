@@ -7,7 +7,10 @@ module;
 #include <cstddef>
 #include <concepts>
 #include <filesystem>
+#include <Unknwn.h>
 #include <Windows.h>
+#include <WinString.h>
+#include <winrt/Windows.Storage.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/OneToolkit.System.h>
 #include <winrt/OneToolkit.UI.Windowing.h>
@@ -27,6 +30,69 @@ export namespace winrt::OneToolkit
 {
 	namespace System
 	{
+		struct StringOperations
+		{
+			StringOperations() = delete;
+
+			static auto Trim(hstring const& text, hstring const& trimChars)
+			{
+				HSTRING output;
+				check_hresult(WindowsTrimStringStart(static_cast<HSTRING>(get_abi(text)), static_cast<HSTRING>(get_abi(trimChars)), &output));
+				check_hresult(WindowsTrimStringEnd(static_cast<HSTRING>(get_abi(output)), static_cast<HSTRING>(get_abi(trimChars)), &output));
+				return hstring(output, take_ownership_from_abi);
+			}
+
+			static auto TrimStart(hstring const& text, hstring const& trimChars)
+			{
+				HSTRING output;
+				check_hresult(WindowsTrimStringStart(static_cast<HSTRING>(get_abi(text)), static_cast<HSTRING>(get_abi(trimChars)), &output));
+				return hstring(output, take_ownership_from_abi);
+			}
+
+			static auto TrimEnd(hstring const& text, hstring const& trimChars)
+			{
+				HSTRING output;
+				check_hresult(WindowsTrimStringEnd(static_cast<HSTRING>(get_abi(text)), static_cast<HSTRING>(get_abi(trimChars)), &output));
+				return hstring(output, take_ownership_from_abi);
+			}
+
+			static auto Replace(hstring const& text, hstring const& replaced, hstring const& replacedWith)
+			{
+				HSTRING output;
+				check_hresult(WindowsReplaceString(static_cast<HSTRING>(get_abi(text)), static_cast<HSTRING>(get_abi(replaced)), static_cast<HSTRING>(get_abi(replacedWith)), &output));
+				return hstring(output, take_ownership_from_abi);
+			}
+
+			static auto Substring(hstring const& text, uint32 startIndex)
+			{
+				HSTRING output;
+				check_hresult(WindowsSubstring(static_cast<HSTRING>(get_abi(text)), startIndex, &output));
+				return hstring(output, take_ownership_from_abi);
+			}
+
+			static auto Substring(hstring const& text, uint32 startIndex, uint32 length)
+			{
+				HSTRING output;
+				check_hresult(WindowsSubstringWithSpecifiedLength(static_cast<HSTRING>(get_abi(text)), startIndex, length, &output));
+				return hstring(output, take_ownership_from_abi);
+			}
+
+			static auto Split(hstring const& text, hstring const& delimiter)
+			{
+				std::vector<hstring> values;
+				std::wstring textCopy{ text };
+				wchar_t* state = nullptr;
+				auto token = wcstok_s(textCopy.data(), delimiter.data(), &state);
+				while (token != nullptr)
+				{
+					values.emplace_back(token);
+					token = wcstok_s(nullptr, delimiter.data(), &state);
+				}
+
+				return values;
+			}
+		};
+
 		template <typename Derived>
 		struct WeakSingleton
 		{
@@ -78,7 +144,7 @@ export namespace winrt::OneToolkit
 			/// @brief Throws an exception if the object is already closed.
 			void ThrowIfDisposed(hstring const& message = {}) const
 			{
-				if (m_IsDisposed) throw hresult_object_closed(message);
+				if (m_IsDisposed) throw hresult_error(RO_E_CLOSED, message);
 			}
 		private:
 			bool m_IsDisposed;
@@ -139,5 +205,78 @@ export namespace winrt::OneToolkit
 				AsyncOperationCompletedHandler<Result> m_Completed;
 			};
 		};
+	}
+
+	namespace Storage
+	{
+		[flags]
+		enum class HandleOptions
+		{
+			None = 0,
+			OpenRequiringOplock = 0x40000,
+			DeleteOnClose = 0x4000000,
+			SequentialScan = 0x8000000,
+			RandomAccess = 0x10000000,
+			NoBuffering = 0x20000000,
+			Overlapped = 0x40000000,
+			WriteThrough = 0x80000000
+		};
+
+		[flags]
+		enum class HandleAccessOptions
+		{
+			None = 0,
+			ReadAttributes = 0x80,
+			Read = 0x120089,
+			Write = 0x120116,
+			Delete = 0x10000
+		};
+
+		[flags]
+		enum class HandleSharingOptions
+		{
+			ShareNone = 0,
+			ShareRead = 0x1,
+			ShareWrite = 0x2,
+			ShareDelete = 0x4
+		};
+		
+		enum class HandleCreationOptions
+		{
+			CreateNew = 0x1,
+			CreateAlways = 0x2,
+			OpenExisting = 0x3,
+			OpenAlways = 0x4,
+			TruncateExisting = 0x5
+		};
+
+		MIDL_INTERFACE("826ABE3D-3ACD-47D3-84F2-88AAEDCF6304") IOplockBreakingHandler : ::IUnknown
+		{
+			STDMETHOD(OplockBreaking)() = 0;
+		};
+
+		auto CreateFileHandle(IStorageItem const& storageItem, HandleAccessOptions accessOptions, HandleSharingOptions sharingOptions, HandleOptions options, IOplockBreakingHandler* oplockBreakingHandler = nullptr)
+		{
+			MIDL_INTERFACE("5CA296B2-2C25-4D22-B785-B885C8201E6A") IStorageItemHandleAccess : ::IUnknown
+			{
+				STDMETHOD(Create)(HandleAccessOptions accessOptions, HandleSharingOptions sharingOptions, HandleOptions options, IOplockBreakingHandler* oplockBreakingHandler, HANDLE* interopHandle) = 0;
+			};
+
+			HANDLE result;
+			check_hresult(storageItem.as<IStorageItemHandleAccess>()->Create(accessOptions, sharingOptions, options, oplockBreakingHandler, &result));
+			return file_handle(result);
+		}
+
+		auto CreateFileHandle(IStorageFolder const& storageFile, hstring const& fileName, HandleCreationOptions creationOptions, HandleAccessOptions accessOptions, HandleSharingOptions sharingOptions, HandleOptions options, IOplockBreakingHandler oplockBreakingHandler = nullptr)
+		{
+			MIDL_INTERFACE("DF19938F-5462-48A0-BE65-D2A3271A08D6") IStorageFolderHandleAccess : ::IUnknown
+			{
+				STDMETHOD(Create)(wchar_t const* fileName, HandleCreationOptions creationOptions, HandleAccessOptions accessOptions, HandleSharingOptions sharingOptions, HandleOptions options, IOplockBreakingHandler* oplockBreakingHandler, HANDLE* interopHandle) = 0;
+			};
+
+			HANDLE result;
+			check_hresult(storageFile.as<IStorageFolderHandleAccess>()->Create(fileName.data(), creationOptions, accessOptions, sharingOptions, options, oplockBreakingHandler, &result));
+			return file_handle(result);
+		}
 	}
 }

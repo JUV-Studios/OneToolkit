@@ -1,8 +1,0 @@
-namespace OneToolkit.UI.Xaml.Controls
-{
-    [default_interface]
-    runtimeclass PivotViewItem : Microsoft.UI.Xaml.Controls.NavigationViewItem
-    {
-        PivotViewItem();
-    }
-}

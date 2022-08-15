@@ -656,12 +656,12 @@
 #include <wil/resource.h>
 #include "WindowingBase.h"
 #include "UI.Windowing.ViewService.g.h"
-#include "UI.Windowing.ViewReferenceTitleBar.g.h"
 #include <winrt/Windows.Foundation.Collections.h>
 
 import juv;
 import OneToolkit;
-import ViewReference;
+import Window;
+import WindowTitleBar;
 
 using namespace juv;
 using namespace winrt;
@@ -684,9 +684,10 @@ namespace winrt::OneToolkit::UI::Windowing
 		{
 			ViewService() = delete;
 
-			static IMapView<uint64, ViewReference> CachedViews()
+			static IMapView<uint64, IWindow> CachedViews()
 			{
-				return *ViewReferenceCache::s_Instance;
+				//return *ViewReferenceCache::s_Instance;
+				return nullptr;
 			}
 
 			static Universal::Core::UserInteractionMode InteractionMode()
@@ -701,33 +702,39 @@ namespace winrt::OneToolkit::UI::Windowing
 				}
 			}
 
-			static ViewReference CurrentView()
+			static IWindow CurrentWindow()
 			{
-				auto const appView = Universal::Core::ApplicationView::GetForCurrentView();
-				auto view = ViewReferenceCache::s_Instance->Lookup(static_cast<uint64>(appView.Id()));
-				if (!view)
-				{
-					auto const coreAppView = Universal::Core::CoreApplication::GetCurrentView();
-					auto const navigationManager = Universal::Core::SystemNavigationManager::GetForCurrentView();
-					auto const navigationManagerPreview = Universal::Core::SystemNavigationManagerPreview::GetForCurrentView();
-					view = make<Universal::Core::ViewReference>(appView, coreAppView, navigationManager, navigationManagerPreview);
-					ViewReferenceCache::s_Instance->Append(view);
-				}
-
-				return view;
+				WindowController const controller{ Universal::Core::ApplicationView::GetForCurrentView(), Universal::Core::CoreApplication::GetCurrentView(), Universal::Core::SystemNavigationManager::GetForCurrentView(), Universal::Core::SystemNavigationManagerPreview::GetForCurrentView() };
+				return make<Universal::Core::Window>(controller);
 			}
 
-			static IAsyncOperation<IVectorView<ViewReference>> GetViewsAsync()
+			static IWindow GetWindowFromController(IInspectable const& controller)
+			{
+				if (auto const windowController = controller.try_as<WindowController>()) return make<Universal::Core::Window>(windowController);
+				else if (auto const appWindowUwp = controller.try_as<Universal::Preview::AppWindow>()) return make<Universal::Preview::Window>(appWindowUwp);
+				else if (auto const appWindowWasdk = controller.try_as<Desktop::AppWindow>()) return make<Desktop::Window>(appWindowWasdk);
+				else return nullptr;
+			}
+
+			static IWindowTitleBar GetTitleBarFromController(IInspectable const& controller)
+			{
+				if (auto const windowTitleBarController = controller.try_as<WindowTitleBarController>()) return make<Universal::Core::WindowTitleBar>(windowTitleBarController);
+				else if (auto const appWindowTitleBarUwp = controller.try_as<Universal::Preview::AppWindowTitleBar>()) return make<Universal::Preview::WindowTitleBar>(appWindowTitleBarUwp);
+				else if (auto const appWindowTitleBarWasdk = controller.try_as<Desktop::AppWindowTitleBar>()) return make<Desktop::WindowTitleBar>(appWindowTitleBarWasdk);
+				else return nullptr;
+			}
+
+			static IAsyncOperation<IVectorView<IWindow>> GetViewsAsync()
 			{
 				apartment_context threadContext;
-				std::vector<ViewReference> views;
+				std::vector<IWindow> views;
 				auto const coreAppViews = Universal::Core::CoreApplication::Views();
 				if (coreAppViews.Size())
 				{
 					for (auto const& coreAppView : coreAppViews)
 					{
 						co_await coreAppView.Dispatcher();
-						views.emplace_back(CurrentView());
+						views.emplace_back(CurrentWindow());
 					}
 				}
 				else
@@ -739,37 +746,9 @@ namespace winrt::OneToolkit::UI::Windowing
 				co_return single_threaded_vector(std::move(views)).GetView();
 			}
 
-			static IAsyncOperation<ViewReference> GetViewAsync(uint64 windowId)
+			static IWindow GetWindowFromId(uint64 windowId)
 			{
-				auto result = ViewReferenceCache::s_Instance->Lookup(windowId);
-				if (!result)
-				{
-					auto const coreAppViews = Universal::Core::CoreApplication::Views();
-					if (coreAppViews.Size())
-					{
-						for (auto const& coreAppView : coreAppViews)
-						{
-							co_await coreAppView.Dispatcher();
-							auto const appView = Universal::Core::ApplicationView::GetForCurrentView();
-							if (appView.Id() == windowId)
-							{
-								auto const navigationManager = Universal::Core::SystemNavigationManager::GetForCurrentView();
-								auto const navigationManagerPreview = Universal::Core::SystemNavigationManagerPreview::GetForCurrentView();
-								auto const view = make<Universal::Core::ViewReference>(appView, coreAppView, navigationManager, navigationManagerPreview);
-								ViewReferenceCache::s_Instance->Append(view);
-								co_return view;
-							}
-						}
-					}
-					else
-					{
-						auto const view = make<Desktop::ViewReference>(Desktop::AppWindow::GetFromWindowId({ windowId }));
-						ViewReferenceCache::s_Instance->Append(view);
-						co_return view;
-					}
-				}
-
-				co_return result;
+				return make<Desktop::Window>(Desktop::AppWindow::GetFromWindowId({ windowId }));
 			}
 		};
 	}
@@ -779,32 +758,7 @@ namespace winrt::OneToolkit::UI::Windowing
 		struct ViewService : ViewServiceT<ViewService, implementation::ViewService>
 		{
 		};
-
-		struct ViewReferenceTitleBar : ViewReferenceTitleBarT<ViewReferenceTitleBar, ViewReferenceTitleBar>
-		{
-			static bool IsCustomizationSupported()
-			{
-				if (auto const appWindowTitleBarStatics = try_get_activation_factory<implementation::Desktop::AppWindowTitleBar, implementation::Desktop::IAppWindowTitleBarStatics>())
-				{
-					return appWindowTitleBarStatics.IsCustomizationSupported();
-				}
-				else
-				{
-					return true;
-				}
-			}
-		};
 	}
-
-	bool ViewReferenceTitleBar::IsCustomizationSupported()
-	{
-		return OneToolkit::UI::Windowing::factory_implementation::ViewReferenceTitleBar::IsCustomizationSupported();
-	}
-}
-
-void* winrt_make_OneToolkit_UI_Windowing_ViewReferenceTitleBar()
-{
-	return detach_abi(make<OneToolkit::UI::Windowing::factory_implementation::ViewReferenceTitleBar>());
 }
 
 #include "UI.Windowing.ViewService.g.cpp"

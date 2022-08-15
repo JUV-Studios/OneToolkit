@@ -29,6 +29,9 @@
     <Filter Include="UI\Theming">
       <UniqueIdentifier>{82f00acd-fdc0-45dd-bca2-86ce2b971322}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Metadata">
+      <UniqueIdentifier>{53275621-4a02-4920-a9bf-f780c86ade56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ViewService.cpp">
@@ -48,14 +51,17 @@
     <ClCompile Include="FileVersionInfo.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ViewReference.ixx">
-      <Filter>UI\Windowing</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewReferenceTitleBar.ixx">
-      <Filter>UI\Windowing</Filter>
-    </ClCompile>
     <ClCompile Include="..\OneToolkit.Mvvm\OneToolkit.Mvvm.ixx">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.ixx">
+      <Filter>UI\Windowing</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowTitleBar.ixx">
+      <Filter>UI\Windowing</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorHelper.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -96,12 +102,6 @@
     <Midl Include="AppInformation.idl">
       <Filter>System</Filter>
     </Midl>
-    <Midl Include="ViewReferenceTitleBar.idl">
-      <Filter>UI\Windowing</Filter>
-    </Midl>
-    <Midl Include="ViewReference.idl">
-      <Filter>UI\Windowing</Filter>
-    </Midl>
     <Midl Include="ViewService.idl">
       <Filter>UI\Windowing</Filter>
     </Midl>
@@ -111,11 +111,26 @@
     <Midl Include="AppLifecycleHelper.idl">
       <Filter>System</Filter>
     </Midl>
-    <Midl Include="ThemeConverter.idl">
-      <Filter>UI\Theming</Filter>
-    </Midl>
     <Midl Include="ThemeService.idl">
       <Filter>UI\Theming</Filter>
+    </Midl>
+    <Midl Include="Window.idl">
+      <Filter>UI\Windowing</Filter>
+    </Midl>
+    <Midl Include="WindowTitleBar.idl">
+      <Filter>UI\Windowing</Filter>
+    </Midl>
+    <Midl Include="WindowController.idl">
+      <Filter>UI\Windowing</Filter>
+    </Midl>
+    <Midl Include="WindowTitleBarController.idl">
+      <Filter>UI\Windowing</Filter>
+    </Midl>
+    <Midl Include="Documentation.idl">
+      <Filter>Metadata</Filter>
+    </Midl>
+    <Midl Include="ColorHelper.idl">
+      <Filter>UI</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>

@@ -38,8 +38,6 @@ namespace OneToolkit.Showcase.ViewModels
 
 		public static readonly ResourceLoader Resources = ResourceLoader.GetForViewIndependentUse();
 
-		public static readonly ViewReference ViewServiceProvider = ViewService.CurrentView;
-
 		public static readonly DataTransferManager TransferManager = DataTransferManager.GetForCurrentView();
 
 		public string AboutDisplayText => $"OneToolkit Showcase\n{string.Format(Resources.GetString("VersionText"), Package.Current.Id.Version)}\n{Resources.GetString("CopyrightText")}";
@@ -79,9 +77,9 @@ namespace OneToolkit.Showcase.ViewModels
 		}
 #pragma warning restore CS0618
 
-		public static async void Close() => await ViewServiceProvider.CloseAsync();
+		public static async void Close() => await ViewService.CurrentWindow.CloseAsync();
 
-		public static async void Suspend() => await ViewServiceProvider.MinimizeAsync();
+		public static async void Suspend() => await ViewService.CurrentWindow.MinimizeAsync();
 
 		public static async void OpenHelpPage() => await LaunchLinkAsync(new("http://discord.com/invite/CZpBpPQjq8"));
 

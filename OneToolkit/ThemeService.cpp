@@ -1,4 +1,5 @@
 ﻿#include "UI.Theming.ThemeService.g.h"
+#include "UI.Theming.RelativeThemeHelper.g.h"
 #include <Windows.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Xaml.h>
@@ -47,6 +48,11 @@ namespace winrt::OneToolkit::UI::Theming
 				}
 			}
 
+			AbsoluteTheme AppTheme()
+			{
+				return RelativeThemeHelper::ToAbsoluteTheme(m_AppThemeOverride, SystemAppsTheme());
+			}
+
 			RelativeTheme AppThemeOverride() noexcept
 			{
 				return m_AppThemeOverride;
@@ -57,8 +63,8 @@ namespace winrt::OneToolkit::UI::Theming
 				auto const appThemeOverride = m_AppThemeOverride.load();
 				if (appThemeOverride != value)
 				{
-					auto newAppTheme = ThemeConverter::ToAbsoluteTheme(value, SystemAppsTheme());
-					auto currentAppTheme = ThemeConverter::ToAbsoluteTheme(appThemeOverride, SystemAppsTheme());
+					auto newAppTheme = RelativeThemeHelper::ToAbsoluteTheme(value, SystemAppsTheme());
+					auto currentAppTheme = RelativeThemeHelper::ToAbsoluteTheme(appThemeOverride, SystemAppsTheme());
 					m_AppThemeOverride = value;
 					if (currentAppTheme != newAppTheme)
 					{
@@ -137,6 +143,16 @@ namespace winrt::OneToolkit::UI::Theming
 				}
 			}
 		};
+
+		struct RelativeThemeHelper : RelativeThemeHelperT<RelativeThemeHelper>
+		{
+			RelativeThemeHelper() = delete;
+
+			static AbsoluteTheme ToAbsoluteTheme(RelativeTheme theme, AbsoluteTheme defaultTheme) noexcept
+			{
+				return theme == RelativeTheme::Default ? defaultTheme : AbsoluteTheme(static_cast<int>(theme) - 1);
+			}
+		};
 	}
 
 	namespace factory_implementation
@@ -144,8 +160,12 @@ namespace winrt::OneToolkit::UI::Theming
 		struct ThemeService : ThemeServiceT<ThemeService, implementation::ThemeService>
 		{
 		};
+
+		struct RelativeThemeHelper : RelativeThemeHelperT<RelativeThemeHelper, implementation::RelativeThemeHelper>
+		{
+		};
 	}
 }
 
 #include "UI.Theming.ThemeService.g.cpp"
-#include "UI.Theming.AppThemeChangedEventArgs.g.cpp"
+#include "UI.Theming.RelativeThemeHelper.g.cpp"

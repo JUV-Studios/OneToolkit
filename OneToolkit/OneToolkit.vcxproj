@@ -90,7 +90,6 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="PropertySheet.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Artifacts\$(MSBuildProjectName)\$(Configuration)\$(Platform)\</OutDir>
@@ -111,7 +110,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>$(SolutionDir)RuntimeComponent.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -224,10 +222,6 @@
     <ClInclude Include="FileVersionInfo.h" />
     <ClInclude Include="FixedFileInfo.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="StorageItemHandle.h">
-      <DependentUpon>StorageItemHandle.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="WindowingBase.h" />
   </ItemGroup>
   <ItemGroup>
@@ -241,9 +235,9 @@
       <DependentUpon>AppLifecycleHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ViewReference.ixx">
-      <DependentUpon>ViewReference.idl</DependentUpon>
-      <SubType>Code</SubType>
+    <ClCompile Include="ColorHelper.cpp">
+      <SubType>
+      </SubType>
     </ClCompile>
     <ClCompile Include="FileVersionInfo.cpp">
       <DependentUpon>FileVersionInfo.h</DependentUpon>
@@ -284,24 +278,22 @@
       <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PreprocessToFile>
     </ClCompile>
-    <ClCompile Include="StorageItemHandle.cpp">
-      <DependentUpon>StorageItemHandle.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ThemeConverter.cpp">
-      <DependentUpon>ThemeConverter.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="ThemeService.cpp">
       <DependentUpon>ThemeService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ViewReferenceTitleBar.ixx">
-      <DependentUpon>ViewReferenceTitleBar.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
+    <ClCompile Include="Window.ixx" />
     <ClCompile Include="ViewService.cpp">
       <DependentUpon>ViewService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="WindowController.cpp">
+      <DependentUpon>WindowController.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="WindowTitleBar.ixx" />
+    <ClCompile Include="WindowTitleBarController.cpp">
+      <DependentUpon>WindowTitleBarController.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClInclude Include="OneToolkit.h">
@@ -324,6 +316,11 @@
     <Midl Include="AppLifecycleHelper.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="ColorHelper.idl">
+      <SubType>
+      </SubType>
+    </Midl>
+    <Midl Include="Documentation.idl" />
     <Midl Include="Imaging.idl">
       <SubType>Designer</SubType>
     </Midl>
@@ -335,19 +332,18 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="StorageItemHandle.idl" />
-    <Midl Include="ThemeConverter.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="ThemeService.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="ViewReference.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ViewReferenceTitleBar.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="ViewService.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="Window.idl" />
+    <Midl Include="WindowController.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="WindowTitleBar.idl" />
+    <Midl Include="WindowTitleBarController.idl">
       <SubType>Designer</SubType>
     </Midl>
   </ItemGroup>

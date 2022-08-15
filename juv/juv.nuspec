@@ -20,6 +20,5 @@
 		<file src="juv.props" target="build\native" />
 		<file src="juv.ixx" target="build\native\" />
 		<file src="juv.h" target="build\native\include" />
-		<file src="debug-trap.h" target="build\native\include" />
 	</files>
 </package>
