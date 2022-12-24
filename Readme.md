@@ -1,7 +1,10 @@
-OneToolkit provides a set of controls, converters, services and helpers that help you build modern Windows apps and cross-platform .NET apps. We work with all officially supported programming language or UI framework and enable you to write the best apps the best possible performance.
-
 [![Build Status](https://dev.azure.com/JUV-Studios/OneToolkit/_apis/build/status/OneToolkit?branchName=master)](https://dev.azure.com/JUV-Studios/OneToolkit/_build/latest?definitionId=3&branchName=master)
 
-[Get it on NuGet](https://www.nuget.org/packages/OneToolkit/)\
-[Send us feedback](https://www.nuget.org/packages/OneToolkit/1.0.0.3/ContactOwners)\
-[Read the documentation](https://dev.azure.com/JUV-Studios/OneToolkit/_wiki/wikis)
+OneToolkit enables building modern Windows applications with ease. We aim to support any officially supported programming language and UI framework without discrimination.
+
+A small set of functionality are available cross-platform for .NET Standard 2.0 and C++20.
+
+## What's in the package
+- Handy utilities, wrappers and services that are useful regardless of UI framework
+- Model-View-ViewModel (MVVM) framework for building XAML apps with C++/WinRT.
+- Controls, converters and helpers for building XAML apps with WinUI 2 or WinUI 3.
