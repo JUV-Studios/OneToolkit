@@ -1,0 +1,13 @@
+namespace OneToolkit.System
+{
+    [default_interface]
+	runtimeclass AppInformation
+	{
+		String Id { get; };
+		String AppUserModelId { get; };
+        String Name { get; };
+        String Description { get; };
+		Windows.ApplicationModel.PackageVersion Version { get; };
+		static AppInformation Current { get; };
+	}
+}

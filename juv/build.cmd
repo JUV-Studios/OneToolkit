@@ -1,0 +1,1 @@
+nuget pack juv.nuspec -OutputDirectory ..\Artifacts

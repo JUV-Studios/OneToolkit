@@ -1,0 +1,11 @@
+namespace OneToolkit.Storage.Logging
+{
+    [default_interface]
+    runtimeclass Logger 
+    {
+        Logger();
+		[default_overload]
+		void Write(String text);
+		void Write(Object value);
+    }
+}
